@@ -1,0 +1,16 @@
+[
+{
+  "modid": "westerlife",
+  "name": "WesterLife",
+  "description": "Mod de WesterLife.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["yan36"],
+  "credits": "WesterLife",
+  "logoFile": "logo.png",
+  "screenshots": [],
+  "dependencies": []
+}
+]
