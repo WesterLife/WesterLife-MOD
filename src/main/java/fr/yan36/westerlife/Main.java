@@ -1,5 +1,6 @@
 package fr.yan36.westerlife;
 
+import fr.yan36.westerlife.creativetabs.WesterTab;
 import fr.yan36.westerlife.proxy.CommonProxy;
 import fr.yan36.westerlife.registry.RegisteringHandler;
 import net.minecraftforge.common.MinecraftForge;
@@ -16,7 +17,7 @@ public class Main {
 
     public static final String MODID = "westerlife";
     public static final String NAME = "WesterLife Mod";
-    public static final String VERSION = "1.0a";
+    public static final String VERSION = "1.1";
 
     @Mod.Instance(Main.MODID)
     public static Main instance;
@@ -42,5 +43,7 @@ public class Main {
     public Main() {
         MinecraftForge.EVENT_BUS.register(new RegisteringHandler());
     }
+
+    public static final WesterTab creativeTab = new WesterTab();
 
 }

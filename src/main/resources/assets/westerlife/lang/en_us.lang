@@ -1,3 +1,12 @@
 item.westerlife.cni.name=CNI
 item.westerlife.pdc.name=Permis de Conduire
 item.westerlife.cb.name=Carte Bancaire
+item.westerlife.cinqeuros.name=Billet de 5€
+item.westerlife.dixeuros.name=Billet de 10€
+item.westerlife.vingteuros.name=Billet de 20€
+item.westerlife.cinquanteeuros.name=Billet de 50€
+item.westerlife.centeuros.name=Billet de 100€
+item.westerlife.deuxcenteuros.name=Billet de 200€
+item.westerlife.cinqcenteuros.name=Billet de 500€
+itemGroup.westerlife=WesterLife
+tile.westerlife.atm.name=Distributeur de Billet

@@ -1,5 +1,6 @@
 package fr.yan36.westerlife.items;
 
+import fr.yan36.westerlife.Main;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 
@@ -11,6 +12,6 @@ public class ItemCB extends Item {
         super();
 
         WesterItem.setItemName(this, CB);
-        setCreativeTab(CreativeTabs.MISC);
+        setCreativeTab(Main.creativeTab);
     }
 }

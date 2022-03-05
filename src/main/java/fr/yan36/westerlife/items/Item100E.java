@@ -4,15 +4,14 @@ import fr.yan36.westerlife.Main;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 
-public class ItemCNI extends Item {
+public class Item100E extends Item {
 
-    public static final String CNI = "cni";
+    public static final String CENTEUROS = "centeuros";
 
-    public ItemCNI()
-    {
+    public Item100E() {
         super();
 
-        WesterItem.setItemName(this, CNI);
+        WesterItem.setItemName(this, CENTEUROS);
         setCreativeTab(Main.creativeTab);
     }
 }
