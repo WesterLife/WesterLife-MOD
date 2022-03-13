@@ -1,0 +1,27 @@
+.screen{
+    background-image: url("dynamxmod:textures/font.png");
+    height: 100%;
+    width: 100%;
+}
+#para{
+    background-image: url("dynamxmod:textures/para.png");
+    top: 45%;
+    left: 5%;
+    width: 25%;
+    height: 30%;
+}
+#play{
+    background-image: url("dynamxmod:textures/play.png");
+    top: 45%;
+    left: 38%;
+    width: 25%;
+    height: 30%;
+}
+#site{
+    background-image: url("dynamxmod:textures/site.png");
+    top: 45%;
+    right: 5%;
+    width: 25%;
+    height: 30%;
+    text-align: center;
+}

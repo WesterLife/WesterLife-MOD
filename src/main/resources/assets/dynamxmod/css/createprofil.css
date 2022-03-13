@@ -1,0 +1,69 @@
+.screen{
+    border-radius: 5px;
+    background-image: url("dynamxmod:textures/create/font.png");
+    top: 10%;
+    left: 35%;
+    height: 80%;
+    width: 30%;
+}
+#confirm{
+    background-image: url("dynamxmod:textures/create/confirm.png");
+    bottom: 5%;
+    left: 10%;
+    width: 80%;
+    height: 10%;
+}
+#Prenom{
+    background-color: rgba(41,41,41,255);
+    border-radius: 5px;
+    width: 60%;
+    height: 20px;
+    top: 40%;
+    right: 20%;
+    padding-left: 3px;
+    padding-top: 4px;
+    text-align: center;
+}
+#Nom{
+    background-color: rgba(41,41,41,255);
+    border-radius: 5px;
+    width: 60%;
+    height: 20px;
+    top: 50%;
+    right: 20%;
+    padding-left: 3px;
+    padding-top: 4px;
+    text-align: center;
+}
+
+#Sex{
+    background-color: rgba(41,41,41,255);
+    border-radius: 5px;
+    width: 60%;
+    height: 20px;
+    top: 60%;
+    right: 20%;
+    padding-left: 3px;
+    padding-top: 4px;
+    text-align: center;
+}
+#Date{
+    background-color: rgba(41,41,41,255);
+    border-radius: 5px;
+    width: 60%;
+    height: 20px;
+    top: 70%;
+    right: 20%;
+    padding-left: 3px;
+    padding-top: 4px;
+    text-align: center;
+}
+#error{
+    color: red;
+    left: 25%;
+    width: 50%;
+    height: 10%
+    top: 78%;
+    text-align: center;
+
+}
