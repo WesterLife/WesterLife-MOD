@@ -1,4 +1,4 @@
-package fr.yan36.westerlife.items;
+package fr.yan36.westerlife.common.items;
 
 import fr.yan36.westerlife.Main;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -18,7 +18,7 @@ public class WesterItem
     public static final Item CB = new ItemCB();
 
     public static void setItemName(Item item, String name) {
-        item.setRegistryName(Main.MODID, name).setUnlocalizedName(Main.MODID + "." + name);
+        item.setRegistryName(Main.MODID, name).setTranslationKey(Main.MODID + "." + name);
     }
 
     // En 1.12+
@@ -35,7 +35,7 @@ public class WesterItem
     public static void registerModel(Item item, int metadata)
     {
         if (metadata < 0) metadata = 0;
-        String resourceName = item.getUnlocalizedName().substring(5).replace('.', ':');;
+        String resourceName = item.getTranslationKey().substring(5).replace('.', ':');;
         if (metadata > 0) resourceName += "_m" + String.valueOf(metadata);
 
         ModelLoader.setCustomModelResourceLocation(item, metadata, new ModelResourceLocation(resourceName, "inventory"));

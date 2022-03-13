@@ -1,4 +1,7 @@
-package fr.yan36.westerlife.proxy;
+package fr.yan36.westerlife.serveur;
+
+import fr.yan36.westerlife.common.CommonProxy;
+import net.minecraftforge.common.MinecraftForge;
 
 import java.io.File;
 
@@ -8,7 +11,8 @@ public class ServerProxy extends CommonProxy {
     public void preInit(File configFile)
     {
         super.preInit(configFile);
-        System.out.println("pre init côté serveur");
+        MinecraftForge.EVENT_BUS.register(new Serveur());
+
     }
 
     @Override

@@ -1,4 +1,4 @@
-package fr.yan36.westerlife.items;
+package fr.yan36.westerlife.common.items;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;

@@ -1,6 +1,6 @@
-package fr.yan36.westerlife.registry;
+package fr.yan36.westerlife.common.registry;
 
-import fr.yan36.westerlife.items.WesterItem;
+import fr.yan36.westerlife.common.items.WesterItem;
 import net.minecraft.item.Item;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;

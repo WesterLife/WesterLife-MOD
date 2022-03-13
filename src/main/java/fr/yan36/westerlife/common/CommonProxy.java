@@ -1,4 +1,4 @@
-package fr.yan36.westerlife.proxy;
+package fr.yan36.westerlife.common;
 
 import java.io.File;
 
