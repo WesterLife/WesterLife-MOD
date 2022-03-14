@@ -8,5 +8,5 @@ item.westerlife.cinquanteeuros.name=Billet de 50€
 item.westerlife.centeuros.name=Billet de 100€
 item.westerlife.deuxcenteuros.name=Billet de 200€
 item.westerlife.cinqcenteuros.name=Billet de 500€
-itemGroup.westerlife=WesterLife
+itemGroup.westerlifetab=WesterLife
 tile.westerlife.atm.name=Distributeur de Billet

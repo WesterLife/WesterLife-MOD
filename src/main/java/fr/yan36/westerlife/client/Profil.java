@@ -1,0 +1,38 @@
+package fr.yan36.westerlife.client;
+
+public class Profil {
+    private static String prenom,nom,sex,date;
+
+    public static String getPrenom() {
+        return prenom;
+    }
+
+    public static String getNom() {
+        return nom;
+    }
+
+    public static String getSex() {
+        return sex;
+    }
+
+    public static String getDate() {
+        return date;
+    }
+
+    public static void setPrenom(String prenom) {
+        Profil.prenom = prenom;
+    }
+
+    public static void setNom(String nom) {
+        Profil.nom = nom;
+    }
+
+    public static void setSex(String sex) {
+        Profil.sex = sex;
+    }
+
+    public static void setDate(String date) {
+        Profil.date = date;
+    }
+}
+
