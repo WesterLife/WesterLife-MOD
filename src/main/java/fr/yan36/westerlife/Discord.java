@@ -4,7 +4,6 @@ import club.minnced.discord.rpc.DiscordEventHandlers;
 import club.minnced.discord.rpc.DiscordRPC;
 import club.minnced.discord.rpc.DiscordRichPresence;
 import net.minecraft.client.Minecraft;
-import net.minecraftforge.fml.relauncher.Side;
 
 public class Discord {
 
@@ -14,7 +13,7 @@ public class Discord {
 
     public void start() {
         DiscordEventHandlers event = new DiscordEventHandlers();
-        event.ready = (user) -> System.out.println("Ready!");
+        event.ready = (user) -> System.out.println("RPC Ready!");
         this.client.Discord_Initialize(Main.DISCORD_ID, event, true, "0");
         this.richpresence.startTimestamp = System.currentTimeMillis() / 1000;
         this.richpresence.details = Main.DRP_DETAILS;

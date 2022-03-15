@@ -59,15 +59,11 @@ public class Main {
             DRP_DETAILS = "WesterLife";
             DRP_IMAGE_LARGE = "logo_large";
             DRP_IMAGE_LARGE_TEXT = "Serveur Minecraft RôlePlay";
-            DRP_IMAGE_SMALL = "logo_large";
+            DRP_IMAGE_SMALL = "head";
             DRP_STATE_SOLO = "En solo";
             DRP_STATE_MULTIPLAYER = "Connecté(e)";
             DRP_STATE_OTHER = "Dans les menus";
 
-            if(Side.CLIENT.isClient()) {
-                new Discord().start();
-                System.out.println("WesterLife >> Initialisation de RPC");
-            }
     }
 
 
