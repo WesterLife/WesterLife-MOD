@@ -1,6 +1,7 @@
 package fr.yan36.westerlife.common.items;
 
 import fr.yan36.westerlife.Main;
+import fr.yan36.westerlife.common.blocks.WesterBlocks;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -25,6 +26,8 @@ public class WesterItem
     public static final Item DEUXCENTEUROS = new Item200E();
     public static final Item CINQCENTEUROS = new Item500E();
 
+    public static final Item BLOCK_ATM_ITEM = new ItemBlock(WesterBlocks.ATM).setRegistryName(WesterBlocks.ATM.getRegistryName());
+
     public static void setItemName(Item item, String name) {
         item.setRegistryName(Main.MODID, name).setTranslationKey(Main.MODID + "." + name);
     }
@@ -44,6 +47,7 @@ public class WesterItem
         registerModel(CENTEUROS, 0);
         registerModel(DEUXCENTEUROS, 0);
         registerModel(CINQCENTEUROS, 0);
+        registerModel(BLOCK_ATM_ITEM, 0);
     }
 
     @SideOnly(Side.CLIENT)

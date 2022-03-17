@@ -22,6 +22,7 @@ public class PacketCreateIdentity implements IMessage{
     public void toBytes(ByteBuf buf) {
 
     }
+
     public static class handler implements IMessageHandler<PacketCreateIdentity, IMessage> {
         @Override
         @SideOnly(Side.CLIENT)

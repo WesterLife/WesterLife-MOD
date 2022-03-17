@@ -82,10 +82,6 @@ minecraft {
         }
     }
 
-    dependencies {
-        compile 'club.minnced:java-discord-rpc:2.0.1'
-
-    }
 
     repositories {
         jcenter()
@@ -98,7 +94,7 @@ minecraft {
 
         testCompile group: 'junit', name: 'junit', version: '4.12'
         minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2855'
-        //compile 'club.minnced:java-discord-rpc:2.0.0'
+        compile 'club.minnced:java-discord-rpc:2.0.0'
         compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.21'
         compile fileTree(dir: 'libs', include: '*.jar')
         implementation fg.deobf('fr.dynamx:DynamX:3.3.0')
@@ -111,7 +107,7 @@ minecraft {
             attributes([
                     "Specification-Title"     : "westerlife",
                     "Specification-Vendor"    : "yan36,MK_16",
-                    "Specification-Version"   : "1", // We are version 1 of ourselves
+                    "Specification-Version"   : "2", // We are version 1 of ourselves
                     "Implementation-Title"    : project.name,
                     "Implementation-Version"  : project.version,
                     "Implementation-Vendor"   : "MK, Afhistos",

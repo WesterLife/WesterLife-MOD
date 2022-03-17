@@ -2,9 +2,13 @@ package fr.yan36.westerlife;
 
 import fr.dynamx.api.contentpack.DynamXAddon;
 import fr.yan36.westerlife.client.creativetabs.WesterTab;
+import fr.yan36.westerlife.common.blocks.BlockDynamx;
+import fr.yan36.westerlife.common.items.ItemDynamx;
 import fr.yan36.westerlife.common.network.Network;
 import fr.yan36.westerlife.common.CommonProxy;
 import fr.yan36.westerlife.common.registry.RegisteringHandler;
+import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
@@ -38,9 +42,16 @@ public class Main {
     public static Main instance;
     public static SimpleNetworkWrapper network;
 
+    public static ItemDynamx PistoletRadar;
+
     @DynamXAddon.AddonEventSubscriber
     public static void init() {
+
+        PistoletRadar = new ItemDynamx(Main.MODID, "pistoletradar", "pistoletradar/pistoletradar.obj");
+        //radar = new BlockDynamx(Material.ANVIL, Main.MODID, "radar", "radar/radar.obj");
+
     }
+
 
     @SidedProxy(clientSide = "fr.yan36.westerlife.client.ClientProxy", serverSide = "fr.yan36.westerlife.serveur.ServerProxy")
     public static CommonProxy proxy;
@@ -55,6 +66,7 @@ public class Main {
         Network.init();
         MinecraftForge.EVENT_BUS.register(new RegisteringHandler());
 
+
             DISCORD_ID = "835564028528033852";
             DRP_DETAILS = "WesterLife";
             DRP_IMAGE_LARGE = "logo_large";
@@ -64,6 +76,9 @@ public class Main {
             DRP_STATE_MULTIPLAYER = "Connecté(e)";
             DRP_STATE_OTHER = "Dans les menus";
 
+        if(event.getSide().isClient()) {
+            //new Discord();
+        }
     }
 
 
@@ -71,7 +86,10 @@ public class Main {
     public void init(FMLInitializationEvent event)
     {
         proxy.init();
+        RegisteringHandler.initRegistries();
     }
+
+
 
     public static final CreativeTabs creativeTab = new WesterTab("westertab");
 
