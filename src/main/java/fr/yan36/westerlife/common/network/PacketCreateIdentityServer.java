@@ -26,7 +26,7 @@ public class PacketCreateIdentityServer implements IMessage{
         this.nom=nom;
         this.sex=sex;
         this.date=date;
-        System.out.println("MKKKKKKKKK: "+nom+" "+prenom+" "+sex+" "+date);
+        //System.out.println("MKKKKKKKKK: "+nom+" "+prenom+" "+sex+" "+date);
     }
     @Override
     public void fromBytes(ByteBuf buf) {

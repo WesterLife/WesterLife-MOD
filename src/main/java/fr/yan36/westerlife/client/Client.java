@@ -52,11 +52,19 @@ public class Client {
     public void GuieventHandler(GuiOpenEvent e) {
 
         if(e.getGui() instanceof GuiMainMenu){
-            e.setGui(new CSSGuiMainMenu().getGuiScreen());
+            if(Minecraft.getMinecraft().getSession().getUsername().equals("gabidut76")) {
+                System.out.println("Salut pas BG");
+            } else if(Minecraft.getMinecraft().getSession().getUsername().equals("yan36")) {
+                e.setGui(new CSSGuiMainMenu().getGuiScreen());
+                System.out.println("T'es beau !");
+            } else {
+                e.setGui(new CSSGuiMainMenu().getGuiScreen());
+            }
         }
         if (e.getGui() instanceof GuiIngameMenu) {
             //e.setGui(new CSSGuiIngameMenu().getGuiScreen());
         }
+        
         if (e.getGui() == null) {
             if(create == 1){
                 e.setGui(new CSSGuiCreateProfil().getGuiScreen());
@@ -67,15 +75,13 @@ public class Client {
 
     @SubscribeEvent
     public void InteractWithEntity(PlayerInteractEvent.EntityInteract e) {
-        if(e.getEntityPlayer().getHeldItemMainhand().isItemEqual(new ItemStack(WesterItem.CNI))){
-            //e.getEntityPlayer().sendMessage(new TextComponentString("§cCarte Nationale d'Identité » " + Profil.getPrenom() + " " + Profil.getNom() + " né(e) le " + Profil.getDate()));
-        }
+        /*if(e.getEntityPlayer().getHeldItemMainhand().isItemEqual(new ItemStack(WesterItem.CNI))){
+            e.getEntityPlayer().sendMessage(new TextComponentString("§cCarte Nationale d'Identité » " + Profil.getPrenom() + " " + Profil.getNom() + " né(e) le " + Profil.getDate()));
+        }*/
     }
 
     @SubscribeEvent
     public void renderPseudo(RenderLivingEvent.Specials.Pre e){
-
-
 
         if(!(Minecraft.getMinecraft().player.isCreative())){
             e.setCanceled(true);
