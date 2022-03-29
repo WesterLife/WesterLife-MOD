@@ -2,6 +2,7 @@ package fr.yan36.westerlife.client;
 
 public class Profil {
     private static String prenom,nom,sex,date;
+    private static Double bank;
 
     public static String getPrenom() {
         return prenom;
@@ -33,6 +34,18 @@ public class Profil {
 
     public static void setDate(String date) {
         Profil.date = date;
+    }
+
+
+    //set bank
+
+
+    public static Double getBank() {
+        return bank;
+    }
+
+    public static void setBank(Double bank) {
+        Profil.bank = bank;
     }
 }
 

@@ -32,6 +32,16 @@ public class MethodesBDD {
         String uuid = p.getUniqueID().toString();
         instance.execute("UPDATE players SET Argent = ? WHERE uuid = ?", Argent, uuid);
     }
+    public static Double getArgent(EntityPlayer p){
+        String uuid = p.getUniqueID().toString();
+        QueryResult qr = instance.getData("SELECT Argent FROM players WHERE uuid= ?", uuid);
+        try {
+            return Double.valueOf(qr.getValue(0, 0));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0.0;
+    }
     public static String getNom(EntityPlayer p){
         String job = null;
         QueryResult qr = instance.getData("SELECT nom FROM players WHERE uuid= ?", p.getUniqueID());
