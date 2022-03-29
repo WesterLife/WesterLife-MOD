@@ -12,15 +12,17 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class PacketSyncPlayer implements IMessage{
 
     String prenom,nom,sex,date;
+    Double bank;
 
     public PacketSyncPlayer(){}
 
-    public PacketSyncPlayer(String nom, String prenom, String sex, String date) {
+    public PacketSyncPlayer(String nom, String prenom, String sex, String date,Double bank) {
 
         this.prenom=prenom;
         this.nom=nom;
         this.sex=sex;
         this.date=date;
+        this.bank = bank;
     }
     @Override
     public void fromBytes(ByteBuf buf) {
@@ -28,6 +30,7 @@ public class PacketSyncPlayer implements IMessage{
         this.nom = ByteBufUtils.readUTF8String(buf);
         this.sex = ByteBufUtils.readUTF8String(buf);
         this.date = ByteBufUtils.readUTF8String(buf);
+        this.bank = buf.readDouble();
     }
 
     @Override
@@ -36,6 +39,7 @@ public class PacketSyncPlayer implements IMessage{
         ByteBufUtils.writeUTF8String(buf, this.prenom);
         ByteBufUtils.writeUTF8String(buf, this.sex);
         ByteBufUtils.writeUTF8String(buf, this.date);
+        buf.writeDouble(this.bank);
     }
     public static class Handler implements IMessageHandler<PacketSyncPlayer, IMessage> {
         @Override
@@ -45,6 +49,7 @@ public class PacketSyncPlayer implements IMessage{
             Profil.setNom(m.nom);
             Profil.setPrenom(m.prenom);
             Profil.setSex(m.sex);
+            Profil.setBank(m.bank);
             return null;
         }
     }
