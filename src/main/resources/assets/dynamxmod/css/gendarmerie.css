@@ -1,0 +1,32 @@
+.home{
+    background-image: url("dynamxmod:textures/gendarmerie/back.png");
+    height: 98%;
+    width: 98%;
+    top: 1%;
+    left: 1%;
+    border-radius: 10%;
+}
+.plainte{
+    background-image: url("dynamxmod:textures/gendarmerie/plainte.png");
+    height: 3%;
+    width: 10%;
+    top: 8%;
+    left: 35%;
+    border-radius: 10%;
+}
+.amende{
+    background-image: url("dynamxmod:textures/gendarmerie/amende.png");
+    height: 3%;
+    width: 12%;
+    top: 8%;
+    left: 50%;
+    border-radius: 10%;
+}
+.taj{
+    background-image: url("dynamxmod:textures/gendarmerie/taj.png");
+    height: 3%;
+    width: 4%;
+    top: 8%;
+    left: 67%;
+    border-radius: 10%;
+}

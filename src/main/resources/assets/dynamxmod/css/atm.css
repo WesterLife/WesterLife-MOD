@@ -1,0 +1,95 @@
+.home{
+    background-image: url("dynamxmod:textures/atm/back.png");
+    height: 80%;
+    width: 30%;
+    top: 10%;
+    left: 35%;
+    border-radius: 10%;
+}
+.solde{
+    background-image: url("dynamxmod:textures/atm/sold.png");
+    top: 20%;
+    left: 10%;
+    width: 80%;
+    height: 20%;
+    border-radius: 5px;
+}
+#sold{
+    top: 20%;
+    width: 100%;
+    height: 80%;
+    text-align: center;
+    text-align-vertical: bottom;
+}
+.cinqeuros{
+    background-image: url("dynamxmod:textures/atm/cinqeuros.png");
+    left: 10%;
+    width: 80%;
+    height: 10%;
+    bottom: 70%;
+    border-radius: 5px;
+}
+.dixeuros{
+    background-image: url("dynamxmod:textures/atm/dixeuros.png");
+    left: 10%;
+    width: 80%;
+    height: 10%;
+    bottom: 59%;
+    border-radius: 5px;
+}
+.vingteuros{
+    background-image: url("dynamxmod:textures/atm/vingteuros.png");
+    left: 10%;
+    width: 80%;
+    height: 10%;
+    bottom: 48%;
+    border-radius: 5px;
+}
+.cinquanteeuros{
+    background-image: url("dynamxmod:textures/atm/cinquanteeuros.png");
+    left: 10%;
+    width: 80%;
+    height: 10%;
+    bottom: 37%;
+    border-radius: 5px;
+}
+.centeuros{
+    background-image: url("dynamxmod:textures/atm/centeuros.png");
+    left: 10%;
+    width: 80%;
+    height: 10%;
+    bottom: 26%;
+    border-radius: 5px;
+}
+.deuxcenteuros{
+    background-image: url("dynamxmod:textures/atm/deuxcenteuros.png");
+    left: 10%;
+    width: 80%;
+    height: 10%;
+    bottom: 15%;
+    border-radius: 5px;
+}
+.cinqcenteuros{
+    background-image: url("dynamxmod:textures/atm/cinqcenteuros.png");
+    left: 10%;
+    width: 80%;
+    height: 10%;
+    bottom: 4%;
+    border-radius: 5px;
+}
+.depo{
+    background-image: url("dynamxmod:textures/atm/depo.png");
+    left: 10%;
+    width: 80%;
+    height: 10%;
+    bottom: 20%;
+    border-radius: 5px;
+}
+.reti{
+    background-image: url("dynamxmod:textures/atm/reti.png");
+    left: 10%;
+    width: 80%;
+    height: 10%;
+    bottom: 9%;
+    border-radius: 5px;
+}

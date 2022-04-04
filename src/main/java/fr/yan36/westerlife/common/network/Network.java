@@ -13,5 +13,6 @@ public class Network {
         Main.network.registerMessage(PacketCreateIdentity.handler.class,PacketCreateIdentity.class,1, Side.CLIENT);
         Main.network.registerMessage(PacketCreateIdentityServer.ServerHandler.class,PacketCreateIdentityServer.class,2, Side.SERVER);
         Main.network.registerMessage(PacketSyncPlayer.Handler.class,PacketSyncPlayer.class,3, Side.CLIENT);
+        Main.network.registerMessage(PacketGetArgent.handler.class, PacketGetArgent.class, 4, Side.SERVER);
     }
 }

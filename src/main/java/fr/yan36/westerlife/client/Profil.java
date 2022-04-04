@@ -1,5 +1,10 @@
 package fr.yan36.westerlife.client;
 
+import fr.yan36.westerlife.Main;
+import fr.yan36.westerlife.common.network.PacketGetArgent;
+import fr.yan36.westerlife.common.network.PacketSyncPlayer;
+import net.minecraft.client.Minecraft;
+
 public class Profil {
     private static String prenom,nom,sex,date;
     private static Double bank;
@@ -35,9 +40,6 @@ public class Profil {
     public static void setDate(String date) {
         Profil.date = date;
     }
-
-
-    //set bank
 
 
     public static Double getBank() {

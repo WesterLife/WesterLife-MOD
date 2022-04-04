@@ -2,6 +2,7 @@ package fr.yan36.westerlife.common.items;
 
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.blocks.WesterBlocks;
+import fr.yan36.westerlife.common.registry.SoundsHandler;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -25,6 +26,7 @@ public class WesterItem
     public static final Item CENTEUROS = new Item100E();
     public static final Item DEUXCENTEUROS = new Item200E();
     public static final Item CINQCENTEUROS = new Item500E();
+    public static final Item DISC_MARSEILLAISE = new ItemMarseillaise("marseillaise", SoundsHandler.MARSEILLAISE);
 
     public static final Item BLOCK_ATM_ITEM = new ItemBlock(WesterBlocks.ATM).setRegistryName(WesterBlocks.ATM.getRegistryName());
 
@@ -48,6 +50,7 @@ public class WesterItem
         registerModel(DEUXCENTEUROS, 0);
         registerModel(CINQCENTEUROS, 0);
         registerModel(BLOCK_ATM_ITEM, 0);
+        registerModel(DISC_MARSEILLAISE, 0);
     }
 
     @SideOnly(Side.CLIENT)

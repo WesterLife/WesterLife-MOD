@@ -17,8 +17,6 @@ public class PacketCreateIdentityServer implements IMessage{
     String prenom,nom,sex,date;
     int player;
 
-    public PacketCreateIdentityServer(){}
-
     public PacketCreateIdentityServer(EntityPlayer player, String nom, String prenom, String sex, String date) {
 
         this.player =player.getEntityId();

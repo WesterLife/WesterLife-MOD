@@ -15,14 +15,18 @@ import fr.dynamx.utils.DynamXUtils;
 import fr.dynamx.utils.debug.DynamXDebugOptions;
 import fr.yan36.westerlife.Discord;
 import fr.yan36.westerlife.Main;
-import fr.yan36.westerlife.client.gui.CSSGuiCreateProfil;
-import fr.yan36.westerlife.client.gui.CSSGuiMainMenu;
+import fr.yan36.westerlife.client.gui.*;
+import fr.yan36.westerlife.common.blocks.BlockATM;
+import fr.yan36.westerlife.common.blocks.WesterBlocks;
 import fr.yan36.westerlife.common.items.WesterItem;
 import fr.yan36.westerlife.common.registry.SoundsHandler;
+import fr.yan36.westerlife.serveur.bdd.MethodesBDD;
+import ibxm.Player;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockBanner;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiIngame;
-import net.minecraft.client.gui.GuiIngameMenu;
-import net.minecraft.client.gui.GuiMainMenu;
+import net.minecraft.client.gui.*;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -32,15 +36,21 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.world.IInteractionObject;
 import net.minecraftforge.client.GuiIngameForge;
 import net.minecraftforge.client.event.GuiOpenEvent;
+import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import org.lwjgl.input.Keyboard;
 
 import java.awt.*;
 import java.util.Iterator;
@@ -52,17 +62,17 @@ public class Client {
     public void GuieventHandler(GuiOpenEvent e) {
 
         if(e.getGui() instanceof GuiMainMenu){
-            if(Minecraft.getMinecraft().getSession().getUsername().equals("gabidut76")) {
+            if(Minecraft.getMinecraft().getSession().getUsername().equals("gabidut76") || Minecraft.getMinecraft().getSession().getUsername().equals("_INeox")) {
                 System.out.println("Salut pas BG");
             } else if(Minecraft.getMinecraft().getSession().getUsername().equals("yan36")) {
-                e.setGui(new CSSGuiMainMenu().getGuiScreen());
+                //e.setGui(new CSSGuiMainMenu().getGuiScreen());
                 System.out.println("T'es beau !");
             } else {
-                e.setGui(new CSSGuiMainMenu().getGuiScreen());
+                //e.setGui(new CSSGuiMainMenu().getGuiScreen());
             }
         }
         if (e.getGui() instanceof GuiIngameMenu) {
-            //e.setGui(new CSSGuiIngameMenu().getGuiScreen());
+            e.setGui(new CSSGuiIngameMenu().getGuiScreen());
         }
         
         if (e.getGui() == null) {
@@ -74,10 +84,8 @@ public class Client {
     }
 
     @SubscribeEvent
-    public void InteractWithEntity(PlayerInteractEvent.EntityInteract e) {
-        /*if(e.getEntityPlayer().getHeldItemMainhand().isItemEqual(new ItemStack(WesterItem.CNI))){
-            e.getEntityPlayer().sendMessage(new TextComponentString("§cCarte Nationale d'Identité » " + Profil.getPrenom() + " " + Profil.getNom() + " né(e) le " + Profil.getDate()));
-        }*/
+    public void InteractWithEntity(PlayerInteractEvent.EntityInteractSpecific e) {
+        //e.getEntityPlayer().getHeldItemMainhand().isItemEqual(new ItemStack(WesterItem.CNI))
     }
 
     @SubscribeEvent
@@ -88,6 +96,49 @@ public class Client {
         }
 
     }
+
+    @SubscribeEvent
+    public void onClickItem(PlayerInteractEvent.RightClickItem e){
+        if(e.getItemStack().isItemEqual(new ItemStack(WesterItem.DISC_MARSEILLAISE))){
+            e.getEntityPlayer().playSound(SoundsHandler.MARSEILLAISE, 0.8f,1f);
+
+        }
+    }
+
+    @SubscribeEvent
+    public void onRightClickBlock(PlayerInteractEvent.RightClickBlock e){
+        if(e.getEntityPlayer().getHeldItemMainhand().isItemEqual(new ItemStack(WesterItem.CB))){
+
+            Minecraft.getMinecraft().displayGuiScreen(new CSSGuiAtm().getGuiScreen());
+        }
+    }
+
+    private static KeyBinding keyBindTest;
+
+    public Client()
+    {
+        FMLCommonHandler.instance().bus().register(this);
+        keyBindTest = new KeyBinding("westerlife.admin", Keyboard.KEY_F9, "");
+        ClientRegistry.registerKeyBinding(keyBindTest);
+    }
+
+    @SubscribeEvent
+    public void onEvent(InputEvent.KeyInputEvent event)
+    {
+        if(keyBindTest.isPressed())
+        {
+            keyTestTyped();
+        }
+    }
+
+    private void keyTestTyped() {
+            //if (Minecraft.getMinecraft().getSession().getUsername().equals("yan36")) {
+                Minecraft.getMinecraft().displayGuiScreen(new CSSGuiGendarmerie().getGuiScreen());
+        //}
+    }
+
+}
+
 
     /*@SubscribeEvent
     public void livingUpdateEvent(LivingEvent.LivingUpdateEvent e) {
@@ -108,6 +159,3 @@ public class Client {
             Minecraft.getMinecraft().ingameGUI.setOverlayMessage("§cVitesse du Véhicule : ", true);
 
         */
-
-
-}

@@ -16,6 +16,7 @@ public class PacketSyncPlayer implements IMessage{
 
     public PacketSyncPlayer(){}
 
+
     public PacketSyncPlayer(String nom, String prenom, String sex, String date,Double bank) {
 
         this.prenom=prenom;
@@ -24,6 +25,7 @@ public class PacketSyncPlayer implements IMessage{
         this.date=date;
         this.bank = bank;
     }
+
     @Override
     public void fromBytes(ByteBuf buf) {
         this.prenom = ByteBufUtils.readUTF8String(buf);
@@ -41,6 +43,7 @@ public class PacketSyncPlayer implements IMessage{
         ByteBufUtils.writeUTF8String(buf, this.date);
         buf.writeDouble(this.bank);
     }
+
     public static class Handler implements IMessageHandler<PacketSyncPlayer, IMessage> {
         @Override
         @SideOnly(Side.CLIENT)

@@ -16,5 +16,6 @@ public class BlockATM extends Block {
         setResistance(5.0F);
         setHardness(3.0F);
         setCreativeTab(Main.creativeTab);
+
     }
 }
