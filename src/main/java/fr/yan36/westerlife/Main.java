@@ -21,6 +21,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.logging.log4j.Logger;
 
+import java.io.IOException;
+
 @Mod(
         modid = Main.MODID,
         name = Main.NAME,
@@ -33,6 +35,7 @@ public class Main {
     /**
      * On déclare différentes valeurs utiles.
      */
+
     public static final String MODID = "westerlife";
     public static final String NAME = "WesterLife Mod";
     public static final String VERSION = "1.0";
@@ -59,9 +62,8 @@ public class Main {
     public static Logger logger;
 
     @Mod.EventHandler
-    public void preInit(FMLPreInitializationEvent event)
-    {
-        proxy.preInit(event.getSuggestedConfigurationFile());
+    public void preInit(FMLPreInitializationEvent event) throws IOException {
+        proxy.preInit();
         logger = event.getModLog();
         Network.init();
         MinecraftForge.EVENT_BUS.register(new RegisteringHandler());

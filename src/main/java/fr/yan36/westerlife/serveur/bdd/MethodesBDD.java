@@ -42,6 +42,18 @@ public class MethodesBDD {
         }
         return 0.0;
     }
+
+    public static void createPlainte(String plaignant, String contre, String deposition){
+        instance.execute("INSERT INTO `gendarmerie_plainte` (`Plaignant`,`Contre`, `Deposition`) VALUES ('"+plaignant+"','"+contre+"','"+deposition+"')");
+    }
+
+    public static String getPlainte(){
+        String job = null;
+        QueryResult qr = instance.getData("SELECT * FROM gendarmerie_plainte");
+        job = qr.getValue(0,0);
+        return job;
+    }
+
     public static String getNom(EntityPlayer p){
         String job = null;
         QueryResult qr = instance.getData("SELECT nom FROM players WHERE uuid= ?", p.getUniqueID());

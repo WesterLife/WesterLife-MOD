@@ -1,8 +1,10 @@
 package fr.yan36.westerlife.common.network;
 
+import fr.yan36.westerlife.common.items.WesterItem;
 import fr.yan36.westerlife.serveur.bdd.MethodesBDD;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -14,8 +16,11 @@ import java.nio.charset.StandardCharsets;
 
 public class PacketCreateIdentityServer implements IMessage{
 
+
     String prenom,nom,sex,date;
     int player;
+
+    public PacketCreateIdentityServer(){}
 
     public PacketCreateIdentityServer(EntityPlayer player, String nom, String prenom, String sex, String date) {
 
@@ -24,7 +29,7 @@ public class PacketCreateIdentityServer implements IMessage{
         this.nom=nom;
         this.sex=sex;
         this.date=date;
-        //System.out.println("MKKKKKKKKK: "+nom+" "+prenom+" "+sex+" "+date);
+        System.out.println("MKKKKKKKKK: "+nom+" "+prenom+" "+sex+" "+date);
     }
     @Override
     public void fromBytes(ByteBuf buf) {
@@ -50,6 +55,7 @@ public class PacketCreateIdentityServer implements IMessage{
             EntityPlayer e = (EntityPlayer) ctx.getServerHandler().player.world.getEntityByID(m.player);
             if(!MethodesBDD.getPlayerExist(e)) {
                 MethodesBDD.addplayer(e, m.prenom, m.nom, m.date, m.sex);
+                e.addItemStackToInventory(new ItemStack(WesterItem.CNI));
             }
             return null;
         }

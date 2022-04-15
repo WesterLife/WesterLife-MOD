@@ -7,24 +7,15 @@ import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.aym.acsguis.component.textarea.GuiTextArea;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.client.Profil;
-import fr.yan36.westerlife.common.network.Network;
-import fr.yan36.westerlife.common.network.PacketCreateIdentityServer;
-import fr.yan36.westerlife.common.network.PacketGetArgent;
-import fr.yan36.westerlife.serveur.bdd.MethodesBDD;
+import fr.yan36.westerlife.common.items.WesterItem;
+import fr.yan36.westerlife.common.network.PacketRetirerArgent;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.Packet;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ChatType;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.Style;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.awt.*;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -126,15 +117,13 @@ public class CSSGuiAtm extends GuiFrame {
 
         });
 
-        cinqeuros.addClickListener((x, y, bu) ->{
+        cinqeuros.addClickListener((x, y, bu) -> {
+            System.out.println("Cinq euros !");
             if(status.equals("reti")){
-                System.out.println("Retirer" + Profil.getBank());
-                if(Profil.getBank() > 5){
-                } else {
-                    Minecraft.getMinecraft().ingameGUI.setOverlayMessage("Vous n'avez pas assez d'argent !", false);
-                    //Dire pas assez d'argent
-                }
-            } else if (status.equals("depose")) {
+                Main.network.sendToServer(new PacketRetirerArgent(Minecraft.getMinecraft().player, new ItemStack(WesterItem.CINQEUROS), 5));
+            } else if (status.equals("depo")){
+
+            } else {
 
             }
         });

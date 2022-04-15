@@ -4,13 +4,13 @@ import fr.yan36.westerlife.common.CommonProxy;
 import net.minecraftforge.common.MinecraftForge;
 
 import java.io.File;
+import java.io.IOException;
 
 public class ServerProxy extends CommonProxy {
 
     @Override
-    public void preInit(File configFile)
-    {
-        super.preInit(configFile);
+    public void preInit() throws IOException {
+        super.preInit();
         MinecraftForge.EVENT_BUS.register(new Serveur());
 
     }

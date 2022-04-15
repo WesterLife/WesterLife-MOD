@@ -6,9 +6,12 @@ import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.style.ComponentStyleManager;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.aym.acsguis.component.textarea.GuiTextArea;
+import fr.aym.acsguis.component.textarea.GuiTextField;
 import fr.aym.acsguis.event.ComponentMouseEvent;
 import fr.aym.acsguis.event.listeners.IFocusListener;
+import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.client.Profil;
+import fr.yan36.westerlife.common.network.PacketCreatePlainte;
 import ibxm.Player;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiOptions;
@@ -29,6 +32,7 @@ public class CSSGuiGendarmerie extends GuiFrame {
         home.setCssClass("home");
         home.setCssId("home");
         GuiPanel plainte = new GuiPanel();
+        GuiPanel plaintePanel = new GuiPanel();
         plainte.setCssClass("plainte");
         plainte.setCssId("plainte");
         GuiPanel amende = new GuiPanel();
@@ -37,17 +41,64 @@ public class CSSGuiGendarmerie extends GuiFrame {
         GuiPanel taj = new GuiPanel();
         taj.setCssClass("taj");
         taj.setCssId("taj");
+        GuiPanel createPlainte = new GuiPanel();
+        createPlainte.setCssClass("createPlainte");
+        createPlainte.setCssId("createPlainte");
+        GuiPanel createPlainteGui = new GuiPanel();
+        createPlainteGui.setCssClass("createPlainteGUI");
+        createPlainteGui.setCssId("createPlainteGUI");
+
+        GuiPanel createPlainteGuiimg = new GuiPanel();
+        createPlainteGuiimg.setCssClass("createPlainteGUIimg");
+        createPlainteGuiimg.setCssId("createPlainteGUIimg");
+
+        GuiPanel plaintes = new GuiPanel();
+
+        GuiTextArea Plaignant,Contre,Date, Deposition;
+        Plaignant = (GuiTextArea) new GuiTextArea(0, 0, 0, 0).setMaxTextLength(30).setHintText("Plaignant").setCssId("Plaignant");
+        Contre = (GuiTextArea) new GuiTextArea(0, 0, 0, 0).setMaxTextLength(30).setHintText("A l'encontre de").setCssId("Contre");
+        Deposition = (GuiTextArea) new GuiTextField().setMaxTextLength(1024).setHintText("Déposition").setCssId("Deposition");
 
         plainte.addClickListener((x, y, bu) ->{
 
-
+            createPlainte.setVisible(true);
 
 
         });
 
+        createPlainte.addClickListener((x, y, bu) ->{
+            if(createPlainte.isVisible()){
+                createPlainteGui.setVisible(true);
+                home.add(Plaignant);
+                home.add(Contre);
+                home.add(Deposition);
+                home.add(createPlainteGuiimg);
+                plainte.setVisible(false);
+                amende.setVisible(false);
+                taj.setVisible(false);
+            }
+        });
+
+        createPlainteGuiimg.addClickListener((x, y, bu) ->{
+           if(!Plaignant.getText().isEmpty()&&!Deposition.getText().isEmpty()&&!Contre.getText().isEmpty()){
+               Minecraft.getMinecraft().displayGuiScreen(null);
+
+               Main.network.sendToServer(new PacketCreatePlainte(Plaignant.getText().replaceAll("'", "''"), Contre.getText().replaceAll("'", "''"), Deposition.getText().replaceAll("'", "''")));
+           } else {
+
+           }
+        });
+
+
+
+        createPlainteGui.setVisible(false);
+        createPlainte.setVisible(false);
+        home.add(createPlainteGui);
+        home.add(createPlainte);
         home.add(taj);
         home.add(amende);
         home.add(plainte);
+
         add(home);
     }
 

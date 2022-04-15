@@ -38,7 +38,6 @@ public class CSSGuiCreateProfil extends GuiFrame {
                 Client.create=0;
                 Minecraft.getMinecraft().displayGuiScreen(null);
                 Main.network.sendToServer(new PacketCreateIdentityServer(Minecraft.getMinecraft().player, Nom.getText(),Prenom.getText(),Sex.getText(),date.getText()));
-                Minecraft.getMinecraft().player.inventory.addItemStackToInventory(new ItemStack(WesterItem.CNI));
             }else {
                 GuiLabel error = (GuiLabel) new GuiLabel(0,0,0,0,"Case vide !").setCssId("error");
                 screen.add(error);

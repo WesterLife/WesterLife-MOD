@@ -35,6 +35,7 @@ public class CSSGuiMainMenu extends GuiFrame {
         para.setCssId("para").addClickListener((x, y, bu) -> {
             mc.gameSettings.saveOptions();
             mc.displayGuiScreen(new GuiOptions(this.getGuiScreen(), mc.gameSettings));
+
         });
         screen.add(para);
         GuiPanel play = new GuiPanel();

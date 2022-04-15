@@ -10,33 +10,35 @@
     color: rgb(250, 105, 77);
 }
 .rtg{
+    color: rgb(255, 255, 255);
     height: 10%;
     width: 100%;
     text-align: center;
     horizontal-position: center;
-
     top: 25%;
-    left: 35%
+    left: 50%
 }
 .parameter:hover{
     color: rgb(250, 105, 77);
 }
 .parameter{
+    color: rgb(255, 255, 255);
     height: 10%;
     width: 100%;
     text-align: center;
     horizontal-position: center;
     top: 50%;
-    left: 35%;
+    left: 50%;
 }
 .disconnect:hover{
    color: rgb(250, 105, 77);
 }
 .disconnect{
+    color: rgb(255, 255, 255);
     height: 10%;
     width: 100%;
     text-align: center;
     horizontal-position: center;
     top: 75%;
-    left: 35%;
+    left: 50%;
 }

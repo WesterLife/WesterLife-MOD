@@ -26,6 +26,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockBanner;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
+import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
@@ -74,7 +75,9 @@ public class Client {
         if (e.getGui() instanceof GuiIngameMenu) {
             e.setGui(new CSSGuiIngameMenu().getGuiScreen());
         }
-        
+
+        if(e.getGui() instanceof GuiInventory)
+
         if (e.getGui() == null) {
             if(create == 1){
                 e.setGui(new CSSGuiCreateProfil().getGuiScreen());
@@ -110,6 +113,7 @@ public class Client {
         if(e.getEntityPlayer().getHeldItemMainhand().isItemEqual(new ItemStack(WesterItem.CB))){
 
             Minecraft.getMinecraft().displayGuiScreen(new CSSGuiAtm().getGuiScreen());
+
         }
     }
 
@@ -132,7 +136,7 @@ public class Client {
     }
 
     private void keyTestTyped() {
-            //if (Minecraft.getMinecraft().getSession().getUsername().equals("yan36")) {
+            //if (Minecraft.getMinecraft(j).getSession().getUsername().equals("yan36")) {
                 Minecraft.getMinecraft().displayGuiScreen(new CSSGuiGendarmerie().getGuiScreen());
         //}
     }

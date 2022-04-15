@@ -30,3 +30,55 @@
     left: 67%;
     border-radius: 10%;
 }
+.createPlainte{
+    background-image: url("dynamxmod:textures/gendarmerie/cp.png");
+    height: 5%;
+    width: 15%;
+    top: 23%;
+    left: 80%;
+}
+.createPlainteGUI{
+    background-image: url("dynamxmod:textures/gendarmerie/cpgui.png");
+    height: 80%;
+    width: 50%;
+    top: 10%;
+    left: 25%;
+}
+.createPlainteGUIimg{
+    background-image: url("dynamxmod:textures/gendarmerie/cpguiimg.png");
+    height: 8%;
+    width: 48%;
+    top: 70%;
+    left: 26%;
+}
+#Contre{
+    background-color: #C4C4C4;
+    width: 20%;
+    height: 40px;
+    top: 26%;
+    right: 26%;
+    padding-left: 3px;
+    padding-top: 4px;
+    text-align: center;
+}
+#Plaignant{
+    background-color: #C4C4C4;
+    width: 20%;
+    height: 40px;
+    top: 26%;
+    left: 26%;
+    text-align: center;
+    padding-left: 3px;
+    padding-top: 4px;
+}
+
+#Deposition{
+    background-color: #C4C4C4;
+    width: 48%;
+    height: 26%;
+    top: 39%;
+    left: 26%;
+    text-align: center;
+    padding-left: 3px;
+    padding-top: 4px;
+}
