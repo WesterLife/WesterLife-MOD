@@ -1,4 +1,4 @@
-package fr.yan36.westerlife.serveur.bdd;
+package fr.yan36.westerlife.server.bdd;
 
 
 import java.io.File;

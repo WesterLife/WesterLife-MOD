@@ -2,7 +2,7 @@ package fr.yan36.westerlife.client;
 
 public class Profil {
     private static String prenom,nom,sex,date;
-    private static Double bank;
+    public static Double bank;
 
     public static String getPrenom() {
         return prenom;

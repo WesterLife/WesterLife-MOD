@@ -27,6 +27,7 @@ public class PacketCreateIdentity implements IMessage{
         @Override
         @SideOnly(Side.CLIENT)
         public IMessage onMessage(PacketCreateIdentity m, MessageContext ctx) {
+            Client.create = 1;
             return null;
         }
     }

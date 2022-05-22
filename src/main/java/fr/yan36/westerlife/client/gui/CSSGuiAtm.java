@@ -8,7 +8,8 @@ import fr.aym.acsguis.component.textarea.GuiTextArea;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.client.Profil;
 import fr.yan36.westerlife.common.items.WesterItem;
-import fr.yan36.westerlife.common.network.PacketRetirerArgent;
+import fr.yan36.westerlife.common.network.PacketDepoArgentServer;
+import fr.yan36.westerlife.common.network.PacketRetirerArgentServer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -22,9 +23,11 @@ import java.util.regex.Pattern;
 @SideOnly(Side.CLIENT)
 public class CSSGuiAtm extends GuiFrame {
     String status = "home";
+
     public CSSGuiAtm() {
 
         super(new GuiScaler.Identity());
+
         GuiPanel home = new GuiPanel();
         home.setCssClass("home");
         GuiTextArea mont;
@@ -34,7 +37,7 @@ public class CSSGuiAtm extends GuiFrame {
         mont.setVisible(false);
         GuiPanel solde = new GuiPanel();
         solde.setCssClass("solde");
-        solde.add(new GuiLabel(0,0,0,0, "" + Profil.getBank()).setCssId("sold"));
+        solde.add(new GuiLabel(0,0,0,0, "" + Profil.getBank() + "€").setCssId("sold"));
         home.add(solde);
         GuiPanel depo = new GuiPanel();
         GuiPanel reti = new GuiPanel();
@@ -61,6 +64,7 @@ public class CSSGuiAtm extends GuiFrame {
         GuiPanel cinqcenteuros = new GuiPanel();
         cinqcenteuros.setCssClass("cinqcenteuros");
         cinqcenteuros.setCssId("cinqcenteuros");
+
         home.add(cinqeuros);
         home.add(dixeuros);
         home.add(vingteuros);
@@ -118,13 +122,58 @@ public class CSSGuiAtm extends GuiFrame {
         });
 
         cinqeuros.addClickListener((x, y, bu) -> {
-            System.out.println("Cinq euros !");
             if(status.equals("reti")){
-                Main.network.sendToServer(new PacketRetirerArgent(Minecraft.getMinecraft().player, new ItemStack(WesterItem.CINQEUROS), 5));
+                Main.network.sendToServer(new PacketRetirerArgentServer(Minecraft.getMinecraft().player, 5));
             } else if (status.equals("depo")){
+                Main.network.sendToServer(new PacketDepoArgentServer(Minecraft.getMinecraft().player, 5, new ItemStack(WesterItem.CINQEUROS)));
+            }
+        });
 
-            } else {
+        dixeuros.addClickListener((x, y, bu) -> {
+            if(status.equals("reti")){
+                Main.network.sendToServer(new PacketRetirerArgentServer(Minecraft.getMinecraft().player, 10));
+            } else if (status.equals("depo")){
+                Main.network.sendToServer(new PacketDepoArgentServer(Minecraft.getMinecraft().player, 10, new ItemStack(WesterItem.DIXEUROS)));
+            }
+        });
 
+        vingteuros.addClickListener((x, y, bu) -> {
+            if(status.equals("reti")){
+                Main.network.sendToServer(new PacketRetirerArgentServer(Minecraft.getMinecraft().player, 20));
+            } else if (status.equals("depo")){
+                Main.network.sendToServer(new PacketDepoArgentServer(Minecraft.getMinecraft().player, 20, new ItemStack(WesterItem.VINGTEUROS)));
+            }
+        });
+
+        cinquanteeuros.addClickListener((x, y, bu) -> {
+            if(status.equals("reti")){
+                Main.network.sendToServer(new PacketRetirerArgentServer(Minecraft.getMinecraft().player, 50));
+            } else if (status.equals("depo")){
+                Main.network.sendToServer(new PacketDepoArgentServer(Minecraft.getMinecraft().player, 50, new ItemStack(WesterItem.CINQUANTEEUROS)));
+            }
+        });
+
+        centeuros.addClickListener((x, y, bu) -> {
+            if(status.equals("reti")){
+                Main.network.sendToServer(new PacketRetirerArgentServer(Minecraft.getMinecraft().player, 100));
+            } else if (status.equals("depo")){
+                Main.network.sendToServer(new PacketDepoArgentServer(Minecraft.getMinecraft().player, 100, new ItemStack(WesterItem.CENTEUROS)));
+            }
+        });
+
+        deuxcenteuros.addClickListener((x, y, bu) -> {
+            if(status.equals("reti")){
+                Main.network.sendToServer(new PacketRetirerArgentServer(Minecraft.getMinecraft().player, 200));
+            } else if (status.equals("depo")){
+                Main.network.sendToServer(new PacketDepoArgentServer(Minecraft.getMinecraft().player, 200, new ItemStack(WesterItem.DEUXCENTEUROS)));
+            }
+        });
+
+        cinqcenteuros.addClickListener((x, y, bu) -> {
+            if(status.equals("reti")){
+                Main.network.sendToServer(new PacketRetirerArgentServer(Minecraft.getMinecraft().player, 500));
+            } else if (status.equals("depo")){
+                Main.network.sendToServer(new PacketDepoArgentServer(Minecraft.getMinecraft().player, 500, new ItemStack(WesterItem.CINQCENTEUROS)));
             }
         });
         add(home);

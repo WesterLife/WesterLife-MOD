@@ -2,23 +2,17 @@ package fr.yan36.westerlife;
 
 import fr.dynamx.api.contentpack.DynamXAddon;
 import fr.yan36.westerlife.client.creativetabs.WesterTab;
-import fr.yan36.westerlife.common.blocks.BlockDynamx;
 import fr.yan36.westerlife.common.items.ItemDynamx;
 import fr.yan36.westerlife.common.network.Network;
 import fr.yan36.westerlife.common.CommonProxy;
 import fr.yan36.westerlife.common.registry.RegisteringHandler;
-import net.minecraft.block.material.Material;
-import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
@@ -50,8 +44,10 @@ public class Main {
     @DynamXAddon.AddonEventSubscriber
     public static void init() {
 
-        PistoletRadar = new ItemDynamx(Main.MODID, "pistoletradar", "pistoletradar/pistoletradar.obj");
+        PistoletRadar = (ItemDynamx) new ItemDynamx(Main.MODID, "pistoletradar", "pistoletradar/pistoletradar.obj").setMaxStackSize(1);
+
         //radar = new BlockDynamx(Material.ANVIL, Main.MODID, "radar", "radar/radar.obj");
+        //feu_tricolore = new BlockDynamx(Material.ANVIL, Main.MODID, "feutricolore", "feut/feut.obj");
 
     }
 
@@ -77,10 +73,9 @@ public class Main {
             DRP_STATE_SOLO = "En solo";
             DRP_STATE_MULTIPLAYER = "Connecté(e)";
             DRP_STATE_OTHER = "Dans les menus";
-
-        if(event.getSide().isClient()) {
+        //if(event.getSide().isClient()) {
             //new Discord();
-        }
+        //}
     }
 
 
@@ -89,9 +84,8 @@ public class Main {
     {
         proxy.init();
         RegisteringHandler.initRegistries();
+
     }
-
-
 
     public static final CreativeTabs creativeTab = new WesterTab("westertab");
 

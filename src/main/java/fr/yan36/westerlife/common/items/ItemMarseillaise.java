@@ -1,8 +1,6 @@
 package fr.yan36.westerlife.common.items;
 
 import fr.yan36.westerlife.Main;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemRecord;
 import net.minecraft.util.SoundEvent;
 
@@ -15,4 +13,5 @@ public class ItemMarseillaise extends ItemRecord {
         WesterItem.setItemName(this, MARSEILLAISE);
         setCreativeTab(Main.creativeTab);
     }
+
 }

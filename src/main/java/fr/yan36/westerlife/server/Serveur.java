@@ -1,12 +1,13 @@
-package fr.yan36.westerlife.serveur;
+package fr.yan36.westerlife.server;
 
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.network.PacketCreateIdentity;
 import fr.yan36.westerlife.common.network.PacketSyncPlayer;
-import fr.yan36.westerlife.serveur.bdd.MethodesBDD;
+import fr.yan36.westerlife.server.bdd.MethodesBDD;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
+import net.minecraftforge.fml.common.network.FMLNetworkEvent;
 
 
 public class Serveur {
@@ -23,4 +24,5 @@ public class Serveur {
             //send packet with data of player
         }
     }
+
 }

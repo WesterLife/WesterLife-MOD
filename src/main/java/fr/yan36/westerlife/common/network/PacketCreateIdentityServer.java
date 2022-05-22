@@ -1,18 +1,14 @@
 package fr.yan36.westerlife.common.network;
 
-import fr.yan36.westerlife.common.items.WesterItem;
-import fr.yan36.westerlife.serveur.bdd.MethodesBDD;
+import fr.yan36.westerlife.server.bdd.MethodesBDD;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.nio.charset.StandardCharsets;
 
 public class PacketCreateIdentityServer implements IMessage{
 
@@ -55,7 +51,6 @@ public class PacketCreateIdentityServer implements IMessage{
             EntityPlayer e = (EntityPlayer) ctx.getServerHandler().player.world.getEntityByID(m.player);
             if(!MethodesBDD.getPlayerExist(e)) {
                 MethodesBDD.addplayer(e, m.prenom, m.nom, m.date, m.sex);
-                e.addItemStackToInventory(new ItemStack(WesterItem.CNI));
             }
             return null;
         }

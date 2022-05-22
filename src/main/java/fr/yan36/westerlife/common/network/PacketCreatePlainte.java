@@ -1,9 +1,7 @@
 package fr.yan36.westerlife.common.network;
 
-import fr.yan36.westerlife.client.Client;
-import fr.yan36.westerlife.serveur.bdd.MethodesBDD;
+import fr.yan36.westerlife.server.bdd.MethodesBDD;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;

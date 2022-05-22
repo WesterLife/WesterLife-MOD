@@ -1,10 +1,6 @@
-package fr.yan36.westerlife.serveur.bdd;
+package fr.yan36.westerlife.server.bdd;
 
 import net.minecraft.entity.player.EntityPlayer;
-
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MethodesBDD {
     static SQLUtils instance = new SQLUtils();

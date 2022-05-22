@@ -13,7 +13,7 @@ public class Discord {
 
     public Discord() {
             DiscordEventHandlers event = new DiscordEventHandlers();
-            event.ready = (user) -> System.out.println("RPC Ready!");
+            //event.ready = (user) -> System.out.println("RPC Ready!");
             this.client.Discord_Initialize(Main.DISCORD_ID, event, true, "0");
             this.richpresence.startTimestamp = System.currentTimeMillis() / 1000;
             this.richpresence.details = Main.DRP_DETAILS;
@@ -23,9 +23,10 @@ public class Discord {
             this.richpresence.partySize = 0;
             this.richpresence.partyMax = 0;
             this.richpresence.smallImageText = mc.getSession().getUsername();
+            //this.richpresence.joinSecret = "WESTERLIFE";
             this.client.Discord_UpdatePresence(richpresence);
 
-            new Thread("RPC-Callback-Handler") {
+            new Thread("RPC-WL-Callback-Handler") {
                 @Override
                 public void run() {
                     while (!Thread.currentThread().isInterrupted()) {

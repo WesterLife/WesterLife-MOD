@@ -45,7 +45,7 @@ tasks.withType(JavaCompile) {
 
 sourceSets { main { output.resourcesDir = output.classesDir } }
 
-version = '1.0'
+version = '1.1'
 group = 'fr.yan36.westerlife' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'westerlife'
 
@@ -94,11 +94,12 @@ minecraft {
 
         testCompile group: 'junit', name: 'junit', version: '4.12'
         minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2855'
-        compile 'club.minnced:java-discord-rpc:2.0.0'
+        compile 'club.minnced:java-discord-rpc:2.0.1'
         compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.21'
         compile fileTree(dir: 'libs', include: '*.jar')
         implementation fg.deobf('fr.dynamx:DynamX:3.3.0')
         compile "fr.aym.acsguis:ACsGuis:1.2.2-1"
+        implementation "curse.maven:lizardon-mcef-577541:3641377"
     }
 
 
@@ -112,7 +113,14 @@ minecraft {
                     "Implementation-Version"  : project.version,
                     "Implementation-Vendor"   : "MK, Afhistos",
                     "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+
             ])
+        }
+
+        from {
+            configurations.compile
+                    //.filter { it.name == 'java-discord-rpc-2.0.1.jar' }
+                    .collect { it.isDirectory() ? it : zipTree(it) }
         }
 
     }

@@ -1,61 +1,26 @@
 package fr.yan36.westerlife.client;
 
 
-import fr.dynamx.api.audio.IDynamXSound;
-import fr.dynamx.api.contentpack.DynamXAddon;
-import fr.dynamx.api.contentpack.object.subinfo.SubInfoTypeOwner;
-import fr.dynamx.api.events.VehicleEntityEvent;
-import fr.dynamx.client.sound.DynamXSoundHandler;
-import fr.dynamx.common.DynamXMain;
-import fr.dynamx.common.entities.BaseVehicleEntity;
-import fr.dynamx.common.physics.entities.BaseVehiclePhysicsHandler;
-import fr.dynamx.common.physics.entities.EntityPhysicsHandler;
-import fr.dynamx.server.network.DynamXServerNetworkSystem;
-import fr.dynamx.utils.DynamXUtils;
-import fr.dynamx.utils.debug.DynamXDebugOptions;
-import fr.yan36.westerlife.Discord;
-import fr.yan36.westerlife.Main;
+import fr.aym.acsguis.api.ACsGuiApi;
 import fr.yan36.westerlife.client.gui.*;
-import fr.yan36.westerlife.common.blocks.BlockATM;
-import fr.yan36.westerlife.common.blocks.WesterBlocks;
 import fr.yan36.westerlife.common.items.WesterItem;
 import fr.yan36.westerlife.common.registry.SoundsHandler;
-import fr.yan36.westerlife.serveur.bdd.MethodesBDD;
-import ibxm.Player;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockBanner;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
-import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraft.world.IInteractionObject;
-import net.minecraftforge.client.GuiIngameForge;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.client.event.GuiOpenEvent;
-import net.minecraftforge.client.event.GuiScreenEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
-import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
-import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
-
-import java.awt.*;
-import java.util.Iterator;
-import java.util.List;
 
 public class Client {
     public static int create = 0;
@@ -66,21 +31,19 @@ public class Client {
             if(Minecraft.getMinecraft().getSession().getUsername().equals("gabidut76") || Minecraft.getMinecraft().getSession().getUsername().equals("_INeox")) {
                 System.out.println("Salut pas BG");
             } else if(Minecraft.getMinecraft().getSession().getUsername().equals("yan36")) {
-                //e.setGui(new CSSGuiMainMenu().getGuiScreen());
+                ACsGuiApi.asyncLoadThenShowGui("mainmenu", CSSGuiMainMenu::new);
                 System.out.println("T'es beau !");
             } else {
-                //e.setGui(new CSSGuiMainMenu().getGuiScreen());
+                //ACsGuiApi.asyncLoadThenShowGui("mainmenu", CSSGuiMainMenu::new);
             }
         }
         if (e.getGui() instanceof GuiIngameMenu) {
-            e.setGui(new CSSGuiIngameMenu().getGuiScreen());
+            ACsGuiApi.asyncLoadThenShowGui("ingamemenu", CSSGuiIngameMenu::new);
         }
-
-        if(e.getGui() instanceof GuiInventory)
 
         if (e.getGui() == null) {
             if(create == 1){
-                e.setGui(new CSSGuiCreateProfil().getGuiScreen());
+                ACsGuiApi.asyncLoadThenShowGui("createprofil", CSSGuiCreateProfil::new);
             }
         }
 
@@ -89,6 +52,31 @@ public class Client {
     @SubscribeEvent
     public void InteractWithEntity(PlayerInteractEvent.EntityInteractSpecific e) {
         //e.getEntityPlayer().getHeldItemMainhand().isItemEqual(new ItemStack(WesterItem.CNI))
+    }
+
+    @SideOnly(Side.CLIENT)
+    @SubscribeEvent
+    public void onRenderPre(RenderGameOverlayEvent.Pre event)
+    {
+        if(event.getType() == RenderGameOverlayEvent.ElementType.DEBUG)
+        {
+            Minecraft mc = Minecraft.getMinecraft();
+            event.setCanceled(true);
+
+            //Minecraft.getMinecraft().debug.
+            this.drawString(Minecraft.getMinecraft().fontRenderer, "WesterLife - Menu de Débug", 5, 10, 0xFF5C5C);
+            this.drawString(Minecraft.getMinecraft().fontRenderer, mc.debug.split(",", 2)[0].substring(0, 6), 5, 15, 0xFF5C5C);
+        }
+
+        if(event.getType() == RenderGameOverlayEvent.ElementType.EXPERIENCE){
+            event.setCanceled(true);
+        }
+    }
+
+    public void drawString(FontRenderer fontRenderer, String str, int x, int y, int color)
+    {
+        fontRenderer.drawStringWithShadow(str, x, y, color);
+
     }
 
     @SubscribeEvent
@@ -104,16 +92,6 @@ public class Client {
     public void onClickItem(PlayerInteractEvent.RightClickItem e){
         if(e.getItemStack().isItemEqual(new ItemStack(WesterItem.DISC_MARSEILLAISE))){
             e.getEntityPlayer().playSound(SoundsHandler.MARSEILLAISE, 0.8f,1f);
-
-        }
-    }
-
-    @SubscribeEvent
-    public void onRightClickBlock(PlayerInteractEvent.RightClickBlock e){
-        if(e.getEntityPlayer().getHeldItemMainhand().isItemEqual(new ItemStack(WesterItem.CB))){
-
-            Minecraft.getMinecraft().displayGuiScreen(new CSSGuiAtm().getGuiScreen());
-
         }
     }
 
@@ -137,11 +115,12 @@ public class Client {
 
     private void keyTestTyped() {
             //if (Minecraft.getMinecraft(j).getSession().getUsername().equals("yan36")) {
-                Minecraft.getMinecraft().displayGuiScreen(new CSSGuiGendarmerie().getGuiScreen());
+
         //}
     }
-
 }
+
+
 
 
     /*@SubscribeEvent

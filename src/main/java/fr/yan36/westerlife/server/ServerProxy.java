@@ -1,9 +1,8 @@
-package fr.yan36.westerlife.serveur;
+package fr.yan36.westerlife.server;
 
 import fr.yan36.westerlife.common.CommonProxy;
 import net.minecraftforge.common.MinecraftForge;
 
-import java.io.File;
 import java.io.IOException;
 
 public class ServerProxy extends CommonProxy {
