@@ -2,6 +2,8 @@ package fr.yan36.westerlife.server.bdd;
 
 import net.minecraft.entity.player.EntityPlayer;
 
+import java.util.UUID;
+
 public class MethodesBDD {
     static SQLUtils instance = new SQLUtils();
     public static void addplayer(EntityPlayer p, String prenom, String nom,String date,String sex){
@@ -22,6 +24,27 @@ public class MethodesBDD {
         }
         return exists;
 
+    }
+
+    public static boolean getPlayerExistUUID(UUID uuid){
+        boolean exists = false;
+        QueryResult qr = instance.getData("SELECT uuid FROM players WHERE uuid= ?", uuid);
+        //System.out.println(uuid);
+        try {
+            //System.out.println(qr.getResultAsArray());
+            //System.out.println(qr.getValue(0, 0));
+            exists = uuid.equals(qr.getValue(0, 0));
+        } catch (Exception e) {
+            //e.printStackTrace();
+        }
+        return exists;
+    }
+
+    public static void removePlayer(UUID uuid) {
+        if(MethodesBDD.getPlayerExistUUID(uuid)){
+            instance.execute("DELETE FROM players WHERE uuid= ?", uuid);
+
+        }
     }
 
     public static void setArgent(EntityPlayer p, double Argent){

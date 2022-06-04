@@ -31,10 +31,6 @@ public class CSSGuiAtm extends GuiFrame {
         GuiPanel home = new GuiPanel();
         home.setCssClass("home");
         GuiTextArea mont;
-        mont = (GuiTextArea) new GuiTextArea(0, 0, 0, 0).setMaxTextLength(10).setHintText("0").setCssId("mont").setCssClass("mont");
-        mont.setRegexPattern(Pattern.compile(".*[0-9].*"));
-        home.add(mont);
-        mont.setVisible(false);
         GuiPanel solde = new GuiPanel();
         solde.setCssClass("solde");
         solde.add(new GuiLabel(0,0,0,0, "" + Profil.getBank() + "€").setCssId("sold"));

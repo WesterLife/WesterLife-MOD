@@ -1,6 +1,5 @@
 package fr.yan36.westerlife.client;
 
-
 import fr.aym.acsguis.api.ACsGuiApi;
 import fr.yan36.westerlife.client.gui.*;
 import fr.yan36.westerlife.common.items.WesterItem;
@@ -9,7 +8,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.EnumFacing;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
@@ -22,7 +21,11 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+
 public class Client {
+
     public static int create = 0;
     @SubscribeEvent
     public void GuieventHandler(GuiOpenEvent e) {
@@ -60,12 +63,38 @@ public class Client {
     {
         if(event.getType() == RenderGameOverlayEvent.ElementType.DEBUG)
         {
+
+
             Minecraft mc = Minecraft.getMinecraft();
             event.setCanceled(true);
 
-            //Minecraft.getMinecraft().debug.
+            EnumFacing orientation = mc.player.getHorizontalFacing();
+            int dir = Math.round(orientation.getHorizontalAngle());
+            String dire;
+            switch (dir){
+                case 0:
+                    dire = "North";
+                    break;
+                case 90:
+                    dire = "East";
+                    break;
+                case 180:
+                    dire = "South";
+                    break;
+                case 270:
+                    dire = "West";
+                    break;
+                default:
+                    dire = "undifined";
+                    break;
+            }
+
+            DecimalFormat df = new DecimalFormat("#.##");
+            df.setRoundingMode(RoundingMode.HALF_UP);
             this.drawString(Minecraft.getMinecraft().fontRenderer, "WesterLife - Menu de Débug", 5, 10, 0xFF5C5C);
-            this.drawString(Minecraft.getMinecraft().fontRenderer, mc.debug.split(",", 2)[0].substring(0, 6), 5, 15, 0xFF5C5C);
+            this.drawString(Minecraft.getMinecraft().fontRenderer, mc.debug.split(",", 2)[0].substring(0, 6), 5, 20, 0xFF5C5C);
+            this.drawString(Minecraft.getMinecraft().fontRenderer, "Direction : " + dire, 5, 30, 0xFF5C5C);
+            this.drawString(Minecraft.getMinecraft().fontRenderer, "X: " + df.format(Minecraft.getMinecraft().player.posX) + " Y: " + df.format(Minecraft.getMinecraft().player.posY) + " Z: " + df.format(Minecraft.getMinecraft().player.posZ), 5, 40, 0xFF5C5C);
         }
 
         if(event.getType() == RenderGameOverlayEvent.ElementType.EXPERIENCE){
@@ -76,6 +105,7 @@ public class Client {
     public void drawString(FontRenderer fontRenderer, String str, int x, int y, int color)
     {
         fontRenderer.drawStringWithShadow(str, x, y, color);
+
 
     }
 

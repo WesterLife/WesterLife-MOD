@@ -38,6 +38,7 @@ public class Profil {
 
 
     public static Double getBank() {
+
         return bank;
     }
 

@@ -5,10 +5,15 @@ import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.client.gui.CSSGuiAtm;
 import fr.yan36.westerlife.client.gui.CSSGuiGendarmerie;
 import fr.yan36.westerlife.common.items.WesterItem;
+import fr.yan36.westerlife.common.network.PacketOpenGUI;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.IInteractionObject;
@@ -29,15 +34,17 @@ public class BlockATM extends Block {
         setHardness(3.0F);
         setCreativeTab(Main.creativeTab);
     }
+
     @Override
-    public void onBlockClicked(World worldIn, BlockPos pos, EntityPlayer playerIn) {
-        System.out.println("atm");
-        if(playerIn.getHeldItemMainhand().isItemEqual(new ItemStack(WesterItem.CB))) {
-            ACsGuiApi.asyncLoadThenShowGui("atm", CSSGuiAtm::new);
-        } else {
-            playerIn.sendMessage(new TextComponentString("§cVous devez entrer votre carte bancaire."));
-            System.out.println("atm2");
+    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        if (!worldIn.isRemote) {
+            System.out.println("atm");
+//        if(playerIn.getHeldItemMainhand().isItemEqual(new ItemStack(WesterItem.CB))) {
+            Main.network.sendTo(new PacketOpenGUI(1), (EntityPlayerMP) playerIn);
+//        } else {
+//            playerIn.sendMessage(new TextComponentString("§cVous devez entrer votre carte bancaire."));
+//        }
         }
-        super.onBlockClicked(worldIn, pos, playerIn);
+        return true;
     }
 }

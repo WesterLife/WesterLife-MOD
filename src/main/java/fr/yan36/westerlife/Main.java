@@ -1,7 +1,12 @@
 package fr.yan36.westerlife;
 
+import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
+import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
+import com.sedmelluq.discord.lavaplayer.source.AudioSourceManager;
+import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
 import fr.dynamx.api.contentpack.DynamXAddon;
 import fr.yan36.westerlife.client.creativetabs.WesterTab;
+import fr.yan36.westerlife.common.commands.DelUser;
 import fr.yan36.westerlife.common.items.ItemDynamx;
 import fr.yan36.westerlife.common.network.Network;
 import fr.yan36.westerlife.common.CommonProxy;
@@ -12,6 +17,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import org.apache.logging.log4j.Logger;
 
@@ -52,7 +58,7 @@ public class Main {
     }
 
 
-    @SidedProxy(clientSide = "fr.yan36.westerlife.client.ClientProxy", serverSide = "fr.yan36.westerlife.serveur.ServerProxy")
+    @SidedProxy(clientSide = "fr.yan36.westerlife.client.ClientProxy", serverSide = "fr.yan36.westerlife.server.ServerProxy")
     public static CommonProxy proxy;
 
     public static Logger logger;
