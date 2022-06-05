@@ -1,6 +1,10 @@
 package fr.yan36.westerlife.common;
 
 import es.allblue.mcef.api.*;
+import fr.yan36.westerlife.common.blocks.tileentity.TESign;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,6 +12,7 @@ import java.io.IOException;
 public class CommonProxy {
     public void preInit() throws IOException {
         System.out.println("pre init côté commun");
+        GameRegistry.registerTileEntity(TESign.class, new ResourceLocation("westerlife", "tesign"));
     }
 
     public void init()

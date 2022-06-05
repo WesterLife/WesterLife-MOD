@@ -5,12 +5,21 @@ import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.source.AudioSourceManager;
 import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
 import fr.dynamx.api.contentpack.DynamXAddon;
+import fr.dynamx.api.events.DynamXBlockEvent;
+import fr.dynamx.api.events.PhysicsEntityEvent;
+import fr.dynamx.api.events.VehicleEntityEvent;
+import fr.yan36.westerlife.client.Client;
 import fr.yan36.westerlife.client.creativetabs.WesterTab;
+import fr.yan36.westerlife.common.blocks.BlockDynamx;
+import fr.yan36.westerlife.common.blocks.BlockSignVillage;
 import fr.yan36.westerlife.common.commands.DelUser;
 import fr.yan36.westerlife.common.items.ItemDynamx;
 import fr.yan36.westerlife.common.network.Network;
 import fr.yan36.westerlife.common.CommonProxy;
 import fr.yan36.westerlife.common.registry.RegisteringHandler;
+import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -18,9 +27,11 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import org.apache.logging.log4j.Logger;
 
+import java.awt.*;
 import java.io.IOException;
 
 @Mod(
@@ -46,11 +57,13 @@ public class Main {
     public static SimpleNetworkWrapper network;
 
     public static ItemDynamx PistoletRadar;
+    public static BlockSignVillage SignVillage;
 
     @DynamXAddon.AddonEventSubscriber
     public static void init() {
 
         PistoletRadar = (ItemDynamx) new ItemDynamx(Main.MODID, "pistoletradar", "pistoletradar/pistoletradar.obj").setMaxStackSize(1);
+        SignVillage = new BlockSignVillage(Material.ANVIL, Main.MODID, "panneauvillage", "signvillage/sign.obj");
 
         //radar = new BlockDynamx(Material.ANVIL, Main.MODID, "radar", "radar/radar.obj");
         //feu_tricolore = new BlockDynamx(Material.ANVIL, Main.MODID, "feutricolore", "feut/feut.obj");
@@ -92,6 +105,8 @@ public class Main {
         RegisteringHandler.initRegistries();
 
     }
+
+
 
     public static final CreativeTabs creativeTab = new WesterTab("westertab");
 

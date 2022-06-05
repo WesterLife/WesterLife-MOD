@@ -4,6 +4,7 @@ import fr.aym.acsguis.api.ACsGuiApi;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.client.Profil;
 import fr.yan36.westerlife.client.gui.CSSGuiAtm;
+import fr.yan36.westerlife.client.gui.CSSGuiChangeSign;
 import fr.yan36.westerlife.server.bdd.MethodesBDD;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -44,6 +45,7 @@ public class PacketOpenGUI implements IMessage{
                         ACsGuiApi.asyncLoadThenShowHudGui("atm", CSSGuiAtm::new);
                         break;
                     case 2:
+                        ACsGuiApi.asyncLoadThenShowHudGui("changesigndata", CSSGuiChangeSign::new);
                         break;
                 }
 
