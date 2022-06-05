@@ -39,11 +39,11 @@ public class BlockATM extends Block {
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if (!worldIn.isRemote) {
             System.out.println("atm");
-//        if(playerIn.getHeldItemMainhand().isItemEqual(new ItemStack(WesterItem.CB))) {
+        if(playerIn.getHeldItemMainhand().isItemEqual(new ItemStack(WesterItem.CB))) {
             Main.network.sendTo(new PacketOpenGUI(1), (EntityPlayerMP) playerIn);
-//        } else {
-//            playerIn.sendMessage(new TextComponentString("§cVous devez entrer votre carte bancaire."));
-//        }
+        } else {
+            playerIn.sendMessage(new TextComponentString("§cVous devez entrer votre carte bancaire."));
+        }
         }
         return true;
     }

@@ -18,7 +18,7 @@ import java.nio.ByteBuffer;
 
 public class PacketOpenGUI implements IMessage{
 
-    private static int id;
+    int id;
 
     public PacketOpenGUI(int id) {
         id = this.id;
