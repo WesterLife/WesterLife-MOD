@@ -16,6 +16,8 @@ public class Network {
         Main.network.registerMessage(PacketCreatePlainte.Handler.class, PacketCreatePlainte.class, 4, Side.SERVER);
         Main.network.registerMessage(PacketRetirerArgentServer.ServerHandler.class, PacketRetirerArgentServer.class, 5, Side.SERVER);
         Main.network.registerMessage(PacketDepoArgentServer.ServerHandler.class, PacketDepoArgentServer.class, 6, Side.SERVER);
-        Main.network.registerMessage(PacketOpenGUI.Handler.class, PacketOpenGUI.class, 7, Side.CLIENT);
+        Main.network.registerMessage(PacketOpenGUIAtm.Handler.class, PacketOpenGUIAtm.class, 7, Side.CLIENT);
+        Main.network.registerMessage(PacketOpenGUIEditSign.Handler.class, PacketOpenGUIEditSign.class, 8, Side.CLIENT);
+        Main.network.registerMessage(PacketUpdateTileSign.Handler.class, PacketUpdateTileSign.class, 9, Side.SERVER);
     }
 }

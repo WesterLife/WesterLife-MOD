@@ -7,44 +7,65 @@ import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.aym.acsguis.component.textarea.GuiTextArea;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.client.Client;
-import fr.yan36.westerlife.client.Profil;
-import fr.yan36.westerlife.common.items.WesterItem;
+import fr.yan36.westerlife.common.Util;
 import fr.yan36.westerlife.common.network.PacketCreateIdentityServer;
-import fr.yan36.westerlife.common.network.PacketDepoArgentServer;
-import fr.yan36.westerlife.common.network.PacketRetirerArgentServer;
+import fr.yan36.westerlife.common.network.PacketUpdateTileSign;
 import net.minecraft.client.Minecraft;
-import net.minecraft.item.ItemStack;
+import net.minecraft.client.gui.GuiOptions;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 @SideOnly(Side.CLIENT)
 public class CSSGuiChangeSign extends GuiFrame {
-    String status = "home";
 
-    public CSSGuiChangeSign() {
+    public CSSGuiChangeSign(String pos) {
 
         super(new GuiScaler.Identity());
+
         GuiPanel screen = new GuiPanel();
         screen.setCssClass("screen");
         screen.setCssId("screen");
-        GuiTextArea Prenom,Nom,date,Sex;
-        Nom = (GuiTextArea) new GuiTextArea(0, 0, 0, 0).setMaxTextLength(10).setHintText("Texte").setCssId("Nom");
+        GuiTextArea Nom, Color;
+        Nom = (GuiTextArea) new GuiTextArea(0, 0, 0, 0).setMaxTextLength(40).setHintText("Texte").setCssId("Prenom");
+        Color = (GuiTextArea) new GuiTextArea(0, 0, 0, 0).setMaxTextLength(40).setHintText("Texte").setCssId("Nom");
+        Color.setText("black");
         screen.add(Nom);
+        screen.add(Color);
 
         GuiPanel confirm = new GuiPanel();
         confirm.setCssId("confirm").addClickListener((x, y, bu) -> {
-            
+            Main.network.sendToServer(new PacketUpdateTileSign(pos, Nom.getText(), Color.getText()));
         });
         screen.add(confirm);
         add(screen);
+
+        /*
+
+            BlockPos pos1 = Util.parseBlockPosFromString(pos);
+            World world = Minecraft.getMinecraft().world;
+            try {
+                Objects.requireNonNull(world.getTileEntity(pos1)).getTileData().setString("text", textInput.getText());
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                Minecraft.getMinecraft().player.sendMessage(new TextComponentString(TextFormatting.RED +"An error as occured, please check the console."));
+            }
+
+         */
+
+
     }
 
     public List<ResourceLocation> getCssStyles() {
-        return Collections.singletonList(new ResourceLocation("dynamxmod:css/atm.css"));
+        return Collections.singletonList(new ResourceLocation("dynamxmod:css/createprofil.css"));
     }
 
 

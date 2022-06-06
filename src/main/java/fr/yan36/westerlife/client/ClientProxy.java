@@ -3,11 +3,14 @@ package fr.yan36.westerlife.client;
 import fr.aym.acsguis.api.ACsGuiApi;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.CommonProxy;
+import fr.yan36.westerlife.common.blocks.tileentity.TESign;
+import fr.yan36.westerlife.common.blocks.tileentity.TESignRender;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureUtil;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Util;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import org.apache.commons.io.IOUtils;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.imageout.ImageIOWriter;
@@ -33,7 +36,7 @@ public class ClientProxy extends CommonProxy {
     public void preInit() throws IOException {
         super.preInit();
 
-
+        ClientRegistry.bindTileEntitySpecialRenderer(TESign.class, new TESignRender());
 
         /**if(Minecraft.getMinecraft().getSession().getUsername().equals("yan36")){
         Audio oggEffect = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("assets/sounds/load.ogg"));

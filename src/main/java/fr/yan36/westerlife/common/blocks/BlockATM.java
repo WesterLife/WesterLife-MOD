@@ -1,11 +1,9 @@
 package fr.yan36.westerlife.common.blocks;
 
-import fr.aym.acsguis.api.ACsGuiApi;
+import fr.dynamx.common.items.tools.ItemShockWave;
 import fr.yan36.westerlife.Main;
-import fr.yan36.westerlife.client.gui.CSSGuiAtm;
-import fr.yan36.westerlife.client.gui.CSSGuiGendarmerie;
 import fr.yan36.westerlife.common.items.WesterItem;
-import fr.yan36.westerlife.common.network.PacketOpenGUI;
+import fr.yan36.westerlife.common.network.PacketOpenGUIAtm;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -16,10 +14,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
-import net.minecraft.world.IInteractionObject;
 import net.minecraft.world.World;
-
-import javax.swing.text.html.CSS;
 
 public class BlockATM extends Block {
 
@@ -40,7 +35,7 @@ public class BlockATM extends Block {
         if (!worldIn.isRemote) {
             System.out.println("atm");
         if(playerIn.getHeldItemMainhand().isItemEqual(new ItemStack(WesterItem.CB))) {
-            Main.network.sendTo(new PacketOpenGUI(1), (EntityPlayerMP) playerIn);
+            Main.network.sendTo(new PacketOpenGUIAtm(), (EntityPlayerMP) playerIn);
         } else {
             playerIn.sendMessage(new TextComponentString("§cVous devez entrer votre carte bancaire."));
         }

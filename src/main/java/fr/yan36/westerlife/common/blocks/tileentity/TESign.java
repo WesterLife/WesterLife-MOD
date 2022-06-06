@@ -1,20 +1,19 @@
 package fr.yan36.westerlife.common.blocks.tileentity;
 
-import fr.dynamx.common.blocks.TEDynamXBlock;
 import fr.dynamx.common.contentpack.type.objects.BlockObject;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
 
-import java.awt.*;
+import java.util.List;
 
 public class TESign extends TileEntitySyncClient implements ITickable {
+
     private BlockObject b;
 
-
-    private static String text = "Panneau";
-
+    private static String text="";
+    private static String color="black";
 
     public TESign(){
         super(null);
@@ -29,37 +28,38 @@ public class TESign extends TileEntitySyncClient implements ITickable {
     public void readFromNBT(NBTTagCompound tagCompound) {
         super.readFromNBT(tagCompound);
         text = tagCompound.getString("text");
+        color = tagCompound.getString("color");
     }
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
         super.writeToNBT(tagCompound);
-        tagCompound.setString("text", text);
+        tagCompound.setString("text",text);
+        tagCompound.setString("color",color);
         return tagCompound;
     }
 
-    //time en tick
+    public void setText(String text) {
+        TESign.text = text;
+        sync();
+        markDirty();
+    }
+
+    public String getText() {
+        return this.text;
+    }
+
+    public String getColor() {
+        return this.color;
+    }
+
+    public void setColor(String color) {
+        TESign.color = color;
+        sync();
+        markDirty();
+    }
+
     @Override
     public void update() {
-        if (this.world.isRemote) {
-            GlStateManager.pushMatrix();
-            // GlStateManager.translate(0.278, 1.3, -2.769);
-            GlStateManager.rotate(180, 0, 0, 1);
-            GlStateManager.scale(2, 2, 2);
-
-            // drawSplitString(Minecraft.getMinecraft().fontRenderer, carData.get(e.carEntity.getUniqueID().toString()), 0, 0, 0, Color.black.getRGB());
-            Minecraft.getMinecraft().fontRenderer.drawString(text, 0, 0, Color.black.getRGB());
-            GlStateManager.color(1,1,1);
-            GlStateManager.popMatrix();
-            System.out.println(text);
-        }
-    }
-
-    public static void setText(String text){
-        TESign te = (TESign) Minecraft.getMinecraft().world.getTileEntity(Minecraft.getMinecraft().player.getPosition());
-        TESign.text = text;
-    }
-    public String getText(){
-        return text;
     }
 }
