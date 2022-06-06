@@ -7,7 +7,7 @@ import java.util.UUID;
 public class MethodesBDD {
     static SQLUtils instance = new SQLUtils();
     public static void addplayer(EntityPlayer p, String prenom, String nom,String date,String sex){
-        instance.execute("INSERT INTO `players` (`uuid`,`prenom`, `nom`, `date`, `sex`) VALUES ('"+p.getUniqueID()+"','"+prenom+"','"+nom+"','"+date+"','"+sex+"')");
+        instance.execute("INSERT INTO `players` (`uuid`,`prenom`, `nom`, `date`, `sex`,`permis`,`nbPoints`) VALUES ('"+p.getUniqueID()+"','"+prenom+"','"+nom+"','"+date+"','"+sex+"',0,0)");
 
     }
     public static boolean getPlayerExist(EntityPlayer p){
