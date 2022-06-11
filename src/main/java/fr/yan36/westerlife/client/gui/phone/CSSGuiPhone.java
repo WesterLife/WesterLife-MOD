@@ -44,9 +44,15 @@ public class CSSGuiPhone extends GuiFrame {
             if(itemCount % 2 == 0) {
                 appPanel.getStyle().setOffsetX(10);
                 appPanel.getStyle().setOffsetY(last);
+
+                appName.getStyle().setOffsetX(10);
+                appName.getStyle().setOffsetY(last);
             } else {
                 appPanel.getStyle().setOffsetX(70);
                 appPanel.getStyle().setOffsetY(itemCount * 15);
+
+                appName.getStyle().setOffsetX(70);
+                appName.getStyle().setOffsetY(itemCount * 15);
                 last = itemCount * 15;
             }
             itemCount++;
