@@ -4,6 +4,8 @@ import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.source.AudioSourceManager;
 import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
+import es.allblue.mcef.api.IDisplayHandler;
+import es.allblue.mcef.api.IJSQueryHandler;
 import fr.dynamx.api.contentpack.DynamXAddon;
 import fr.dynamx.api.events.DynamXBlockEvent;
 import fr.dynamx.api.events.PhysicsEntityEvent;

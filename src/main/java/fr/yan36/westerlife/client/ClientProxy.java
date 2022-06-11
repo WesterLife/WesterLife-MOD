@@ -2,6 +2,7 @@ package fr.yan36.westerlife.client;
 
 import fr.aym.acsguis.api.ACsGuiApi;
 import fr.yan36.westerlife.Main;
+import fr.yan36.westerlife.client.phone.Apps;
 import fr.yan36.westerlife.common.CommonProxy;
 import fr.yan36.westerlife.common.blocks.tileentity.TESign;
 import fr.yan36.westerlife.common.blocks.tileentity.TESignRender;
@@ -54,6 +55,8 @@ public class ClientProxy extends CommonProxy {
         ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("dynamxmod", "css/createprofil.css"));
         ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("dynamxmod", "css/atm.css"));
         ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("dynamxmod", "css/gendarmerie.css"));
+        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("dynamxmod", "css/phone.css"));
+        Apps.Init();
 
     }
 

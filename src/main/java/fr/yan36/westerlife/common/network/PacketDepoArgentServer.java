@@ -1,9 +1,11 @@
 package fr.yan36.westerlife.common.network;
 
+import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.items.WesterItem;
 import fr.yan36.westerlife.server.bdd.MethodesBDD;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
@@ -52,6 +54,9 @@ public class PacketDepoArgentServer implements IMessage {
 
             //Le packet est plutôt sécurisé mais une faille est possible.
 
+            assert e != null;
+            Main.network.sendTo(new PacketSyncPlayer(MethodesBDD.getNom(e),MethodesBDD.getPrenom(e),MethodesBDD.getSex(e),MethodesBDD.getDate(e),MethodesBDD.getArgent(e)), (EntityPlayerMP) e);
+
             if ((m.is.getItem().equals(WesterItem.CINQEUROS) || m.is.getItem().equals(WesterItem.CINQUANTEEUROS) || m.is.getItem().equals(WesterItem.CINQCENTEUROS) || m.is.getItem().equals(WesterItem.DIXEUROS) || m.is.getItem().equals(WesterItem.VINGTEUROS) || m.is.getItem().equals(WesterItem.CENTEUROS) || m.is.getItem().equals(WesterItem.DEUXCENTEUROS)) && (m.money == 5 || m.money == 50 || m.money == 100 || m.money == 200 || m.money == 500 || m.money == 10 || m.money == 20)){
             if (e.inventory.hasItemStack(m.is)) {
                 int count = 0;
@@ -64,6 +69,8 @@ public class PacketDepoArgentServer implements IMessage {
                     }
 
                     MethodesBDD.setArgent(e, MethodesBDD.getArgent(e) + m.money);
+                    Main.network.sendTo(new PacketSyncPlayer(MethodesBDD.getNom(e),MethodesBDD.getPrenom(e),MethodesBDD.getSex(e),MethodesBDD.getDate(e),MethodesBDD.getArgent(e)), (EntityPlayerMP) e);
+
                 }
             } else {
                 e.sendMessage(new TextComponentString("§cVous n'avez pas les billets nécessaires pour effectuer ce dépôt."));

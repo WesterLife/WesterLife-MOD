@@ -4,6 +4,9 @@ import fr.dynamx.common.items.tools.ItemShockWave;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.items.WesterItem;
 import fr.yan36.westerlife.common.network.PacketOpenGUIAtm;
+import fr.yan36.westerlife.common.network.PacketReqSyncPlayer;
+import fr.yan36.westerlife.common.network.PacketSyncPlayer;
+import fr.yan36.westerlife.server.bdd.MethodesBDD;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -34,11 +37,13 @@ public class BlockATM extends Block {
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if (!worldIn.isRemote) {
             System.out.println("atm");
-        if(playerIn.getHeldItemMainhand().isItemEqual(new ItemStack(WesterItem.CB))) {
-            Main.network.sendTo(new PacketOpenGUIAtm(), (EntityPlayerMP) playerIn);
-        } else {
-            playerIn.sendMessage(new TextComponentString("§cVous devez entrer votre carte bancaire."));
-        }
+            if(playerIn.getHeldItemMainhand().isItemEqual(new ItemStack(WesterItem.CB))) {
+                Main.network.sendTo(new PacketOpenGUIAtm(), (EntityPlayerMP) playerIn);
+                EntityPlayerMP player = (EntityPlayerMP) playerIn;
+                Main.network.sendTo(new PacketReqSyncPlayer(), player);
+            } else {
+                playerIn.sendMessage(new TextComponentString("§cVous devez entrer votre carte bancaire."));
+            }
         }
         return true;
     }

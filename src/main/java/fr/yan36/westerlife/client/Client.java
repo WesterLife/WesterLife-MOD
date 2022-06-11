@@ -1,15 +1,16 @@
 package fr.yan36.westerlife.client;
 
 import fr.aym.acsguis.api.ACsGuiApi;
-import fr.dynamx.api.events.DynamXBlockEvent;
-import fr.yan36.westerlife.Main;
+import fr.dynamx.common.entities.BaseVehicleEntity;
+import fr.dynamx.common.physics.entities.BaseVehiclePhysicsHandler;
 import fr.yan36.westerlife.client.gui.*;
+import fr.yan36.westerlife.client.gui.phone.CSSGuiPhone;
 import fr.yan36.westerlife.common.items.WesterItem;
 import fr.yan36.westerlife.common.registry.SoundsHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.client.event.GuiOpenEvent;
@@ -26,7 +27,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
 
-import java.awt.*;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
@@ -155,10 +155,22 @@ public class Client {
         }
     }
 
-    private void keyTestTyped() {
-            //if (Minecraft.getMinecraft(j).getSession().getUsername().equals("yan36")) {
+    @SubscribeEvent
+    public void onInteractEvent(PlayerInteractEvent.EntityInteract event)
+    {
+        System.out.println("target");
+        Entity Target = event.getTarget();
+        System.out.println(Target);
+        if (Target instanceof BaseVehicleEntity) {
+            BaseVehiclePhysicsHandler<?> physicsHandler = ((BaseVehicleEntity<?>) Target).physicsHandler;
+            float speed = physicsHandler.getSpeed(BaseVehiclePhysicsHandler.SpeedUnit.KMH);
+            System.out.println(speed);
+            Minecraft.getMinecraft().ingameGUI.setOverlayMessage("§cVitesse du Véhicule : " + speed, true);
+        }
+    }
 
-        //}
+    private void keyTestTyped() {
+            ACsGuiApi.asyncLoadThenShowGui("phone", CSSGuiPhone::new);
     }
 }
 

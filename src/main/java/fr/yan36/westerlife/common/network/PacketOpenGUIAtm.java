@@ -32,7 +32,6 @@ public class PacketOpenGUIAtm implements IMessage{
         @SideOnly(Side.CLIENT)
         public IMessage onMessage(PacketOpenGUIAtm m, MessageContext ctx) {
             ACsGuiApi.asyncLoadThenShowGui("atm", CSSGuiAtm::new);
-            Main.network.sendToServer(new PacketSyncPlayer());
             return null;
         }
     }

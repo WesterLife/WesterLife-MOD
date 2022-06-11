@@ -1,9 +1,11 @@
 package fr.yan36.westerlife.common.network;
 
+import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.items.WesterItem;
 import fr.yan36.westerlife.server.bdd.MethodesBDD;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -43,7 +45,9 @@ public class PacketRetirerArgentServer implements IMessage {
         @SideOnly(Side.SERVER)
         public IMessage onMessage(PacketRetirerArgentServer m, MessageContext ctx) {
             EntityPlayer e = (EntityPlayer) ctx.getServerHandler().player.world.getEntityByID(m.player);
-                if(MethodesBDD.getArgent(e) >= m.money){
+            Main.network.sendTo(new PacketSyncPlayer(MethodesBDD.getNom(e),MethodesBDD.getPrenom(e),MethodesBDD.getSex(e),MethodesBDD.getDate(e),MethodesBDD.getArgent(e)), (EntityPlayerMP) e);
+
+            if(MethodesBDD.getArgent(e) >= m.money){
                     switch (m.money) {
 
                         //Vérification le pack est sécurisé.
@@ -84,6 +88,8 @@ public class PacketRetirerArgentServer implements IMessage {
                     e.sendMessage(new TextComponentString("§cVous n'avez pas les fonds nécessaires sur votre compte bancaire pour effectuer ce débit."));
                 }
                 System.out.println(m.money);
+                Main.network.sendTo(new PacketSyncPlayer(MethodesBDD.getNom(e),MethodesBDD.getPrenom(e),MethodesBDD.getSex(e),MethodesBDD.getDate(e),MethodesBDD.getArgent(e)), (EntityPlayerMP) e);
+
             return null;
         }
     }

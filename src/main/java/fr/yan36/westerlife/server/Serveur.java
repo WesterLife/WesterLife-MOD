@@ -22,7 +22,7 @@ public class Serveur {
     @SubscribeEvent
     public void onConnectToServer(PlayerEvent.PlayerLoggedInEvent e) {
         //System.out.println(MethodesBDD.getPlayerExist(e.player));
-        boolean devmod = true;
+        boolean devmod = false;
         if(!devmod) {
             if(!MethodesBDD.getPlayerExist(e.player)){
                 System.out.println("Nouveau joueur : "+e.player.getName());
