@@ -20,5 +20,6 @@ public class Network {
         Main.network.registerMessage(PacketOpenGUIEditSign.Handler.class, PacketOpenGUIEditSign.class, 8, Side.CLIENT);
         Main.network.registerMessage(PacketUpdateTileSign.Handler.class, PacketUpdateTileSign.class, 9, Side.SERVER);
         Main.network.registerMessage(PacketReqSyncPlayer.Handler.class, PacketReqSyncPlayer.class, 10, Side.SERVER);
+        Main.network.registerMessage(PacketOpenGUIGendarmerie.Handler.class, PacketOpenGUIGendarmerie.class, 10, Side.CLIENT);
     }
 }

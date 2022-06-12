@@ -3,31 +3,27 @@ package fr.yan36.westerlife.client.gui;
 import fr.aym.acsguis.component.layout.GuiScaler;
 import fr.aym.acsguis.component.panel.GuiFrame;
 import fr.aym.acsguis.component.panel.GuiPanel;
-import fr.aym.acsguis.component.style.ComponentStyleManager;
-import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.aym.acsguis.component.textarea.GuiTextArea;
 import fr.aym.acsguis.component.textarea.GuiTextField;
-import fr.aym.acsguis.event.ComponentMouseEvent;
-import fr.aym.acsguis.event.listeners.IFocusListener;
 import fr.yan36.westerlife.Main;
-import fr.yan36.westerlife.client.Profil;
 import fr.yan36.westerlife.common.network.PacketCreatePlainte;
-import ibxm.Player;
+import fr.yan36.westerlife.server.Plainte;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiOptions;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.regex.Pattern;
 
 @SideOnly(Side.CLIENT)
 public class CSSGuiGendarmerie extends GuiFrame {
-    public CSSGuiGendarmerie() {
+    public CSSGuiGendarmerie(List<Plainte> plainteArrayList) {
         super(new GuiScaler.Identity());
+
+        System.out.println(plainteArrayList);
+
         GuiPanel home = new GuiPanel();
         home.setCssClass("home");
         home.setCssId("home");

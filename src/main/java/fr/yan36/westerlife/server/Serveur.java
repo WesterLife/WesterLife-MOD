@@ -2,6 +2,7 @@ package fr.yan36.westerlife.server;
 
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.network.PacketCreateIdentity;
+import fr.yan36.westerlife.common.network.PacketOpenGUIGendarmerie;
 import fr.yan36.westerlife.common.network.PacketSyncPlayer;
 import fr.yan36.westerlife.server.bdd.MethodesBDD;
 import net.minecraft.client.Minecraft;
@@ -31,6 +32,7 @@ public class Serveur {
                 Main.network.sendTo(new PacketSyncPlayer(MethodesBDD.getNom(e.player),MethodesBDD.getPrenom(e.player),MethodesBDD.getSex(e.player),MethodesBDD.getDate(e.player),MethodesBDD.getArgent(e.player)), (EntityPlayerMP) e.player);
                 //send packet with data of player
             }
+            Main.network.sendTo(new PacketOpenGUIGendarmerie(MethodesBDD.getPlainte()), (EntityPlayerMP) e.player);
         }
     }
 
