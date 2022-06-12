@@ -1,7 +1,10 @@
 package fr.yan36.westerlife.server.bdd;
 
+import fr.yan36.westerlife.server.Plainte;
 import net.minecraft.entity.player.EntityPlayer;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class MethodesBDD {
@@ -65,11 +68,13 @@ public class MethodesBDD {
         instance.execute("INSERT INTO `gendarmerie_plainte` (`Plaignant`,`Contre`, `Deposition`) VALUES ('"+plaignant+"','"+contre+"','"+deposition+"')");
     }
 
-    public static String getPlainte(){
-        String job = null;
+    public static List<Plainte> getPlainte(){
         QueryResult qr = instance.getData("SELECT * FROM gendarmerie_plainte");
-        job = qr.getValue(0,0);
-        return job;
+        List<Plainte> plaintes = new ArrayList<>();
+        for (int i = 0; i < qr.getRowsCount(); i++) {
+            plaintes.add(new Plainte(Integer.parseInt(qr.getValue(i, 0)), qr.getValue(i, 1), qr.getValue(i, 2), qr.getValue(i, 3)));
+        }
+        return plaintes;
     }
 
     public static String getNom(EntityPlayer p){
