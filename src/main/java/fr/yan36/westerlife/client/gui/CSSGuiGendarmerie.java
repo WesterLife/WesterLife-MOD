@@ -19,8 +19,14 @@ import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public class CSSGuiGendarmerie extends GuiFrame {
-    public CSSGuiGendarmerie(List<Plainte> plainteArrayList) {
+    public CSSGuiGendarmerie(List<String> plainteArrayList) {
         super(new GuiScaler.Identity());
+
+        // Get plainte ICI !
+
+        for (String s : plainteArrayList) {
+            Plainte plainte = Plainte.fromString(s.replaceAll(" ", ""));
+        }
 
         System.out.println(plainteArrayList);
 
