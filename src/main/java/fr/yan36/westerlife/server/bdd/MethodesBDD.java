@@ -1,5 +1,6 @@
 package fr.yan36.westerlife.server.bdd;
 
+import fr.yan36.westerlife.server.Gendarme;
 import fr.yan36.westerlife.server.Plainte;
 import net.minecraft.entity.player.EntityPlayer;
 
@@ -75,6 +76,15 @@ public class MethodesBDD {
             plaintes.add(new Plainte(Integer.parseInt(qr.getValue(i, 0)), qr.getValue(i, 1), qr.getValue(i, 2), qr.getValue(i, 3)));
         }
         return plaintes;
+    }
+
+    public static List<Gendarme> getAccountGendarme(){
+        QueryResult qr = instance.getData("SELECT * FROM gendarmerie_user");
+        List<Gendarme> gendarme = new ArrayList<>();
+        for (int i = 0; i < qr.getRowsCount(); i++) {
+            //gendarme.add(new Plainte(Integer.parseInt(qr.getValue(i, 0)), qr.getValue(i, 1), qr.getValue(i, 2), qr.getValue(i, 3)));
+        }
+        return gendarme;
     }
 
     public static String getNom(EntityPlayer p){

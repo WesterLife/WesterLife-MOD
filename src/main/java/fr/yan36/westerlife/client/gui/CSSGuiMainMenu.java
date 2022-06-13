@@ -93,19 +93,19 @@ public class CSSGuiMainMenu extends GuiFrame {
 
         leftbar.add(play);
 
-        URL url = new URL("https://cdn.westerlife.fr/news/news.json");
-        BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
-        StringBuffer json = new StringBuffer();
-        String line;
-
-        while ((line = reader.readLine()) != null) {
-            json.append(line);
-        }
-
-        System.out.println(json.toString());
-        reader.close();
-
-        json = new StringBuffer(json.toString());
+//        URL url = new URL("https://cdn.westerlife.fr/news/news.json");
+//        BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+//        StringBuffer json = new StringBuffer();
+//        String line;
+//
+//        while ((line = reader.readLine()) != null) {
+//            json.append(line);
+//        }
+//
+//        System.out.println(json.toString());
+//        reader.close();
+//
+//        json = new StringBuffer(json.toString());
 
 
         param.addClickListener((x, y, bu) -> {

@@ -19,6 +19,7 @@ public class Network {
         Main.network.registerMessage(PacketUpdateTileSign.Handler.class, PacketUpdateTileSign.class, 9, Side.SERVER);
         Main.network.registerMessage(PacketReqSyncPlayer.Handler.class, PacketReqSyncPlayer.class, 10, Side.SERVER);
         Main.network.registerMessage(PacketOpenGUIGendarmerie.Handler.class, PacketOpenGUIGendarmerie.class, 10, Side.CLIENT);
-        Main.network.registerMessage(PacketLoginGendarmerie.Handler.class, PacketLoginGendarmerie.class, 11, Side.SERVER);
+        Main.network.registerMessage(PacketLoginGendarmerieServer.Handler.class, PacketLoginGendarmerieServer.class, 11, Side.SERVER);
+        Main.network.registerMessage(PacketLoginGendarmerie.Handler.class, PacketLoginGendarmerie.class, 12, Side.CLIENT);
     }
 }

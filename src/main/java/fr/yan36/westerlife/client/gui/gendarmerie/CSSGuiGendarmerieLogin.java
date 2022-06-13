@@ -56,7 +56,7 @@ public class CSSGuiGendarmerieLogin extends GuiFrame {
         loginButton.addClickListener((x, y, bu) -> {
            if(!login.getText().isEmpty()&&!password.getText().isEmpty()){
                 error.setVisible(false);
-                //Main.network.sendTo(new PacketLoginGendarmerie(login.getText(), password.getText()), );
+                Main.network.sendToServer(new PacketLoginGendarmerie(login.getText(), password.getText(), Minecraft.getMinecraft().player));
            } else {
                background.add(error);
                error.setVisible(true);
