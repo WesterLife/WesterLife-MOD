@@ -4,6 +4,7 @@ import fr.aym.acsguis.api.ACsGuiApi;
 import fr.dynamx.common.entities.BaseVehicleEntity;
 import fr.dynamx.common.physics.entities.BaseVehiclePhysicsHandler;
 import fr.yan36.westerlife.client.gui.*;
+import fr.yan36.westerlife.client.gui.gendarmerie.CSSGuiGendarmerieLogin;
 import fr.yan36.westerlife.client.gui.phone.CSSGuiPhone;
 import fr.yan36.westerlife.common.items.WesterItem;
 import fr.yan36.westerlife.common.registry.SoundsHandler;
@@ -29,6 +30,8 @@ import org.lwjgl.input.Keyboard;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Client {
 
@@ -43,7 +46,7 @@ public class Client {
                 ACsGuiApi.asyncLoadThenShowGui("mainmenu", CSSGuiMainMenu::new);
                 System.out.println("T'es beau !");
             } else {
-                //ACsGuiApi.asyncLoadThenShowGui("mainmenu", CSSGuiMainMenu::new);
+                ACsGuiApi.asyncLoadThenShowGui("mainmenu", CSSGuiMainMenu::new);
             }
         }
         if (e.getGui() instanceof GuiIngameMenu) {
@@ -170,7 +173,7 @@ public class Client {
     }
 
     private void keyTestTyped() {
-            ACsGuiApi.asyncLoadThenShowGui("phone", CSSGuiPhone::new);
+            ACsGuiApi.asyncLoadThenShowGui("phone", CSSGuiGendarmerieLogin::new);
     }
 }
 

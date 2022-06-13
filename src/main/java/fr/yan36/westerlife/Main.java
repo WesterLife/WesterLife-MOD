@@ -1,9 +1,5 @@
 package fr.yan36.westerlife;
 
-import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
-import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
-import com.sedmelluq.discord.lavaplayer.source.AudioSourceManager;
-import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
 import es.allblue.mcef.api.IDisplayHandler;
 import es.allblue.mcef.api.IJSQueryHandler;
 import fr.dynamx.api.contentpack.DynamXAddon;
@@ -15,6 +11,7 @@ import fr.dynamx.utils.physics.DynamXPhysicsHelper;
 import fr.yan36.westerlife.client.Client;
 import fr.yan36.westerlife.client.creativetabs.WesterTab;
 import fr.yan36.westerlife.common.blocks.BlockDynamx;
+import fr.yan36.westerlife.common.blocks.BlockLaptop;
 import fr.yan36.westerlife.common.blocks.BlockSignVillage;
 import fr.yan36.westerlife.common.commands.DelUser;
 import fr.yan36.westerlife.common.items.ItemDynamx;
@@ -53,6 +50,7 @@ public class Main {
      * On déclare différentes valeurs utiles.
      */
 
+
     public static final String MODID = "westerlife";
     public static final String NAME = "WesterLife Mod";
     public static final String VERSION = "1.0";
@@ -64,6 +62,7 @@ public class Main {
 
     public static ItemDynamx PistoletRadar;
     public static BlockSignVillage SignVillage;
+    public static BlockLaptop Laptop;
 
     @DynamXAddon.AddonEventSubscriber
     public static void init() {
@@ -73,6 +72,7 @@ public class Main {
 
         //radar = new BlockDynamx(Material.ANVIL, Main.MODID, "radar", "radar/radar.obj");
         //feu_tricolore = new BlockDynamx(Material.ANVIL, Main.MODID, "feutricolore", "feut/feut.obj");
+        Laptop = new BlockLaptop(Material.ANVIL, Main.MODID, "laptop", "laptop/ordi.obj");
 
     }
 

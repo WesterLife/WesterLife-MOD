@@ -1,27 +1,114 @@
-.screen{
-    background-image: url("dynamxmod:textures/font.png");
+.background{
+    background-image: url("dynamxmod:textures/main/background.png");
     height: 100%;
     width: 100%;
+    top: 0%;
+    left: 0%;
 }
-#para{
-    background-image: url("dynamxmod:textures/para.png");
-    top: 45%;
-    left: 5%;
-    width: 25%;
-    height: 30%;
+.topbar_color{
+    background-color: #393F44;
+    height: 100%;
+    width: 100%;
+    top: 0%;
+    left: 0%;
 }
-#play{
-    background-image: url("dynamxmod:textures/play.png");
-    top: 45%;
-    left: 38%;
-    width: 25%;
-    height: 30%;
+.topbar{
+    height: 14%;
+    width: 100%;
+    top: 0%;
+    left: 0%;
 }
-#site{
-    background-image: url("dynamxmod:textures/site.png");
-    top: 45%;
-    right: 5%;
-    width: 25%;
+.leftbar{
+    background-color: #32373A;
+    height: 86%;
+    width: 13%;
+    top: 14%;
+    left: 0%;
+}
+.logo{
+    background-image: url("dynamxmod:textures/main/logo.png");
+    height: 78%;
+    width: 6%;
+    top: 11%;
+    left: 91%;
+}
+.title{
+    height: 55%;
+    width: 16%;
+    top: 25%;
+    left: 2%;
+    color: #ffffff;
+    font-size: 15px;
+}
+.site{
     height: 30%;
-    text-align: center;
+    width: 13%;
+    top: 35%;
+    left: 15%;
+    color: #ffffff;
+    font-size: 10px;
+}
+.site:hover{
+    color: #aaaaaa;
+}
+.param{
+    height: 30%;
+    width: 13%;
+    top: 35%;
+    left: 30%;
+    color: #ffffff;
+    font-size: 10px;
+}
+.param:hover{
+    color: #aaaaaa;
+}
+.zonestaff{
+    height: 30%;
+    width: 29%;
+    top: 35%;
+    left: 60%;
+    color: #C95353;
+    font-size: 10px;
+}
+.discord{
+    background-image: url("dynamxmod:textures/main/discord.png");
+    width: 47%;
+    height: 13%;
+    left: 25%;
+    top: 15%;
+}
+.play{
+    background-image: url("dynamxmod:textures/main/play.png");
+    width: 47%;
+    height: 13%;
+    left: 25%;
+    top: 31%;
+}
+.quit{
+    background-image: url("dynamxmod:textures/main/close.png");
+    width: 47%;
+    height: 13%;
+    left: 25%;
+    top: 48%;
+}
+.desc{
+    background-image: url("dynamxmod:textures/main/desc.png");
+    width: 41%;
+    height: 23%;
+    left: 16%;
+    top: 64%;
+}
+.mute{
+    background-image: url("dynamxmod:textures/main/mute.png");
+    width: 48%;
+    height: 13%;
+    left: 25%;
+    top: 80%;
+}
+.mute_on{
+    background-image: url("dynamxmod:textures/main/unmute.png");
+    width: 48%;
+    height: 13%;
+    left: 25%;
+    top: 80%;
 }

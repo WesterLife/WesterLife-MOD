@@ -5,9 +5,7 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 
 public class Network {
-    /**
-     * La honte
-     */
+
     public static void init() {
         Main.network = NetworkRegistry.INSTANCE.newSimpleChannel("westerlife1");
         Main.network.registerMessage(PacketCreateIdentity.handler.class, PacketCreateIdentity.class, 1, Side.CLIENT);
@@ -21,5 +19,6 @@ public class Network {
         Main.network.registerMessage(PacketUpdateTileSign.Handler.class, PacketUpdateTileSign.class, 9, Side.SERVER);
         Main.network.registerMessage(PacketReqSyncPlayer.Handler.class, PacketReqSyncPlayer.class, 10, Side.SERVER);
         Main.network.registerMessage(PacketOpenGUIGendarmerie.Handler.class, PacketOpenGUIGendarmerie.class, 10, Side.CLIENT);
+        Main.network.registerMessage(PacketLoginGendarmerie.Handler.class, PacketLoginGendarmerie.class, 11, Side.SERVER);
     }
 }

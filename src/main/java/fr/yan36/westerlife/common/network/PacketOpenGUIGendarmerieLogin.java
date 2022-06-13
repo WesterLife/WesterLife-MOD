@@ -2,6 +2,7 @@ package fr.yan36.westerlife.common.network;
 
 import fr.aym.acsguis.api.ACsGuiApi;
 import fr.yan36.westerlife.client.gui.gendarmerie.CSSGuiGendarmerie;
+import fr.yan36.westerlife.client.gui.gendarmerie.CSSGuiGendarmerieLogin;
 import fr.yan36.westerlife.server.Plainte;
 import io.netty.buffer.ByteBuf;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
@@ -15,35 +16,27 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class PacketOpenGUIGendarmerie implements IMessage{
+public class PacketOpenGUIGendarmerieLogin implements IMessage{
 
 
-    private String plainteList;
-
-    public PacketOpenGUIGendarmerie() {
-    }
-
-    public PacketOpenGUIGendarmerie(List<Plainte> plainteList) {
-        this.plainteList = plainteList.toString();
+    public PacketOpenGUIGendarmerieLogin() {
     }
 
 
     @Override
     public void fromBytes(ByteBuf buf) {
-        this.plainteList = ByteBufUtils.readUTF8String(buf);
     }
 
     @Override
     public void toBytes(ByteBuf buf) {
-        ByteBufUtils.writeUTF8String(buf, this.plainteList);
+
     }
 
-    public static class Handler implements IMessageHandler<PacketOpenGUIGendarmerie, IMessage> {
+    public static class Handler implements IMessageHandler<PacketOpenGUIGendarmerieLogin, IMessage> {
         @Override
         @SideOnly(Side.CLIENT)
-        public IMessage onMessage(PacketOpenGUIGendarmerie m, MessageContext ctx) {
-            List<String> myList = new ArrayList<String>(Arrays.asList(m.plainteList.substring(1, m.plainteList.length() - 1).split(",")));
-            ACsGuiApi.asyncLoadThenShowGui("gendarmerie", () -> new CSSGuiGendarmerie(myList));
+        public IMessage onMessage(PacketOpenGUIGendarmerieLogin m, MessageContext ctx) {
+            ACsGuiApi.asyncLoadThenShowGui("gendarmerielogin", CSSGuiGendarmerieLogin::new);
 
             return null;
         }
