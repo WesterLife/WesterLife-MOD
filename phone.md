@@ -8,8 +8,14 @@ Maintenant que la classe est prête, vous pouvez l'enregistrer dans `Apps` ainsi
 
 ### Créer une interface utilisateur pour son application 
 
-Pour faire cela, vous pourrez utiliser la classe PhoneFrame 
+Pour faire cela, vous pourrez utiliser la classe PhoneBaseFrame 
 dans laquelle vous pourrez jouer avec un GUI de base (le contour et l'heure) 
+
+Fonctions :
+| Fonction | usage  | utilité  |
+| :------------------:   | :-: | :-: |
+| openGui() | PhoneBaseFrame#openGui() | Permet d'ouvrir un nouveau GUI Vierge qui contiendra donc uniquement la frame du téléphone et les quelques boutons. |
+| PddElementToGui() | PhoneBaseFrame#addElementToGui(GuiElement) | Permet d'ajouter tout type d'élément au GUI ouvert auparavant. Pour définir du texte ou autre, déclarer l'élement du gui en tant que variable et par exemple changer le texte d'un GuiTextField et ensuite l'ajouter. |
 
 Pour l'instant aucune info sur les fonctions, cette classe n'existe pas encore 
 
