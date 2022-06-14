@@ -2,18 +2,20 @@ package fr.yan36.westerlife.client.utils;
 
 public class News {
 
-    private final String url;
+    private final String abouturl;
     private final String title;
     private final String content;
+    private final String author;
 
-    public News(String title, String content, String url) {
+    public News(String title, String content, String author, String abouturl) {
         this.title = title;
         this.content = content;
-        this.url = url;
+        this.abouturl = abouturl;
+        this.author = author;
     }
 
-    public String getUrl() {
-        return url;
+    public String getAbouturl() {
+        return abouturl;
     }
 
     public String getTitle() {
@@ -22,5 +24,9 @@ public class News {
 
     public String getContent() {
         return content;
+    }
+
+    public String getAuthor() {
+        return author;
     }
 }

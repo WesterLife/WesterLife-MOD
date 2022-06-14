@@ -45,7 +45,7 @@ public class CSSGuiMainMenu extends GuiFrame {
         Gson gson = new Gson();
 
 
-        URL url = new URL("https://cdn.westerlife.fr/news/news.json");
+        URL url = new URL("https://cdn.westerlife.fr/news/news.news");
         BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
         StringBuilder json = new StringBuilder();
         String line;
@@ -60,12 +60,12 @@ public class CSSGuiMainMenu extends GuiFrame {
         json = new StringBuilder(json.toString());
         System.out.println(json);
         JsonObject jsonObject = gson.fromJson(json.toString(), JsonObject.class);
-        // schema : {"titre":{"content":"blabma","url":"https://westerlife.fr/"}, "titre":{"content":"blabma","url":"https://westerlife.fr/"}}
-        jsonObject.getAsJsonArray().forEach(jsonElement -> {
-            System.out.println(jsonElement);
-        });
+        News news = new News(jsonObject.get("title").getAsString(), jsonObject.get("content").getAsString(), jsonObject.get("author").getAsString(), jsonObject.get("abouturl").getAsString());
 
-
+        System.out.println(news.getTitle());
+        System.out.println(news.getContent());
+        System.out.println(news.getAuthor());
+        System.out.println(news.getAbouturl());
 
 
 
