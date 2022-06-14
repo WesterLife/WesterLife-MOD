@@ -1,0 +1,67 @@
+.background{
+    width: 69%;
+    height: 86%;
+    left: 14%;
+    top: 7%;
+    background: #32373A;
+    border-radius: 5px;
+}
+.leftbar{
+    width: 26%;
+    height: 100%;
+    left: 0%;
+    top: 0%;
+    background: #454545;
+}
+.title{
+    width: 37%;
+    height: 13%;
+    left: 43%;
+    top: 8%;
+    background-image: url("dynamxmod:textures/gendarmerie/login/title.png");
+}
+.login{
+    padding-top: 10px;
+    padding-left: 10px;
+    width: 37%;
+    height: 13%;
+    left: 43%;
+    top: 34%;
+    background: #424346;
+    border-radius: 5px;
+    font-size: 20px;
+    border: none;
+}
+.password{
+    padding-top: 10px;
+    padding-left: 10px;
+    width: 37%;
+    height: 13%;
+    left: 43%;
+    top: 50%;
+    background: #424346;
+    border-radius: 5px;
+    font-size: 20px;
+    border: none;
+}
+.loginbutton{
+    width: 37%;
+    height: 13%;
+    left: 43%;
+    top: 74%;
+    background-image: url("dynamxmod:textures/gendarmerie/login/loginbutton.png");
+}
+.error{
+    width: 37%;
+    height: 13%;
+    left: 43%;
+    top: 85%;
+    color: #DA5050;
+    }
+.logo{
+    width: 68%;
+    height: 25%;
+    left: 16%;
+    top: 3%;
+    background-image: url("dynamxmod:textures/gendarmerie/login/logo.png");
+}
