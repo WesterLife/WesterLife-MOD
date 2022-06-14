@@ -78,6 +78,7 @@ public class MethodesBDD {
         return plaintes;
     }
 
+    // jobs
     public static List<Job> getJobs(){
         QueryResult qr = instance.getData("SELECT * FROM france_travail");
         List<Job> jobsList = new ArrayList<>();

@@ -40,7 +40,7 @@ public class Client {
     public void GuieventHandler(GuiOpenEvent e) {
 
         if(e.getGui() instanceof GuiMainMenu){
-            if(Minecraft.getMinecraft().getSession().getUsername().equals("gabidut76") || Minecraft.getMinecraft().getSession().getUsername().equals("_INeox")) {
+            if(Minecraft.getMinecraft().getSession().getUsername().equals("gabidut762") || Minecraft.getMinecraft().getSession().getUsername().equals("_INeox")) {
                 System.out.println("Salut pas BG");
             } else if(Minecraft.getMinecraft().getSession().getUsername().equals("yan36")) {
                 ACsGuiApi.asyncLoadThenShowGui("mainmenu", CSSGuiMainMenu::new);
