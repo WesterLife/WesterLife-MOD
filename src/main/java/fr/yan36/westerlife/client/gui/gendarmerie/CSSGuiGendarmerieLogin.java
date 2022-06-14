@@ -7,17 +7,15 @@ import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.aym.acsguis.component.textarea.GuiPasswordField;
 import fr.aym.acsguis.component.textarea.GuiTextArea;
 import fr.yan36.westerlife.Main;
-import fr.yan36.westerlife.common.network.PacketLoginGendarmerie;
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayerMP;
+import fr.yan36.westerlife.common.network.PacketLoginGendarmerieServer;
+
 import net.minecraft.util.ResourceLocation;
 
-import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
 public class CSSGuiGendarmerieLogin extends GuiFrame {
-    public CSSGuiGendarmerieLogin() throws IOException {
+    public CSSGuiGendarmerieLogin() {
         super(new GuiScaler.Identity());
         GuiPanel background = new GuiPanel();
         background.setCssClass("background");
@@ -40,6 +38,8 @@ public class CSSGuiGendarmerieLogin extends GuiFrame {
         GuiTextArea login;
         GuiTextArea password;
 
+        GuiLabel legend = (GuiLabel) new GuiLabel(0, 0, 600, 1080, "Bienvenue sur le portail intranet du groupement départemental de la Gendarmerie Nationale de Baltia. Afin d’accéder à vos espaces veuillez saisir vos informations de connexions. Ce portail est réservé aux militaires de la Gendarmerie Nationale. En cas de problème avec cette connexion contacter votre hiérarchie.").setCssClass("legend");
+
         login = (GuiTextArea) new GuiTextArea(0, 0, 0, 0).setMaxTextLength(30).setHintText("Identifiant").setCssClass("login");
         password = (GuiTextArea) new GuiPasswordField().setMaxTextLength(30).setHintText("Mot de passe").setCssClass("password");
 
@@ -47,6 +47,8 @@ public class CSSGuiGendarmerieLogin extends GuiFrame {
         background.add(password);
         background.add(loginButton);
         background.add(title);
+
+        leftbar.add(legend);
 
         leftbar.add(logo);
 
@@ -56,7 +58,8 @@ public class CSSGuiGendarmerieLogin extends GuiFrame {
         loginButton.addClickListener((x, y, bu) -> {
            if(!login.getText().isEmpty()&&!password.getText().isEmpty()){
                 error.setVisible(false);
-                Main.network.sendToServer(new PacketLoginGendarmerie(login.getText(), password.getText(), Minecraft.getMinecraft().player));
+               System.out.println("Test " + login.getText() + " " + password.getText());
+               Main.network.sendToServer(new PacketLoginGendarmerieServer("e", "e"));
            } else {
                background.add(error);
                error.setVisible(true);

@@ -11,24 +11,20 @@ import net.minecraftforge.fml.relauncher.Side;
 
 public class PacketLoginGendarmerie implements IMessage {
 
-    String login, nom, prenom;
     int player;
 
 
-    public PacketLoginGendarmerie(String login, String password, EntityPlayer player) {
-        this.login = login;
+    public PacketLoginGendarmerie(EntityPlayer player) {
         this.player = player.getEntityId();
     }
 
     @Override
     public void fromBytes(ByteBuf buf) {
-        login = ByteBufUtils.readUTF8String(buf);
         player = buf.readInt();
     }
 
     @Override
     public void toBytes(ByteBuf buf) {
-        ByteBufUtils.writeUTF8String(buf, login);
         buf.writeInt(player);
 
     }
@@ -36,7 +32,7 @@ public class PacketLoginGendarmerie implements IMessage {
     public static class Handler implements IMessageHandler<PacketLoginGendarmerie, IMessage> {
         @Override
         public IMessage onMessage(PacketLoginGendarmerie m, MessageContext ctx) {
-                    Minecraft.getMinecraft().displayGuiScreen(null);
+
 
 
             return null;

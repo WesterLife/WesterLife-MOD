@@ -82,7 +82,7 @@ public class CSSGuiMainMenu extends GuiFrame {
         topbar.add(logo);
 
         zonestaff.addClickListener((x, y, bu) -> {
-            mc.displayGuiScreen(new GuiWorldSelection(this.getGuiScreen()));
+            mc.displayGuiScreen(new GuiMultiplayer(this.getGuiScreen()));
             System.out.println("zonestaff");
         });
 

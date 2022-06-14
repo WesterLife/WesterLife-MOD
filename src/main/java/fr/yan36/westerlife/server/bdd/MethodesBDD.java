@@ -80,11 +80,11 @@ public class MethodesBDD {
 
     public static List<Gendarme> getAccountGendarme(){
         QueryResult qr = instance.getData("SELECT * FROM gendarmerie_user");
-        List<Gendarme> gendarme = new ArrayList<>();
+        List<Gendarme> gendarmes = new ArrayList<>();
         for (int i = 0; i < qr.getRowsCount(); i++) {
-            //gendarme.add(new Plainte(Integer.parseInt(qr.getValue(i, 0)), qr.getValue(i, 1), qr.getValue(i, 2), qr.getValue(i, 3)));
+            gendarmes.add(new Gendarme(Integer.parseInt(qr.getValue(i, 0)), qr.getValue(i, 1), qr.getValue(i, 2), qr.getValue(i, 3), qr.getValue(i, 4), qr.getValue(i, 5), qr.getValue(i, 6), qr.getValue(i, 7), Boolean.parseBoolean(qr.getValue(i, 8))));
         }
-        return gendarme;
+        return gendarmes;
     }
 
     public static String getNom(EntityPlayer p){

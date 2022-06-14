@@ -42,8 +42,7 @@ public class PacketOpenGUIGendarmerie implements IMessage{
         @Override
         @SideOnly(Side.CLIENT)
         public IMessage onMessage(PacketOpenGUIGendarmerie m, MessageContext ctx) {
-            List<String> myList = new ArrayList<String>(Arrays.asList(m.plainteList.substring(1, m.plainteList.length() - 1).split(",")));
-            ACsGuiApi.asyncLoadThenShowGui("gendarmerie", () -> new CSSGuiGendarmerie(myList));
+             //ACsGuiApi.asyncLoadThenShowGui("gendarmerie", () -> new CSSGuiGendarmerie(myList));
 
             return null;
         }

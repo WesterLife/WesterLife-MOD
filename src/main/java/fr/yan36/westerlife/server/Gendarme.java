@@ -106,7 +106,7 @@ public class Gendarme {
         return new Gendarme(Integer.parseInt(split[0]), split[1], split[2], split[3], split[4], split[5], split[6], split[7], Boolean.parseBoolean(split[8]));
     }
 
-    public static String toStringNice(Plainte p) {
+    public static String toStringNice(Gendarme g) {
 
         return "";
     }

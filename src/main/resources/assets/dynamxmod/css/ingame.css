@@ -1,44 +1,49 @@
 .home{
-    background-image: url("dynamxmod:textures/ingame/back.png");
-    height: 100%;
-    width: 30%;
-    top: 0%;
-    left: 0%;
-    border-radius: 10%;
+     background-image: url("dynamxmod:textures/ingame/back.png");
+     height: 88%;
+     width: 33%;
+     top: 6%;
+     left: 33%;
 }
-.rtg:hover{
-    color: rgb(250, 105, 77);
-}
-.rtg{
-    color: rgb(255, 255, 255);
-    height: 10%;
-    width: 100%;
-    text-align: center;
-    horizontal-position: center;
-    top: 25%;
-    left: 50%
-}
-.parameter:hover{
-    color: rgb(250, 105, 77);
+.returnToGame{
+    background-image: url("dynamxmod:textures/ingame/returntogame.png");
+    height: 12%;
+    width: 76%;
+    top: 18%;
+    left: 12%;
 }
 .parameter{
-    color: rgb(255, 255, 255);
-    height: 10%;
-    width: 100%;
-    text-align: center;
-    horizontal-position: center;
-    top: 50%;
-    left: 50%;
+    background-image: url("dynamxmod:textures/ingame/parameter.png");
+    height: 12%;
+    width: 76%;
+    top: 33%;
+    left: 12%;
 }
-.disconnect:hover{
-   color: rgb(250, 105, 77);
+.keyboard{
+    background-image: url("dynamxmod:textures/ingame/keyboard.png");
+    height: 12%;
+    width: 76%;
+    top: 47%;
+    left: 12%;
+}
+.discord{
+    background-image: url("dynamxmod:textures/ingame/discord.png");
+    height: 12%;
+    width: 17%;
+    top: 71%;
+    left: 12%;
 }
 .disconnect{
-    color: rgb(255, 255, 255);
-    height: 10%;
-    width: 100%;
-    text-align: center;
-    horizontal-position: center;
-    top: 75%;
-    left: 50%;
+    background-image: url("dynamxmod:textures/ingame/disconnect.png");
+    height: 12%;
+    width: 17%;
+    top: 71%;
+    left: 41%;
+}
+.site{
+    background-image: url("dynamxmod:textures/ingame/site.png");
+    height: 12%;
+    width: 17%;
+    top: 71%;
+    left: 70%;
 }

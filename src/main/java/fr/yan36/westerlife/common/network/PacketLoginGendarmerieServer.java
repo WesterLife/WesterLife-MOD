@@ -1,6 +1,8 @@
 package fr.yan36.westerlife.common.network;
 
 import fr.yan36.westerlife.Main;
+import fr.yan36.westerlife.server.AuthSystem;
+import fr.yan36.westerlife.server.Plainte;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -9,47 +11,39 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class PacketLoginGendarmerieServer implements IMessage {
 
+    /**
+     * TODO: Si jamais tu passes par la gabidut76, tu vérifiras ce packet car il m'énerve.
+     * Bisou !
+     */
+
     String login, password;
-    int player;
 
-
-    public PacketLoginGendarmerieServer(String login, String password, EntityPlayer player) {
+    public PacketLoginGendarmerieServer(String login, String password) {
         this.login = login;
         this.password = password;
-        this.player = player.getEntityId();
     }
 
     @Override
     public void fromBytes(ByteBuf buf) {
-        login = ByteBufUtils.readUTF8String(buf);
-        password = ByteBufUtils.readUTF8String(buf);
-        player = buf.readInt();
+        this.login = ByteBufUtils.readUTF8String(buf);
+        this.password = ByteBufUtils.readUTF8String(buf);
     }
 
     @Override
     public void toBytes(ByteBuf buf) {
-        ByteBufUtils.writeUTF8String(buf, login);
-        ByteBufUtils.writeUTF8String(buf, password);
-        buf.writeInt(player);
-
+        ByteBufUtils.writeUTF8String(buf, this.login);
+        ByteBufUtils.writeUTF8String(buf, this.password);
     }
 
-    public static class Handler implements IMessageHandler<PacketLoginGendarmerieServer, IMessage> {
+    public static class ServerHandler implements IMessageHandler<PacketLoginGendarmerieServer, IMessage> {
         @Override
+        @SideOnly(Side.SERVER)
         public IMessage onMessage(PacketLoginGendarmerieServer m, MessageContext ctx) {
-            if (m.login.equals("admin") && m.password.equals("admin")) {
-                if (Side.CLIENT == ctx.side) {
-                    Minecraft.getMinecraft().displayGuiScreen(null);
-                }
-            } else {
-
-
-
-            }
-
+            System.out.println("Login Gendarmerie Server");
             return null;
         }
     }
