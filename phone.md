@@ -15,8 +15,14 @@ Fonctions :
 | Fonction | usage  | utilité  |
 | :------------------:   | :-: | :-: |
 | openGui() | PhoneBaseFrame#openGui() | Permet d'ouvrir un nouveau GUI Vierge qui contiendra donc uniquement la frame du téléphone et les quelques boutons. |
-| PddElementToGui() | PhoneBaseFrame#addElementToGui(GuiElement) | Permet d'ajouter tout type d'élément au GUI ouvert auparavant. Pour définir du texte ou autre, déclarer l'élement du gui en tant que variable et par exemple changer le texte d'un GuiTextField et ensuite l'ajouter. |
+| addElementToGui() | PhoneBaseFrame#addElementToGui(GuiElement) | Permet d'ajouter tout type d'élément au GUI ouvert auparavant. Pour définir du texte ou autre, déclarer l'élement du gui en tant que variable et par exemple changer le texte d'un GuiTextField et ensuite l'ajouter. |
+
 
 Pour l'instant aucune info sur les fonctions, cette classe n'existe pas encore 
 
 ### La classe PhoneUtils
+
+Elle permet d'effectuer différentes actions utile avec le téléphone tel que : 
+
+getInstalledApps() : Qui permet de récupérer de récupérer les applications installées.
+*goHome()* : Qui permet au téléphone de retourner sur l'écran de séléction des applications.
