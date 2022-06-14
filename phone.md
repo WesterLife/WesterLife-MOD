@@ -6,9 +6,11 @@ Ensuite il vous faudra implémenter la fonction `OnClick(EntityPlayer) ` qui s'e
 
 Maintenant que la classe est prête, vous pouvez l'enregistrer dans `Apps` ainsi : `public static App appExemple = new AppExemple();` Il faut évidemment remplacer appExemple par un nom de variable explicite et de même pour l'appel à votre classe. 
 
-### Enregistrer un GUI
-register le CSS dans la fonction init() 
-créer les gui dans le package apps.gui
-close l'ancien 
+### Créer une interface utilisateur pour son application 
+
+Pour faire cela, vous pourrez utiliser la classe PhoneFrame 
+dans laquelle vous pourrez jouer avec un GUI de base (le contour et l'heure) 
+
+Pour l'instant aucune info sur les fonctions, cette classe n'existe pas encore 
 
 ### La classe PhoneUtils
