@@ -1,6 +1,6 @@
 package fr.yan36.westerlife.server.bdd;
 
-import fr.yan36.westerlife.server.Gendarme;
+import fr.yan36.westerlife.server.Job;
 import fr.yan36.westerlife.server.Plainte;
 import net.minecraft.entity.player.EntityPlayer;
 
@@ -78,13 +78,22 @@ public class MethodesBDD {
         return plaintes;
     }
 
-    public static List<Gendarme> getAccountGendarme(){
-        QueryResult qr = instance.getData("SELECT * FROM gendarmerie_user");
-        List<Gendarme> gendarme = new ArrayList<>();
+    public static List<Job> getJobs(){
+        QueryResult qr = instance.getData("SELECT * FROM france_travail");
+        List<Job> jobsList = new ArrayList<>();
         for (int i = 0; i < qr.getRowsCount(); i++) {
-            //gendarme.add(new Plainte(Integer.parseInt(qr.getValue(i, 0)), qr.getValue(i, 1), qr.getValue(i, 2), qr.getValue(i, 3)));
+            jobsList.add(new Job(
+                Integer.parseInt(qr.getValue(i, 0)),
+                qr.getValue(i, 1),
+                qr.getValue(i, 2),
+                qr.getValue(i, 3),
+                Integer.parseInt(qr.getValue(i, 4)),
+                Integer.parseInt(qr.getValue(i, 5)),
+                Boolean.valueOf(qr.getValue(i, 6)),
+                Boolean.valueOf(qr.getValue(i, 7))
+            ));
         }
-        return gendarme;
+        return jobsList;
     }
 
     public static String getNom(EntityPlayer p){
