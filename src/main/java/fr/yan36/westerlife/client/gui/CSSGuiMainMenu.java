@@ -1,9 +1,12 @@
 package fr.yan36.westerlife.client.gui;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import fr.aym.acsguis.component.layout.GuiScaler;
 import fr.aym.acsguis.component.panel.GuiFrame;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.textarea.GuiLabel;
+import fr.yan36.westerlife.client.utils.News;
 import fr.yan36.westerlife.common.registry.SoundsHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.ISound;
@@ -21,6 +24,7 @@ import org.newdawn.slick.openal.AudioLoader;
 import org.newdawn.slick.openal.SoundStore;
 import org.newdawn.slick.util.ResourceLoader;
 
+import java.lang.reflect.Type;
 import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -35,6 +39,36 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class CSSGuiMainMenu extends GuiFrame {
     public CSSGuiMainMenu() throws IOException {
         super(new GuiScaler.Identity());
+
+        // register  news
+
+        Gson gson = new Gson();
+
+
+        URL url = new URL("https://cdn.westerlife.fr/news/news.json");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+        StringBuilder json = new StringBuilder();
+        String line;
+
+        while ((line = reader.readLine()) != null) {
+            json.append(line);
+        }
+
+        System.out.println(json.toString());
+        reader.close();
+
+        json = new StringBuilder(json.toString());
+        System.out.println(json);
+        JsonObject jsonObject = gson.fromJson(json.toString(), JsonObject.class);
+        // schema : {"titre":{"content":"blabma","url":"https://westerlife.fr/"}, "titre":{"content":"blabma","url":"https://westerlife.fr/"}}
+        jsonObject.getAsJsonArray().forEach(jsonElement -> {
+            System.out.println(jsonElement);
+        });
+
+
+
+
+
         GuiPanel background = new GuiPanel();
         background.setCssClass("background");
         background.setCssId("background");
@@ -92,21 +126,6 @@ public class CSSGuiMainMenu extends GuiFrame {
         topbar.add(param);
 
         leftbar.add(play);
-
-//        URL url = new URL("https://cdn.westerlife.fr/news/news.json");
-//        BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
-//        StringBuffer json = new StringBuffer();
-//        String line;
-//
-//        while ((line = reader.readLine()) != null) {
-//            json.append(line);
-//        }
-//
-//        System.out.println(json.toString());
-//        reader.close();
-//
-//        json = new StringBuffer(json.toString());
-
 
         param.addClickListener((x, y, bu) -> {
             mc.gameSettings.saveOptions();
