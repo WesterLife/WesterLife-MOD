@@ -1,14 +1,23 @@
 package fr.yan36.westerlife.client;
 
+import com.jme3.math.Vector3f;
 import fr.aym.acsguis.api.ACsGuiApi;
+import fr.dynamx.client.DynamXModelRegistry;
+import fr.dynamx.client.renders.model.ArmorRenderer;
+import fr.dynamx.client.renders.model.ModelObjArmor;
+import fr.dynamx.common.contentpack.DynamXObjectLoaders;
+import fr.dynamx.common.contentpack.type.objects.ArmorObject;
 import fr.dynamx.common.entities.BaseVehicleEntity;
+import fr.dynamx.common.items.DynamXItemArmor;
 import fr.dynamx.common.physics.entities.BaseVehiclePhysicsHandler;
+import fr.dynamx.utils.client.DynamXRenderUtils;
 import fr.yan36.westerlife.client.gui.*;
 import fr.yan36.westerlife.client.gui.phone.CSSGuiPhone;
 import fr.yan36.westerlife.common.items.WesterItem;
 import fr.yan36.westerlife.common.registry.SoundsHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
@@ -26,9 +35,12 @@ import net.minecraftforge.fml.common.network.FMLNetworkEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.opengl.GL11;
 
+import java.awt.*;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.util.Objects;
 
 public class Client {
 
@@ -67,6 +79,7 @@ public class Client {
     public void InteractWithEntity(FMLNetworkEvent.ClientConnectedToServerEvent e) {
         System.out.println(e.getConnectionType());
     }
+
 
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
@@ -120,12 +133,21 @@ public class Client {
     }
 
     @SubscribeEvent
-    public void renderPseudo(RenderLivingEvent.Specials.Pre e){
+    public void renderPseudo(RenderLivingEvent.Specials.Pre e) {
 
-        if(!(Minecraft.getMinecraft().player.isCreative())){
+        if (!(Minecraft.getMinecraft().player.isCreative())) {
             e.setCanceled(true);
         }
-
+        System.out.println(Minecraft.getMinecraft().gameSettings.thirdPersonView);
+        if(Minecraft.getMinecraft().gameSettings.thirdPersonView != 2) {
+            ModelObjArmor a = Objects.requireNonNull(DynamXObjectLoaders.ARMORS.findInfo("westerpack.armor_pompierinterventionbleue")).getObjArmor();
+            GlStateManager.pushMatrix();
+            GL11.glTranslatef(0.0F, 2.0F, 0.0F);
+            GL11.glRotatef(180.0F, 0.0F, 1.0F, 1.0F);
+            GL11.glRotatef(90.0F, 0.0F, 0.0F, 1.0F);
+            a.render(e.getEntity(),a.swingProgress, 1.0F, 1.0F, e.getEntity().rotationYaw, e.getEntity().rotationPitch, 1.0F);
+            GlStateManager.popMatrix();
+        }
     }
 
     @SubscribeEvent

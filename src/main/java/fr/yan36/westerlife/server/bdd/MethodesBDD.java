@@ -1,5 +1,6 @@
 package fr.yan36.westerlife.server.bdd;
 
+import fr.yan36.westerlife.server.Job;
 import fr.yan36.westerlife.server.Plainte;
 import net.minecraft.entity.player.EntityPlayer;
 
@@ -65,7 +66,7 @@ public class MethodesBDD {
     }
 
     public static void createPlainte(String plaignant, String contre, String deposition){
-        instance.execute("INSERT INTO `gendarmerie_plainte` (`Plaignant`,`Contre`, `Deposition`) VALUES ('"+plaignant+"','"+contre+"','"+deposition+"')");
+        instance.execute("INSERT INTO `gendarmerie_plainte` (`Plaignant`,`Contre`, `Deposition`) VALUES ('"+plaignant+"','"+contre+"','"+deposition+"')");fg
     }
 
     public static List<Plainte> getPlainte(){
@@ -75,6 +76,24 @@ public class MethodesBDD {
             plaintes.add(new Plainte(Integer.parseInt(qr.getValue(i, 0)), qr.getValue(i, 1), qr.getValue(i, 2), qr.getValue(i, 3)));
         }
         return plaintes;
+    }
+
+    public static List<Job> getJobs(){
+        QueryResult qr = instance.getData("SELECT * FROM france_travail");
+        List<Job> jobsList = new ArrayList<>();
+        for (int i = 0; i < qr.getRowsCount(); i++) {
+            jobsList.add(new Job(
+                Integer.parseInt(qr.getValue(i, 0)),
+                qr.getValue(i, 1),
+                qr.getValue(i, 2),
+                qr.getValue(i, 3),
+                Integer.parseInt(qr.getValue(i, 4)),
+                Integer.parseInt(qr.getValue(i, 5)),
+                Boolean.valueOf(qr.getValue(i, 6)),
+                Boolean.valueOf(qr.getValue(i, 7))
+            ));
+        }
+        return jobsList;
     }
 
     public static String getNom(EntityPlayer p){
