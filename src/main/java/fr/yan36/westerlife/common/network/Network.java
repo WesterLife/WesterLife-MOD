@@ -21,5 +21,6 @@ public class Network {
         Main.network.registerMessage(PacketOpenGUIGendarmerie.Handler.class, PacketOpenGUIGendarmerie.class, 11, Side.CLIENT);
         Main.network.registerMessage(PacketLoginGendarmerieServer.Handler.class, PacketLoginGendarmerieServer.class, 12, Side.SERVER);
         Main.network.registerMessage(PacketLoginGendarmerie.Handler.class, PacketLoginGendarmerie.class, 13, Side.CLIENT);
+        Main.network.registerMessage(PacketOpenGUIKeypad.Handler.class, PacketOpenGUIKeypad.class, 14, Side.CLIENT);
     }
 }

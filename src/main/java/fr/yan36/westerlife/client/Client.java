@@ -176,7 +176,7 @@ public class Client {
     }
 
     private void keyTestTyped() {
-            ACsGuiApi.asyncLoadThenShowGui("phone", CSSGuiGendarmerieLogin::new);
+            ACsGuiApi.asyncLoadThenShowGui("phone", () -> new CSSKeypad("0000"));
     }
 }
 

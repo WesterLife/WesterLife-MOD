@@ -98,7 +98,7 @@ public class Gendarme {
 
     @Override
     public String toString() {
-        return id + ";" + login + ";" + password + ";" + nom + ";" + prenom + ";" + grade + ";" + qualification + ";" + creationDate;
+        return id + ";" + login + ";" + nom + ";" + prenom + ";" + grade + ";" + qualification + ";" + creationDate;
     }
 
     public static Gendarme fromString(String s) {

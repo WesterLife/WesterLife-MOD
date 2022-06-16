@@ -11,6 +11,7 @@ import fr.dynamx.utils.physics.DynamXPhysicsHelper;
 import fr.yan36.westerlife.client.Client;
 import fr.yan36.westerlife.client.creativetabs.WesterTab;
 import fr.yan36.westerlife.common.blocks.BlockDynamx;
+import fr.yan36.westerlife.common.blocks.BlockKeypad;
 import fr.yan36.westerlife.common.blocks.BlockLaptop;
 import fr.yan36.westerlife.common.blocks.BlockSignVillage;
 import fr.yan36.westerlife.common.commands.DelUser;
@@ -63,6 +64,7 @@ public class Main {
     public static ItemDynamx PistoletRadar;
     public static BlockSignVillage SignVillage;
     public static BlockLaptop Laptop;
+    public static BlockKeypad Keypad;
 
     @DynamXAddon.AddonEventSubscriber
     public static void init() {
@@ -73,6 +75,7 @@ public class Main {
         //radar = new BlockDynamx(Material.ANVIL, Main.MODID, "radar", "radar/radar.obj");
         //feu_tricolore = new BlockDynamx(Material.ANVIL, Main.MODID, "feutricolore", "feut/feut.obj");
         Laptop = new BlockLaptop(Material.ANVIL, Main.MODID, "laptop", "laptop/ordi.obj");
+        //Keypad = new BlockKeypad(Material.ANVIL, Main.MODID, "keypad", "keypad/keypad.obj");
 
     }
 

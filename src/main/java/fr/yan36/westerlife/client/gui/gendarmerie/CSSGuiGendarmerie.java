@@ -21,7 +21,7 @@ import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public class CSSGuiGendarmerie extends GuiFrame {
-    public CSSGuiGendarmerie(List<String> plainteArrayList, List<String> gendarmeUser, List<String> userAccount) {
+    public CSSGuiGendarmerie(List<String> plainteArrayList, List<String> userAccount, List<String> amendesArrayList, List<String> tajArrayList, List<String> avisDeRecherchesArrayList) {
         super(new GuiScaler.Identity());
 
         // Get plainte ICI !

@@ -35,6 +35,7 @@ public class Serveur {
             }
             //Main.network.sendTo(new PacketOpenFranceTravail(MethodesBDD.getJobs()), (EntityPlayerMP) e.player);
         }
+
     }
 
 }
