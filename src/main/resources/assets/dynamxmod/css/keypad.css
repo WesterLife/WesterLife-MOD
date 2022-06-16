@@ -1,0 +1,103 @@
+.background{
+    background-color: #32373A;
+    height: 86%;
+    width: 32%;
+    top: 7%;
+    left: 34%;
+}
+.saisie{
+    background-color: #434343;
+    height: 12%;
+    width: 66%;
+    top: 12%;
+    left: 16%;
+    border: none;
+    color: #ffffff;
+    font-size: 50px;
+    padding-left: 5px;
+    padding-top: 5px;
+}
+.one {
+    background-image: url("dynamxmod:textures/keypad/1.png");
+    height: 12%;
+    width: 20%;
+    top: 32%;
+    left: 16%;
+}
+.two {
+    background-image: url("dynamxmod:textures/keypad/2.png");
+    height: 12%;
+    width: 20%;
+    top: 32%;
+    left: 40%;
+}
+.three {
+    background-image: url("dynamxmod:textures/keypad/3.png");
+    height: 12%;
+    width: 20%;
+    top: 32%;
+    left: 63%;
+}
+.four {
+    background-image: url("dynamxmod:textures/keypad/4.png");
+    height: 12%;
+    width: 20%;
+    top: 47%;
+    left: 16%;
+}
+.five {
+    background-image: url("dynamxmod:textures/keypad/5.png");
+    height: 12%;
+    width: 20%;
+    top: 47%;
+    left: 40%;
+}
+.six {
+    background-image: url("dynamxmod:textures/keypad/6.png");
+    height: 12%;
+    width: 20%;
+    top: 47%;
+    left: 63%;
+}
+.seven {
+    background-image: url("dynamxmod:textures/keypad/7.png");
+    height: 12%;
+    width: 20%;
+    top: 61%;
+    left: 16%;
+}
+.eight {
+    background-image: url("dynamxmod:textures/keypad/8.png");
+    height: 12%;
+    width: 20%;
+    top: 61%;
+    left: 40%;
+}
+.nine {
+    background-image: url("dynamxmod:textures/keypad/9.png");
+    height: 12%;
+    width: 20%;
+    top: 61%;
+    left: 63%;
+}
+.zero {
+    background-image: url("dynamxmod:textures/keypad/0.png");
+    height: 12%;
+    width: 20%;
+    top: 76%;
+    left: 40%;
+}
+.enter {
+    background-color: #26C23F;
+    height: 12%;
+    width: 20%;
+    top: 76%;
+    left: 16%;
+}
+.clear {
+    background-color: #CD1717;
+    height: 12%;
+    width: 20%;
+    top: 76%;
+    left: 63%;
+}
