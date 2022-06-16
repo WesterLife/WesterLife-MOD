@@ -1,84 +1,22 @@
-.home{
-    background-image: url("dynamxmod:textures/gendarmerie/back.png");
-    height: 98%;
-    width: 98%;
-    top: 1%;
-    left: 1%;
-    border-radius: 10%;
+.background{
+    width: 69%;
+    height: 86%;
+    left: 14%;
+    top: 7%;
+    background: #32373A;
+    border-radius: 5px;
 }
-.plainte{
-    background-image: url("dynamxmod:textures/gendarmerie/plainte.png");
-    height: 3%;
-    width: 10%;
-    top: 8%;
-    left: 35%;
-    border-radius: 10%;
+.leftbar{
+    width: 26%;
+    height: 100%;
+    left: 0%;
+    top: 0%;
+    background: #454545;
 }
-.amende{
-    background-image: url("dynamxmod:textures/gendarmerie/amende.png");
-    height: 3%;
-    width: 12%;
-    top: 8%;
-    left: 50%;
-    border-radius: 10%;
-}
-.taj{
-    background-image: url("dynamxmod:textures/gendarmerie/taj.png");
-    height: 3%;
-    width: 4%;
-    top: 8%;
-    left: 67%;
-    border-radius: 10%;
-}
-.createPlainte{
-    background-image: url("dynamxmod:textures/gendarmerie/cp.png");
-    height: 5%;
-    width: 15%;
-    top: 23%;
-    left: 80%;
-}
-.createPlainteGUI{
-    background-image: url("dynamxmod:textures/gendarmerie/cpgui.png");
-    height: 80%;
-    width: 50%;
-    top: 10%;
-    left: 25%;
-}
-.createPlainteGUIimg{
-    background-image: url("dynamxmod:textures/gendarmerie/cpguiimg.png");
-    height: 8%;
-    width: 48%;
-    top: 70%;
-    left: 26%;
-}
-#Contre{
-    background-color: #C4C4C4;
-    width: 20%;
-    height: 40px;
-    top: 26%;
-    right: 26%;
-    padding-left: 3px;
-    padding-top: 4px;
-    text-align: center;
-}
-#Plaignant{
-    background-color: #C4C4C4;
-    width: 20%;
-    height: 40px;
-    top: 26%;
-    left: 26%;
-    text-align: center;
-    padding-left: 3px;
-    padding-top: 4px;
-}
-
-#Deposition{
-    background-color: #C4C4C4;
-    width: 48%;
-    height: 26%;
-    top: 39%;
-    left: 26%;
-    text-align: center;
-    padding-left: 3px;
-    padding-top: 4px;
+.logo{
+    width: 68%;
+    height: 25%;
+    left: 16%;
+    top: 3%;
+    background-image: url("dynamxmod:textures/gendarmerie/logo.png");
 }

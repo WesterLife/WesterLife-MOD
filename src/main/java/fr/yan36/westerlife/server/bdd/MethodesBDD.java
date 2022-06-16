@@ -84,7 +84,9 @@ public class MethodesBDD {
         List<Gendarme> gendarmes = new ArrayList<>();
         for (int i = 0; i < qr.getRowsCount(); i++) {
             gendarmes.add(new Gendarme(Integer.parseInt(qr.getValue(i, 0)), qr.getValue(i, 1), qr.getValue(i, 2), qr.getValue(i, 3), qr.getValue(i, 4), qr.getValue(i, 5), qr.getValue(i, 6), qr.getValue(i, 7), Boolean.parseBoolean(qr.getValue(i, 8))));
+            System.out.println("GGD"+qr.getValue(i, 8));
         }
+
         return gendarmes;
     }
 

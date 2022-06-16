@@ -1,5 +1,6 @@
 package fr.yan36.westerlife.client.gui;
 
+import fr.aym.acsguis.api.ACsGuiApi;
 import fr.aym.acsguis.component.layout.GuiScaler;
 import fr.aym.acsguis.component.panel.GuiFrame;
 import fr.aym.acsguis.component.panel.GuiPanel;
@@ -11,10 +12,8 @@ import fr.aym.acsguis.event.listeners.IFocusListener;
 import fr.yan36.westerlife.client.Profil;
 import ibxm.Player;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiControls;
-import net.minecraft.client.gui.GuiKeyBindingList;
-import net.minecraft.client.gui.GuiOptions;
+import net.minecraft.client.gui.*;
+import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.play.server.SPacketDisconnect;
 import net.minecraft.util.ResourceLocation;
@@ -92,7 +91,10 @@ public class CSSGuiIngameMenu extends GuiFrame {
             //TODO: Disconnect
 
             System.out.println("Reste sur WesterLife, tu vas t'amuser !");
-            mc.shutdown();
+
+            mc.world.sendQuittingDisconnectingPacket();
+            mc.loadWorld((WorldClient)null);
+            ACsGuiApi.asyncLoadThenShowGui("mainmenu", CSSGuiMainMenu::new);
 
             //Euh en attendant, tu restes ou tu pars.
         });

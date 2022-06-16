@@ -5,6 +5,17 @@ import fr.aym.acsguis.component.panel.GuiFrame;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.aym.acsguis.component.textarea.GuiTextArea;
+import fr.dynamx.api.contentpack.DynamXAddon;
+import fr.dynamx.common.DynamXContext;
+import fr.dynamx.common.contentpack.ModularVehicleInfo;
+import fr.dynamx.common.core.DynamXCoreMod;
+import fr.dynamx.common.handlers.DynamXGuiHandler;
+import fr.dynamx.common.items.DynamXItem;
+import fr.dynamx.common.items.DynamXItemArmor;
+import fr.dynamx.common.items.DynamXItemSpawner;
+import fr.dynamx.utils.DynamXMpsConfig;
+import fr.dynamx.utils.client.DynamXRenderUtils;
+import fr.dynamx.utils.debug.DynamXDebugOptions;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.client.Client;
 import fr.yan36.westerlife.common.items.WesterItem;
@@ -31,6 +42,7 @@ public class CSSGuiCreateProfil extends GuiFrame {
         screen.add(Prenom);
         screen.add(date);
         screen.add(Sex);
+
 
         GuiPanel confirm = new GuiPanel();
         confirm.setCssId("confirm").addClickListener((x, y, bu) -> {

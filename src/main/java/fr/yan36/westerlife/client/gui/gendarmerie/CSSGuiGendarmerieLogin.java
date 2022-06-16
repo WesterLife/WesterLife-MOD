@@ -9,14 +9,20 @@ import fr.aym.acsguis.component.textarea.GuiTextArea;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.network.PacketLoginGendarmerieServer;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.Collections;
 import java.util.List;
 
 public class CSSGuiGendarmerieLogin extends GuiFrame {
+
+    public static String errorText = "";
+
     public CSSGuiGendarmerieLogin() {
         super(new GuiScaler.Identity());
+
+
         GuiPanel background = new GuiPanel();
         background.setCssClass("background");
         background.setCssId("background");
@@ -54,14 +60,15 @@ public class CSSGuiGendarmerieLogin extends GuiFrame {
 
         background.add(leftbar);
         add(background);
+        background.add(error);
 
         loginButton.addClickListener((x, y, bu) -> {
            if(!login.getText().isEmpty()&&!password.getText().isEmpty()){
-                error.setVisible(false);
+               error.setText("");
                System.out.println("Test " + login.getText() + " " + password.getText());
-               Main.network.sendToServer(new PacketLoginGendarmerieServer("e", "e"));
+               Main.network.sendToServer(new PacketLoginGendarmerieServer(login.getText(), password.getText(), Minecraft.getMinecraft().player));
+               error.setText(errorText);
            } else {
-               background.add(error);
                error.setVisible(true);
                error.setText("Erreur, veuillez remplir tous les champs.");
            }
