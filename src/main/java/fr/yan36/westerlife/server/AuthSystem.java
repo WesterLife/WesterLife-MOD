@@ -10,8 +10,6 @@ public class AuthSystem {
         List<Gendarme> gendarmeList = MethodesBDD.getAccountGendarme();
         for (Gendarme gendarme : gendarmeList) {
 
-            System.out.println(login + " : " + password);
-            System.out.println(gendarme.getLogin() + " = " + gendarme.getPassword());
             if (gendarme.getLogin().equals(login) && gendarme.getPassword().equals(password)) {
 
                 return true;
@@ -21,6 +19,14 @@ public class AuthSystem {
     }
 
     public static boolean loginPompier(String login, String password) {
-        return true;
+        List<Pompier> pompierList = MethodesBDD.getAccountPompier();
+        for (Pompier pompier : pompierList) {
+
+            if (pompier.getLogin().equals(login) && pompier.getPassword().equals(password)) {
+
+                return true;
+            }
+        }
+        return false;
     }
 }

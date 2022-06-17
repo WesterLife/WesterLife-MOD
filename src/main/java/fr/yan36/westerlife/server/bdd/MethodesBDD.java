@@ -3,6 +3,7 @@ package fr.yan36.westerlife.server.bdd;
 import fr.yan36.westerlife.server.Gendarme;
 import fr.yan36.westerlife.server.Job;
 import fr.yan36.westerlife.server.Plainte;
+import fr.yan36.westerlife.server.Pompier;
 import net.minecraft.entity.player.EntityPlayer;
 
 import java.util.ArrayList;
@@ -84,10 +85,21 @@ public class MethodesBDD {
         List<Gendarme> gendarmes = new ArrayList<>();
         for (int i = 0; i < qr.getRowsCount(); i++) {
             gendarmes.add(new Gendarme(Integer.parseInt(qr.getValue(i, 0)), qr.getValue(i, 1), qr.getValue(i, 2), qr.getValue(i, 3), qr.getValue(i, 4), qr.getValue(i, 5), qr.getValue(i, 6), qr.getValue(i, 7), Boolean.parseBoolean(qr.getValue(i, 8))));
-            System.out.println("GGD"+qr.getValue(i, 8));
+
         }
 
         return gendarmes;
+    }
+
+    public static List<Pompier> getAccountPompier(){
+        QueryResult qr = instance.getData("SELECT * FROM pompier_user");
+        List<Pompier> pompiers = new ArrayList<>();
+        for (int i = 0; i < qr.getRowsCount(); i++) {
+            pompiers.add(new Pompier(Integer.parseInt(qr.getValue(i, 0)), qr.getValue(i, 1), qr.getValue(i, 2), qr.getValue(i, 3), qr.getValue(i, 4), qr.getValue(i, 5), qr.getValue(i, 6), Boolean.parseBoolean(qr.getValue(i, 7))));
+
+        }
+
+        return pompiers;
     }
 
     // jobs

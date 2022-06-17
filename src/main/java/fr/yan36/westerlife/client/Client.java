@@ -6,6 +6,7 @@ import fr.dynamx.common.physics.entities.BaseVehiclePhysicsHandler;
 import fr.yan36.westerlife.client.gui.*;
 import fr.yan36.westerlife.client.gui.gendarmerie.CSSGuiGendarmerieLogin;
 import fr.yan36.westerlife.client.gui.phone.CSSGuiPhone;
+import fr.yan36.westerlife.client.gui.pompier.CSSGuiPompierLogin;
 import fr.yan36.westerlife.common.items.WesterItem;
 import fr.yan36.westerlife.common.registry.SoundsHandler;
 import net.minecraft.client.Minecraft;
@@ -176,7 +177,7 @@ public class Client {
     }
 
     private void keyTestTyped() {
-            ACsGuiApi.asyncLoadThenShowGui("phone", () -> new CSSKeypad("0000"));
+            ACsGuiApi.asyncLoadThenShowGui("phone", CSSGuiPompierLogin::new);
     }
 }
 

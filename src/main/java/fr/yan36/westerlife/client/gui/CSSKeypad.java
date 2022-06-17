@@ -1,5 +1,6 @@
 package fr.yan36.westerlife.client.gui;
 
+import com.sun.org.apache.xalan.internal.xsltc.compiler.Pattern;
 import fr.aym.acsguis.component.layout.GuiScaler;
 import fr.aym.acsguis.component.panel.GuiFrame;
 import fr.aym.acsguis.component.panel.GuiPanel;
