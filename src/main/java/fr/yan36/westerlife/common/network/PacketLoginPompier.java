@@ -18,7 +18,6 @@ public class PacketLoginPompier implements IMessage {
     public PacketLoginPompier() {}
 
     public PacketLoginPompier(Boolean result) {
-
         this.result = result;
     }
 
@@ -44,7 +43,6 @@ public class PacketLoginPompier implements IMessage {
                 CSSGuiPompierLogin.errorText = "Identifiant ou mot de passe incorrects.";
                 System.out.println("Login failed");
             }
-
             return null;
         }
     }
