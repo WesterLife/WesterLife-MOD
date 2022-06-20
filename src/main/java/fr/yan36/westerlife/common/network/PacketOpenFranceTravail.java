@@ -3,7 +3,6 @@ package fr.yan36.westerlife.common.network;
 import fr.aym.acsguis.api.ACsGuiApi;
 import fr.yan36.westerlife.client.gui.CSSFranceTravail;
 import fr.yan36.westerlife.server.Job;
-import fr.yan36.westerlife.server.Plainte;
 import io.netty.buffer.ByteBuf;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;

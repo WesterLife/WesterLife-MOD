@@ -18,7 +18,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.regex.Pattern;
 
 @SideOnly(Side.CLIENT)
 public class CSSGuiAtm extends GuiFrame {

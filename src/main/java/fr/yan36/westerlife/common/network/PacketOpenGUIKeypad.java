@@ -1,7 +1,6 @@
 package fr.yan36.westerlife.common.network;
 
 import fr.aym.acsguis.api.ACsGuiApi;
-import fr.yan36.westerlife.client.gui.CSSGuiAtm;
 import fr.yan36.westerlife.client.gui.CSSKeypad;
 import io.netty.buffer.ByteBuf;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
@@ -14,6 +13,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class PacketOpenGUIKeypad implements IMessage{
 
     private String code;
+
+    public PacketOpenGUIKeypad() {
+    }
 
     public PacketOpenGUIKeypad(String code) {
         this.code = code;

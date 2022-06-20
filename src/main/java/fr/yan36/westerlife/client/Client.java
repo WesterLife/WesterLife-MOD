@@ -3,14 +3,17 @@ package fr.yan36.westerlife.client;
 import fr.aym.acsguis.api.ACsGuiApi;
 import fr.dynamx.common.entities.BaseVehicleEntity;
 import fr.dynamx.common.physics.entities.BaseVehiclePhysicsHandler;
-import fr.yan36.westerlife.client.gui.*;
-import fr.yan36.westerlife.client.gui.gendarmerie.CSSGuiGendarmerieLogin;
-import fr.yan36.westerlife.client.gui.phone.CSSGuiPhone;
+import fr.yan36.westerlife.client.gui.CSSGuiCreateProfil;
+import fr.yan36.westerlife.client.gui.CSSGuiIngameMenu;
+import fr.yan36.westerlife.client.gui.CSSGuiMainMenu;
 import fr.yan36.westerlife.client.gui.pompier.CSSGuiPompierLogin;
+import fr.yan36.westerlife.client.phone.util.PhoneFrame;
 import fr.yan36.westerlife.common.items.WesterItem;
 import fr.yan36.westerlife.common.registry.SoundsHandler;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.*;
+import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.GuiIngameMenu;
+import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
@@ -31,12 +34,10 @@ import org.lwjgl.input.Keyboard;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class Client {
 
-    // TODO: Apprendre à développer à _INeox.
+    // TODO: Apprendre à modéliser à Tixnox parce que rename 120 fichiers de panneaux et se retrouver à dev un script python pour générer toutes les map_Kd.
 
     public static int create = 0;
     @SubscribeEvent
@@ -132,6 +133,8 @@ public class Client {
             e.setCanceled(true);
         }
 
+        // Objects.requireNonNull(DynamXObjectLoaders.ARMORS.findInfo("dynamxmod:hello")).getObjArmor().render(e.getEntity(), e.getEntity().limbSwing, e.getEntity().limbSwingAmount, 1.0F, e.getEntity().rotationYaw, e.getEntity().cameraPitch, 1.0F);
+
     }
 
     @SubscribeEvent
@@ -142,6 +145,7 @@ public class Client {
     }
 
     private static KeyBinding keyBindTest;
+    private static KeyBinding keyBindPhoneV26264;
 
     public Client()
     {
@@ -149,7 +153,9 @@ public class Client {
         FMLCommonHandler.instance().bus().register(this);
         MinecraftForge.EVENT_BUS.register(this);
         keyBindTest = new KeyBinding("westerlife.admin", Keyboard.KEY_F9, "");
+        keyBindPhoneV26264 = new KeyBinding("westerlife.admin", Keyboard.KEY_0, "");
         ClientRegistry.registerKeyBinding(keyBindTest);
+        ClientRegistry.registerKeyBinding(keyBindPhoneV26264);
     }
 
     @SubscribeEvent
@@ -158,6 +164,10 @@ public class Client {
         if(keyBindTest.isPressed())
         {
             keyTestTyped();
+        }
+        if(keyBindPhoneV26264.isPressed())
+        {
+            keyTestTyped2();
         }
     }
 
@@ -178,6 +188,9 @@ public class Client {
 
     private void keyTestTyped() {
             ACsGuiApi.asyncLoadThenShowGui("phone", CSSGuiPompierLogin::new);
+    }
+    private void keyTestTyped2() {
+        ACsGuiApi.asyncLoadThenShowGui("phone", PhoneFrame::new);
     }
 }
 

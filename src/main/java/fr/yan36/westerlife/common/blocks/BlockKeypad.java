@@ -3,8 +3,6 @@ package fr.yan36.westerlife.common.blocks;
 import fr.dynamx.common.blocks.DynamXBlock;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.blocks.tileentity.TEKeypad;
-import fr.yan36.westerlife.common.blocks.tileentity.TESign;
-import fr.yan36.westerlife.common.network.PacketOpenGUIGendarmerieLogin;
 import fr.yan36.westerlife.common.network.PacketOpenGUIKeypad;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

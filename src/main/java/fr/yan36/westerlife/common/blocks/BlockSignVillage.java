@@ -4,7 +4,6 @@ import fr.dynamx.common.blocks.DynamXBlock;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.Util;
 import fr.yan36.westerlife.common.blocks.tileentity.TESign;
-import fr.yan36.westerlife.common.network.PacketOpenGUIAtm;
 import fr.yan36.westerlife.common.network.PacketOpenGUIEditSign;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

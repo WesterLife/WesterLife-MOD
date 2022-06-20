@@ -1,0 +1,13 @@
+.screen{
+    background-image: url("dynamxmod:textures/phone/font.png");
+    height: 80%;
+    width: 25%;
+    left: 70%;
+    top: 20%;
+}
+#app {
+    width: 10%;
+    height: 10%;
+    background-color: black;
+    border-radius: 10px;
+}

@@ -1,6 +1,5 @@
 package fr.yan36.westerlife.client.phone;
 
-import fr.aym.acsguis.api.ACsGuiApi;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentString;

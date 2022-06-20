@@ -1,12 +1,9 @@
 package fr.yan36.westerlife.common.registry;
 
-import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.blocks.WesterBlocks;
 import fr.yan36.westerlife.common.items.WesterItem;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 

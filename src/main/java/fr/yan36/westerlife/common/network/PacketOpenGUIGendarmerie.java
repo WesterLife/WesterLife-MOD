@@ -1,7 +1,5 @@
 package fr.yan36.westerlife.common.network;
 
-import fr.aym.acsguis.api.ACsGuiApi;
-import fr.yan36.westerlife.client.gui.gendarmerie.CSSGuiGendarmerie;
 import fr.yan36.westerlife.server.Plainte;
 import io.netty.buffer.ByteBuf;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
@@ -11,8 +9,6 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class PacketOpenGUIGendarmerie implements IMessage{

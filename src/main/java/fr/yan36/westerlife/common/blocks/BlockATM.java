@@ -1,12 +1,9 @@
 package fr.yan36.westerlife.common.blocks;
 
-import fr.dynamx.common.items.tools.ItemShockWave;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.items.WesterItem;
 import fr.yan36.westerlife.common.network.PacketOpenGUIAtm;
 import fr.yan36.westerlife.common.network.PacketReqSyncPlayer;
-import fr.yan36.westerlife.common.network.PacketSyncPlayer;
-import fr.yan36.westerlife.server.bdd.MethodesBDD;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

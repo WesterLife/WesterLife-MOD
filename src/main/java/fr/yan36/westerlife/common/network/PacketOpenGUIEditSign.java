@@ -1,7 +1,6 @@
 package fr.yan36.westerlife.common.network;
 
 import fr.aym.acsguis.api.ACsGuiApi;
-import fr.yan36.westerlife.client.gui.CSSGuiAtm;
 import fr.yan36.westerlife.client.gui.CSSGuiChangeSign;
 import io.netty.buffer.ByteBuf;
 import net.minecraftforge.fml.common.network.ByteBufUtils;

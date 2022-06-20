@@ -1,8 +1,5 @@
 package fr.yan36.westerlife.server;
 
-import java.util.Arrays;
-import java.util.Base64;
-
 public class Plainte {
 
     private int id;

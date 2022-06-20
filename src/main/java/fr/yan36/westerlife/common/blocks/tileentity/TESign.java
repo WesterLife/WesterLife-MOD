@@ -1,12 +1,8 @@
 package fr.yan36.westerlife.common.blocks.tileentity;
 
 import fr.dynamx.common.contentpack.type.objects.BlockObject;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
-
-import java.util.List;
 
 public class TESign extends TileEntitySyncClient implements ITickable {
 

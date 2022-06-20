@@ -2,7 +2,6 @@ package fr.yan36.westerlife.common.network;
 
 import fr.yan36.westerlife.common.Util;
 import fr.yan36.westerlife.common.blocks.tileentity.TESign;
-import fr.yan36.westerlife.server.bdd.MethodesBDD;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.ByteBufUtils;

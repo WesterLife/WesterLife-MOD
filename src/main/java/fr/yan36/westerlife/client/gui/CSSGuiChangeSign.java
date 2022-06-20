@@ -3,26 +3,15 @@ package fr.yan36.westerlife.client.gui;
 import fr.aym.acsguis.component.layout.GuiScaler;
 import fr.aym.acsguis.component.panel.GuiFrame;
 import fr.aym.acsguis.component.panel.GuiPanel;
-import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.aym.acsguis.component.textarea.GuiTextArea;
 import fr.yan36.westerlife.Main;
-import fr.yan36.westerlife.client.Client;
-import fr.yan36.westerlife.common.Util;
-import fr.yan36.westerlife.common.network.PacketCreateIdentityServer;
 import fr.yan36.westerlife.common.network.PacketUpdateTileSign;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiOptions;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 @SideOnly(Side.CLIENT)
 public class CSSGuiChangeSign extends GuiFrame {

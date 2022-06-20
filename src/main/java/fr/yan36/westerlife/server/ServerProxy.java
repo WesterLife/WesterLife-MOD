@@ -4,9 +4,6 @@ import fr.yan36.westerlife.common.CommonProxy;
 import net.minecraftforge.common.MinecraftForge;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class ServerProxy extends CommonProxy {
 
