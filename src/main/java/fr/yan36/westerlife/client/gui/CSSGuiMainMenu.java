@@ -57,8 +57,6 @@ public class CSSGuiMainMenu extends GuiFrame {
         System.out.println(news.getAuthor());
         System.out.println(news.getAbouturl());
 
-
-
         GuiPanel background = new GuiPanel();
         background.setCssClass("background");
         background.setCssId("background");
