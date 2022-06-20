@@ -1,5 +1,6 @@
 package fr.yan36.westerlife.client;
 
+import com.mrcrayfish.obfuscate.client.event.RenderItemEvent;
 import fr.aym.acsguis.api.ACsGuiApi;
 import fr.dynamx.common.entities.BaseVehicleEntity;
 import fr.dynamx.common.physics.entities.BaseVehiclePhysicsHandler;
@@ -142,6 +143,7 @@ public class Client {
     }
 
     private static KeyBinding keyBindTest;
+    private static KeyBinding keyBindAnimation;
 
     public Client()
     {
@@ -149,6 +151,7 @@ public class Client {
         FMLCommonHandler.instance().bus().register(this);
         MinecraftForge.EVENT_BUS.register(this);
         keyBindTest = new KeyBinding("westerlife.admin", Keyboard.KEY_F9, "");
+        keyBindAnimation = new KeyBinding("westerlife.animation", Keyboard.KEY_F4, "westerlife.keybind");
         ClientRegistry.registerKeyBinding(keyBindTest);
     }
 
@@ -159,25 +162,34 @@ public class Client {
         {
             keyTestTyped();
         }
+
+        if(keyBindAnimation.isPressed())
+        {
+            keyAnimationTyped();
+        }
     }
 
     @SubscribeEvent
     public void onInteractEvent(PlayerInteractEvent.EntityInteract event)
     {
-        System.out.println("target");
-        Entity Target = event.getTarget();
-
-        System.out.println(Target);
-        if (Target instanceof BaseVehicleEntity) {
-            BaseVehiclePhysicsHandler<?> physicsHandler = ((BaseVehicleEntity<?>) Target).physicsHandler;
-            float speed = physicsHandler.getSpeed(BaseVehiclePhysicsHandler.SpeedUnit.KMH);
-            System.out.println(speed);
-            Minecraft.getMinecraft().ingameGUI.setOverlayMessage("§cVitesse du Véhicule : " + speed, true);
-        }
+//        System.out.println("target");
+//        Entity Target = event.getTarget();
+//
+//        System.out.println(Target);
+//        if (Target instanceof BaseVehicleEntity) {
+//            BaseVehiclePhysicsHandler<?> physicsHandler = ((BaseVehicleEntity<?>) Target).physicsHandler;
+//            float speed = physicsHandler.getSpeed(BaseVehiclePhysicsHandler.SpeedUnit.KMH);
+//            System.out.println(speed);
+//            Minecraft.getMinecraft().ingameGUI.setOverlayMessage("§cVitesse du Véhicule : " + speed, true);
+//        }
     }
 
     private void keyTestTyped() {
-            ACsGuiApi.asyncLoadThenShowGui("phone", CSSGuiPompierLogin::new);
+            ACsGuiApi.asyncLoadThenShowGui("phone", CSSGuiGendarmerieLogin::new);
+    }
+
+    private void keyAnimationTyped() {
+        ACsGuiApi.asyncLoadThenShowGui("animation", CSSGuiAnimation::new);
     }
 }
 

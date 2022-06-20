@@ -20,3 +20,9 @@
     top: 3%;
     background-image: url("dynamxmod:textures/gendarmerie/logo.png");
 }
+.scrollpanel{
+    width: 20%;
+    height: 10%;
+    left: 50%;
+    top: 30%;
+}

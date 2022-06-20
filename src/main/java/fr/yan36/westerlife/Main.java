@@ -2,6 +2,7 @@ package fr.yan36.westerlife;
 
 import es.allblue.mcef.api.IDisplayHandler;
 import es.allblue.mcef.api.IJSQueryHandler;
+import fr.aym.acsguis.component.panel.GuiScrollPane;
 import fr.dynamx.api.contentpack.DynamXAddon;
 import fr.dynamx.api.events.DynamXBlockEvent;
 import fr.dynamx.api.events.PhysicsEntityEvent;
@@ -65,6 +66,7 @@ public class Main {
     public static BlockSignVillage SignVillage;
     public static BlockLaptop Laptop;
     public static BlockKeypad Keypad;
+
 
     @DynamXAddon.AddonEventSubscriber
     public static void init() {

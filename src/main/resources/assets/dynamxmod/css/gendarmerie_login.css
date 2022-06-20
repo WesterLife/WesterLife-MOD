@@ -73,3 +73,10 @@
     font-size: 8px;
     color: #FFFFFF;
 }
+.scrollpanel{
+    background-image: url("dynamxmod:textures/gendarmerie/logo.png");
+    width: 20%;
+    height: 10%;
+    left: 50%;
+    top: 30%;
+}
