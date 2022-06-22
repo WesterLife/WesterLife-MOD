@@ -1,12 +1,9 @@
 package fr.yan36.westerlife.common;
 
-import es.allblue.mcef.api.*;
 import fr.yan36.westerlife.common.blocks.tileentity.TESign;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-import java.io.File;
 import java.io.IOException;
 
 public class CommonProxy {

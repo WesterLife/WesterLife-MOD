@@ -2,13 +2,8 @@ package fr.yan36.westerlife.common.network;
 
 import fr.aym.acsguis.api.ACsGuiApi;
 import fr.yan36.westerlife.client.gui.CSSGuiAtm;
-import fr.yan36.westerlife.client.gui.gendarmerie.CSSGuiGendarmerie;
 import fr.yan36.westerlife.client.gui.gendarmerie.CSSGuiGendarmerieLogin;
-import fr.yan36.westerlife.client.gui.phone.CSSGuiPhone;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;

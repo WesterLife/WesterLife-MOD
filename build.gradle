@@ -108,7 +108,7 @@ minecraft {
         manifest {
             attributes([
                     "Specification-Title"     : "westerlife",
-                    "Specification-Vendor"    : "yan36,MK_16",
+                    "Specification-Vendor"    : "yan36,MK_16,gabidut76",
                     "Specification-Version"   : "2", // We are version 1 of ourselves
                     "Implementation-Title"    : project.name,
                     "Implementation-Version"  : project.version,

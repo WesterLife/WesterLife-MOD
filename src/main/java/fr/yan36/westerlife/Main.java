@@ -1,42 +1,24 @@
 package fr.yan36.westerlife;
 
-import es.allblue.mcef.api.IDisplayHandler;
-import es.allblue.mcef.api.IJSQueryHandler;
-import fr.aym.acsguis.component.panel.GuiScrollPane;
 import fr.dynamx.api.contentpack.DynamXAddon;
-import fr.dynamx.api.events.DynamXBlockEvent;
-import fr.dynamx.api.events.PhysicsEntityEvent;
-import fr.dynamx.api.events.VehicleEntityEvent;
-import fr.dynamx.common.DynamXMain;
-import fr.dynamx.utils.physics.DynamXPhysicsHelper;
-import fr.yan36.westerlife.client.Client;
 import fr.yan36.westerlife.client.creativetabs.WesterTab;
-import fr.yan36.westerlife.common.blocks.BlockDynamx;
+import fr.yan36.westerlife.common.CommonProxy;
 import fr.yan36.westerlife.common.blocks.BlockKeypad;
 import fr.yan36.westerlife.common.blocks.BlockLaptop;
 import fr.yan36.westerlife.common.blocks.BlockSignVillage;
-import fr.yan36.westerlife.common.commands.DelUser;
 import fr.yan36.westerlife.common.items.ItemDynamx;
 import fr.yan36.westerlife.common.network.Network;
-import fr.yan36.westerlife.common.CommonProxy;
 import fr.yan36.westerlife.common.registry.RegisteringHandler;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
-import net.minecraftforge.server.permission.DefaultPermissionLevel;
-import net.minecraftforge.server.permission.PermissionAPI;
 import org.apache.logging.log4j.Logger;
 
-import java.awt.*;
 import java.io.IOException;
 
 @Mod(

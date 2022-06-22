@@ -7,28 +7,18 @@ import fr.yan36.westerlife.common.CommonProxy;
 import fr.yan36.westerlife.common.blocks.tileentity.TESign;
 import fr.yan36.westerlife.common.blocks.tileentity.TESignRender;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.texture.TextureUtil;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Util;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import org.apache.commons.io.IOUtils;
 import org.lwjgl.opengl.Display;
-import org.newdawn.slick.imageout.ImageIOWriter;
-import org.newdawn.slick.openal.Audio;
-import org.newdawn.slick.openal.AudioLoader;
-import org.newdawn.slick.openal.SoundStore;
-import org.newdawn.slick.opengl.ImageIOImageData;
-import org.newdawn.slick.util.ResourceLoader;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
-import java.util.Objects;
 
 
 public class ClientProxy extends CommonProxy {
@@ -59,8 +49,9 @@ public class ClientProxy extends CommonProxy {
         ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("dynamxmod", "css/gendarmerie_login.css"));
         ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("dynamxmod", "css/keypad.css"));
         ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("dynamxmod", "css/pompier_login.css"));
-        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("dynamxmod", "css/animation.css"));
-        Apps.Init();
+        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("phoneframe", "css/phoneframe.css"));
+
+        Apps.Init(); // Gabi <3
 
     }
 
