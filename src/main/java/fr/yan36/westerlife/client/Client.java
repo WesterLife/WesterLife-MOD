@@ -4,11 +4,13 @@ import com.mrcrayfish.obfuscate.client.event.RenderItemEvent;
 import fr.aym.acsguis.api.ACsGuiApi;
 import fr.dynamx.common.entities.BaseVehicleEntity;
 import fr.dynamx.common.physics.entities.BaseVehiclePhysicsHandler;
+import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.client.gui.*;
 import fr.yan36.westerlife.client.gui.gendarmerie.CSSGuiGendarmerieLogin;
 import fr.yan36.westerlife.client.gui.phone.CSSGuiPhone;
 import fr.yan36.westerlife.client.gui.pompier.CSSGuiPompierLogin;
 import fr.yan36.westerlife.common.items.WesterItem;
+import fr.yan36.westerlife.common.network.PacketOpenGUIGendarmerieServer;
 import fr.yan36.westerlife.common.registry.SoundsHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
@@ -185,7 +187,7 @@ public class Client {
     }
 
     private void keyTestTyped() {
-            ACsGuiApi.asyncLoadThenShowGui("phone", CSSGuiGendarmerieLogin::new);
+        Main.network.sendToServer(new PacketOpenGUIGendarmerieServer(Minecraft.getMinecraft().player));
     }
 
     private void keyAnimationTyped() {

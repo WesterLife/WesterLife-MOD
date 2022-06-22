@@ -12,7 +12,7 @@ import fr.aym.acsguis.component.textarea.GuiTextField;
 import fr.dynamx.server.command.DynamXCommands;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.network.PacketCreatePlainte;
-import fr.yan36.westerlife.server.Plainte;
+import fr.yan36.westerlife.server.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
@@ -35,6 +35,28 @@ public class CSSGuiGendarmerie extends GuiFrame {
         }
 
 
+        for (String s : userAccount) {
+            Gendarme accounts = Gendarme.fromString(s.replaceAll(" ", ""));
+
+        }
+
+
+        for (String s : amendesArrayList) {
+            Amendes amendes = Amendes.fromString(s.replaceAll(" ", ""));
+
+        }
+
+        for (String s : tajArrayList) {
+            TAJ taj = TAJ.fromString(s.replaceAll(" ", ""));
+
+        }
+
+        for (String s : avisDeRecherchesArrayList) {
+            AvisDeRecherche avisDeRecherche = AvisDeRecherche.fromString(s.replaceAll(" ", ""));
+
+        }
+
+
         System.out.println(plainteArrayList);
 
         GuiPanel background = new GuiPanel();
@@ -46,12 +68,6 @@ public class CSSGuiGendarmerie extends GuiFrame {
 
         GuiPanel logo = new GuiPanel();
         logo.setCssClass("logo");
-
-        GuiScrollPane scrollPanel = new GuiScrollPane();
-        scrollPanel.drawForeground(0, 0, 1L);
-        scrollPanel.setCssClass("scrollpanel");
-        scrollPanel.drawString(Minecraft.getMinecraft().fontRenderer, "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", 0, 0, 0xFFFFFF);
-
 
         leftbar.add(logo);
 

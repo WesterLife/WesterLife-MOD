@@ -24,5 +24,6 @@ public class Network {
         Main.network.registerMessage(PacketOpenGUIKeypad.Handler.class, PacketOpenGUIKeypad.class, 14, Side.CLIENT);
         Main.network.registerMessage(PacketLoginPompierServer.Handler.class, PacketLoginPompierServer.class, 15, Side.SERVER);
         Main.network.registerMessage(PacketLoginPompier.Handler.class, PacketLoginPompier.class, 16, Side.CLIENT);
+        Main.network.registerMessage(PacketOpenGUIGendarmerieServer.Handler.class, PacketOpenGUIGendarmerieServer.class, 17, Side.SERVER);
     }
 }

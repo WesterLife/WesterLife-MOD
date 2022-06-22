@@ -15,6 +15,7 @@ public class GuiAppManager extends GuiFrame {
         screen.setCssClass("screen");
         screen.add(new GuiLabel("Hello !"));
         add(screen);
+
     }
 
     @Override
