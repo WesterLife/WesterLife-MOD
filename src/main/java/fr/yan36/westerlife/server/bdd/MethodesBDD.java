@@ -1,10 +1,8 @@
 package fr.yan36.westerlife.server.bdd;
 
-import fr.yan36.westerlife.server.Gendarme;
-import fr.yan36.westerlife.server.Job;
-import fr.yan36.westerlife.server.Plainte;
-import fr.yan36.westerlife.server.Pompier;
+import fr.yan36.westerlife.server.*;
 import net.minecraft.entity.player.EntityPlayer;
+import scala.Int;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,6 +87,39 @@ public class MethodesBDD {
         }
 
         return gendarmes;
+    }
+
+    public static List<TAJ> getTAJ(){
+        QueryResult qr = instance.getData("SELECT * FROM gendarmerie_taj");
+        List<TAJ> taj = new ArrayList<>();
+        for (int i = 0; i < qr.getRowsCount(); i++) {
+            taj.add(new TAJ(Integer.parseInt(qr.getValue(i, 0)), qr.getValue(i, 1), qr.getValue(i, 2), qr.getValue(i, 3), qr.getValue(i, 4)));
+
+        }
+
+        return taj;
+    }
+
+    public static List<Amendes> getAmendes(){
+        QueryResult qr = instance.getData("SELECT * FROM gendarmerie_amendes");
+        List<Amendes> amendes = new ArrayList<>();
+        for (int i = 0; i < qr.getRowsCount(); i++) {
+            amendes.add(new Amendes(Integer.parseInt(qr.getValue(i, 0)), qr.getValue(i, 1), qr.getValue(i, 2), qr.getValue(i, 3), Integer.parseInt(qr.getValue(i, 4))));
+
+        }
+
+        return amendes;
+    }
+
+    public static List<AvisDeRecherche> getAvisDeRecherche(){
+        QueryResult qr = instance.getData("SELECT * FROM gendarmerie_avisderecherche");
+        List<AvisDeRecherche> avisderecherche = new ArrayList<>();
+        for (int i = 0; i < qr.getRowsCount(); i++) {
+            avisderecherche.add(new AvisDeRecherche(Integer.parseInt(qr.getValue(i, 0)), qr.getValue(i, 1), qr.getValue(i, 2), qr.getValue(i, 3), qr.getValue(i, 4)));
+
+        }
+
+        return avisderecherche;
     }
 
     public static List<Pompier> getAccountPompier(){

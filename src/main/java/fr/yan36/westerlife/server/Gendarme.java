@@ -98,12 +98,12 @@ public class Gendarme {
 
     @Override
     public String toString() {
-        return id + ";" + login + ";" + nom + ";" + prenom + ";" + grade + ";" + qualification + ";" + creationDate;
+        return id + ";" + login + ";" + "password" + ";" + nom + ";" + prenom + ";" + grade + ";" + qualification + ";" + creationDate;
     }
 
     public static Gendarme fromString(String s) {
         String[] split = s.split(";");
-        return new Gendarme(Integer.parseInt(split[0]), split[1], split[2], split[3], split[4], split[5], split[6], split[7], Boolean.parseBoolean(split[8]));
+        return new Gendarme(Integer.parseInt(split[0]), split[1], "password", split[3], split[4], split[5], split[6], split[7], Boolean.parseBoolean(split[8]));
     }
 
     public static String toStringNice(Gendarme g) {
