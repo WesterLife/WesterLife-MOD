@@ -14,6 +14,6 @@ public class AppSettings extends App {
 
     @Override
     public void onClick(EntityPlayer executor) {
-        ACsGuiApi.asyncLoadThenShowGui("phonesettings", GuiSettings::new);
+        A
     }
 }

@@ -2,9 +2,8 @@ package fr.yan36.westerlife.client.phone.util;
 
 import fr.aym.acsguis.component.layout.GuiScaler;
 import fr.aym.acsguis.component.panel.GuiFrame;
-import net.minecraft.client.Minecraft;
+import fr.aym.acsguis.component.panel.GuiPanel;
 import net.minecraft.util.ResourceLocation;
-import org.lwjgl.opengl.GL11;
 
 import java.util.Collections;
 import java.util.List;
@@ -14,14 +13,27 @@ public class PhoneFrame extends GuiFrame {
 
     public PhoneFrame() {
         super(new GuiScaler.AdjustToScreenSize(true,1,1));
-        GL11.glPopMatrix();
-        Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation("westerlife:textures/gui/phone/font.png"));
-        this.drawTexturedBackground(0,0, 0.0F);
-        GL11.glPushMatrix();
+
+        GuiPanel screen = new GuiPanel();
+        screen.setCssClass("screen");
+
+
+        add(screen);
     }
 
     @Override
     public List<ResourceLocation> getCssStyles() {
         return Collections.singletonList(new ResourceLocation("dynamxmod:css/phoneframe.css"));
+    }
+
+    /**
+     * @apiNote This method is called when the screen is resized. Before calling the super method, you can use the
+     */
+    public void addElement(GuiPanel pan) {
+        add(pan);
+    }
+
+    public static void openGui() {
+        
     }
 }
