@@ -42,6 +42,7 @@ public class Client {
     // TODO: Apprendre à développer à _INeox.
 
     public static int create = 0;
+    public static String animationState = "default";
     @SubscribeEvent
     public void GuieventHandler(GuiOpenEvent e) {
 

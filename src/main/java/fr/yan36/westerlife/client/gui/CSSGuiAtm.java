@@ -11,6 +11,7 @@ import fr.yan36.westerlife.common.items.WesterItem;
 import fr.yan36.westerlife.common.network.PacketDepoArgentServer;
 import fr.yan36.westerlife.common.network.PacketRetirerArgentServer;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
@@ -23,155 +24,157 @@ import java.util.List;
 public class CSSGuiAtm extends GuiFrame {
     String status = "home";
 
+    public void clavier(int number) {
+        //TO DO
+    }
+
     public CSSGuiAtm() {
 
         super(new GuiScaler.Identity());
 
-        GuiPanel home = new GuiPanel();
-        home.setCssClass("home");
-        GuiTextArea mont;
-        GuiPanel solde = new GuiPanel();
-        solde.setCssClass("solde");
-        solde.add(new GuiLabel(0,0,0,0, "" + Profil.getBank() + "€").setCssId("sold"));
-        home.add(solde);
-        GuiPanel depo = new GuiPanel();
-        GuiPanel reti = new GuiPanel();
-        depo.setCssClass("depo");
-        depo.setCssId("depo");
-        GuiPanel cinqeuros = new GuiPanel();
-        cinqeuros.setCssClass("cinqeuros");
-        cinqeuros.setCssId("cinqeuros");
-        GuiPanel dixeuros = new GuiPanel();
-        dixeuros.setCssClass("dixeuros");
-        dixeuros.setCssId("dixeuros");
-        GuiPanel vingteuros = new GuiPanel();
-        vingteuros.setCssClass("vingteuros");
-        vingteuros.setCssId("vingteuros");
-        GuiPanel cinquanteeuros = new GuiPanel();
-        cinquanteeuros.setCssClass("cinquanteeuros");
-        cinquanteeuros.setCssId("cinquanteeuros");
-        GuiPanel centeuros = new GuiPanel();
-        centeuros.setCssClass("centeuros");
-        centeuros.setCssId("centeuros");
-        GuiPanel deuxcenteuros = new GuiPanel();
-        deuxcenteuros.setCssClass("deuxcenteuros");
-        deuxcenteuros.setCssId("deuxcenteuros");
-        GuiPanel cinqcenteuros = new GuiPanel();
-        cinqcenteuros.setCssClass("cinqcenteuros");
-        cinqcenteuros.setCssId("cinqcenteuros");
+        GuiPanel back = new GuiPanel();
+        back.setCssClass("back");
 
-        home.add(cinqeuros);
-        home.add(dixeuros);
-        home.add(vingteuros);
-        home.add(cinquanteeuros);
-        home.add(centeuros);
-        home.add(deuxcenteuros);
-        home.add(cinqcenteuros);
-        home.add(depo);
-        reti.setCssClass("reti");
-        reti.setCssId("reti");
-        home.add(reti);
-        cinqeuros.setVisible(false);
-        dixeuros.setVisible(false);
-        vingteuros.setVisible(false);
-        cinquanteeuros.setVisible(false);
-        centeuros.setVisible(false);
-        deuxcenteuros.setVisible(false);
-        cinqcenteuros.setVisible(false);
-        depo.addClickListener((x, y, bu) -> {
-            if(cinqcenteuros.isVisible()){
-            }else {
-                reti.setVisible(false);
-                depo.setVisible(false);
-                cinqeuros.setVisible(true);
-                dixeuros.setVisible(true);
-                vingteuros.setVisible(true);
-                cinquanteeuros.setVisible(true);
-                centeuros.setVisible(true);
-                deuxcenteuros.setVisible(true);
-                cinqcenteuros.setVisible(true);
-                solde.setVisible(false);
-                depo.setCssCode("bottom: 5%;");
-                status = "depo";
-            }
+        GuiPanel clavierAera = new GuiPanel();
+        clavierAera.setCssClass("clavier-area");
 
-        });
-        reti.addClickListener((x, y, bu) -> {
-            if(cinqcenteuros.isVisible()){
+        /** Clavier */
 
-            }else {
-                reti.setVisible(false);
-                depo.setVisible(false);
-                cinqeuros.setVisible(true);
-                dixeuros.setVisible(true);
-                vingteuros.setVisible(true);
-                cinquanteeuros.setVisible(true);
-                centeuros.setVisible(true);
-                deuxcenteuros.setVisible(true);
-                cinqcenteuros.setVisible(true);
-                solde.setVisible(false);
-                depo.setCssCode("bottom: 5%;");
-                status = "reti";
-            }
+        GuiPanel oneButton = new GuiPanel();
+        oneButton.setCssClass("one-button");
 
-        });
+        GuiPanel twoButton = new GuiPanel();
+        twoButton.setCssClass("two-button");
 
-        cinqeuros.addClickListener((x, y, bu) -> {
-            if(status.equals("reti")){
-                Main.network.sendToServer(new PacketRetirerArgentServer(Minecraft.getMinecraft().player, 5));
-            } else if (status.equals("depo")){
-                Main.network.sendToServer(new PacketDepoArgentServer(Minecraft.getMinecraft().player, 5, new ItemStack(WesterItem.CINQEUROS)));
-            }
-        });
+        GuiPanel threeButton = new GuiPanel();
+        threeButton.setCssClass("three-button");
 
-        dixeuros.addClickListener((x, y, bu) -> {
-            if(status.equals("reti")){
-                Main.network.sendToServer(new PacketRetirerArgentServer(Minecraft.getMinecraft().player, 10));
-            } else if (status.equals("depo")){
-                Main.network.sendToServer(new PacketDepoArgentServer(Minecraft.getMinecraft().player, 10, new ItemStack(WesterItem.DIXEUROS)));
-            }
-        });
+        GuiPanel fourButton = new GuiPanel();
+        fourButton.setCssClass("four-button");
 
-        vingteuros.addClickListener((x, y, bu) -> {
-            if(status.equals("reti")){
-                Main.network.sendToServer(new PacketRetirerArgentServer(Minecraft.getMinecraft().player, 20));
-            } else if (status.equals("depo")){
-                Main.network.sendToServer(new PacketDepoArgentServer(Minecraft.getMinecraft().player, 20, new ItemStack(WesterItem.VINGTEUROS)));
-            }
-        });
+        GuiPanel fiveButton = new GuiPanel();
+        fiveButton.setCssClass("five-button");
 
-        cinquanteeuros.addClickListener((x, y, bu) -> {
-            if(status.equals("reti")){
-                Main.network.sendToServer(new PacketRetirerArgentServer(Minecraft.getMinecraft().player, 50));
-            } else if (status.equals("depo")){
-                Main.network.sendToServer(new PacketDepoArgentServer(Minecraft.getMinecraft().player, 50, new ItemStack(WesterItem.CINQUANTEEUROS)));
-            }
-        });
+        GuiPanel sixButton = new GuiPanel();
+        sixButton.setCssClass("six-button");
 
-        centeuros.addClickListener((x, y, bu) -> {
-            if(status.equals("reti")){
-                Main.network.sendToServer(new PacketRetirerArgentServer(Minecraft.getMinecraft().player, 100));
-            } else if (status.equals("depo")){
-                Main.network.sendToServer(new PacketDepoArgentServer(Minecraft.getMinecraft().player, 100, new ItemStack(WesterItem.CENTEUROS)));
-            }
-        });
+        GuiPanel sevenButton = new GuiPanel();
+        sevenButton.setCssClass("seven-button");
 
-        deuxcenteuros.addClickListener((x, y, bu) -> {
-            if(status.equals("reti")){
-                Main.network.sendToServer(new PacketRetirerArgentServer(Minecraft.getMinecraft().player, 200));
-            } else if (status.equals("depo")){
-                Main.network.sendToServer(new PacketDepoArgentServer(Minecraft.getMinecraft().player, 200, new ItemStack(WesterItem.DEUXCENTEUROS)));
-            }
-        });
+        GuiPanel eightButton = new GuiPanel();
+        eightButton.setCssClass("eight-button");
 
-        cinqcenteuros.addClickListener((x, y, bu) -> {
-            if(status.equals("reti")){
-                Main.network.sendToServer(new PacketRetirerArgentServer(Minecraft.getMinecraft().player, 500));
-            } else if (status.equals("depo")){
-                Main.network.sendToServer(new PacketDepoArgentServer(Minecraft.getMinecraft().player, 500, new ItemStack(WesterItem.CINQCENTEUROS)));
-            }
-        });
-        add(home);
+        GuiPanel nineButton = new GuiPanel();
+        nineButton.setCssClass("nine-button");
+
+        GuiPanel zeroButton = new GuiPanel();
+        zeroButton.setCssClass("zero-button");
+
+        GuiPanel enterButton = new GuiPanel();
+        enterButton.setCssClass("enter-button");
+
+        GuiPanel clearButton = new GuiPanel();
+        clearButton.setCssClass("clear-button");
+
+        GuiPanel cancelButton = new GuiPanel();
+        cancelButton.setCssClass("cancel-button");
+
+        /** 8 buttons */
+
+        GuiPanel button1right = new GuiPanel();
+        GuiPanel button2right = new GuiPanel();
+        GuiPanel button3right = new GuiPanel();
+        GuiPanel button4right = new GuiPanel();
+
+        GuiPanel button1left = new GuiPanel();
+        GuiPanel button2left = new GuiPanel();
+        GuiPanel button3left = new GuiPanel();
+        GuiPanel button4left = new GuiPanel();
+
+        button1right.setCssClass("button1right");
+        button2right.setCssClass("button2right");
+        button3right.setCssClass("button3right");
+        button4right.setCssClass("button4right");
+
+        button1left.setCssClass("button1left");
+        button2left.setCssClass("button2left");
+        button3left.setCssClass("button3left");
+        button4left.setCssClass("button4left");
+
+        /**
+         * Home Page
+         */
+
+        GuiPanel screenHome = new GuiPanel();
+        screenHome.setCssClass("screen");
+        screenHome.setCssId("screen-home");
+
+        GuiPanel screenHomeTitle = new GuiPanel();
+        screenHomeTitle.setCssClass("screen-home-title");
+
+        /**
+         * Code Login Page
+         */
+
+        GuiPanel screenCodeLogin = new GuiPanel();
+        screenCodeLogin.setCssClass("screen");
+        screenCodeLogin.setCssId("screen-login");
+
+        GuiPanel screenCodeLoginTextAera = new GuiPanel();
+        screenCodeLoginTextAera.setCssClass("screen-login-text-area");
+
+        /**
+         * Dépôt
+         */
+
+        GuiPanel screenDepot = new GuiPanel();
+        screenDepot.setCssClass("screen");
+        screenDepot.setCssId("screen-depot");
+
+        /**
+         * Retrait
+         */
+
+        GuiPanel screenRetrait = new GuiPanel();
+        screenRetrait.setCssClass("screen");
+        screenRetrait.setCssId("screen-retrait");
+
+        /**
+         * Transaction
+         */
+
+        GuiPanel screenTransaction = new GuiPanel();
+        screenTransaction.setCssClass("screen");
+        screenTransaction.setCssId("screen-transaction");
+
+        GuiPanel RIBaera = new GuiPanel();
+        RIBaera.setCssClass("rib-area");
+
+        GuiPanel Soldeaera = new GuiPanel();
+        Soldeaera.setCssClass("solde-area");
+
+        /**
+         * Mon profil
+         */
+
+        GuiPanel screenProfil = new GuiPanel();
+        screenProfil.setCssClass("screen");
+        screenProfil.setCssId("screen-profil");
+
+        GuiPanel infoProfil = new GuiPanel();
+        infoProfil.setCssClass("info-profil");
+
+        /**
+         * Modif code
+         */
+
+        GuiPanel screenProfilcode = new GuiPanel();
+        screenProfilcode.setCssClass("screen");
+        screenProfilcode.setCssId("screen-profil-code");
+
+        GuiPanel newCode = new GuiPanel();
+        newCode.setCssClass("new-code");
+
     }
 
     public List<ResourceLocation> getCssStyles() {

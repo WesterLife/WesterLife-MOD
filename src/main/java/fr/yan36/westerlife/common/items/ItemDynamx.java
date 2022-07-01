@@ -5,6 +5,7 @@ import fr.dynamx.common.items.DynamXItem;
 import fr.dynamx.common.physics.entities.BaseVehiclePhysicsHandler;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.registry.SoundsHandler;
+import net.minecraft.block.BlockDoor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
