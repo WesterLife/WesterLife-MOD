@@ -4,7 +4,10 @@ import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.network.PacketCreateIdentity;
 import fr.yan36.westerlife.common.network.PacketSyncPlayer;
 import fr.yan36.westerlife.server.bdd.MethodesBDD;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 

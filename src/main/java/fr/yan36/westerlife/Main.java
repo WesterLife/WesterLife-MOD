@@ -12,6 +12,7 @@ import fr.yan36.westerlife.common.registry.RegisteringHandler;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -34,7 +35,6 @@ public class Main {
      * On déclare différentes valeurs utiles.
      */
 
-
     public static final String MODID = "westerlife";
     public static final String NAME = "WesterLife Mod";
     public static final String VERSION = "1.0";
@@ -45,6 +45,7 @@ public class Main {
     public static SimpleNetworkWrapper network;
 
     public static ItemDynamx PistoletRadar;
+    public static ItemDynamx Belier;
     public static BlockSignVillage SignVillage;
     public static BlockLaptop Laptop;
     public static BlockKeypad Keypad;
@@ -54,13 +55,14 @@ public class Main {
     public static void init() {
 
         PistoletRadar = (ItemDynamx) new ItemDynamx(Main.MODID, "pistoletradar", "pistoletradar/pistoletradar.obj").setMaxStackSize(1);
-        SignVillage = new BlockSignVillage(Material.ANVIL, Main.MODID, "panneauvillage", "signvillage/sign.obj");
+        Belier = (ItemDynamx) new ItemDynamx(Main.MODID, "belier", "belier/belier.obj").setMaxStackSize(1);
 
-        //radar = new BlockDynamx(Material.ANVIL, Main.MODID, "radar", "radar/radar.obj");
-        //feu_tricolore = new BlockDynamx(Material.ANVIL, Main.MODID, "feutricolore", "feut/feut.obj");
+        SignVillage = new BlockSignVillage(Material.ANVIL, Main.MODID, "panneauvillage", "signvillage/sign.obj");
+//
+//        radar = new BlockDynamx(Material.ANVIL, Main.MODID, "radar", "radar/radar.obj");
+//        feu_tricolore = new BlockDynamx(Material.ANVIL, Main.MODID, "feutricolore", "feut/feut.obj");
         Laptop = new BlockLaptop(Material.ANVIL, Main.MODID, "laptop", "laptop/ordi.obj");
         //Keypad = new BlockKeypad(Material.ANVIL, Main.MODID, "keypad", "keypad/keypad.obj");
-
     }
 
 
@@ -76,7 +78,6 @@ public class Main {
         Network.init();
         MinecraftForge.EVENT_BUS.register(new RegisteringHandler());
 
-
             DISCORD_ID = "835564028528033852";
             DRP_DETAILS = "WesterLife";
             DRP_IMAGE_LARGE = "logo_large";
@@ -89,7 +90,6 @@ public class Main {
             //new Discord();
         //}
     }
-
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event)

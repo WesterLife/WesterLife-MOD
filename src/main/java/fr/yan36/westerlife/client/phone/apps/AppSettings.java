@@ -14,6 +14,5 @@ public class AppSettings extends App {
 
     @Override
     public void onClick(EntityPlayer executor) {
-        A
     }
 }
