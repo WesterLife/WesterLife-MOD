@@ -6,5 +6,9 @@
   "marseillaise": {
     "subtitle": "westerlife.subtitle.marseillaise",
     "sounds": [ "westerlife:marseillaise" ]
+  },
+  "atmsoundbip": {
+    "subtitle": "westerlife.subtitle.atmsoundbip",
+    "sounds": [ "westerlife:atmsoundbip" ]
   }
 }

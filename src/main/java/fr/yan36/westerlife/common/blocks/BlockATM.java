@@ -3,6 +3,7 @@ package fr.yan36.westerlife.common.blocks;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.items.WesterItem;
 import fr.yan36.westerlife.common.network.PacketOpenGUIAtm;
+import fr.yan36.westerlife.common.network.PacketOpenGUIAtmServer;
 import fr.yan36.westerlife.common.network.PacketReqSyncPlayer;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -35,9 +36,7 @@ public class BlockATM extends Block {
         if (!worldIn.isRemote) {
             System.out.println("atm");
             if(playerIn.getHeldItemMainhand().isItemEqual(new ItemStack(WesterItem.CB))) {
-                Main.network.sendTo(new PacketOpenGUIAtm(), (EntityPlayerMP) playerIn);
-                EntityPlayerMP player = (EntityPlayerMP) playerIn;
-                Main.network.sendTo(new PacketReqSyncPlayer(), player);
+                Main.network.sendTo(new PacketOpenGUIAtmServer(), (EntityPlayerMP) playerIn);
             } else {
                 playerIn.sendMessage(new TextComponentString("§cVous devez entrer votre carte bancaire."));
             }

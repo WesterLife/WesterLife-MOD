@@ -37,7 +37,7 @@ public class PacketLoginGendarmerie implements IMessage {
         @SideOnly(Side.CLIENT)
         public IMessage onMessage(PacketLoginGendarmerie m, MessageContext ctx) {
             if(m.result) {
-                ACsGuiApi.asyncLoadThenShowGui("gendarmerie", CSSGuiAtm::new);
+
                 System.out.println("Login success");
             } else {
                 CSSGuiGendarmerieLogin.errorText = "Identifiant ou mot de passe incorrects.";

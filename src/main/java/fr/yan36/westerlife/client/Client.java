@@ -10,7 +10,10 @@ import fr.yan36.westerlife.client.gui.gendarmerie.CSSGuiGendarmerieLogin;
 import fr.yan36.westerlife.client.gui.phone.CSSGuiPhone;
 import fr.yan36.westerlife.client.gui.pompier.CSSGuiPompierLogin;
 import fr.yan36.westerlife.common.items.WesterItem;
+import fr.yan36.westerlife.common.network.PacketOpenGUIAtm;
+import fr.yan36.westerlife.common.network.PacketOpenGUIAtmServer;
 import fr.yan36.westerlife.common.network.PacketOpenGUIGendarmerieServer;
+import fr.yan36.westerlife.common.network.PacketReqSyncPlayer;
 import fr.yan36.westerlife.common.registry.SoundsHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
@@ -153,7 +156,7 @@ public class Client {
         System.out.println("WesterClient");
         FMLCommonHandler.instance().bus().register(this);
         MinecraftForge.EVENT_BUS.register(this);
-        keyBindTest = new KeyBinding("westerlife.admin", Keyboard.KEY_F9, "");
+        keyBindTest = new KeyBinding("westerlife.admin", Keyboard.KEY_F9, "westerlife.category");
         keyBindAnimation = new KeyBinding("westerlife.animation", Keyboard.KEY_F4, "westerlife.keybind");
         ClientRegistry.registerKeyBinding(keyBindTest);
     }
@@ -188,16 +191,14 @@ public class Client {
     }
 
     private void keyTestTyped() {
-        Main.network.sendToServer(new PacketOpenGUIGendarmerieServer(Minecraft.getMinecraft().player));
+        Main.network.sendToServer(new PacketOpenGUIAtmServer());
+
     }
 
     private void keyAnimationTyped() {
         ACsGuiApi.asyncLoadThenShowGui("animation", CSSGuiAnimation::new);
     }
 }
-
-
-
 
     /*@SubscribeEvent
     public void livingUpdateEvent(LivingEvent.LivingUpdateEvent e) {

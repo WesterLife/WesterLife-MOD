@@ -158,6 +158,19 @@ public class MethodesBDD {
         job = qr.getValue(0,0);
         return job;
     }
+
+    public static String getCodeCB(EntityPlayer p){
+        String job = null;
+        QueryResult qr = instance.getData("SELECT codeCB FROM players WHERE uuid= ?", p.getUniqueID());
+        job = qr.getValue(0,0);
+        return job;
+    }
+
+    public static void setCodeCB(EntityPlayer p, String code){
+        String uuid = p.getUniqueID().toString();
+        instance.execute("UPDATE players SET codeCB = ? WHERE uuid = ?", code, uuid);
+    }
+
     public static String getPrenom(EntityPlayer p){
         String job = null;
         QueryResult qr = instance.getData("SELECT prenom FROM players WHERE uuid= ?", p.getUniqueID());

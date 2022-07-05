@@ -36,7 +36,7 @@ public class PacketLoginPompier implements IMessage {
         @SideOnly(Side.CLIENT)
         public IMessage onMessage(PacketLoginPompier m, MessageContext ctx) {
             if(m.result) {
-                ACsGuiApi.asyncLoadThenShowGui("pompier", CSSGuiAtm::new);
+
                 System.out.println("Login success");
             } else {
                 CSSGuiPompierLogin.errorText = "Identifiant ou mot de passe incorrects.";

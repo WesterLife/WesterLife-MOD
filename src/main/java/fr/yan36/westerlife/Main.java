@@ -11,6 +11,7 @@ import fr.yan36.westerlife.common.network.Network;
 import fr.yan36.westerlife.common.registry.RegisteringHandler;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.fml.common.Mod;
@@ -46,6 +47,7 @@ public class Main {
 
     public static ItemDynamx PistoletRadar;
     public static ItemDynamx Belier;
+    public static ItemDynamx Menottes;
     public static BlockSignVillage SignVillage;
     public static BlockLaptop Laptop;
     public static BlockKeypad Keypad;
@@ -56,12 +58,13 @@ public class Main {
 
         PistoletRadar = (ItemDynamx) new ItemDynamx(Main.MODID, "pistoletradar", "pistoletradar/pistoletradar.obj").setMaxStackSize(1);
         Belier = (ItemDynamx) new ItemDynamx(Main.MODID, "belier", "belier/belier.obj").setMaxStackSize(1);
+        Menottes = (ItemDynamx) new ItemDynamx(Main.MODID, "menottes", "menottes/menotte.obj").setMaxStackSize(1);
 
         SignVillage = new BlockSignVillage(Material.ANVIL, Main.MODID, "panneauvillage", "signvillage/sign.obj");
 //
 //        radar = new BlockDynamx(Material.ANVIL, Main.MODID, "radar", "radar/radar.obj");
 //        feu_tricolore = new BlockDynamx(Material.ANVIL, Main.MODID, "feutricolore", "feut/feut.obj");
-        Laptop = new BlockLaptop(Material.ANVIL, Main.MODID, "laptop", "laptop/ordi.obj");
+        Laptop = new BlockLaptop(Material.ANVIL, Main.MODID, "laptop", "laptop/pc.obj");
         //Keypad = new BlockKeypad(Material.ANVIL, Main.MODID, "keypad", "keypad/keypad.obj");
     }
 

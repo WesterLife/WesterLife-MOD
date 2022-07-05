@@ -68,10 +68,11 @@ public class PacketDepoArgentServer implements IMessage {
 
                     }
 
-                    MethodesBDD.setArgent(e, MethodesBDD.getArgent(e) + m.money);
-                    Main.network.sendTo(new PacketSyncPlayer(MethodesBDD.getNom(e),MethodesBDD.getPrenom(e),MethodesBDD.getSex(e),MethodesBDD.getDate(e),MethodesBDD.getArgent(e)), (EntityPlayerMP) e);
-
                 }
+
+                Main.network.sendTo(new PacketSyncPlayer(MethodesBDD.getNom(e),MethodesBDD.getPrenom(e),MethodesBDD.getSex(e),MethodesBDD.getDate(e),MethodesBDD.getArgent(e)), (EntityPlayerMP) e);
+                MethodesBDD.setArgent(e, MethodesBDD.getArgent(e) + m.money);
+
             } else {
                 e.sendMessage(new TextComponentString("§cVous n'avez pas les billets nécessaires pour effectuer ce dépôt."));
             }

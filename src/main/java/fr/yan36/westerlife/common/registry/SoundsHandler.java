@@ -9,10 +9,12 @@ public class SoundsHandler {
 
     public static SoundEvent BIP;
     public static SoundEvent MARSEILLAISE;
+    public static SoundEvent ATMSOUNDBIP;
 
     public static void registerSounds() {
         BIP = registerSound("bip");
         MARSEILLAISE = registerSound("marseillaise");
+        ATMSOUNDBIP = registerSound("atmsoundbip");
     }
 
     private static SoundEvent registerSound(String name) {

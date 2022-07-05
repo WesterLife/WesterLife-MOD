@@ -55,7 +55,6 @@ public class CSSGuiIngameMenu extends GuiFrame {
 
         keyboard.addClickListener((x, y, bu) -> {
             //TODO: Keyboard GUI
-            mc.displayGuiScreen(new GuiOptions(this.getGuiScreen(), mc.gameSettings));
         });
 
         site.addClickListener((x, y, bu) -> {
