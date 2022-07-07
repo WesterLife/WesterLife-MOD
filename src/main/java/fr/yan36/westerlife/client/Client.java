@@ -153,7 +153,6 @@ public class Client {
 
     public Client()
     {
-        System.out.println("WesterClient");
         FMLCommonHandler.instance().bus().register(this);
         MinecraftForge.EVENT_BUS.register(this);
         keyBindTest = new KeyBinding("westerlife.admin", Keyboard.KEY_F9, "westerlife.category");

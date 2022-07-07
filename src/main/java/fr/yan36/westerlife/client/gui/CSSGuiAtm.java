@@ -11,6 +11,7 @@ import fr.aym.acsguis.component.textarea.GuiTextArea;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.client.Profil;
 import fr.yan36.westerlife.common.items.WesterItem;
+import fr.yan36.westerlife.common.network.PacketATMTransaction;
 import fr.yan36.westerlife.common.network.PacketChangerCodeServer;
 import fr.yan36.westerlife.common.network.PacketDepoArgentServer;
 import fr.yan36.westerlife.common.network.PacketRetirerArgentServer;
@@ -31,7 +32,6 @@ import java.util.regex.Pattern;
 @SideOnly(Side.CLIENT)
 public class CSSGuiAtm extends GuiFrame {
     String status = "code";
-
 
     public CSSGuiAtm(String code) {
 
@@ -142,8 +142,6 @@ public class CSSGuiAtm extends GuiFrame {
          * Home Page
          */
 
-        //Test
-
         GuiPanel screenHome = new GuiPanel();
         screenHome.setCssClass("screen");
         screenHome.setCssId("screen-home");
@@ -153,7 +151,7 @@ public class CSSGuiAtm extends GuiFrame {
 
         GuiPanel screenHomeTitle = new GuiPanel();
         GuiLabel screenHomeTitleLabel;
-        screenHomeTitle.add(screenHomeTitleLabel = new GuiLabel(0, 0, 0, 0,"Bonjour " + Profil.getPrenom() + ", bienvenue dans votre compte. Votre solde est de " + Profil.getBank() + "€."));
+        screenHomeTitle.add(screenHomeTitleLabel = new GuiLabel(0, 0, 0, 80,"Bonjour " + Profil.getPrenom() + ", bienvenue dans votre compte. Votre solde est de " + Profil.getBank() + "€."));
         screenHomeTitle.setCssClass("text-home");
         screenHome.add(screenHomeTitle);
 
@@ -168,15 +166,12 @@ public class CSSGuiAtm extends GuiFrame {
         back.add(screenCodeLogin);
         screenCodeLogin.setVisible(true);
 
-
         GuiPasswordField codeLogin;
         codeLogin = (GuiPasswordField) new GuiPasswordField().setHintText("****").setMaxTextLength(4);
         codeLogin.setCssClass("code-login");
 
         screenCodeLogin.add(codeLogin);
         codeLogin.setVisible(true);
-
-
 
         /**
          * Dépôt
@@ -211,23 +206,18 @@ public class CSSGuiAtm extends GuiFrame {
         back.add(screenTransaction);
         screenTransaction.setVisible(false);
 
-//        GuiPanel RIBaera = new GuiPanel();
-//        RIBaera.setCssClass("rib-area");
-//
-//        back.add(RIBaera);
-//        RIBaera.setVisible(false);
-//
-//        GuiPanel Soldeaera = new GuiPanel();
-//        Soldeaera.setCssClass("solde-area");
-//
-//        back.add(Soldeaera);
-//        Soldeaera.setVisible(false);
+        GuiTextArea rib, montant;
+        rib = (GuiTextArea) new GuiTextArea().setHintText("RIB destinataire").setMaxTextLength(8).setRegexPattern(Pattern.compile(".*[0-9].*"));
+        rib.setCssClass("transac-rib");
 
-        //TODO:
+        screenTransaction.add(rib);
+        rib.setVisible(false);
 
-        /**
-         * Mon profil
-         */
+        montant = (GuiTextArea) new GuiTextArea().setHintText("Montant").setMaxTextLength(6).setRegexPattern(Pattern.compile(".*[0-9].*"));
+        montant.setCssClass("transac-montant");
+
+        screenTransaction.add(montant);
+        montant.setVisible(false);
 
         GuiPanel screenProfil = new GuiPanel();
         screenProfil.setCssClass("screen");
@@ -237,23 +227,21 @@ public class CSSGuiAtm extends GuiFrame {
         screenProfil.setVisible(false);
 
         GuiPanel infoProfil = new GuiPanel();
-        infoProfil.setCssClass("info-profil");
+        infoProfil.add(new GuiLabel(0, 10, 0, 0, "Nom : " + Profil.getNom()).setCssId("text-profil"));
+        infoProfil.add(new GuiLabel(0, 30, 0, 0, "Prenom : " + Profil.getPrenom()).setCssId("text-profil"));
+        infoProfil.add(new GuiLabel(0, 50, 0, 0, "RIB  : " + Profil.getRib()).setCssId("text-profil"));
+        infoProfil.add(new GuiLabel(0, 70, 0, 0, "Solde : " + Profil.getBank() + "€").setCssId("text-profil"));
+        infoProfil.setCssClass("profil-info");
 
         screenProfil.add(infoProfil);
         infoProfil.setVisible(false);
-
-        // TODO :
-
-        /**
-         * Modif code
-         */
 
         GuiPanel screenProfilcode = new GuiPanel();
         screenProfilcode.setCssClass("screen");
         screenProfilcode.setCssId("screen-profilcode");
 
         GuiTextArea newCode;
-        newCode = (GuiTextArea) new GuiTextArea().setHintText("****").setText(code).setMaxTextLength(10);
+        newCode = (GuiTextArea) new GuiTextArea().setHintText("****").setText(code).setMaxTextLength(4).setRegexPattern(Pattern.compile(".*[0-9].*"));
         newCode.setCssClass("new-code");
         screenProfilcode.add(newCode);
         screenProfilcode.setVisible(false);
@@ -428,6 +416,8 @@ public class CSSGuiAtm extends GuiFrame {
                 case "home":
                     screenHome.setVisible(false);
                     screenTransaction.setVisible(true);
+                    montant.setVisible(true);
+                    rib.setVisible(true);
                     status = "transaction";
                     break;
                 case "depot":
@@ -447,6 +437,7 @@ public class CSSGuiAtm extends GuiFrame {
                 case "home":
                     screenProfil.setVisible(true);
                     screenHome.setVisible(false);
+                    infoProfil.setVisible(true);
                     status = "profil";
                     break;
                 case "depot":
@@ -475,7 +466,19 @@ public class CSSGuiAtm extends GuiFrame {
                     Main.network.sendToServer(new PacketDepoArgentServer(Minecraft.getMinecraft().player, 500, new ItemStack(WesterItem.CINQCENTEUROS)));
                     break;
                 case "transaction":
-                    // TODO : Valider la transaction
+
+                    /**
+                     * Fonctionnement RIB :
+                     * Type de RIB :
+                     * Commencant par :
+                     *   - 01 : Compte Joueur
+                     *   - 02 : Compte Entreprise
+                     */
+
+                    if(!montant.getText().isEmpty() && !rib.getText().isEmpty()){
+                        Main.network.sendToServer(new PacketATMTransaction(rib.getText(), montant.getText()));
+                        System.out.println("Transaction envoyée");
+                    }
                     break;
                 case "profil":
                     screenProfil.setVisible(false);
@@ -487,6 +490,7 @@ public class CSSGuiAtm extends GuiFrame {
                         Main.network.sendToServer(new PacketChangerCodeServer(Minecraft.getMinecraft().player, newCode.getText()));
                         screenProfil.setVisible(true);
                         screenProfilcode.setVisible(false);
+                        infoProfil.setVisible(true);
                         status = "profil";
                     }
                         break;
@@ -539,12 +543,8 @@ public class CSSGuiAtm extends GuiFrame {
                     break;
             }
         });
-
     }
-
     public List<ResourceLocation> getCssStyles() {
         return Collections.singletonList(new ResourceLocation("dynamxmod:css/atm.css"));
     }
-
-
 }

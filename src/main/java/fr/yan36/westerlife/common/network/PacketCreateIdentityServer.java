@@ -50,7 +50,9 @@ public class PacketCreateIdentityServer implements IMessage{
         public IMessage onMessage(PacketCreateIdentityServer m, MessageContext ctx) {
             EntityPlayer e = (EntityPlayer) ctx.getServerHandler().player.world.getEntityByID(m.player);
             if(!MethodesBDD.getPlayerExist(e)) {
-                MethodesBDD.addplayer(e, m.prenom, m.nom, m.date, m.sex);
+                int nombreAleatoire = 1000 + (int)(Math.random() * ((99999 - 1000) + 1));
+                String rib = "01"+ Integer.toString(nombreAleatoire);
+                MethodesBDD.addplayer(e, m.prenom, m.nom, m.date, m.sex, rib);
             }
             return null;
         }

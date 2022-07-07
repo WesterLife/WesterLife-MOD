@@ -28,8 +28,8 @@ public class PacketChangerCodeServer implements IMessage {
 
     @Override
     public void fromBytes(ByteBuf buf) {
-        player = buf.readInt();
-        code = ByteBufUtils.readUTF8String(buf);
+        this.player = buf.readInt();
+        this.code = ByteBufUtils.readUTF8String(buf);
     }
 
     @Override
@@ -43,9 +43,7 @@ public class PacketChangerCodeServer implements IMessage {
         @SideOnly(Side.SERVER)
         public IMessage onMessage(PacketChangerCodeServer m, MessageContext ctx) {
             EntityPlayer e = (EntityPlayer) ctx.getServerHandler().player.world.getEntityByID(m.player);
-            if(!MethodesBDD.getPlayerExist(e)) {
                 MethodesBDD.setCodeCB(e, m.code);
-            }
             return null;
         }
     }

@@ -24,7 +24,7 @@ public class Serveur {
                 System.out.println("Nouveau joueur : "+e.player.getName());
                 Main.network.sendTo(new PacketCreateIdentity(), (EntityPlayerMP) e.player);
             }else{
-                Main.network.sendTo(new PacketSyncPlayer(MethodesBDD.getNom(e.player),MethodesBDD.getPrenom(e.player),MethodesBDD.getSex(e.player),MethodesBDD.getDate(e.player),MethodesBDD.getArgent(e.player)), (EntityPlayerMP) e.player);
+                Main.network.sendTo(new PacketSyncPlayer(MethodesBDD.getNom(e.player),MethodesBDD.getPrenom(e.player),MethodesBDD.getSex(e.player),MethodesBDD.getDate(e.player),MethodesBDD.getArgent(e.player),MethodesBDD.getRIB(e.player)), (EntityPlayerMP) e.player);
                 //send packet with data of player
             }
             //Main.network.sendTo(new PacketOpenFranceTravail(MethodesBDD.getJobs()), (EntityPlayerMP) e.player);

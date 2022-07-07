@@ -45,8 +45,6 @@ public class PacketRetirerArgentServer implements IMessage {
         @SideOnly(Side.SERVER)
         public IMessage onMessage(PacketRetirerArgentServer m, MessageContext ctx) {
             EntityPlayer e = (EntityPlayer) ctx.getServerHandler().player.world.getEntityByID(m.player);
-            Main.network.sendTo(new PacketSyncPlayer(MethodesBDD.getNom(e),MethodesBDD.getPrenom(e),MethodesBDD.getSex(e),MethodesBDD.getDate(e),MethodesBDD.getArgent(e)), (EntityPlayerMP) e);
-
             if(MethodesBDD.getArgent(e) >= m.money){
                     switch (m.money) {
 
@@ -88,7 +86,7 @@ public class PacketRetirerArgentServer implements IMessage {
                     e.sendMessage(new TextComponentString("§cVous n'avez pas les fonds nécessaires sur votre compte bancaire pour effectuer ce débit."));
                 }
                 System.out.println(m.money);
-                Main.network.sendTo(new PacketSyncPlayer(MethodesBDD.getNom(e),MethodesBDD.getPrenom(e),MethodesBDD.getSex(e),MethodesBDD.getDate(e),MethodesBDD.getArgent(e)), (EntityPlayerMP) e);
+                Main.network.sendTo(new PacketSyncPlayer(MethodesBDD.getNom(e),MethodesBDD.getPrenom(e),MethodesBDD.getSex(e),MethodesBDD.getDate(e),MethodesBDD.getArgent(e),MethodesBDD.getRIB(e)), (EntityPlayerMP) e);
 
             return null;
         }

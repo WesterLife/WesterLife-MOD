@@ -10,8 +10,8 @@ import java.util.UUID;
 
 public class MethodesBDD {
     static SQLUtils instance = new SQLUtils();
-    public static void addplayer(EntityPlayer p, String prenom, String nom,String date,String sex){
-        instance.execute("INSERT INTO `players` (`uuid`,`prenom`, `nom`, `date`, `sex`) VALUES ('"+p.getUniqueID()+"','"+prenom+"','"+nom+"','"+date+"','"+sex+"')");
+    public static void addplayer(EntityPlayer p, String prenom, String nom,String date,String sex, String rib){
+        instance.execute("INSERT INTO `players` (`uuid`,`prenom`, `nom`, `date`, `sex`, `rib`) VALUES ('"+p.getUniqueID()+"','"+prenom+"','"+nom+"','"+date+"','"+sex+"','"+rib+"')");
     }
     public static boolean getPlayerExist(EntityPlayer p){
         boolean exists = false;
@@ -22,6 +22,21 @@ public class MethodesBDD {
             //System.out.println(qr.getResultAsArray());
             //System.out.println(qr.getValue(0, 0));
             exists = p.getUniqueID().toString().equals(qr.getValue(0, 0));
+        } catch (Exception e) {
+            //e.printStackTrace();
+        }
+        return exists;
+
+    }
+
+    public static boolean getRibExist(String rib){
+        boolean exists = false;
+        QueryResult qr = instance.getData("SELECT rib FROM players WHERE rib= ?", rib);
+        //System.out.println(uuid);
+        try {
+            //System.out.println(qr.getResultAsArray());
+            //System.out.println(qr.getValue(0, 0));
+            exists = rib.toString().equals(qr.getValue(0, 0));
         } catch (Exception e) {
             //e.printStackTrace();
         }
@@ -54,9 +69,24 @@ public class MethodesBDD {
         String uuid = p.getUniqueID().toString();
         instance.execute("UPDATE players SET Argent = ? WHERE uuid = ?", Argent, uuid);
     }
+
+    public static void setArgentByRIB(String rib, double montant){
+        instance.execute("UPDATE players SET Argent = ? WHERE rib = ?", montant, rib);
+    }
+
     public static Double getArgent(EntityPlayer p){
         String uuid = p.getUniqueID().toString();
         QueryResult qr = instance.getData("SELECT Argent FROM players WHERE uuid= ?", uuid);
+        try {
+            return Double.valueOf(qr.getValue(0, 0));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0.0;
+    }
+
+    public static Double getArgentByRIB(String rib){
+        QueryResult qr = instance.getData("SELECT Argent FROM players WHERE rib= ?", rib);
         try {
             return Double.valueOf(qr.getValue(0, 0));
         } catch (Exception e) {
@@ -159,6 +189,13 @@ public class MethodesBDD {
         return job;
     }
 
+    public static String getRIB(EntityPlayer p){
+        String job = null;
+        QueryResult qr = instance.getData("SELECT rib FROM players WHERE uuid= ?", p.getUniqueID());
+        job = qr.getValue(0,0);
+        return job;
+    }
+
     public static String getCodeCB(EntityPlayer p){
         String job = null;
         QueryResult qr = instance.getData("SELECT codeCB FROM players WHERE uuid= ?", p.getUniqueID());
@@ -166,9 +203,10 @@ public class MethodesBDD {
         return job;
     }
 
-    public static void setCodeCB(EntityPlayer p, String code){
+    public static void setCodeCB(EntityPlayer p, String Code){
         String uuid = p.getUniqueID().toString();
-        instance.execute("UPDATE players SET codeCB = ? WHERE uuid = ?", code, uuid);
+        instance.execute("UPDATE players SET codeCB = ? WHERE uuid = ?", Code, uuid);
+        System.out.println("Code CB updated for " + p.getName() + " : " + Code);
     }
 
     public static String getPrenom(EntityPlayer p){

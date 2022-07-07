@@ -32,7 +32,7 @@ public class PacketReqSyncPlayer implements IMessage{
         @SideOnly(Side.SERVER)
         public IMessage onMessage(PacketReqSyncPlayer m, MessageContext ctx) {
             EntityPlayerMP player = ctx.getServerHandler().player;
-            Main.network.sendTo(new PacketSyncPlayer(MethodesBDD.getNom(player),MethodesBDD.getPrenom(player),MethodesBDD.getSex(player),MethodesBDD.getDate(player),MethodesBDD.getArgent(player)), player);
+            Main.network.sendTo(new PacketSyncPlayer(MethodesBDD.getNom(player),MethodesBDD.getPrenom(player),MethodesBDD.getSex(player),MethodesBDD.getDate(player),MethodesBDD.getArgent(player), MethodesBDD.getRIB(player)), player);
             return null;
         }
     }
