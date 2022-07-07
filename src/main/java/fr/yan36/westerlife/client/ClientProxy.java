@@ -6,6 +6,7 @@ import fr.yan36.westerlife.client.phone.Apps;
 import fr.yan36.westerlife.common.CommonProxy;
 import fr.yan36.westerlife.common.blocks.tileentity.TESign;
 import fr.yan36.westerlife.common.blocks.tileentity.TESignRender;
+import fr.yan36.westerlife.utils.Discord;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Util;
@@ -52,6 +53,7 @@ public class ClientProxy extends CommonProxy {
         ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("phoneframe", "css/phoneframe.css"));
 
         Apps.Init(); // Gabi <3
+
 
     }
 

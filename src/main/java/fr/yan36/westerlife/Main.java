@@ -10,6 +10,7 @@ import fr.yan36.westerlife.common.blocks.BlockSignVillage;
 import fr.yan36.westerlife.common.items.ItemDynamx;
 import fr.yan36.westerlife.common.network.Network;
 import fr.yan36.westerlife.common.registry.RegisteringHandler;
+import fr.yan36.westerlife.utils.Discord;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -94,9 +95,9 @@ public class Main {
             DRP_STATE_SOLO = "En solo";
             DRP_STATE_MULTIPLAYER = "Connecté(e)";
             DRP_STATE_OTHER = "Dans les menus";
-        //if(event.getSide().isClient()) {
-            //new Discord();
-        //}
+        if(event.getSide().isClient()) {
+            new Discord().start();
+        }
     }
 
     @Mod.EventHandler
