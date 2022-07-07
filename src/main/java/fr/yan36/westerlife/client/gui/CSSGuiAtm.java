@@ -151,7 +151,7 @@ public class CSSGuiAtm extends GuiFrame {
 
         GuiPanel screenHomeTitle = new GuiPanel();
         GuiLabel screenHomeTitleLabel;
-        screenHomeTitle.add(screenHomeTitleLabel = new GuiLabel(0, 0, 0, 80,"Bonjour " + Profil.getPrenom() + ", bienvenue sur votre compte. Votre solde est de " + Profil.getBank() + "€.")).setCssId("home-title");
+        screenHomeTitle.add(screenHomeTitleLabel = new GuiLabel(0, 0, 0, 80,"Bonjour " + Profil.getPrenom() + ", bienvenue sur votre compte. Votre solde est de " + Profil.getBank() + "€.")).setCssId("home-title").setCssClass("text-home");
         screenHomeTitle.setCssClass("text-home");
         screenHome.add(screenHomeTitle);
 
@@ -167,7 +167,7 @@ public class CSSGuiAtm extends GuiFrame {
         screenCodeLogin.setVisible(true);
 
         GuiPasswordField codeLogin;
-        codeLogin = (GuiPasswordField) new GuiPasswordField().setHintText("****").setMaxTextLength(4);
+        codeLogin = (GuiPasswordField) new GuiPasswordField().setHintText("****").setMaxTextLength(4).setCssClass("code-login");
         codeLogin.setCssClass("code-login");
 
         screenCodeLogin.add(codeLogin);
@@ -510,25 +510,25 @@ public class CSSGuiAtm extends GuiFrame {
                 case "depot":
                     screenDepot.setVisible(false);
                     screenHome.setVisible(true);
-                    screenHomeTitleLabel.setText("Bonjour " + Profil.getPrenom() + ", bienvenue dans votre compte. Votre solde est de " + Profil.getBank() + "€.");
+                    screenHomeTitleLabel.setText("Bonjour " + Profil.getPrenom() + ", bienvenue sur votre compte. Votre solde est de " + Profil.getBank() + "€.");
                     status = "home";
                     break;
                 case "retrait":
                     screenRetrait.setVisible(false);
                     screenHome.setVisible(true);
-                    screenHomeTitleLabel.setText("Bonjour " + Profil.getPrenom() + ", bienvenue dans votre compte. Votre solde est de " + Profil.getBank() + "€.");
+                    screenHomeTitleLabel.setText("Bonjour " + Profil.getPrenom() + ", bienvenue sur votre compte. Votre solde est de " + Profil.getBank() + "€.");
                     status = "home";
                     break;
                 case "transaction":
                     screenTransaction.setVisible(false);
                     screenHome.setVisible(true);
-                    screenHomeTitleLabel.setText("Bonjour " + Profil.getPrenom() + ", bienvenue dans votre compte. Votre solde est de " + Profil.getBank() + "€.");
+                    screenHomeTitleLabel.setText("Bonjour " + Profil.getPrenom() + ", bienvenue sur votre compte. Votre solde est de " + Profil.getBank() + "€.");
                     status = "home";
                     break;
                 case "profil":
                     screenProfil.setVisible(false);
                     screenHome.setVisible(true);
-                    screenHomeTitleLabel.setText("Bonjour " + Profil.getPrenom() + ", bienvenue dans votre compte. Votre solde est de " + Profil.getBank() + "€.");
+                    screenHomeTitleLabel.setText("Bonjour " + Profil.getPrenom() + ", bienvenue sur votre compte. Votre solde est de " + Profil.getBank() + "€.");
                     status = "home";
                     break;
                 case "profil-code":

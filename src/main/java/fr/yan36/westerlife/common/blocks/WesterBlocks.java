@@ -6,7 +6,7 @@ import net.minecraft.block.material.Material;
 
 public class WesterBlocks {
 
-    public static final Block ATM = new BlockATM(Material.ROCK);
+
 
     public static void setBlockName(Block block, String name)
     {

@@ -190,7 +190,7 @@ public class Client {
     }
 
     private void keyTestTyped() {
-        Main.network.sendToServer(new PacketOpenGUIAtmServer());
+        Main.network.sendToServer(new PacketOpenGUIAtmServer(Minecraft.getMinecraft().player));
 
     }
 

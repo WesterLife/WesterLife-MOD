@@ -3,6 +3,7 @@ package fr.yan36.westerlife;
 import fr.dynamx.api.contentpack.DynamXAddon;
 import fr.yan36.westerlife.client.creativetabs.WesterTab;
 import fr.yan36.westerlife.common.CommonProxy;
+import fr.yan36.westerlife.common.blocks.BlockDistributeur;
 import fr.yan36.westerlife.common.blocks.BlockKeypad;
 import fr.yan36.westerlife.common.blocks.BlockLaptop;
 import fr.yan36.westerlife.common.blocks.BlockSignVillage;
@@ -50,6 +51,7 @@ public class Main {
     public static ItemDynamx Menottes;
     public static BlockSignVillage SignVillage;
     public static BlockLaptop Laptop;
+    public static BlockDistributeur Distributeur;
     public static BlockKeypad Keypad;
 
 
@@ -60,11 +62,14 @@ public class Main {
         Belier = (ItemDynamx) new ItemDynamx(Main.MODID, "belier", "belier/belier.obj").setMaxStackSize(1);
         Menottes = (ItemDynamx) new ItemDynamx(Main.MODID, "menottes", "menottes/menotte.obj").setMaxStackSize(1);
 
+        Distributeur = new BlockDistributeur(Material.ROCK, Main.MODID, "distributeur", "atm/atm.obj");
         SignVillage = new BlockSignVillage(Material.ANVIL, Main.MODID, "panneauvillage", "signvillage/sign.obj");
-//
+
 //        radar = new BlockDynamx(Material.ANVIL, Main.MODID, "radar", "radar/radar.obj");
 //        feu_tricolore = new BlockDynamx(Material.ANVIL, Main.MODID, "feutricolore", "feut/feut.obj");
+
         Laptop = new BlockLaptop(Material.ANVIL, Main.MODID, "laptop", "laptop/pc.obj");
+
         //Keypad = new BlockKeypad(Material.ANVIL, Main.MODID, "keypad", "keypad/keypad.obj");
     }
 

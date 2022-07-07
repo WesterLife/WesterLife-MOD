@@ -28,9 +28,6 @@ public class WesterItem
     public static final Item CINQCENTEUROS = new Item500E();
     public static final Item DISC_MARSEILLAISE = new ItemMarseillaise("marseillaise", SoundsHandler.MARSEILLAISE);
     public static final Item COD = new ItemCOD();
-
-    public static final Item BLOCK_ATM_ITEM = new ItemBlock(WesterBlocks.ATM).setRegistryName(WesterBlocks.ATM.getRegistryName());
-
     public static void setItemName(Item item, String name) {
         item.setRegistryName(Main.MODID, name).setTranslationKey(Main.MODID + "." + name);
     }
@@ -50,7 +47,6 @@ public class WesterItem
         registerModel(CENTEUROS, 0);
         registerModel(DEUXCENTEUROS, 0);
         registerModel(CINQCENTEUROS, 0);
-        registerModel(BLOCK_ATM_ITEM, 0);
         registerModel(DISC_MARSEILLAISE, 0);
         registerModel(COD, 0);
     }
