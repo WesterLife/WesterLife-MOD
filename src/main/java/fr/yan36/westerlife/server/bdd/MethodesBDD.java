@@ -9,15 +9,18 @@ import java.util.List;
 import java.util.UUID;
 
 public class MethodesBDD {
+
     static SQLUtils instance = new SQLUtils();
     public static void addplayer(EntityPlayer p, String prenom, String nom,String date,String sex, String rib){
         instance.execute("INSERT INTO `players` (`uuid`,`prenom`, `nom`, `date`, `sex`, `rib`) VALUES ('"+p.getUniqueID()+"','"+prenom+"','"+nom+"','"+date+"','"+sex+"','"+rib+"')");
     }
+
     public static boolean getPlayerExist(EntityPlayer p){
         boolean exists = false;
         String uuid = p.getUniqueID().toString();
         QueryResult qr = instance.getData("SELECT uuid FROM players WHERE uuid= ?", uuid);
         //System.out.println(uuid);
+
         try {
             //System.out.println(qr.getResultAsArray());
             //System.out.println(qr.getValue(0, 0));
