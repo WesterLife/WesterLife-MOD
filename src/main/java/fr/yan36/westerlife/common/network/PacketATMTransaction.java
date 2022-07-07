@@ -50,6 +50,7 @@ public class PacketATMTransaction implements IMessage{
                         MethodesBDD.setArgent(e, MethodesBDD.getArgent(e) - Double.parseDouble(m.montant));
                         MethodesBDD.setArgentByRIB(m.rib, MethodesBDD.getArgentByRIB(m.rib) + Double.parseDouble(m.montant));
                         e.sendMessage(new TextComponentString("§cTransaction effectuée avec succès."));
+                        Main.network.sendTo(new PacketSyncPlayer(MethodesBDD.getNom(e), MethodesBDD.getPrenom(e), MethodesBDD.getSex(e), MethodesBDD.getDate(e), MethodesBDD.getArgent(e), MethodesBDD.getRIB(e)), (EntityPlayerMP) e);
                     } else {
                         ctx.getServerHandler().player.sendMessage(new TextComponentString("§cVous n'avez pas assez d'argent sur votre compte pour effectuer cette transaction"));
                     }
