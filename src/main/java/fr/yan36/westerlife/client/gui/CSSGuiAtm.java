@@ -151,7 +151,7 @@ public class CSSGuiAtm extends GuiFrame {
 
         GuiPanel screenHomeTitle = new GuiPanel();
         GuiLabel screenHomeTitleLabel;
-        screenHomeTitle.add(screenHomeTitleLabel = new GuiLabel(0, 0, 0, 80,"Bonjour " + Profil.getPrenom() + ", bienvenue dans votre compte. Votre solde est de " + Profil.getBank() + "€."));
+        screenHomeTitle.add(screenHomeTitleLabel = new GuiLabel(0, 0, 0, 80,"Bonjour " + Profil.getPrenom() + ", bienvenue sur votre compte. Votre solde est de " + Profil.getBank() + "€.")).setCssId("home-title");
         screenHomeTitle.setCssClass("text-home");
         screenHome.add(screenHomeTitle);
 
@@ -328,7 +328,7 @@ public class CSSGuiAtm extends GuiFrame {
                         Minecraft.getMinecraft().player.playSound(SoundsHandler.ATMSOUNDBIP, 0.5f, 1);
                     } else {
                         codeLogin.setText("");
-                        Minecraft.getMinecraft().player.sendMessage(new TextComponentString("&cCode incorrect. Le code par défaut est 0000. Si vous l'avez modifié et ne vous souvenez plus de ce dernier contactez votre banque."));
+                        Minecraft.getMinecraft().player.sendMessage(new TextComponentString("§cCode incorrect. Le code par défaut est 0000. Si vous l'avez modifié et ne vous souvenez plus de ce dernier contactez votre banque."));
                         Minecraft.getMinecraft().player.playSound(SoundsHandler.BIP, 0.8f, 1);
                     }
                 }
