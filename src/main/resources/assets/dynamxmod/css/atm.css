@@ -207,7 +207,17 @@
         padding-top: 15px;
         padding-left: 10px;
         color: white;
-        font-size: 30px;
+        font-size: 40px;
+}
+#home-title{
+        height: 40%;
+        width: 95%;
+        top: 25%;
+        left: 4%;
+        padding-top: 15px;
+        padding-left: 10px;
+        color: white;
+        font-size: 40px;
 }
 .new-code{
         background-color: #EFEFEF;
