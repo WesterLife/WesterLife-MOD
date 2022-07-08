@@ -26,7 +26,7 @@ public class Network {
         Main.network.registerMessage(PacketLoginPompier.Handler.class, PacketLoginPompier.class, 16, Side.CLIENT);
         Main.network.registerMessage(PacketOpenGUIGendarmerieServer.Handler.class, PacketOpenGUIGendarmerieServer.class, 17, Side.SERVER);
         Main.network.registerMessage(PacketChangerCodeServer.Handler.class, PacketChangerCodeServer.class, 18, Side.SERVER);
-        Main.network.registerMessage(PacketOpenGUIAtmServer.Handler.class, PacketOpenGUIAtmServer.class, 19, Side.SERVER);
+        Main.network.registerMessage(PacketOpenGUIAdmin.Handler.class, PacketOpenGUIAdmin.class, 19, Side.SERVER);
         Main.network.registerMessage(PacketATMTransaction.Handler.class, PacketATMTransaction.class, 20, Side.SERVER);
     }
 }
