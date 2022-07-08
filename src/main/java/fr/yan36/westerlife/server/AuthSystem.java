@@ -1,6 +1,8 @@
 package fr.yan36.westerlife.server;
 
 import fr.yan36.westerlife.server.bdd.MethodesBDD;
+import fr.yan36.westerlife.utils.Gendarme;
+import fr.yan36.westerlife.utils.Pompier;
 
 import java.util.List;
 
