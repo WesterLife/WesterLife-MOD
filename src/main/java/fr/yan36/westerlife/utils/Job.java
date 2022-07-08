@@ -1,4 +1,4 @@
-package fr.yan36.westerlife.server;
+package fr.yan36.westerlife.utils;
 
 public class Job {
 

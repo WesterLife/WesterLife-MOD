@@ -11,19 +11,25 @@ import fr.yan36.westerlife.common.items.ItemDynamx;
 import fr.yan36.westerlife.common.network.Network;
 import fr.yan36.westerlife.common.registry.RegisteringHandler;
 import fr.yan36.westerlife.utils.Discord;
+import fr.yan36.westerlife.utils.commands.WesterLifeCommand;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import net.minecraftforge.server.permission.DefaultPermissionLevel;
+import net.minecraftforge.server.permission.PermissionAPI;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
+import java.util.UUID;
 
 @Mod(
         modid = Main.MODID,
@@ -40,7 +46,7 @@ public class Main {
 
     public static final String MODID = "westerlife";
     public static final String NAME = "WesterLife Mod";
-    public static final String VERSION = "1.0";
+    public static final String VERSION = "1.3";
     public static String DISCORD_ID, DRP_DETAILS, DRP_IMAGE_LARGE, DRP_IMAGE_LARGE_TEXT, DRP_IMAGE_SMALL, DRP_STATE_SOLO, DRP_STATE_MULTIPLAYER, DRP_STATE_OTHER;
 
     @Mod.Instance(Main.MODID)
@@ -54,7 +60,6 @@ public class Main {
     public static BlockLaptop Laptop;
     public static BlockDistributeur Distributeur;
     public static BlockKeypad Keypad;
-
 
     @DynamXAddon.AddonEventSubscriber
     public static void init() {
@@ -105,8 +110,15 @@ public class Main {
     {
         proxy.init();
         RegisteringHandler.initRegistries();
+        PermissionAPI.registerNode("westerlife.command.wlmod", DefaultPermissionLevel.OP, "Permission d'administration");
+
     }
 
+    @Mod.EventHandler
+    public void onserverStarting(FMLServerStartingEvent event) {
+        event.registerServerCommand(new WesterLifeCommand());
+
+    }
 
 
     public static final CreativeTabs creativeTab = new WesterTab("westertab");
