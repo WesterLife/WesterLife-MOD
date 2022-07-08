@@ -3,11 +3,14 @@ package fr.yan36.westerlife.client.gui;
 import fr.aym.acsguis.api.ACsGuiApi;
 import fr.aym.acsguis.component.button.GuiButton;
 import fr.aym.acsguis.component.button.GuiSlider;
+import fr.aym.acsguis.component.layout.GridLayout;
 import fr.aym.acsguis.component.layout.GuiScaler;
+import fr.aym.acsguis.component.layout.PanelLayout;
 import fr.aym.acsguis.component.panel.GuiFrame;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.panel.GuiScrollPane;
 import fr.aym.acsguis.component.panel.GuiTabbedPane;
+import fr.aym.acsguis.component.style.ComponentStyleManager;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
@@ -34,6 +37,8 @@ public class CSSGuiAdmin extends GuiFrame {
         GuiPanel settings = new GuiPanel(0, 0, 0, 0);
         GuiPanel others = new GuiPanel(0, 0, 0, 0);
 
+        //Grid Layout;
+
         pane.addTab("Warps", warps);
         pane.addTab("Joueurs", players);
         pane.addTab("Paramètres", settings);
@@ -52,8 +57,6 @@ public class CSSGuiAdmin extends GuiFrame {
         add(players);
         add(settings);
         add(others);
-
-
 
     }
 
