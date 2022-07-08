@@ -1,24 +1,13 @@
 package fr.yan36.westerlife.client.gui.gendarmerie;
 
-import fr.aym.acsguis.component.entity.GuiEntityRender;
 import fr.aym.acsguis.component.layout.GuiScaler;
 import fr.aym.acsguis.component.panel.GuiFrame;
 import fr.aym.acsguis.component.panel.GuiPanel;
-import fr.aym.acsguis.component.panel.GuiScrollPane;
-import fr.aym.acsguis.component.textarea.GuiLabel;
-import fr.aym.acsguis.component.textarea.GuiPasswordField;
-import fr.aym.acsguis.component.textarea.GuiTextArea;
-import fr.aym.acsguis.component.textarea.GuiTextField;
-import fr.dynamx.server.command.DynamXCommands;
-import fr.yan36.westerlife.Main;
-import fr.yan36.westerlife.common.network.PacketCreatePlainte;
-import fr.yan36.westerlife.server.*;
-import net.minecraft.client.Minecraft;
+import fr.yan36.westerlife.utils.*;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 

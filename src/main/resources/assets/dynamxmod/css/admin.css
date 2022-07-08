@@ -1,0 +1,57 @@
+.home{
+    width: 100%;
+    height: 100%;
+    top: 0%;
+    left: 0%;
+}
+tabbed_pane {
+    background-color: rgba(84, 82, 82, 20);
+    width: 100%;
+    height: 12%;
+    top: 0%;
+}
+
+tabbed_pane > button {
+    background-color: #707070;
+    background-image: none;
+    border-position: internal;
+    height: 80%;
+    width: 20%;
+    top: 10%;
+    padding-left: 4%;
+}
+
+tabbed_pane > button:hover {
+    background-color: #667CF5;
+}
+tabbed_pane > button:active {
+    background-color: #3E3E3E;
+}
+#pane{
+    width: 100%;
+    height: 88%;
+    top: 12%;
+}
+#warp > scroll_pane {
+    top: 40px;
+    height: 60%;
+}
+#warp > scroll_pane > scroll_bar {
+    top: 0px;
+    height: 100%;
+}
+.button{
+    width: 60%;
+    background-color: #3E3E3E;
+    height: 5%;
+    left: 20%;
+}
+.button:hover {
+    background-color: #667CF5;
+}
+#buttonwarp{
+    width: 60%;
+    background-color: #3E3E3E;
+    height: 5%;
+    left: 20%;
+}

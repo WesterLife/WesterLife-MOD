@@ -7,6 +7,7 @@ import fr.aym.acsguis.component.panel.GuiFrame;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.yan36.westerlife.client.utils.News;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiMultiplayer;
 import net.minecraft.client.gui.GuiOptions;
 import net.minecraft.client.network.NetHandlerLoginClient;
@@ -89,13 +90,16 @@ public class CSSGuiMainMenu extends GuiFrame {
         topbar_color.setCssClass("topbar_color");
 
         GuiPanel site = new GuiPanel();
-        site.add(new GuiLabel(0, 0, 0, 0, "Site Internet").setCssClass("site"));
+        site.setCssClass("site");
+        site.add(new GuiLabel(0, 0, 100, 50, "Site Internet").setCssId("topbartext"));
 
         GuiPanel param = new GuiPanel();
-        param.add(new GuiLabel(0, 0, 0, 0, "Paramètres").setCssClass("param"));
+        param.setCssClass("param");
+        param.add(new GuiLabel(0, 0, 100, 50, "Paramètres").setCssId("topbartext"));
 
         GuiPanel zonestaff = new GuiPanel();
-        zonestaff.add(new GuiLabel(0, 0, 0, 0, "Zone-Staff").setCssClass("zonestaff"));
+        zonestaff.setCssClass("zonestaff");
+        zonestaff.add(new GuiLabel(0, 0, 100, 50, "Zone-Staff").setCssId("topbartext").setCssCode("color: #aaaaaa"));
 
         GuiPanel title = new GuiPanel();
         title.add(new GuiLabel("WesterLife").setCssClass("title"));
@@ -112,8 +116,7 @@ public class CSSGuiMainMenu extends GuiFrame {
         topbar.add(title);
         topbar.add(site);
         topbar.add(param);
-
-        leftbar.add(play);
+        topbar.add(zonestaff);
 
         param.addClickListener((x, y, bu) -> {
             mc.gameSettings.saveOptions();
@@ -133,10 +136,9 @@ public class CSSGuiMainMenu extends GuiFrame {
 
         background.add(topbar);
 
-        leftbar.add(play);
-        leftbar.add(discord);
-        leftbar.add(mute);
-        leftbar.add(quit);
+        play.addClickListener((x, y, bu) -> {
+            connect("51.38.250.27",25739);
+        });
 
         quit.addClickListener((x, y, bu) -> {
             mc.shutdown();
@@ -148,8 +150,13 @@ public class CSSGuiMainMenu extends GuiFrame {
             } catch (IOException | URISyntaxException e) {
                 e.printStackTrace();
             }
-            System.out.println("https://discord.gg/ZUsYjXE3");
         });
+
+
+        leftbar.add(play);
+        leftbar.add(discord);
+        leftbar.add(mute);
+        leftbar.add(quit);
 
         AtomicBoolean muteState = new AtomicBoolean(true);
 
@@ -166,18 +173,6 @@ public class CSSGuiMainMenu extends GuiFrame {
 
         background.add(leftbar);
         background.add(desc);
-
-
-        //        if(Minecraft.getMinecraft().getSession().getUsername().equals("yan36")) {
-
-//        }
-        topbar.add(zonestaff);
-
-        play.addClickListener((x, y, bu) -> {
-           connect("51.38.250.27",25739);
-        });
-
-
 
         add(background);
 
