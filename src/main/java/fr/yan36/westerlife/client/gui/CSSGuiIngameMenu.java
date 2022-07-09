@@ -4,6 +4,7 @@ import fr.aym.acsguis.api.ACsGuiApi;
 import fr.aym.acsguis.component.layout.GuiScaler;
 import fr.aym.acsguis.component.panel.GuiFrame;
 import fr.aym.acsguis.component.panel.GuiPanel;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiOptions;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.util.ResourceLocation;
@@ -48,9 +49,8 @@ public class CSSGuiIngameMenu extends GuiFrame {
         home.add(site);
 
         parameter.addClickListener((x, y, bu) -> {
-            mc.gameSettings.saveOptions();
-            mc.displayGuiScreen(new GuiOptions(this.getGuiScreen(), mc.gameSettings));
-
+            Minecraft.getMinecraft().gameSettings.saveOptions();
+            Minecraft.getMinecraft().displayGuiScreen(new GuiOptions(this.getGuiScreen(), Minecraft.getMinecraft().gameSettings));
         });
 
         keyboard.addClickListener((x, y, bu) -> {
@@ -80,8 +80,8 @@ public class CSSGuiIngameMenu extends GuiFrame {
 
             System.out.println("Reste sur WesterLife, tu vas t'amuser !");
 
-            mc.world.sendQuittingDisconnectingPacket();
-            mc.loadWorld((WorldClient)null);
+            Minecraft.getMinecraft().world.sendQuittingDisconnectingPacket();
+            Minecraft.getMinecraft().loadWorld((WorldClient)null);
             ACsGuiApi.asyncLoadThenShowGui("mainmenu", CSSGuiMainMenu::new);
 
             //Euh en attendant, tu restes ou tu pars.

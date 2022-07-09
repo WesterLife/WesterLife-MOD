@@ -3,7 +3,7 @@ package fr.yan36.westerlife.client.gui.gendarmerie;
 import fr.aym.acsguis.component.layout.GuiScaler;
 import fr.aym.acsguis.component.panel.GuiFrame;
 import fr.aym.acsguis.component.panel.GuiPanel;
-import fr.yan36.westerlife.utils.*;
+import fr.yan36.westerlife.utils.list.*;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
