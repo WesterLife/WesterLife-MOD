@@ -39,10 +39,8 @@ public class Client {
 
         if(e.getGui() instanceof GuiMainMenu){
             if(Minecraft.getMinecraft().getSession().getUsername().equals("gabidut762") || Minecraft.getMinecraft().getSession().getUsername().equals("_INeox")) {
-                System.out.println("Salut pas BG");
             } else if(Minecraft.getMinecraft().getSession().getUsername().equals("yan36")) {
                 ACsGuiApi.asyncLoadThenShowGui("mainmenu", CSSGuiMainMenu::new);
-                System.out.println("T'es beau !");
             } else {
                 ACsGuiApi.asyncLoadThenShowGui("mainmenu", CSSGuiMainMenu::new);
             }
@@ -75,11 +73,8 @@ public class Client {
     {
         if(event.getType() == RenderGameOverlayEvent.ElementType.DEBUG)
         {
-
-
             Minecraft mc = Minecraft.getMinecraft();
             event.setCanceled(true);
-
             EnumFacing orientation = mc.player.getHorizontalFacing();
             int dir = Math.round(orientation.getHorizontalAngle());
             String dire;

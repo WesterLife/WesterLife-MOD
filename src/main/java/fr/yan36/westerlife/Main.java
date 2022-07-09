@@ -1,7 +1,7 @@
 package fr.yan36.westerlife;
 
 import fr.dynamx.api.contentpack.DynamXAddon;
-import fr.yan36.westerlife.client.creativetabs.WesterTab;
+import fr.yan36.westerlife.client.utils.creativetabs.WesterTab;
 import fr.yan36.westerlife.common.CommonProxy;
 import fr.yan36.westerlife.common.blocks.BlockDistributeur;
 import fr.yan36.westerlife.common.blocks.BlockKeypad;
@@ -14,10 +14,7 @@ import fr.yan36.westerlife.utils.Discord;
 import fr.yan36.westerlife.utils.commands.WesterLifeCommand;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
-import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -29,7 +26,6 @@ import net.minecraftforge.server.permission.PermissionAPI;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
-import java.util.UUID;
 
 @Mod(
         modid = Main.MODID,
