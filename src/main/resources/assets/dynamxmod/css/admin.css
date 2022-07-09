@@ -32,26 +32,22 @@ tabbed_pane > button:active {
     height: 88%;
     top: 12%;
 }
-#warp > scroll_pane {
-    top: 40px;
-    height: 60%;
+#pane:hover{
+    background-color: #667CF5;
 }
-#warp > scroll_pane > scroll_bar {
-    top: 0px;
-    height: 100%;
+#warp > scroll_pane {
+    top: 20px;
+    height: 60%;
 }
 .button{
     width: 60%;
-    background-color: #3E3E3E;
-    height: 5%;
-    left: 20%;
-}
-.button:hover {
     background-color: #667CF5;
-}
-#buttonwarp{
-    width: 60%;
-    background-color: #3E3E3E;
-    height: 5%;
+    height: auto;
+    top: auto;
     left: 20%;
+    right: 20%;
+    color: #FFFFFF;
+}
+.button:hover{
+    background-color: #3E3E3E;
 }

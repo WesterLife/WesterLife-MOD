@@ -41,11 +41,14 @@ public class WesterLifeCommand extends CommandBase {
             } else if(Objects.equals(args[0], "info")){
                 sender.sendMessage(new TextComponentString("§cWesterLife Mod V" + Main.VERSION));
             } else if(Objects.equals(args[0], "admin")){
+                sender.sendMessage(new TextComponentString("§cVoici l'interface d'administration."));
                 Main.network.sendTo(new PacketOpenGUIAdmin(), (EntityPlayerMP) sender);
             } else if(Objects.equals(args[0], "profile")){
                 if(!args[1].isEmpty()){
                     sender.sendMessage(new TextComponentString("§c/wlmod profile <pseudo>"));
                 }
+            } else if(Objects.equals(args[0], "addwarp")){
+
             }
         } else {
             sender.sendMessage(new TextComponentString("§c/wlmod <admin/profile/help/info>"));

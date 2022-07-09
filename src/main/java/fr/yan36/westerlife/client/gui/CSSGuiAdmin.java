@@ -1,28 +1,23 @@
 package fr.yan36.westerlife.client.gui;
 
-import fr.aym.acsguis.api.ACsGuiApi;
-import fr.aym.acsguis.component.button.GuiButton;
-import fr.aym.acsguis.component.button.GuiSlider;
 import fr.aym.acsguis.component.layout.GridLayout;
 import fr.aym.acsguis.component.layout.GuiScaler;
-import fr.aym.acsguis.component.layout.PanelLayout;
 import fr.aym.acsguis.component.panel.GuiFrame;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.panel.GuiScrollPane;
 import fr.aym.acsguis.component.panel.GuiTabbedPane;
-import fr.aym.acsguis.component.style.ComponentStyleManager;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
 
-import javax.swing.*;
 import java.awt.*;
 import java.util.Collections;
 import java.util.List;
 
 public class CSSGuiAdmin extends GuiFrame {
     public CSSGuiAdmin() {
-
         super(new GuiScaler.Identity());
 
         style.setBackgroundColor(new Color(152, 152, 152, 50).getRGB());
@@ -31,26 +26,40 @@ public class CSSGuiAdmin extends GuiFrame {
         GuiTabbedPane pane = new GuiTabbedPane();
         pane.setCssClass("tabbed_pane").getStyle().setBackgroundColor(new Color(84, 84, 82, 20).getRGB());
 
-        GuiPanel warps = new GuiPanel();
+        GuiPanel warps = (GuiPanel) new GuiPanel().setCssId("pane");
 
-        GuiPanel players = new GuiPanel(0, 0, 0, 0);
-        GuiPanel settings = new GuiPanel(0, 0, 0, 0);
-        GuiPanel others = new GuiPanel(0, 0, 0, 0);
+        GuiPanel players = (GuiPanel) new GuiPanel(0, 0, 0, 0).setCssId("pane");
 
-        //Grid Layout;
+        GuiPanel settings = (GuiPanel) new GuiPanel(0, 0, 0, 0).setCssId("pane");
+
+        GuiPanel others = (GuiPanel) new GuiPanel(0, 0, 0, 0).setCssId("pane");
+
+        //Grid Layout ;
 
         pane.addTab("Warps", warps);
         pane.addTab("Joueurs", players);
         pane.addTab("Paramètres", settings);
         pane.addTab("Autres", others);
 
-        warps.setCssId("pane").setCssId("warp");
+        warps.setCssId("pane");
         players.setCssId("pane");
         settings.setCssId("pane");
         others.setCssId("pane");
 
-        GuiScrollPane warpPane = new GuiScrollPane();
-        warps.add(warpPane);
+        GuiScrollPane pane1 = new GuiScrollPane().setAutoScroll(true);
+        pane1.setLayout(new GridLayout(-1, 25, 5, GridLayout.GridDirection.HORIZONTAL, 1));
+
+        for (int i = 0; i < 10; i++) {
+            int finalI = i;
+            GuiPanel label = (GuiPanel) new GuiPanel().setCssClass("button");
+            label.addClickListener((x,y,bu) -> {
+                Minecraft.getMinecraft().player.sendMessage(new TextComponentString("Warp"));
+                System.out.println("e");
+                });
+            pane1.add(label);
+        }
+
+        warps.add(pane1);
 
         add(pane);
         add(warps);
