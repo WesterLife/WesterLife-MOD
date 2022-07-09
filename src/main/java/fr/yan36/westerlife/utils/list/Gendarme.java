@@ -1,4 +1,4 @@
-package fr.yan36.westerlife.utils;
+package fr.yan36.westerlife.utils.list;
 
 public class Gendarme {
 

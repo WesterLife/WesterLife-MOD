@@ -1,20 +1,22 @@
-package fr.yan36.westerlife.utils;
+package fr.yan36.westerlife.utils.list;
 
-public class TAJ {
+import fr.aym.acslib.utils.nbtserializer.ISerializable;
+
+public class Amendes {
 
     private int id;
     private String prenom;
     private String nom;
     private String motifs;
-    private String description;
+    private int prix;
 
 
-    public TAJ(int id, String prenom, String nom, String motifs, String description) {
+    public Amendes(int id, String prenom, String nom, String motifs, int prix) {
         this.id = id;
         this.prenom = prenom;
         this.nom = nom;
         this.motifs = motifs;
-        this.description = description;
+        this.prix = prix;
 
     }
 
@@ -50,26 +52,26 @@ public class TAJ {
         this.motifs = motifs;
     }
 
-    public String getDescription() {
-        return description;
+    public int getPrix() {
+        return prix;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setPrix(int prix) {
+        this.prix = prix;
     }
 
     @Override
     public String toString() {
-        return id + ";" + prenom + ";" + nom + ";" + motifs + ";" + description;
+        return id + ";" + prenom + ";" + nom + ";" + motifs + ";" + prix;
     }
 
-    public static TAJ fromString(String s) {
+    public static Amendes fromString(String s) {
         String[] split = s.split(";");
 
-        return new TAJ(Integer.parseInt(split[0]), split[1], split[2], split[3], split[4]);
+        return new Amendes(Integer.parseInt(split[0]), split[1], split[2], split[3], Integer.parseInt(split[4]));
     }
     public String toBeautifulString() {
-        return "Antécédent N°" + id + " : " + prenom + " " + nom + " (" + motifs + ")" + " " + description;
+        return "Antécédent N°" + id + " : " + prenom + " " + nom + " (" + motifs + ")" + " " + prix;
     }
 
 }
