@@ -1,4 +1,4 @@
-package fr.yan36.westerlife.client.creativetabs;
+package fr.yan36.westerlife.client.utils.creativetabs;
 
 import fr.yan36.westerlife.common.items.WesterItem;
 import net.minecraft.creativetab.CreativeTabs;
