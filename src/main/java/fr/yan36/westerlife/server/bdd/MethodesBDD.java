@@ -1,6 +1,6 @@
 package fr.yan36.westerlife.server.bdd;
 
-import fr.yan36.westerlife.utils.*;
+import fr.yan36.westerlife.utils.list.*;
 import net.minecraft.entity.player.EntityPlayer;
 
 import java.util.ArrayList;
@@ -12,6 +12,10 @@ public class MethodesBDD {
     static SQLUtils instance = new SQLUtils();
     public static void addplayer(EntityPlayer p, String prenom, String nom,String date,String sex, String rib){
         instance.execute("INSERT INTO `players` (`uuid`,`prenom`, `nom`, `date`, `sex`, `rib`) VALUES ('"+p.getUniqueID()+"','"+prenom+"','"+nom+"','"+date+"','"+sex+"','"+rib+"')");
+    }
+
+    public static void addwarp(String name, int x, int y, int z){
+        instance.execute("INSERT INTO `admin_warp` (`name`,`x`, `y`, `z`) VALUES ('"+name+"','"+x+"','"+y+"','"+z+"')");
     }
 
     public static boolean getPlayerExist(EntityPlayer p){
@@ -148,12 +152,17 @@ public class MethodesBDD {
         List<AvisDeRecherche> avisderecherche = new ArrayList<>();
         for (int i = 0; i < qr.getRowsCount(); i++) {
             avisderecherche.add(new AvisDeRecherche(Integer.parseInt(qr.getValue(i, 0)), qr.getValue(i, 1), qr.getValue(i, 2), qr.getValue(i, 3), qr.getValue(i, 4)));
-
         }
-
         return avisderecherche;
     }
-
+    public static List<Warps> getWarps(){
+        QueryResult qr = instance.getData("SELECT * FROM admin_warps");
+        List<Warps> warps = new ArrayList<>();
+        for (int i = 0; i < qr.getRowsCount(); i++) {
+            warps.add(new Warps(qr.getValue(i, 0), Integer.parseInt(qr.getValue(i, 1)), Integer.parseInt(qr.getValue(i, 2)), Integer.parseInt(qr.getValue(i, 3))));
+        }
+        return warps;
+    }
     public static List<Pompier> getAccountPompier(){
         QueryResult qr = instance.getData("SELECT * FROM pompier_user");
         List<Pompier> pompiers = new ArrayList<>();
