@@ -155,11 +155,11 @@ public class MethodesBDD {
         }
         return avisderecherche;
     }
-    public static List<Warps> getWarps(){
+    public static List<Warp> getWarps(){
         QueryResult qr = instance.getData("SELECT * FROM admin_warps");
-        List<Warps> warps = new ArrayList<>();
+        List<Warp> warps = new ArrayList<>();
         for (int i = 0; i < qr.getRowsCount(); i++) {
-            warps.add(new Warps(qr.getValue(i, 0), Integer.parseInt(qr.getValue(i, 1)), Integer.parseInt(qr.getValue(i, 2)), Integer.parseInt(qr.getValue(i, 3))));
+            warps.add(new Warp(qr.getValue(i, 0), Integer.parseInt(qr.getValue(i, 1)), Integer.parseInt(qr.getValue(i, 2)), Integer.parseInt(qr.getValue(i, 3))));
         }
         return warps;
     }

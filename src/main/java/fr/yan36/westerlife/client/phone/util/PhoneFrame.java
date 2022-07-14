@@ -3,7 +3,12 @@ package fr.yan36.westerlife.client.phone.util;
 import fr.aym.acsguis.component.layout.GuiScaler;
 import fr.aym.acsguis.component.panel.GuiFrame;
 import fr.aym.acsguis.component.panel.GuiPanel;
+import fr.yan36.westerlife.Main;
+import fr.yan36.westerlife.common.network.PacketOpenPhoneFrame;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 
 import java.util.Collections;
 import java.util.List;
@@ -16,7 +21,6 @@ public class PhoneFrame extends GuiFrame {
 
         GuiPanel screen = new GuiPanel();
         screen.setCssClass("screen");
-
 
         add(screen);
     }
@@ -33,7 +37,7 @@ public class PhoneFrame extends GuiFrame {
         add(pan);
     }
 
-    public static void openGui() {
-        
+    public static void openGui(EntityPlayer e) {
+        Main.network.sendTo(new PacketOpenPhoneFrame(), (EntityPlayerMP) e);
     }
 }

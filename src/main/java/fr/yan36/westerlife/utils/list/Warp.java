@@ -1,13 +1,13 @@
 package fr.yan36.westerlife.utils.list;
 
-public class Warps {
+public class Warp {
 
     private String name;
     private int x;
     private int y;
     private int z;
 
-    public Warps(String name, int x, int y, int z) {
+    public Warp(String name, int x, int y, int z) {
         this.name = name;
         this.x = x;
         this.y = y;
@@ -51,10 +51,10 @@ public class Warps {
         return "{" + "name=" + name + ", x=" + x + ", y=" + y + ", z=" + z + '}';
     }
 
-    public static Warps fromString(String s) {
+    public static Warp fromString(String s) {
         String[] split = s.split(";");
 
-        return new Warps(split[0], Integer.parseInt(split[1]), Integer.parseInt(split[2]), Integer.parseInt(split[3]));
+        return new Warp(split[0], Integer.parseInt(split[1]), Integer.parseInt(split[2]), Integer.parseInt(split[3]));
     }
     public String toBeautifulString() {
         return name + " X: " + x + " Y: " + y + " Z: " + z;

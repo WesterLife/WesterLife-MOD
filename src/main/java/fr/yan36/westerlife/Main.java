@@ -3,10 +3,7 @@ package fr.yan36.westerlife;
 import fr.dynamx.api.contentpack.DynamXAddon;
 import fr.yan36.westerlife.client.utils.creativetabs.WesterTab;
 import fr.yan36.westerlife.common.CommonProxy;
-import fr.yan36.westerlife.common.blocks.BlockDistributeur;
-import fr.yan36.westerlife.common.blocks.BlockKeypad;
-import fr.yan36.westerlife.common.blocks.BlockLaptop;
-import fr.yan36.westerlife.common.blocks.BlockSignVillage;
+import fr.yan36.westerlife.common.blocks.*;
 import fr.yan36.westerlife.common.items.ItemDynamx;
 import fr.yan36.westerlife.common.network.Network;
 import fr.yan36.westerlife.common.registry.RegisteringHandler;
@@ -56,6 +53,7 @@ public class Main {
     public static BlockLaptop Laptop;
     public static BlockDistributeur Distributeur;
     public static BlockKeypad Keypad;
+    public static BlockBisign doublefeurouge;
 
     @DynamXAddon.AddonEventSubscriber
     public static void init() {
@@ -66,7 +64,7 @@ public class Main {
 
         Distributeur = new BlockDistributeur(Material.ROCK, Main.MODID, "distributeur", "atm/atm.obj");
         SignVillage = new BlockSignVillage(Material.ANVIL, Main.MODID, "panneauvillage", "signvillage/sign.obj");
-
+        doublefeurouge = new BlockBisign(Material.ANVIL, Main.MODID, "doublefeurouge", "bisign/bicolor.obj");
 //        radar = new BlockDynamx(Material.ANVIL, Main.MODID, "radar", "radar/radar.obj");
 //        feu_tricolore = new BlockDynamx(Material.ANVIL, Main.MODID, "feutricolore", "feut/feut.obj");
 
@@ -115,6 +113,8 @@ public class Main {
         event.registerServerCommand(new WesterLifeCommand());
 
     }
+
+
 
 
     public static final CreativeTabs creativeTab = new WesterTab("westertab");

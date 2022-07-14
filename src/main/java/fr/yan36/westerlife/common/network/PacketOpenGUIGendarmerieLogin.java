@@ -30,7 +30,6 @@ public class PacketOpenGUIGendarmerieLogin implements IMessage{
         @SideOnly(Side.CLIENT)
         public IMessage onMessage(PacketOpenGUIGendarmerieLogin m, MessageContext ctx) {
             ACsGuiApi.asyncLoadThenShowGui("gendarmerielogin", CSSGuiGendarmerieLogin::new);
-
             return null;
         }
     }

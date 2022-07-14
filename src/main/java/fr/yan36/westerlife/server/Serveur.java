@@ -1,6 +1,14 @@
 package fr.yan36.westerlife.server;
 
+import com.jme3.bullet.collision.PhysicsCollisionEvent;
 import fr.dynamx.addons.basics.BasicsAddon;
+import fr.dynamx.api.events.PhysicsEntityEvent;
+import fr.dynamx.api.events.PhysicsEvent;
+import fr.dynamx.api.events.VehicleEntityEvent;
+import fr.dynamx.common.DynamXContext;
+import fr.dynamx.common.entities.BaseVehicleEntity;
+import fr.dynamx.common.physics.terrain.chunk.EnumChunkCollisionsState;
+import fr.dynamx.utils.debug.renderer.VehicleDebugRenderer;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.blocks.BlockDistributeur;
 import fr.yan36.westerlife.common.items.WesterItem;
@@ -20,6 +28,8 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 
+import java.util.Objects;
+
 
 public class Serveur {
 
@@ -34,11 +44,16 @@ public class Serveur {
                 Main.network.sendTo(new PacketCreateIdentity(), (EntityPlayerMP) e.player);
             }else{
                 Main.network.sendTo(new PacketSyncPlayer(MethodesBDD.getNom(e.player),MethodesBDD.getPrenom(e.player),MethodesBDD.getSex(e.player),MethodesBDD.getDate(e.player),MethodesBDD.getArgent(e.player),MethodesBDD.getRIB(e.player)), (EntityPlayerMP) e.player);
+                //Main.network.sendTo(new Packet);
                 //send packet with data of player
             }
             //Main.network.sendTo(new PacketOpenFranceTravail(MethodesBDD.getJobs()), (EntityPlayerMP) e.player);
         }
 
+    }
+    @SubscribeEvent
+    public void DynamXVehicleCollide(PhysicsEvent.ChunkCollisionsStateEvent e) {
+        // System.out.println(e.getEntity().collided);
     }
 
     @SubscribeEvent
