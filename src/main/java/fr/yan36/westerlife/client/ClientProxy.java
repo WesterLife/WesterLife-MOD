@@ -1,10 +1,5 @@
 package fr.yan36.westerlife.client;
 
-import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
-import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
-import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
-import com.sedmelluq.discord.lavaplayer.player.event.AudioEventListener;
-import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
 import fr.aym.acsguis.api.ACsGuiApi;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.client.phone.Apps;

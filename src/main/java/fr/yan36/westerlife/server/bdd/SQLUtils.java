@@ -12,7 +12,6 @@ public class SQLUtils {
     private static Connection c;
     private static Properties props = new Properties();
 
-
     public SQLUtils(){
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
