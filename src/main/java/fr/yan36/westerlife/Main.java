@@ -39,7 +39,7 @@ public class Main {
 
     public static final String MODID = "westerlife";
     public static final String NAME = "WesterLife Mod";
-    public static final String VERSION = "1.3";
+    public static final String VERSION = "1.4";
     public static String DISCORD_ID, DRP_DETAILS, DRP_IMAGE_LARGE, DRP_IMAGE_LARGE_TEXT, DRP_IMAGE_SMALL, DRP_STATE_SOLO, DRP_STATE_MULTIPLAYER, DRP_STATE_OTHER;
 
     @Mod.Instance(Main.MODID)

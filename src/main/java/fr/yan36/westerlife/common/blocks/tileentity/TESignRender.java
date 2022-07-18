@@ -25,13 +25,13 @@ public class TESignRender extends TESRDynamXBlock<TESign> {
         RenderHelper.enableStandardItemLighting();
         GlStateManager.tryBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
         if(te.getRotation() * 22.5F == 90.0F) {
-            GL11.glTranslatef((float) x + 0.8F, (float)y + 1.5F, (float)z + 0.46F);
+            GL11.glTranslatef((float) x + 0.8F, (float)y + 1.3F, (float)z + 0.46F);
         } else if(te.getRotation() * 22.5F == 180.0F) {
-            GL11.glTranslatef((float) x + 0.54F, (float)y + 1.5F, (float)z + 0.73F);
+            GL11.glTranslatef((float) x + 0.54F, (float)y + 1.3F, (float)z + 0.73F);
         } else if(te.getRotation() * 22.5F == 270.0F) {
-            GL11.glTranslatef((float) x + 0.25F, (float)y + 1.5F, (float)z + 0.6F);
+            GL11.glTranslatef((float) x + 0.25F, (float)y + 1.3F, (float)z + 0.6F);
         } else {
-            GL11.glTranslatef((float) x + 0.46F, (float)y + 1.5F, (float)z + 0.11F);
+            GL11.glTranslatef((float) x + 0.46F, (float)y + 1.3F, (float)z + 0.11F);
         }
         GL11.glRotatef(te.getRotation() * 22.5F + 270.0F, 0.0F, -1.0F, 0.0F);
         GL11.glRotatef(180F, 0.0F, 0.0F, -1.0F);
