@@ -142,6 +142,7 @@ public class Client {
         keyBindTest = new KeyBinding("westerlife.admin", Keyboard.KEY_F9, "westerlife.category");
         keyBindAnimation = new KeyBinding("westerlife.animation", Keyboard.KEY_F4, "westerlife.keybind");
         ClientRegistry.registerKeyBinding(keyBindTest);
+        ClientRegistry.registerKeyBinding(keyBindAnimation);
     }
 
     @SubscribeEvent
