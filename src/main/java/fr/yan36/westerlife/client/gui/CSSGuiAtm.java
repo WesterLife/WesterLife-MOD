@@ -207,7 +207,7 @@ public class CSSGuiAtm extends GuiFrame {
         screenTransaction.setVisible(false);
 
         GuiTextArea rib, montant;
-        rib = (GuiTextArea) new GuiTextArea().setHintText("RIB destinataire").setMaxTextLength(8).setRegexPattern(Pattern.compile(".*[0-9].*"));
+        rib = (GuiTextArea) new GuiTextArea().setHintText("RIB destinataire").setMaxTextLength(10);
         rib.setCssClass("transac-rib");
 
         screenTransaction.add(rib);

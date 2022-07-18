@@ -54,6 +54,8 @@ public class Main {
     public static BlockDistributeur Distributeur;
     public static BlockKeypad Keypad;
     public static BlockBisign doublefeurouge;
+    public static BlockTerminalDePaiement TerminalDePaiement;
+    public static BlockRadarFixe radarFixe;
 
     @DynamXAddon.AddonEventSubscriber
     public static void init() {
@@ -65,10 +67,11 @@ public class Main {
         Distributeur = new BlockDistributeur(Material.ROCK, Main.MODID, "distributeur", "atm/atm.obj");
         SignVillage = new BlockSignVillage(Material.ANVIL, Main.MODID, "panneauvillage", "signvillage/sign.obj");
         doublefeurouge = new BlockBisign(Material.ANVIL, Main.MODID, "doublefeurouge", "bisign/bicolor.obj");
-//        radar = new BlockDynamx(Material.ANVIL, Main.MODID, "radar", "radar/radar.obj");
 //        feu_tricolore = new BlockDynamx(Material.ANVIL, Main.MODID, "feutricolore", "feut/feut.obj");
 
         Laptop = new BlockLaptop(Material.ANVIL, Main.MODID, "laptop", "laptop/pc.obj");
+        TerminalDePaiement = new BlockTerminalDePaiement(Material.ANVIL, Main.MODID, "tdp", "tdp/paiement.obj");
+        radarFixe = new BlockRadarFixe(Material.ANVIL, Main.MODID, "radarfixe", "radar/radarfixe.obj");
 
         //Keypad = new BlockKeypad(Material.ANVIL, Main.MODID, "keypad", "keypad/keypad.obj");
     }

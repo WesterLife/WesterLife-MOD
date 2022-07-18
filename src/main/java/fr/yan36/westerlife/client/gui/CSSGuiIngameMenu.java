@@ -5,6 +5,7 @@ import fr.aym.acsguis.component.layout.GuiScaler;
 import fr.aym.acsguis.component.panel.GuiFrame;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiControls;
 import net.minecraft.client.gui.GuiOptions;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.util.ResourceLocation;
@@ -49,12 +50,11 @@ public class CSSGuiIngameMenu extends GuiFrame {
         home.add(site);
 
         parameter.addClickListener((x, y, bu) -> {
-            Minecraft.getMinecraft().gameSettings.saveOptions();
             Minecraft.getMinecraft().displayGuiScreen(new GuiOptions(this.getGuiScreen(), Minecraft.getMinecraft().gameSettings));
         });
 
         keyboard.addClickListener((x, y, bu) -> {
-            //TODO: Keyboard GUI
+            //
         });
 
         site.addClickListener((x, y, bu) -> {
@@ -72,7 +72,6 @@ public class CSSGuiIngameMenu extends GuiFrame {
             } catch (IOException | URISyntaxException e) {
                 e.printStackTrace();
             }
-            System.out.println("https://discord.gg/ZUsYjXE3");
         });
 
         disconnect.addClickListener((x,y,bu) -> {

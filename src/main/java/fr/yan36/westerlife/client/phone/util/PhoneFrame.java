@@ -8,7 +8,6 @@ import fr.yan36.westerlife.common.network.PacketOpenPhoneFrame;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 
 import java.util.Collections;
 import java.util.List;
@@ -21,6 +20,7 @@ public class PhoneFrame extends GuiFrame {
 
         GuiPanel screen = new GuiPanel();
         screen.setCssClass("screen");
+
 
         add(screen);
     }

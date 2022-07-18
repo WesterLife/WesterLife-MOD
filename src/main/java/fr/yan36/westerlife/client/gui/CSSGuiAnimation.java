@@ -4,6 +4,8 @@ import fr.aym.acsguis.component.layout.GuiScaler;
 import fr.aym.acsguis.component.panel.GuiFrame;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.panel.GuiScrollPane;
+import fr.aym.acsguis.component.textarea.GuiProgressBar;
+import javafx.scene.control.ProgressBar;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 

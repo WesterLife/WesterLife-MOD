@@ -2,6 +2,7 @@ package fr.yan36.westerlife.common;
 
 import fr.yan36.westerlife.common.blocks.tileentity.TEBisign;
 import fr.yan36.westerlife.common.blocks.tileentity.TESign;
+import fr.yan36.westerlife.common.blocks.tileentity.TETerminalDePaiement;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -12,7 +13,7 @@ public class CommonProxy {
         System.out.println("pre init côté commun");
         GameRegistry.registerTileEntity(TESign.class, new ResourceLocation("westerlife", "tesign"));
         GameRegistry.registerTileEntity(TEBisign.class, new ResourceLocation("westerlife", "tebisign"));
-
+        GameRegistry.registerTileEntity(TETerminalDePaiement.class, new ResourceLocation("westerlife", "teterminaldepaiement"));
     }
 
     public void init()

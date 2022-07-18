@@ -10,6 +10,9 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.UUID;
+import java.util.regex.Pattern;
+
 public class PacketCreateIdentityServer implements IMessage{
 
 
@@ -50,9 +53,15 @@ public class PacketCreateIdentityServer implements IMessage{
         public IMessage onMessage(PacketCreateIdentityServer m, MessageContext ctx) {
             EntityPlayer e = (EntityPlayer) ctx.getServerHandler().player.world.getEntityByID(m.player);
             if(!MethodesBDD.getPlayerExist(e)) {
-                int nombreAleatoire = 1000 + (int)(Math.random() * ((99999 - 1000) + 1));
-                String rib = "01"+ Integer.toString(nombreAleatoire);
-                MethodesBDD.addplayer(e, m.prenom, m.nom, m.date, m.sex, rib);
+                String fg = String.valueOf(e.getUUID(e.getGameProfile()));
+                String pattern = fg.replaceAll("[^0-9]", "");
+
+                if(pattern.length() > 8){
+                    pattern = "FR" + pattern.substring(0,8);
+                    System.out.println(pattern + " " + pattern.length());
+                }
+
+                MethodesBDD.addplayer(e, m.prenom, m.nom, m.date, m.sex, pattern);
             }
             return null;
         }

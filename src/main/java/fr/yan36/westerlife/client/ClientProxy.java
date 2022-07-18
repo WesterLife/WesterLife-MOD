@@ -1,5 +1,10 @@
 package fr.yan36.westerlife.client;
 
+import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
+import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
+import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
+import com.sedmelluq.discord.lavaplayer.player.event.AudioEventListener;
+import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
 import fr.aym.acsguis.api.ACsGuiApi;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.client.phone.Apps;
@@ -8,14 +13,20 @@ import fr.yan36.westerlife.common.blocks.tileentity.TEBisign;
 import fr.yan36.westerlife.common.blocks.tileentity.TEBisignRender;
 import fr.yan36.westerlife.common.blocks.tileentity.TESign;
 import fr.yan36.westerlife.common.blocks.tileentity.TESignRender;
+import fr.yan36.westerlife.common.registry.SoundsHandler;
 import fr.yan36.westerlife.utils.Discord;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.ISound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Util;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import org.apache.commons.io.IOUtils;
 import org.lwjgl.opengl.Display;
+import org.newdawn.slick.openal.Audio;
+import org.newdawn.slick.openal.AudioLoader;
+import org.newdawn.slick.openal.SoundStore;
+import org.newdawn.slick.util.ResourceLoader;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -32,12 +43,6 @@ public class ClientProxy extends CommonProxy {
 
         ClientRegistry.bindTileEntitySpecialRenderer(TESign.class, new TESignRender());
         ClientRegistry.bindTileEntitySpecialRenderer(TEBisign.class, new TEBisignRender());
-
-        /**if(Minecraft.getMinecraft().getSession().getUsername().equals("yan36")){
-        Audio oggEffect = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("assets/sounds/load.ogg"));
-        oggEffect.playAsSoundEffect(1.0f, 1.0f, false);
-
-        SoundStore.get().poll(0);}**/
 
         Display.setTitle("WesterLife - " + Minecraft.getMinecraft().getSession().getUsername());
 
@@ -56,7 +61,6 @@ public class ClientProxy extends CommonProxy {
         ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("phoneframe", "css/phoneframe.css"));
         ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("dynamxmod", "css/admin.css"));
         Apps.Init(); // Gabi <3
-
 
 
     }

@@ -57,9 +57,6 @@ public class ItemDynamx extends DynamXItem {
                 BlockPos pos = instance.objectMouseOver.getBlockPos();
                 System.out.println(instance.player.world.getBlockState(pos).getBlock());
                 Main.network.sendToServer(new BelierMessage(Util.blockPosToString(pos)));
-
-
-
             }
         }
         return ActionResult.newResult(EnumActionResult.SUCCESS, player.getHeldItem(handIn));

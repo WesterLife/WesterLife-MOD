@@ -10,6 +10,7 @@ import fr.yan36.westerlife.client.utils.News;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiMultiplayer;
 import net.minecraft.client.gui.GuiOptions;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.network.NetHandlerLoginClient;
 import net.minecraft.network.EnumConnectionState;
 import net.minecraft.network.NetworkManager;
@@ -112,15 +113,14 @@ public class CSSGuiMainMenu extends GuiFrame {
             System.out.println("zonestaff");
         });
 
-
         topbar.add(title);
         topbar.add(site);
         topbar.add(param);
         topbar.add(zonestaff);
 
         param.addClickListener((x, y, bu) -> {
-            mc.gameSettings.saveOptions();
-            mc.displayGuiScreen(new GuiOptions(this.getGuiScreen(), mc.gameSettings));
+            Minecraft.getMinecraft().gameSettings.saveOptions();
+            Minecraft.getMinecraft().displayGuiScreen(new GuiOptions(this.getGuiScreen(), Minecraft.getMinecraft().gameSettings));
             System.out.println("param");
 
         });

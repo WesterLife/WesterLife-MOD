@@ -18,7 +18,6 @@ buildscript {
 repositories {
     mavenCentral()
     maven {
-        name 'm2-dv8tion'
         url 'https://m2.dv8tion.net/releases'
     }
     maven{
@@ -99,6 +98,7 @@ minecraft {
         implementation fg.deobf('fr.dynamx:DynamX:3.3.0')
         implementation "fr.aym.acsguis:ACsGuis:1.2.2-1"
 
+        implementation 'com.sedmelluq:lavaplayer:1.3.77'
         compile fileTree(dir: 'libs', include: '*.jar')
         implementation "curse.maven:lizardon-mcef-577541:3641377"
         compile 'club.minnced:java-discord-rpc:2.0.1'
