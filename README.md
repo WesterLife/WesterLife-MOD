@@ -6,6 +6,8 @@ L'accès au contenu de ce mod est réservé aux membres agréés par la directio
 
 **Information aux développeurs :** `L'accès à la base de donnée est réservée aux membres agréés par la direction de WesterLife. Si vous n'y avez pas accès certaines fonctionalités risquent de ne pas fonctionner.`
 
+**Vous pouvez utiliser [https://gitmoji.dev/](https://gitmoji.dev/) pour vos commits.**
+
 > __**Libs utilisées :**__
 > - ACsGui
 > - DynamX
