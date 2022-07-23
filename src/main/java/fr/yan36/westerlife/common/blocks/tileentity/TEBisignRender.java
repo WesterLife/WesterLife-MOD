@@ -21,7 +21,7 @@ public class TEBisignRender extends TESRDynamXBlock<TEBisign> {
         } else toRender = "none";
 
         if(!toRender.equals("none")) {
-            System.out.println(toRender);
+            //(System.out.println(toRender);
             GL11.glPushMatrix();
             GlStateManager.enableRescaleNormal();
             GlStateManager.enableBlend();
