@@ -4,6 +4,8 @@ import fr.aym.acsguis.api.ACsGuiApi;
 import fr.dynamx.api.events.PhysicsEvent;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.client.gui.*;
+import fr.yan36.westerlife.client.gui.gendarmerie.CSSGuiGendarmerie;
+import fr.yan36.westerlife.client.gui.gendarmerie.CSSGuiGendarmerieLogin;
 import fr.yan36.westerlife.common.items.WesterItem;
 import fr.yan36.westerlife.common.network.PacketOpenGUIAdmin;
 import fr.yan36.westerlife.common.registry.SoundsHandler;
@@ -70,16 +72,14 @@ public class Client {
 
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
-    public void onRenderPre(RenderGameOverlayEvent.Pre event)
-    {
-        if(event.getType() == RenderGameOverlayEvent.ElementType.DEBUG)
-        {
+    public void onRenderPre(RenderGameOverlayEvent.Pre event) {
+        if (event.getType() == RenderGameOverlayEvent.ElementType.DEBUG) {
             Minecraft mc = Minecraft.getMinecraft();
             event.setCanceled(true);
             EnumFacing orientation = mc.player.getHorizontalFacing();
             int dir = Math.round(orientation.getHorizontalAngle());
             String dire;
-            switch (dir){
+            switch (dir) {
                 case 0:
                     dire = "North";
                     break;
@@ -106,8 +106,9 @@ public class Client {
             this.drawString(Minecraft.getMinecraft().fontRenderer, "X: " + df.format(Minecraft.getMinecraft().player.posX) + " Y: " + df.format(Minecraft.getMinecraft().player.posY) + " Z: " + df.format(Minecraft.getMinecraft().player.posZ), 5, 50, 0xFF5C5C);
         }
 
-        if(event.getType() == RenderGameOverlayEvent.ElementType.EXPERIENCE){
+        if (event.getType() == RenderGameOverlayEvent.ElementType.EXPERIENCE || event.getType() == RenderGameOverlayEvent.ElementType.FOOD || event.getType() == RenderGameOverlayEvent.ElementType.HEALTH || event.getType() == RenderGameOverlayEvent.ElementType.HEALTH){
             event.setCanceled(true);
+
         }
     }
 
@@ -175,7 +176,7 @@ public class Client {
     }
 
     private void keyTestTyped() {
-        ACsGuiApi.asyncLoadThenShowGui("admin", CSSGuiAdmin::new);
+        ACsGuiApi.asyncLoadThenShowGui("gendarmerie", CSSGuiGendarmerieLogin::new);
         System.out.println("hello");
     }
 

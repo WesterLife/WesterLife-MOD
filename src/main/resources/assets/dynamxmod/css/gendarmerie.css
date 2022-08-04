@@ -6,6 +6,30 @@
     background: #32373A;
     border-radius: 5px;
 }
+.guiscreen{
+    width: 74%;
+    height: 100%;
+    left: 26%;
+    top: 0%;
+    background: #32373A;
+    border-radius: 5px;
+}
+#guiscreenplainte{
+    width: 74%;
+    height: 100%;
+    left: 26%;
+    top: 0%;
+    background: #32373A;
+    border-radius: 5px;
+}
+#guiscreentaj{
+    width: 74%;
+    height: 100%;
+    left: 26%;
+    top: 0%;
+    background: #32373A;
+    border-radius: 5px;
+}
 .leftbar{
     width: 26%;
     height: 100%;
@@ -20,9 +44,105 @@
     top: 3%;
     background-image: url("dynamxmod:textures/gendarmerie/logo.png");
 }
-.scrollpanel{
-    width: 20%;
-    height: 10%;
-    left: 50%;
+.menu{
+    width: 100%;
+    height: 70%;
+    left: 0%;
     top: 30%;
+    background-color: #424346;
+}
+tabbed_pane > button {
+    background-color: #424346;
+    color: #FFFFFF;
+    width: auto;
+    height: auto;
+    top: auto;
+    left: auto;
+    border: none;
+    background-image: none;
+    border-position: internal;
+}
+
+tabbed_pane > button:hover {
+    background-color: #002654;
+}
+tabbed_pane > button:active {
+    background-color: #323234;
+}
+.profilbutton{
+    width: 20px;
+    height: 20px;
+    top: 3%;
+    right: 3%;
+    background-image: url("dynamxmod:textures/gendarmerie/profil.png");
+}
+.leftpanel{
+    width: 40%;
+    height: 75%;
+    left: 5%;
+    top: 12%;
+    background: #454545;
+}
+.rightpanel{
+    width: 35%;
+    height: 75%;
+    left: 60%;
+    top: 12%;
+    background: #454545;
+}
+.title{
+    width: 80%;
+    height: 4%;
+    left: 5%;
+    top: 3%;
+    color: #FFFFFF;
+    font-size: 20px;
+}
+.plaignantplainte{
+    width: 80%;
+    height: 15%;
+    left: 10%;
+    top: 7%;
+    background-color: #404042;
+    color: #FFFFFF;
+    padding-top: 2px;
+    padding-left: 2px;
+    border: none;
+    border-radius: 5px;
+}
+.miseencauseplainte{
+    width: 80%;
+    height: 15%;
+    left: 10%;
+    top: 25%;
+    background-color: #404042;
+    color: #FFFFFF;
+    padding-top: 2px;
+    padding-left: 2px;
+    border: none;
+    border-radius: 5px;
+}
+.descriptionplainte {
+    width: 80%;
+    height: 35%;
+    left: 10%;
+    top: 43%;
+    background-color: #404042;
+    color: #FFFFFF;
+    padding-top: 2px;
+    padding-left: 2px;
+    border: none;
+    border-radius: 5px;
+}
+.createplaintebutton{
+    width: 80%;
+    height: 15%;
+    left: 10%;
+    top: 82%;
+    background-color: #36374F;
+    border: none;
+    border-radius: 5px;
+}
+.createplaintebutton:hover{
+    background-color: #4E586E;
 }

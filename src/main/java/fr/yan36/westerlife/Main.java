@@ -97,9 +97,13 @@ public class Main {
             DRP_STATE_SOLO = "En solo";
             DRP_STATE_MULTIPLAYER = "Connecté(e)";
             DRP_STATE_OTHER = "Dans les menus";
-        if(event.getSide().isClient()) {
-            new Discord().start();
-        }
+//        if(event.getSide().isClient()) {
+//            try {
+//                new Discord().start();
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
     }
 
     @Mod.EventHandler
