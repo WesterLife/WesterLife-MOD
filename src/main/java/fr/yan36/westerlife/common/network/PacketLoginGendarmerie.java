@@ -2,6 +2,7 @@ package fr.yan36.westerlife.common.network;
 
 import fr.aym.acsguis.api.ACsGuiApi;
 import fr.yan36.westerlife.client.gui.CSSGuiAtm;
+import fr.yan36.westerlife.client.gui.gendarmerie.CSSGuiGendarmerie;
 import fr.yan36.westerlife.client.gui.gendarmerie.CSSGuiGendarmerieLogin;
 import io.netty.buffer.ByteBuf;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -38,7 +39,7 @@ public class PacketLoginGendarmerie implements IMessage {
         public IMessage onMessage(PacketLoginGendarmerie m, MessageContext ctx) {
             if(m.result) {
 
-                System.out.println("Login success");
+                ACsGuiApi.asyncLoadThenShowGui("gendarmerie", CSSGuiGendarmerie::new);
             } else {
                 CSSGuiGendarmerieLogin.errorText = "Identifiant ou mot de passe incorrects.";
                 System.out.println("Login failed");
