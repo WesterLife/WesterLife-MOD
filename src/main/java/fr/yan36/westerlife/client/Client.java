@@ -41,12 +41,13 @@ public class Client {
     public static int create = 0;
     public static String animationState = "default";
     public static List<Warp> warplist = new ArrayList<>();
+
     @SubscribeEvent
     public void GuieventHandler(GuiOpenEvent e) {
 
-        if(e.getGui() instanceof GuiMainMenu){
-            if(Minecraft.getMinecraft().getSession().getUsername().equals("gabidut762") || Minecraft.getMinecraft().getSession().getUsername().equals("_INeox") || Minecraft.getMinecraft().getSession().getUsername().equals("0hSandji")) {
-            } else if(Minecraft.getMinecraft().getSession().getUsername().equals("yan36")) {
+        if (e.getGui() instanceof GuiMainMenu) {
+            if (Minecraft.getMinecraft().getSession().getUsername().equals("gabidut762") || Minecraft.getMinecraft().getSession().getUsername().equals("_INeox") || Minecraft.getMinecraft().getSession().getUsername().equals("0hSandji")) {
+            } else if (Minecraft.getMinecraft().getSession().getUsername().equals("yan36")) {
                 ACsGuiApi.asyncLoadThenShowGui("mainmenu", CSSGuiMainMenu::new);
             } else {
                 ACsGuiApi.asyncLoadThenShowGui("mainmenu", CSSGuiMainMenu::new);
@@ -57,7 +58,7 @@ public class Client {
         }
 
         if (e.getGui() == null) {
-            if(create == 1){
+            if (create == 1) {
                 ACsGuiApi.asyncLoadThenShowGui("createprofil", CSSGuiCreateProfil::new);
             }
         }
@@ -106,38 +107,36 @@ public class Client {
             this.drawString(Minecraft.getMinecraft().fontRenderer, "X: " + df.format(Minecraft.getMinecraft().player.posX) + " Y: " + df.format(Minecraft.getMinecraft().player.posY) + " Z: " + df.format(Minecraft.getMinecraft().player.posZ), 5, 50, 0xFF5C5C);
         }
 
-        if (event.getType() == RenderGameOverlayEvent.ElementType.EXPERIENCE || event.getType() == RenderGameOverlayEvent.ElementType.FOOD || event.getType() == RenderGameOverlayEvent.ElementType.HEALTH || event.getType() == RenderGameOverlayEvent.ElementType.HEALTH){
+        if (event.getType() == RenderGameOverlayEvent.ElementType.EXPERIENCE || event.getType() == RenderGameOverlayEvent.ElementType.FOOD || event.getType() == RenderGameOverlayEvent.ElementType.HEALTH || event.getType() == RenderGameOverlayEvent.ElementType.HEALTH) {
             event.setCanceled(true);
 
         }
     }
 
-    public void drawString(FontRenderer fontRenderer, String str, int x, int y, int color)
-    {
+    public void drawString(FontRenderer fontRenderer, String str, int x, int y, int color) {
         fontRenderer.drawStringWithShadow(str, x, y, color);
     }
 
     @SubscribeEvent
-    public void renderPseudo(RenderLivingEvent.Specials.Pre e){
+    public void renderPseudo(RenderLivingEvent.Specials.Pre e) {
 
-        if(!(Minecraft.getMinecraft().player.isCreative())){
+        if (!(Minecraft.getMinecraft().player.isCreative())) {
             e.setCanceled(true);
         }
 
     }
 
     @SubscribeEvent
-    public void onClickItem(PlayerInteractEvent.RightClickItem e){
-        if(e.getItemStack().isItemEqual(new ItemStack(WesterItem.DISC_MARSEILLAISE))){
-            e.getEntityPlayer().playSound(SoundsHandler.MARSEILLAISE, 0.8f,1f);
+    public void onClickItem(PlayerInteractEvent.RightClickItem e) {
+        if (e.getItemStack().isItemEqual(new ItemStack(WesterItem.DISC_MARSEILLAISE))) {
+            e.getEntityPlayer().playSound(SoundsHandler.MARSEILLAISE, 0.8f, 1f);
         }
     }
 
     private static KeyBinding keyBindTest;
     private static KeyBinding keyBindAnimation;
 
-    public Client()
-    {
+    public Client() {
         FMLCommonHandler.instance().bus().register(this);
         MinecraftForge.EVENT_BUS.register(this);
         keyBindTest = new KeyBinding("westerlife.admin", Keyboard.KEY_F9, "westerlife.category");
@@ -147,22 +146,18 @@ public class Client {
     }
 
     @SubscribeEvent
-    public void onEvent(InputEvent.KeyInputEvent event)
-    {
-        if(keyBindTest.isPressed())
-        {
+    public void onEvent(InputEvent.KeyInputEvent event) {
+        if (keyBindTest.isPressed()) {
             keyTestTyped();
         }
 
-        if(keyBindAnimation.isPressed())
-        {
+        if (keyBindAnimation.isPressed()) {
             keyAnimationTyped();
         }
     }
 
     @SubscribeEvent
-    public void onInteractEvent(PlayerInteractEvent.EntityInteract event)
-    {
+    public void onInteractEvent(PlayerInteractEvent.EntityInteract event) {
 //        System.out.println("target");
 //        Entity Target = event.getTarget();
 //
@@ -176,12 +171,11 @@ public class Client {
     }
 
     private void keyTestTyped() {
-        ACsGuiApi.asyncLoadThenShowGui("gendarmerie", CSSGuiGendarmerieLogin::new);
-        System.out.println("hello");
+        ACsGuiApi.asyncLoadThenShowGui("gendarmerie", CSSGuiGendarmerie::new);
     }
 
     private void keyAnimationTyped() {
-        ACsGuiApi.asyncLoadThenShowGui("animation", CSSGuiAnimation::new);
+
     }
 }
 

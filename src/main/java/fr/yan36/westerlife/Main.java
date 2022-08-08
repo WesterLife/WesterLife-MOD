@@ -7,7 +7,6 @@ import fr.yan36.westerlife.common.blocks.*;
 import fr.yan36.westerlife.common.items.ItemDynamx;
 import fr.yan36.westerlife.common.network.Network;
 import fr.yan36.westerlife.common.registry.RegisteringHandler;
-import fr.yan36.westerlife.utils.Discord;
 import fr.yan36.westerlife.utils.commands.WesterLifeCommand;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
@@ -22,6 +21,7 @@ import net.minecraftforge.server.permission.DefaultPermissionLevel;
 import net.minecraftforge.server.permission.PermissionAPI;
 import org.apache.logging.log4j.Logger;
 
+import javax.sound.sampled.LineUnavailableException;
 import java.io.IOException;
 
 @Mod(
@@ -82,6 +82,7 @@ public class Main {
 
     public static Logger logger;
 
+
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) throws IOException {
         proxy.preInit();
@@ -107,12 +108,10 @@ public class Main {
     }
 
     @Mod.EventHandler
-    public void init(FMLInitializationEvent event)
-    {
+    public void init(FMLInitializationEvent event) throws LineUnavailableException {
         proxy.init();
         RegisteringHandler.initRegistries();
         PermissionAPI.registerNode("westerlife.command.wlmod", DefaultPermissionLevel.OP, "Permission d'administration");
-
     }
 
     @Mod.EventHandler

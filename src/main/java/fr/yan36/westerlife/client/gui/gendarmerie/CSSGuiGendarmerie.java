@@ -10,7 +10,10 @@ import fr.aym.acsguis.component.panel.GuiTabbedPane;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.aym.acsguis.component.textarea.GuiTextArea;
 import fr.aym.acsguis.component.textarea.GuiTextField;
+import fr.yan36.westerlife.Main;
+import fr.yan36.westerlife.common.network.PacketCreatePlainte;
 import fr.yan36.westerlife.utils.list.*;
+import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -22,6 +25,8 @@ import java.util.List;
 public class CSSGuiGendarmerie extends GuiFrame {
     public CSSGuiGendarmerie() {
         super(new GuiScaler.Identity());
+
+
 
         //List<String> plainteArrayList, List<String> userAccount, List<String> amendesArrayList, List<String> tajArrayList, List<String> avisDeRecherchesArrayList
 //
@@ -65,7 +70,6 @@ public class CSSGuiGendarmerie extends GuiFrame {
         GuiTabbedPane menu = new GuiTabbedPane();
         menu.setCssClass("menu");
 
-        leftbar.add(menu);
 
         // Plaintes
 
@@ -83,7 +87,7 @@ public class CSSGuiGendarmerie extends GuiFrame {
         createPlainte.setCssId("createplainte");
         createPlainte.setCssClass("rightpanel");
 
-        createPlainte.add(new GuiLabel("Créer une plainte").setCssId("createplainte-title").setCssCode("width: 100%; height: 5%;"));
+        createPlainte.add(new GuiLabel("Créer une plainte").setCssId("createplainte-title").setCssCode("width: 100%; height: 6%; top: 1%;"));
 
         GuiTextArea plaignant = (GuiTextArea) new GuiTextArea().setHintText("Plaignant").setMaxTextLength(50);
         plaignant.setCssClass("plaignantplainte");
@@ -95,13 +99,32 @@ public class CSSGuiGendarmerie extends GuiFrame {
         GuiTextArea description = (GuiTextArea) new GuiTextArea().setHintText("Déposition").setMaxTextLength(1024);
         description.setCssClass("descriptionplainte");
 
-        GuiPanel createPlainteButton = new GuiPanel().add(new GuiLabel(0, 0, 0, 0,"Créer").setCssId("createplaintebutton").setCssCode("top: 50%; left: 50%; right: 50%; bottom: 50%;"));
+        GuiPanel createPlainteButton = (GuiPanel) new GuiPanel().add(new GuiLabel(0, 0, 0, 0, "Créer").setCssId("createplaintebutton"));
         createPlainteButton.setCssClass("createplaintebutton");
 
         GuiPanel titlePlainte = new GuiPanel();
         GuiLabel titlePlainteLabel;
         titlePlainte.setCssClass("title");
         titlePlainte.add(titlePlainteLabel = (GuiLabel) new GuiLabel(0, 0, -1, 20, "Plaintes :").setCssId("titleplainte"));
+
+        GuiLabel error = (GuiLabel) new GuiLabel("").setCssId("error").setCssCode("color: red; bottom: 0%; height: 7%; width: 100%;");
+        error.setVisible(false);
+        error.allowLineBreak();
+
+        createPlainte.add(error);
+        createPlainteButton.addClickListener((x, y, bu) -> {
+            if(!plaignant.getText().isEmpty() && !miseEnCause.getText().isEmpty() && !description.getText().isEmpty()) {
+                Main.network.sendToServer(new PacketCreatePlainte(plaignant.getText(), miseEnCause.getText(), description.getText()));
+                Minecraft.getMinecraft().player.sendMessage(new net.minecraft.util.text.TextComponentString("§6[§bGendarmerie§6] §aLa plainte de M. " + plaignant.getText() + " a bien été créée."));
+                error.setVisible(false);
+                plaignant.setText("");
+                miseEnCause.setText("");
+                description.setText("");
+            } else {
+                error.setVisible(true);
+                error.setText("Remplissez tous les champs.");
+            }
+        });
 
 
         // Amendes
@@ -204,46 +227,19 @@ public class CSSGuiGendarmerie extends GuiFrame {
         guiScreenProfil.setCssId("guiscreenprofil");
         guiScreenProfil.setCssClass("guiscreen");
 
-        menu.setLayout(new GridLayout(-1, 50, 1, GridLayout.GridDirection.HORIZONTAL, 1));
-
-        menu.addTab("Plaintes", guiScreenPlaintes);
-        menu.addTab("TAJ", guiScreenTaj);
-        menu.addTab("Amendes", guiScreenAmendes);
-        menu.addTab("Avis de Recherches", guiScreenAvisDeRecherches);
-        menu.addTab("Gestion", guiScreenGestion);
-        menu.getTabButton(4).setCssId("buttonGestion").setCssCode("color: #F43B3B;");
-
-//        menu.getTabButton(0).setCssClass("button");
-//        menu.getTabButton(1).setCssClass("button");
-//        menu.getTabButton(2).setCssClass("button");
-//        menu.getTabButton(3).setCssClass("button");
-//        menu.getTabButton(4).setCssClass("button");
-
         // Button profil
 
         GuiPanel buttonProfil = new GuiPanel();
         buttonProfil.setCssClass("profilbutton");
 
         buttonProfil.addClickListener((x, y, z) -> {
-            menu.getTabButton(0).setEnabled(false);
-            menu.getTabButton(1).setEnabled(false);
-            menu.getTabButton(2).setEnabled(false);
-            menu.getTabButton(3).setEnabled(false);
-            menu.getTabButton(4).setEnabled(false);
+
         });
 
         GuiPanel logo = new GuiPanel();
         logo.setCssClass("logo");
 
         leftbar.add(logo);
-
-        background.add(leftbar);
-        background.add(guiScreenPlaintes);
-        background.add(guiScreenTaj);
-        background.add(guiScreenAmendes);
-        background.add(guiScreenAvisDeRecherches);
-        background.add(guiScreenGestion);
-        add(background);
 
         guiScreenPlaintes.add(viewPlaintes);
         guiScreenPlaintes.add(createPlainte);
@@ -254,6 +250,19 @@ public class CSSGuiGendarmerie extends GuiFrame {
         createPlainte.add(description);
         createPlainte.add(createPlainteButton);
 
+
+        menu.setLayout(new GridLayout(0, 50, 1, GridLayout.GridDirection.HORIZONTAL, 1));
+
+        menu.addTab("Plaintes", guiScreenPlaintes);
+        menu.addTab("TAJ", guiScreenTaj);
+        menu.addTab("Amendes", guiScreenAmendes);
+        menu.addTab("Avis de Recherches", guiScreenAvisDeRecherches);
+        menu.addTab("Gestion", guiScreenGestion);
+        menu.getTabButton(4).setCssId("buttonGestion").setCssCode("color: #F43B3B;");
+
+        background.add(leftbar);
+        background.add(menu);
+        add(background);
         background.add(buttonProfil);
     }
 
