@@ -8,6 +8,7 @@ import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.panel.GuiScrollPane;
 import fr.aym.acsguis.component.panel.GuiTabbedPane;
 import fr.aym.acsguis.component.textarea.GuiLabel;
+import fr.aym.acsguis.component.textarea.GuiSearchField;
 import fr.aym.acsguis.component.textarea.GuiTextArea;
 import fr.aym.acsguis.component.textarea.GuiTextField;
 import fr.yan36.westerlife.Main;
@@ -18,6 +19,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -26,7 +28,17 @@ public class CSSGuiGendarmerie extends GuiFrame {
     public CSSGuiGendarmerie() {
         super(new GuiScaler.Identity());
 
-
+        List<Plainte> plaintes = new ArrayList<>();
+        plaintes.add(new Plainte(1, "VOTARD", "DUTEMPS", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."));
+        plaintes.add(new Plainte(2, "PIERROT", "MACRON", "ike readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search fo"));
+        plaintes.add(new Plainte(3, "VOTARD", "DUTEMPS", "or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a "));
+        plaintes.add(new Plainte(4, "PIERROT", "MACRON", "chunk of Lorem Ipsum used since the 1500s is reproduced below for thos"));
+        plaintes.add(new Plainte(5, "VOTARD", "DUTEMPS", "The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "));
+        plaintes.add(new Plainte(6, "PIERROT", "MACRON", "The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "));
+        plaintes.add(new Plainte(7, "VOTARD", "DUTEMPS", "The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "));
+        plaintes.add(new Plainte(8, "PIERROT", "MACRON", "The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "));
+        plaintes.add(new Plainte(9, "VOTARD", "DUTEMPS", "The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "));
+        plaintes.add(new Plainte(10, "PIERROT", "MACRON", "The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "));
 
         //List<String> plainteArrayList, List<String> userAccount, List<String> amendesArrayList, List<String> tajArrayList, List<String> avisDeRecherchesArrayList
 //
@@ -77,9 +89,42 @@ public class CSSGuiGendarmerie extends GuiFrame {
         guiScreenPlaintes.setCssId("guiscreenplainte");
         guiScreenPlaintes.setCssClass("guiscreen");
 
+        //View plaintes
+
         GuiPanel viewPlaintes = new GuiPanel();
         viewPlaintes.setCssId("viewplainte");
         viewPlaintes.setCssClass("leftpanel");
+
+        GuiScrollPane scrollPlaintes = new GuiScrollPane();
+        scrollPlaintes.setCssId("leftpanel");
+
+        scrollPlaintes.getySlider().setCssId("slider");
+
+        scrollPlaintes.setLayout(new GridLayout(-1, 300, 1, GridLayout.GridDirection.HORIZONTAL, 1));
+
+        for (Plainte plainte : plaintes) {
+            GuiPanel plainteIntro = new GuiPanel().add(new GuiLabel("Plainte n°" + plainte.getId() + " - Déposée par " + plainte.getPlaigant() + " - Mis(e) en cause : " + plainte.getContre()).setCssId("intro").setCssCode("height: 100%; width: 100%; padding-left: 10px; padding-top: 10px;"));
+
+            GuiLabel deposition = new GuiLabel("");
+            deposition.setMaxTextLength(48000);
+            deposition.setCssId("deposition");
+            deposition.setCssCode("color: #FFFFFF; height: 70%; width: 100%; padding-left: 10px; padding-top: 10px; top: 20%;");
+            deposition.setText("Déposition : " + plainte.getDeposition());
+            System.out.println(plainte.getDeposition());
+            System.out.println(deposition.getText());
+            deposition.allowLineBreak();
+            GuiPanel plainteViewPanel = new GuiPanel().add(deposition);
+            GuiPanel buttonPlainteDelete = (GuiPanel) new GuiPanel().add(new GuiLabel("Supprimer").setCssId("supprplainte").setCssCode("text-align: center; width: 100%; height: 100%;")).setCssId("deletebutton").setCssCode("top: 91%; padding-left: 4px; height: 8%; width: 40%; left: 55%;");
+            plainteIntro.setCssClass("plainteintro");
+
+            plainteViewPanel.setCssClass("plainte");
+            plainteViewPanel.setCssId("plainte");
+            plainteViewPanel.add(plainteIntro);
+            plainteViewPanel.add(buttonPlainteDelete);
+            scrollPlaintes.add(plainteViewPanel);
+        }
+
+        viewPlaintes.add(scrollPlaintes);
 
         // Create Plainte
 
@@ -111,11 +156,12 @@ public class CSSGuiGendarmerie extends GuiFrame {
         error.setVisible(false);
         error.allowLineBreak();
 
+
         createPlainte.add(error);
         createPlainteButton.addClickListener((x, y, bu) -> {
             if(!plaignant.getText().isEmpty() && !miseEnCause.getText().isEmpty() && !description.getText().isEmpty()) {
                 Main.network.sendToServer(new PacketCreatePlainte(plaignant.getText(), miseEnCause.getText(), description.getText()));
-                Minecraft.getMinecraft().player.sendMessage(new net.minecraft.util.text.TextComponentString("§6[§bGendarmerie§6] §aLa plainte de M. " + plaignant.getText() + " a bien été créée."));
+                Minecraft.getMinecraft().player.sendMessage(new net.minecraft.util.text.TextComponentString("§6[§bGendarmerie§6] §aLa plainte de " + plaignant.getText() + " a bien été créée."));
                 error.setVisible(false);
                 plaignant.setText("");
                 miseEnCause.setText("");
@@ -260,8 +306,8 @@ public class CSSGuiGendarmerie extends GuiFrame {
         menu.addTab("Gestion", guiScreenGestion);
         menu.getTabButton(4).setCssId("buttonGestion").setCssCode("color: #F43B3B;");
 
-        background.add(leftbar);
         background.add(menu);
+        //background.add(leftbar);
         add(background);
         background.add(buttonProfil);
     }

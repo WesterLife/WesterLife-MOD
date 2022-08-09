@@ -71,6 +71,10 @@ public class MethodesBDD {
         }
     }
 
+    public static void removePlainte(int id){
+        instance.execute("DELETE FROM plainte WHERE id= ?", id);
+    }
+
     public static void setArgent(EntityPlayer p, double Argent){
         String uuid = p.getUniqueID().toString();
         instance.execute("UPDATE players SET Argent = ? WHERE uuid = ?", Argent, uuid);
@@ -102,7 +106,7 @@ public class MethodesBDD {
     }
 
     public static void createPlainte(String plaignant, String contre, String deposition){
-        instance.execute("INSERT INTO `gendarmerie_plainte` (`Plaignant`,`Contre`, `Deposition`) VALUES ('"+plaignant+"','"+contre+"','"+deposition+"')");
+        instance.execute("INSERT INTO `gendarmerie_plainte` (`Plaignant`,`Contre`,`Deposition`) VALUES ('"+plaignant+"','"+contre+"','"+deposition+"');");
     }
 
     public static List<Plainte> getPlainte(){
@@ -146,6 +150,7 @@ public class MethodesBDD {
 
         return amendes;
     }
+
 
     public static List<AvisDeRecherche> getAvisDeRecherche(){
         QueryResult qr = instance.getData("SELECT * FROM gendarmerie_avisderecherche");
