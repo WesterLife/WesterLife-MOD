@@ -28,49 +28,41 @@ public class CSSGuiGendarmerie extends GuiFrame {
     public CSSGuiGendarmerie() {
         super(new GuiScaler.Identity());
 
+        //Valeur de test
+
         List<Plainte> plaintes = new ArrayList<>();
         plaintes.add(new Plainte(1, "VOTARD", "DUTEMPS", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."));
         plaintes.add(new Plainte(2, "PIERROT", "MACRON", "ike readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search fo"));
         plaintes.add(new Plainte(3, "VOTARD", "DUTEMPS", "or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a "));
-        plaintes.add(new Plainte(4, "PIERROT", "MACRON", "chunk of Lorem Ipsum used since the 1500s is reproduced below for thos"));
-        plaintes.add(new Plainte(5, "VOTARD", "DUTEMPS", "The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "));
-        plaintes.add(new Plainte(6, "PIERROT", "MACRON", "The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "));
-        plaintes.add(new Plainte(7, "VOTARD", "DUTEMPS", "The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "));
-        plaintes.add(new Plainte(8, "PIERROT", "MACRON", "The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "));
-        plaintes.add(new Plainte(9, "VOTARD", "DUTEMPS", "The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "));
-        plaintes.add(new Plainte(10, "PIERROT", "MACRON", "The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "));
 
+        List<Gendarme> gendarmes = new ArrayList<>();
+        gendarmes.add(new Gendarme(1, "Harry.WINDSOR", "k", "WINDSOR", "Harry", "Préfet", "", "10/08/2022", true));
+        gendarmes.add(new Gendarme(2, "Pierre.VOTARD", "a", "VOTARD", "Pierre", "Colonel", "OPJ", "10/08/2022", true));
+        gendarmes.add(new Gendarme(3, "Michel.DUTEMPS", "e", "DUTEMPS", "Michel", "GAV", "APJA", "10/08/2022", false));
+
+        List<TAJ> taj = new ArrayList<>();
+        taj.add(new TAJ(1, "Pierre", "VOTARD", "Détournement de fonds publics", "test"));
+        taj.add(new TAJ(2, "Michel", "DUTEMPS", "Excès de vitesse", "test2"));
+        taj.add(new TAJ(3, "Harry", "WINDSOR", "Détournement de fonds publics", "test3"));
+        taj.add(new TAJ(4, "Pierre", "VOTARD", "Excès de vitesse", "test4"));
+        taj.add(new TAJ(5, "Michel", "DUTEMPS", "Détournement de fonds publics", "test5"));
+
+        List<Amendes> amendes = new ArrayList<>();
+        amendes.add(new Amendes(1, "Pierre", "VOTARD", "Détournement de fonds publics", 100));
+        amendes.add(new Amendes(2, "Michel", "DUTEMPS", "Excès de vitesse", 200));
+        amendes.add(new Amendes(3, "Harry", "WINDSOR", "Détournement de fonds publics", 300));
+        amendes.add(new Amendes(4, "Pierre", "VOTARD", "Excès de vitesse", 400));
+        amendes.add(new Amendes(5, "Michel", "DUTEMPS", "Détournement de fonds publics", 500));
+        amendes.add(new Amendes(6, "Harry", "WINDSOR", "Excès de vitesse", 600));
+
+        List<AvisDeRecherche> avisDeRecherches = new ArrayList<>();
+        avisDeRecherches.add(new AvisDeRecherche(1, "Pierre", "VOTARD", "Détournement de fonds publics", "test"));
+        avisDeRecherches.add(new AvisDeRecherche(2, "Michel", "DUTEMPS", "Excès de vitesse", "test2"));
+        avisDeRecherches.add(new AvisDeRecherche(3, "Harry", "WINDSOR", "Détournement de fonds publics", "test3"));
+        avisDeRecherches.add(new AvisDeRecherche(4, "Pierre", "VOTARD", "Excès de vitesse", "test4"));
+        avisDeRecherches.add(new AvisDeRecherche(5, "Michel", "DUTEMPS", "Détournement de fonds publics", "test5"));
+        avisDeRecherches.add(new AvisDeRecherche(6, "Harry", "WINDSOR", "Excès de vitesse", "test6"));
         //List<String> plainteArrayList, List<String> userAccount, List<String> amendesArrayList, List<String> tajArrayList, List<String> avisDeRecherchesArrayList
-//
-//        for (String s : plainteArrayList) {
-//            Plainte plainte = Plainte.fromString(s.replaceAll(" ", ""));
-//
-//        }
-//
-//
-//        for (String s : userAccount) {
-//            Gendarme accounts = Gendarme.fromString(s.replaceAll(" ", ""));
-//
-//        }
-//
-//
-//        for (String s : amendesArrayList) {
-//            Amendes amendes = Amendes.fromString(s.replaceAll(" ", ""));
-//
-//        }
-//
-//        for (String s : tajArrayList) {
-//            TAJ taj = TAJ.fromString(s.replaceAll(" ", ""));
-//
-//        }
-//
-//        for (String s : avisDeRecherchesArrayList) {
-//            AvisDeRecherche avisDeRecherche = AvisDeRecherche.fromString(s.replaceAll(" ", ""));
-//
-//        }
-//
-//
-//        System.out.println(plainteArrayList);
 
         GuiPanel background = new GuiPanel();
         background.setCssClass("background");
@@ -156,7 +148,6 @@ public class CSSGuiGendarmerie extends GuiFrame {
         error.setVisible(false);
         error.allowLineBreak();
 
-
         createPlainte.add(error);
         createPlainteButton.addClickListener((x, y, bu) -> {
             if(!plaignant.getText().isEmpty() && !miseEnCause.getText().isEmpty() && !description.getText().isEmpty()) {
@@ -179,9 +170,36 @@ public class CSSGuiGendarmerie extends GuiFrame {
         guiScreenAmendes.setCssId("guiscreenamendes");
         guiScreenAmendes.setCssClass("guiscreen");
 
+        //View amendes
+
         GuiPanel viewAmendes = new GuiPanel();
         viewAmendes.setCssId("viewamendes");
         viewAmendes.setCssClass("leftpanel");
+
+        GuiScrollPane scrollAmendes = new GuiScrollPane();
+        scrollAmendes.setCssId("leftpanel");
+
+        scrollAmendes.getySlider().setCssId("slider");
+
+        scrollAmendes.setLayout(new GridLayout(-1, 70, 1, GridLayout.GridDirection.HORIZONTAL, 1));
+
+        for (Amendes amende : amendes) {
+            GuiLabel text;
+            text = (GuiLabel) new GuiLabel("").setCssId("amendes").setCssCode("");
+            text.setMaxTextLength(48000);
+            text.allowLineBreak();
+            text.setCssId("amendestext");
+            text.setCssCode("color: #FFFFFF; height: 90%; width: 100%; padding-left: 10px; padding-top: 10px; padding-right: 10px; top: 5%;");
+            text.setText("Amende n°" + amende.getId() + " - " + amende.getNom() + " " + amende.getPrenom() + " - Motifs / Prix : " + amende.getMotifs() + " / " + amende.getPrix() + "€");
+            GuiPanel amendeViewPanel = new GuiPanel().add(text);
+            amendeViewPanel.setCssClass("amende");
+            amendeViewPanel.setCssId("amende");
+            scrollAmendes.add(amendeViewPanel);
+        }
+
+        viewAmendes.add(scrollAmendes);
+
+        // Create amendes
 
         GuiPanel createAmendes = new GuiPanel();
         createAmendes.setCssId("createamendes");
@@ -206,6 +224,29 @@ public class CSSGuiGendarmerie extends GuiFrame {
         viewTaj.setCssId("viewtaj");
         viewTaj.setCssClass("leftpanel");
 
+        GuiScrollPane scrollTAJ = new GuiScrollPane();
+        scrollTAJ.setCssId("leftpanel");
+
+        scrollTAJ.getySlider().setCssId("slider");
+
+        scrollTAJ.setLayout(new GridLayout(-1, 100, 1, GridLayout.GridDirection.HORIZONTAL, 1));
+
+        for (TAJ taje : taj) {
+            GuiLabel text;
+            text = (GuiLabel) new GuiLabel("").setCssId("amendes").setCssCode("");
+            text.setMaxTextLength(48000);
+            text.allowLineBreak();
+            text.setCssId("tajtext");
+            text.setCssCode("color: #FFFFFF; height: 90%; width: 100%; padding-left: 10px; padding-top: 10px; padding-right: 10px; top: 5%;");
+            text.setText("Antécédents n°" + taje.getId() + " - " + taje.getNom() + " " + taje.getPrenom() + " - Motifs / Description : " + taje.getMotifs() + " / " + taje.getDescription());
+            GuiPanel amendeTAJViewPanel = new GuiPanel().add(text);
+            amendeTAJViewPanel.setCssClass("taj");
+            amendeTAJViewPanel.setCssId("taj");
+            scrollTAJ.add(amendeTAJViewPanel);
+        }
+
+        viewTaj.add(scrollTAJ);
+
         GuiPanel createTaj = new GuiPanel();
         createTaj.setCssId("createtaj");
         createTaj.setCssClass("rightpanel");
@@ -227,9 +268,39 @@ public class CSSGuiGendarmerie extends GuiFrame {
         guiScreenAvisDeRecherches.setCssId("guiscreenavisderecherches");
         guiScreenAvisDeRecherches.setCssClass("guiscreen");
 
+        //Avis de recherche
+
         GuiPanel viewAvisDeRecherches = new GuiPanel();
         viewAvisDeRecherches.setCssId("viewavisderecherches");
         viewAvisDeRecherches.setCssClass("leftpanel");
+
+        GuiScrollPane scrollAvisDeRecherche = new GuiScrollPane();
+        scrollAvisDeRecherche.setCssId("leftpanel");
+
+        scrollAvisDeRecherche.getySlider().setCssId("slider");
+
+        scrollAvisDeRecherche.setLayout(new GridLayout(-1, 100, 1, GridLayout.GridDirection.HORIZONTAL, 1));
+
+        for (AvisDeRecherche avisDeRecherche : avisDeRecherches) {
+            GuiLabel text;
+            text = (GuiLabel) new GuiLabel("").setCssId("avisderecherche").setCssCode("");
+            text.setMaxTextLength(48000);
+            text.allowLineBreak();
+            text.setCssId("avisderecherchetext");
+            text.setCssCode("color: #FFFFFF; height: 90%; width: 100%; padding-left: 10px; padding-top: 10px; padding-right: 10px; top: 5%;");
+            text.setText("Avis de Recherche n°" + avisDeRecherche.getId() + " - " + avisDeRecherche.getNom() + " " + avisDeRecherche.getPrenom() + " - Motifs / Description : " + avisDeRecherche.getMotifs() + " / " + avisDeRecherche.getDescription());
+            GuiPanel avisDeRechercheViewPanel = new GuiPanel().add(text);
+            GuiPanel buttonAvisDeRechercheDelete = (GuiPanel) new GuiPanel().add(new GuiLabel("Supprimer").setCssId("supprplainte").setCssCode("text-align: center; width: 100%; height: 100%;")).setCssId("deletebutton").setCssCode("bottom: 5%; padding-left: 4px; height: 20%; width: 40%; left: 55%;");
+
+            avisDeRechercheViewPanel.setCssClass("avisderecherche");
+            avisDeRechercheViewPanel.setCssId("avisderecherche");
+            avisDeRechercheViewPanel.add(buttonAvisDeRechercheDelete);
+            scrollAvisDeRecherche.add(avisDeRechercheViewPanel);
+        }
+
+        viewAvisDeRecherches.add(scrollAvisDeRecherche);
+
+        //Create avis de recherche
 
         GuiPanel createAvisDeRecherches = new GuiPanel();
         createAvisDeRecherches.setCssId("createavisderecherches");
