@@ -228,7 +228,7 @@ tabbed_pane > button:active {
     background-color: #494949;
     color: #FFFFFF;
 }
-.taj{
+.tajs{
     width: auto;
     height: auto;
     left: auto;
@@ -240,6 +240,21 @@ tabbed_pane > button:active {
     border: none;
 }
 .taj:hover{
+    background-color: #494949;
+    color: #FFFFFF;
+}
+.gestion{
+    width: auto;
+    height: auto;
+    left: auto;
+    top: auto;
+    background-color: #4F4C4C;
+    color: #FFFFFF;
+    padding-top: 5px;
+    padding-left: 5px;
+    border: none;
+}
+.gestion:hover{
     background-color: #494949;
     color: #FFFFFF;
 }

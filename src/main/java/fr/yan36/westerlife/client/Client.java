@@ -171,7 +171,7 @@ public class Client {
     }
 
     private void keyTestTyped() {
-        ACsGuiApi.asyncLoadThenShowGui("gendarmerie", CSSGuiGendarmerie::new);
+        ACsGuiApi.asyncLoadThenShowGui("gendarmerie", CSSGuiGendarmerieLogin::new);
     }
 
     private void keyAnimationTyped() {

@@ -39,6 +39,8 @@ public class CSSGuiGendarmerie extends GuiFrame {
         gendarmes.add(new Gendarme(1, "Harry.WINDSOR", "k", "WINDSOR", "Harry", "Préfet", "", "10/08/2022", true));
         gendarmes.add(new Gendarme(2, "Pierre.VOTARD", "a", "VOTARD", "Pierre", "Colonel", "OPJ", "10/08/2022", true));
         gendarmes.add(new Gendarme(3, "Michel.DUTEMPS", "e", "DUTEMPS", "Michel", "GAV", "APJA", "10/08/2022", false));
+        gendarmes.add(new Gendarme(4, "Jean.MACRON", "e", "MACRON", "Jean", "Préfet", "", "10/08/2022", true));
+        gendarmes.add(new Gendarme(5, "Pierre.VOTARD", "a", "VOTARD", "Pierre", "Colonel", "OPJ", "10/08/2022", false));
 
         List<TAJ> taj = new ArrayList<>();
         taj.add(new TAJ(1, "Pierre", "VOTARD", "Détournement de fonds publics", "test"));
@@ -232,15 +234,15 @@ public class CSSGuiGendarmerie extends GuiFrame {
         scrollTAJ.setLayout(new GridLayout(-1, 100, 1, GridLayout.GridDirection.HORIZONTAL, 1));
 
         for (TAJ taje : taj) {
-            GuiLabel text;
-            text = (GuiLabel) new GuiLabel("").setCssId("amendes").setCssCode("");
-            text.setMaxTextLength(48000);
-            text.allowLineBreak();
-            text.setCssId("tajtext");
-            text.setCssCode("color: #FFFFFF; height: 90%; width: 100%; padding-left: 10px; padding-top: 10px; padding-right: 10px; top: 5%;");
-            text.setText("Antécédents n°" + taje.getId() + " - " + taje.getNom() + " " + taje.getPrenom() + " - Motifs / Description : " + taje.getMotifs() + " / " + taje.getDescription());
-            GuiPanel amendeTAJViewPanel = new GuiPanel().add(text);
-            amendeTAJViewPanel.setCssClass("taj");
+            GuiLabel texte;
+            texte = (GuiLabel) new GuiLabel("").setCssId("taj").setCssCode("");
+            texte.setMaxTextLength(48000);
+            texte.allowLineBreak();
+            texte.setCssId("tajtext");
+            texte.setCssCode("color: #FFFFFF; height: 90%; width: 100%; padding-left: 10px; padding-top: 10px; padding-right: 10px; top: 5%;");
+            texte.setText("Antécédents n°" + taje.getId() + " - " + taje.getNom() + " " + taje.getPrenom() + " - Motifs / Description : " + taje.getMotifs() + " / " + taje.getDescription());
+            GuiPanel amendeTAJViewPanel = new GuiPanel().add(texte);
+            amendeTAJViewPanel.setCssClass("tajs");
             amendeTAJViewPanel.setCssId("taj");
             scrollTAJ.add(amendeTAJViewPanel);
         }
@@ -324,6 +326,37 @@ public class CSSGuiGendarmerie extends GuiFrame {
         GuiPanel viewGestion = new GuiPanel();
         viewGestion.setCssId("viewgestion");
         viewGestion.setCssClass("leftpanel");
+
+
+        GuiScrollPane scrollGestion = new GuiScrollPane();
+        scrollGestion.setCssId("leftpanel");
+
+        scrollGestion.getySlider().setCssId("slider");
+
+        scrollGestion.setLayout(new GridLayout(-1, 100, 1, GridLayout.GridDirection.HORIZONTAL, 1));
+
+        for (Gendarme gendarme : gendarmes) {
+            GuiLabel text;
+            text = (GuiLabel) new GuiLabel("").setCssId("avisderecherche").setCssCode("");
+            text.setMaxTextLength(48000);
+            text.allowLineBreak();
+            text.setCssId("avisderecherchetext");
+            text.setCssCode("color: #FFFFFF; height: 60%; width: 100%; padding-left: 10px; padding-top: 10px; padding-right: 10px; top: 5%;");
+            text.setText(gendarme.getPrenom() + " " + gendarme.getNom() + " - " + gendarme.getGrade() + " (" + gendarme.getQualification() + ")");
+            GuiPanel gestion = new GuiPanel().add(text);
+            GuiPanel buttonGestion = (GuiPanel) new GuiPanel().add(new GuiLabel("Supprimer").setCssId("supprgestion").setCssCode("text-align: center; width: 100%; height: 100%;")).setCssId("deletebutton").setCssCode("bottom: 5%; padding-left: 4px; height: 20%; width: 40%; left: 55%;");
+
+            if(gendarme.isAdmin()){
+                text.setText(gendarme.getPrenom() + " " + gendarme.getNom() + " - " + gendarme.getGrade() + " (" + gendarme.getQualification() + ") (A)");
+            }
+
+            gestion.setCssClass("gestion");
+            gestion.setCssId("gestion");
+            gestion.add(buttonGestion);
+            scrollGestion.add(gestion);
+        }
+
+        viewGestion.add(scrollGestion);
 
         GuiPanel createGestion = new GuiPanel();
         createGestion.setCssId("creategestion");
