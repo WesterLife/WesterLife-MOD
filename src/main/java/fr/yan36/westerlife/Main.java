@@ -98,7 +98,7 @@ public class Main {
             DRP_STATE_OTHER = "Dans les menus";
             if(event.getSide().isClient()) {
                 try {
-                    new Discord().start();
+                    //new Discord().start();
                 } catch (Exception e) {
                     e.printStackTrace();
             }
