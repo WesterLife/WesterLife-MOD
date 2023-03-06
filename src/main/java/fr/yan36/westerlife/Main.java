@@ -37,7 +37,7 @@ public class Main {
 
     public static final String MODID = "westerlife";
     public static final String NAME = "WesterLife Mod";
-    public static final String VERSION = "1.4";
+    public static final String VERSION = "1.5";
     public static String DISCORD_ID, DRP_DETAILS, DRP_IMAGE_LARGE, DRP_IMAGE_LARGE_TEXT, DRP_IMAGE_SMALL, DRP_STATE_SOLO, DRP_STATE_MULTIPLAYER, DRP_STATE_OTHER;
 
     @Mod.Instance(Main.MODID)
@@ -58,18 +58,18 @@ public class Main {
     @DynamXAddon.AddonEventSubscriber
     public static void init() {
 
-        PistoletRadar = (ItemDynamx) new ItemDynamx(Main.MODID, "pistoletradar", new ResourceLocation("pistoletradar/pistoletradar.obj")).setMaxStackSize(1);
-        Belier = (ItemDynamx) new ItemDynamx(Main.MODID, "belier", new ResourceLocation("belier/belier.obj")).setMaxStackSize(1);
-        Menottes = (ItemDynamx) new ItemDynamx(Main.MODID, "menottes", new ResourceLocation("menottes/menotte.obj")).setMaxStackSize(1);
+        PistoletRadar = (ItemDynamx) new ItemDynamx(Main.MODID, "pistoletradar", new ResourceLocation("dynamxmod","models/pistoletradar/pistoletradar.obj")).setMaxStackSize(1);
+        Belier = (ItemDynamx) new ItemDynamx(Main.MODID, "belier", new ResourceLocation("dynamxmod","models/belier/belier.obj")).setMaxStackSize(1);
+        Menottes = (ItemDynamx) new ItemDynamx(Main.MODID, "menottes", new ResourceLocation("dynamxmod","models/menottes/menotte.obj")).setMaxStackSize(1);
 
-        Distributeur = new BlockDistributeur(Material.ROCK, Main.MODID, "distributeur", new ResourceLocation("atm/atm.obj"));
-        SignVillage = new BlockSignVillage(Material.ANVIL, Main.MODID, "panneauvillage", new ResourceLocation("signvillage/sign.obj"));
-        doublefeurouge = new BlockBisign(Material.ANVIL, Main.MODID, "doublefeurouge", new ResourceLocation("bisign/bicolor.obj"));
+        Distributeur = new BlockDistributeur(Material.ROCK, Main.MODID, "distributeur", new ResourceLocation("dynamxmod","models/atm/atm.obj"));
+        SignVillage = new BlockSignVillage(Material.ANVIL, Main.MODID, "panneauvillage", new ResourceLocation("dynamxmod","models/signvillage/sign.obj"));
+        doublefeurouge = new BlockBisign(Material.ANVIL, Main.MODID, "doublefeurouge", new ResourceLocation("dynamxmod","models/bisign/bicolor.obj"));
 //        feu_tricolore = new BlockDynamx(Material.ANVIL, Main.MODID, "feutricolore", "feut/feut.obj");
 
-        Laptop = new BlockLaptop(Material.ANVIL, Main.MODID, "laptop", new ResourceLocation("laptop/pc.obj"));
-        TerminalDePaiement = new BlockTerminalDePaiement(Material.ANVIL, Main.MODID, "tdp", new ResourceLocation("tdp/paiement.obj"));
-        radarFixe = new BlockRadarFixe(Material.ANVIL, Main.MODID, "radarfixe", new ResourceLocation("radar/radarfixe.obj"));
+        Laptop = new BlockLaptop(Material.ANVIL, Main.MODID, "laptop", new ResourceLocation("dynamxmod","models/laptop/pc.obj"));
+        TerminalDePaiement = new BlockTerminalDePaiement(Material.ANVIL, Main.MODID, "tdp", new ResourceLocation("dynamxmod","models/tdp/paiement.obj"));
+        radarFixe = new BlockRadarFixe(Material.ANVIL, Main.MODID, "radarfixe", new ResourceLocation("dynamxmod","models/radar/radarfixe.obj"));
 
         //Keypad = new BlockKeypad(Material.ANVIL, Main.MODID, "keypad", "keypad/keypad.obj");
     }
