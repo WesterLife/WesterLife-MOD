@@ -7,9 +7,11 @@ import fr.yan36.westerlife.common.blocks.*;
 import fr.yan36.westerlife.common.items.ItemDynamx;
 import fr.yan36.westerlife.common.network.Network;
 import fr.yan36.westerlife.common.registry.RegisteringHandler;
+import fr.yan36.westerlife.utils.Discord;
 import fr.yan36.westerlife.utils.commands.WesterLifeCommand;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -32,10 +34,6 @@ import java.io.IOException;
 )
 @DynamXAddon(modid = Main.MODID, name = Main.NAME, version = Main.VERSION)
 public class Main {
-
-    /**
-     * On déclare différentes valeurs utiles.
-     */
 
     public static final String MODID = "westerlife";
     public static final String NAME = "WesterLife Mod";
@@ -60,18 +58,18 @@ public class Main {
     @DynamXAddon.AddonEventSubscriber
     public static void init() {
 
-        PistoletRadar = (ItemDynamx) new ItemDynamx(Main.MODID, "pistoletradar", "pistoletradar/pistoletradar.obj").setMaxStackSize(1);
-        Belier = (ItemDynamx) new ItemDynamx(Main.MODID, "belier", "belier/belier.obj").setMaxStackSize(1);
-        Menottes = (ItemDynamx) new ItemDynamx(Main.MODID, "menottes", "menottes/menotte.obj").setMaxStackSize(1);
+        PistoletRadar = (ItemDynamx) new ItemDynamx(Main.MODID, "pistoletradar", new ResourceLocation("pistoletradar/pistoletradar.obj")).setMaxStackSize(1);
+        Belier = (ItemDynamx) new ItemDynamx(Main.MODID, "belier", new ResourceLocation("belier/belier.obj")).setMaxStackSize(1);
+        Menottes = (ItemDynamx) new ItemDynamx(Main.MODID, "menottes", new ResourceLocation("menottes/menotte.obj")).setMaxStackSize(1);
 
-        Distributeur = new BlockDistributeur(Material.ROCK, Main.MODID, "distributeur", "atm/atm.obj");
-        SignVillage = new BlockSignVillage(Material.ANVIL, Main.MODID, "panneauvillage", "signvillage/sign.obj");
-        doublefeurouge = new BlockBisign(Material.ANVIL, Main.MODID, "doublefeurouge", "bisign/bicolor.obj");
+        Distributeur = new BlockDistributeur(Material.ROCK, Main.MODID, "distributeur", new ResourceLocation("atm/atm.obj"));
+        SignVillage = new BlockSignVillage(Material.ANVIL, Main.MODID, "panneauvillage", new ResourceLocation("signvillage/sign.obj"));
+        doublefeurouge = new BlockBisign(Material.ANVIL, Main.MODID, "doublefeurouge", new ResourceLocation("bisign/bicolor.obj"));
 //        feu_tricolore = new BlockDynamx(Material.ANVIL, Main.MODID, "feutricolore", "feut/feut.obj");
 
-        Laptop = new BlockLaptop(Material.ANVIL, Main.MODID, "laptop", "laptop/pc.obj");
-        TerminalDePaiement = new BlockTerminalDePaiement(Material.ANVIL, Main.MODID, "tdp", "tdp/paiement.obj");
-        radarFixe = new BlockRadarFixe(Material.ANVIL, Main.MODID, "radarfixe", "radar/radarfixe.obj");
+        Laptop = new BlockLaptop(Material.ANVIL, Main.MODID, "laptop", new ResourceLocation("laptop/pc.obj"));
+        TerminalDePaiement = new BlockTerminalDePaiement(Material.ANVIL, Main.MODID, "tdp", new ResourceLocation("tdp/paiement.obj"));
+        radarFixe = new BlockRadarFixe(Material.ANVIL, Main.MODID, "radarfixe", new ResourceLocation("radar/radarfixe.obj"));
 
         //Keypad = new BlockKeypad(Material.ANVIL, Main.MODID, "keypad", "keypad/keypad.obj");
     }
@@ -91,20 +89,20 @@ public class Main {
         MinecraftForge.EVENT_BUS.register(new RegisteringHandler());
 
             DISCORD_ID = "835564028528033852";
-            DRP_DETAILS = "WesterLife";
+            DRP_DETAILS = "Le serveur rôle-play !";
             DRP_IMAGE_LARGE = "logo_large";
             DRP_IMAGE_LARGE_TEXT = "Serveur Minecraft RôlePlay";
             DRP_IMAGE_SMALL = "head";
             DRP_STATE_SOLO = "En solo";
             DRP_STATE_MULTIPLAYER = "Connecté(e)";
             DRP_STATE_OTHER = "Dans les menus";
-//        if(event.getSide().isClient()) {
-//            try {
-//                new Discord().start();
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
+            if(event.getSide().isClient()) {
+                try {
+                    new Discord().start();
+                } catch (Exception e) {
+                    e.printStackTrace();
+            }
+        }
     }
 
     @Mod.EventHandler

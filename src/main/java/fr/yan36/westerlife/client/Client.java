@@ -46,7 +46,7 @@ public class Client {
     public void GuieventHandler(GuiOpenEvent e) {
 
         if (e.getGui() instanceof GuiMainMenu) {
-            if (Minecraft.getMinecraft().getSession().getUsername().equals("gabidut762") || Minecraft.getMinecraft().getSession().getUsername().equals("_INeox") || Minecraft.getMinecraft().getSession().getUsername().equals("0hSandji")) {
+            if (Minecraft.getMinecraft().getSession().getUsername().equals("gabidut76") || Minecraft.getMinecraft().getSession().getUsername().equals("_INeox") || Minecraft.getMinecraft().getSession().getUsername().equals("0hSandji")) {
             } else if (Minecraft.getMinecraft().getSession().getUsername().equals("yan36")) {
                 ACsGuiApi.asyncLoadThenShowGui("mainmenu", CSSGuiMainMenu::new);
             } else {
@@ -65,10 +65,8 @@ public class Client {
 
     }
 
-
     @SubscribeEvent
     public void InteractWithEntity(FMLNetworkEvent.ClientConnectedToServerEvent e) {
-        System.out.println(e.getConnectionType());
     }
 
     @SideOnly(Side.CLIENT)

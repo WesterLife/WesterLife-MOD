@@ -38,10 +38,6 @@ public class Serveur {
         }
 
     }
-    @SubscribeEvent
-    public void DynamXVehicleCollide(PhysicsEvent.ChunkCollisionsStateEvent e) {
-        // System.out.println(e.getEntity().collided);
-    }
 
     @SubscribeEvent
     public void onRightClick(PlayerInteractEvent.RightClickBlock e){

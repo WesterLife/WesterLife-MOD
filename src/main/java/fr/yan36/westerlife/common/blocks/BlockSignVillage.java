@@ -12,6 +12,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -19,7 +20,7 @@ import javax.annotation.Nullable;
 
 public class BlockSignVillage extends DynamXBlock {
 
-    public BlockSignVillage(Material material, String modid, String blockName, String model) {
+    public BlockSignVillage(Material material, String modid, String blockName, ResourceLocation model) {
         super(material, modid, blockName, model);
         setCreativeTab(Main.creativeTab);
     }

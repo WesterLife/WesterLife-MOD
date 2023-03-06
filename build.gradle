@@ -94,8 +94,8 @@ minecraft {
         minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2855'
         compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.21'
 
-        implementation fg.deobf('fr.dynamx:DynamX:3.3.0')
-        implementation "fr.aym.acsguis:ACsGuis:1.2.2-1"
+        implementation fg.deobf('fr.dynamx:DynamX:4.0.0-beta-17')
+        implementation "fr.aym.acsguis:ACsGuis:1.2.5"
 
         compile fileTree(dir: 'libs', include: '*.jar')
 //        implementation "curse.maven:lizardon-mcef-577541:3641377"

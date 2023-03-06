@@ -13,10 +13,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
@@ -24,7 +21,7 @@ import net.minecraft.world.World;
 public class ItemDynamx extends DynamXItem {
 
 
-    public ItemDynamx(String modid, String itemName, String model) {
+    public ItemDynamx(String modid, String itemName, ResourceLocation model) {
         super(modid, itemName, model);
         setCreativeTab(Main.creativeTab);
     }
@@ -39,7 +36,7 @@ public class ItemDynamx extends DynamXItem {
                 Entity a = Util.getEntityLookAt(player, 80);
                 if(a instanceof CarEntity) {
                     CarEntity car = (CarEntity) a;
-                    System.out.println(((BaseVehicleEntity<?>) a).getPhysicsHandler().getPropulsion());
+                    System.out.println(((BaseVehicleEntity<?>) a).getPhysicsHandler().getSpeed(BaseVehiclePhysicsHandler.SpeedUnit.KMH));
                     float speed = ((BaseVehicleEntity<?>) a).getPhysicsHandler().getSpeed(BaseVehiclePhysicsHandler.SpeedUnit.KMH);
                     if(Math.floor(speed) == -1.00 || Math.floor(speed) == -2.00 ) {
                         Minecraft.getMinecraft().ingameGUI.setOverlayMessage("§cVitesse du Véhicule : " + Math.floor(speed) + "KM/H", true);

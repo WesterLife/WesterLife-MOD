@@ -11,13 +11,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
 public class BlockKeycard extends DynamXBlock {
-    public BlockKeycard(Material material, String modid, String blockName, String model) {
+    public BlockKeycard(Material material, String modid, String blockName, ResourceLocation model) {
         super(material, modid, blockName, model);
         setCreativeTab(Main.creativeTab);
     }
