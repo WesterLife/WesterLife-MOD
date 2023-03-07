@@ -11,12 +11,14 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiMultiplayer;
 import net.minecraft.client.gui.GuiOptions;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.GuiWorldSelection;
 import net.minecraft.client.network.NetHandlerLoginClient;
 import net.minecraft.network.EnumConnectionState;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.handshake.client.C00Handshake;
 import net.minecraft.network.login.client.CPacketLoginStart;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.input.Keyboard;
 
 import java.awt.*;
 import java.io.BufferedReader;
@@ -53,11 +55,6 @@ public class CSSGuiMainMenu extends GuiFrame {
         System.out.println(json);
         JsonObject jsonObject = gson.fromJson(json.toString(), JsonObject.class);
         News news = new News(jsonObject.get("title").getAsString(), jsonObject.get("content").getAsString(), jsonObject.get("author").getAsString(), jsonObject.get("abouturl").getAsString());
-
-        System.out.println(news.getTitle());
-        System.out.println(news.getContent());
-        System.out.println(news.getAuthor());
-        System.out.println(news.getAbouturl());
 
         GuiPanel background = new GuiPanel();
         background.setCssClass("background");
@@ -109,7 +106,12 @@ public class CSSGuiMainMenu extends GuiFrame {
         topbar.add(logo);
 
         zonestaff.addClickListener((x, y, bu) -> {
-            mc.displayGuiScreen(new GuiMultiplayer(this.getGuiScreen()));
+            if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
+                mc.displayGuiScreen(new GuiWorldSelection(this.getGuiScreen()));
+            } else {
+                mc.displayGuiScreen(new GuiMultiplayer(this.getGuiScreen()));
+            }
+
             System.out.println("zonestaff");
         });
 
