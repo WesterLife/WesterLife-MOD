@@ -1,9 +1,8 @@
 package fr.yan36.westerlife.server;
 
-import fr.dynamx.api.events.PhysicsEvent;
 import fr.yan36.westerlife.Main;
-import fr.yan36.westerlife.common.blocks.BlockDistributeur;
-import fr.yan36.westerlife.common.items.WesterItem;
+import fr.yan36.westerlife.common.blocks.dynamx.BlockDistributeur;
+import fr.yan36.westerlife.common.init.ItemInit;
 import fr.yan36.westerlife.common.network.PacketCreateIdentity;
 import fr.yan36.westerlife.common.network.PacketOpenGUIAtm;
 import fr.yan36.westerlife.common.network.PacketSyncPlayer;
@@ -44,7 +43,7 @@ public class Serveur {
         BlockPos blockPos = e.getPos();
         Block block = e.getWorld().getBlockState(blockPos).getBlock();
         if(block instanceof BlockDistributeur) {
-            if(e.getEntityPlayer().getHeldItemMainhand().isItemEqual(new ItemStack(WesterItem.CB))) {
+            if(e.getEntityPlayer().getHeldItemMainhand().isItemEqual(new ItemStack(ItemInit.CARTE_BANCAIRE))) {
                 Main.network.sendTo(new PacketSyncPlayer(MethodesBDD.getNom(e.getEntityPlayer()), MethodesBDD.getPrenom(e.getEntityPlayer()), MethodesBDD.getSex(e.getEntityPlayer()), MethodesBDD.getDate(e.getEntityPlayer()), MethodesBDD.getArgent(e.getEntityPlayer()), MethodesBDD.getRIB(e.getEntityPlayer())), (EntityPlayerMP) e.getEntityPlayer());
                 Main.network.sendTo(new PacketOpenGUIAtm(MethodesBDD.getCodeCB(e.getEntityPlayer())), (EntityPlayerMP) e.getEntityPlayer());
             } else {

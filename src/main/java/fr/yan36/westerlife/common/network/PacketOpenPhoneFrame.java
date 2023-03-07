@@ -1,7 +1,6 @@
 package fr.yan36.westerlife.common.network;
 
 import fr.aym.acsguis.api.ACsGuiApi;
-import fr.yan36.westerlife.client.Client;
 import fr.yan36.westerlife.client.phone.util.PhoneFrame;
 import io.netty.buffer.ByteBuf;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;

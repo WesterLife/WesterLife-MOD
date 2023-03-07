@@ -1,7 +1,7 @@
 package fr.yan36.westerlife.common.network;
 
 import fr.yan36.westerlife.Main;
-import fr.yan36.westerlife.common.items.WesterItem;
+import fr.yan36.westerlife.common.init.ItemInit;
 import fr.yan36.westerlife.server.bdd.MethodesBDD;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
@@ -51,31 +51,31 @@ public class PacketRetirerArgentServer implements IMessage {
                         //Vérification le pack est sécurisé.
 
                         case 5:
-                            e.addItemStackToInventory(new ItemStack(WesterItem.CINQEUROS));
+                            e.addItemStackToInventory(new ItemStack(ItemInit.CINQ_EUROS));
                             MethodesBDD.setArgent(e, MethodesBDD.getArgent(e) - 5);
                             break;
                         case 10:
-                            e.addItemStackToInventory(new ItemStack(WesterItem.DIXEUROS));
+                            e.addItemStackToInventory(new ItemStack(ItemInit.DIX_EUROS));
                             MethodesBDD.setArgent(e, MethodesBDD.getArgent(e) - 10);
                             break;
                         case 20:
-                            e.addItemStackToInventory(new ItemStack(WesterItem.VINGTEUROS));
+                            e.addItemStackToInventory(new ItemStack(ItemInit.VINGT_EUROS));
                             MethodesBDD.setArgent(e, MethodesBDD.getArgent(e) - 20);
                             break;
                         case 50:
-                            e.addItemStackToInventory(new ItemStack(WesterItem.CINQUANTEEUROS));
+                            e.addItemStackToInventory(new ItemStack(ItemInit.CINQUANTE_EUROS));
                             MethodesBDD.setArgent(e, MethodesBDD.getArgent(e) - 50);
                             break;
                         case 100:
-                            e.addItemStackToInventory(new ItemStack(WesterItem.CENTEUROS));
+                            e.addItemStackToInventory(new ItemStack(ItemInit.CENT_EUROS));
                             MethodesBDD.setArgent(e, MethodesBDD.getArgent(e) - 100);
                             break;
                         case 200:
-                            e.addItemStackToInventory(new ItemStack(WesterItem.DEUXCENTEUROS));
+                            e.addItemStackToInventory(new ItemStack(ItemInit.DEUX_CENTS_EUROS));
                             MethodesBDD.setArgent(e, MethodesBDD.getArgent(e) - 200);
                             break;
                         case 500:
-                            e.addItemStackToInventory(new ItemStack(WesterItem.CINQCENTEUROS));
+                            e.addItemStackToInventory(new ItemStack(ItemInit.CINQ_CENTS_EUROS));
                             MethodesBDD.setArgent(e, MethodesBDD.getArgent(e) - 500);
                             break;
                         default:

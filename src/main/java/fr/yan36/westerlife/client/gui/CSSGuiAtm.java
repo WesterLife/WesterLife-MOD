@@ -1,29 +1,25 @@
 package fr.yan36.westerlife.client.gui;
 
-import fr.aym.acsguis.api.ACsGuiApi;
 import fr.aym.acsguis.component.layout.GuiScaler;
 import fr.aym.acsguis.component.panel.GuiFrame;
 import fr.aym.acsguis.component.panel.GuiPanel;
-import fr.aym.acsguis.component.textarea.GuiIntegerField;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.aym.acsguis.component.textarea.GuiPasswordField;
 import fr.aym.acsguis.component.textarea.GuiTextArea;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.client.Profil;
-import fr.yan36.westerlife.common.items.WesterItem;
+import fr.yan36.westerlife.common.init.ItemInit;
 import fr.yan36.westerlife.common.network.PacketATMTransaction;
 import fr.yan36.westerlife.common.network.PacketChangerCodeServer;
 import fr.yan36.westerlife.common.network.PacketDepoArgentServer;
 import fr.yan36.westerlife.common.network.PacketRetirerArgentServer;
 import fr.yan36.westerlife.common.registry.SoundsHandler;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import scala.collection.parallel.ParIterableLike;
 
 import java.util.Collections;
 import java.util.List;
@@ -355,7 +351,7 @@ public class CSSGuiAtm extends GuiFrame {
             Minecraft.getMinecraft().player.playSound(SoundsHandler.ATMSOUNDBIP, 0.5f, 1);
             switch (status){
                 case "depot":
-                    Main.network.sendToServer(new PacketDepoArgentServer(Minecraft.getMinecraft().player, 10, new ItemStack(WesterItem.DIXEUROS)));
+                    Main.network.sendToServer(new PacketDepoArgentServer(Minecraft.getMinecraft().player, 10, new ItemStack(ItemInit.DIX_EUROS)));
                     break;
                 case "retrait":
                     Main.network.sendToServer(new PacketRetirerArgentServer(Minecraft.getMinecraft().player, 10));
@@ -369,7 +365,7 @@ public class CSSGuiAtm extends GuiFrame {
             Minecraft.getMinecraft().player.playSound(SoundsHandler.ATMSOUNDBIP, 0.5f, 1);
             switch (status){
                 case "depot":
-                    Main.network.sendToServer(new PacketDepoArgentServer(Minecraft.getMinecraft().player, 5, new ItemStack(WesterItem.CINQEUROS)));
+                    Main.network.sendToServer(new PacketDepoArgentServer(Minecraft.getMinecraft().player, 5, new ItemStack(ItemInit.CINQ_EUROS)));
                     break;
                 case "retrait":
                     Main.network.sendToServer(new PacketRetirerArgentServer(Minecraft.getMinecraft().player, 5));
@@ -383,7 +379,7 @@ public class CSSGuiAtm extends GuiFrame {
             Minecraft.getMinecraft().player.playSound(SoundsHandler.ATMSOUNDBIP, 0.5f, 1);
             switch (status){
                 case "depot":
-                    Main.network.sendToServer(new PacketDepoArgentServer(Minecraft.getMinecraft().player, 50, new ItemStack(WesterItem.CINQUANTEEUROS)));
+                    Main.network.sendToServer(new PacketDepoArgentServer(Minecraft.getMinecraft().player, 50, new ItemStack(ItemInit.CINQUANTE_EUROS)));
                     break;
                 case "retrait":
                     Main.network.sendToServer(new PacketRetirerArgentServer(Minecraft.getMinecraft().player, 50));
@@ -400,7 +396,7 @@ public class CSSGuiAtm extends GuiFrame {
             Minecraft.getMinecraft().player.playSound(SoundsHandler.ATMSOUNDBIP, 0.5f, 1);
             switch (status){
                 case "depot":
-                    Main.network.sendToServer(new PacketDepoArgentServer(Minecraft.getMinecraft().player, 20, new ItemStack(WesterItem.VINGTEUROS)));
+                    Main.network.sendToServer(new PacketDepoArgentServer(Minecraft.getMinecraft().player, 20, new ItemStack(ItemInit.VINGT_EUROS)));
                     break;
                 case "retrait":
                     Main.network.sendToServer(new PacketRetirerArgentServer(Minecraft.getMinecraft().player, 20));
@@ -421,7 +417,7 @@ public class CSSGuiAtm extends GuiFrame {
                     status = "transaction";
                     break;
                 case "depot":
-                    Main.network.sendToServer(new PacketDepoArgentServer(Minecraft.getMinecraft().player, 200, new ItemStack(WesterItem.DEUXCENTEUROS)));
+                    Main.network.sendToServer(new PacketDepoArgentServer(Minecraft.getMinecraft().player, 200, new ItemStack(ItemInit.DEUX_CENTS_EUROS)));
                     break;
                 case "retrait":
                     Main.network.sendToServer(new PacketRetirerArgentServer(Minecraft.getMinecraft().player, 200));
@@ -441,7 +437,7 @@ public class CSSGuiAtm extends GuiFrame {
                     status = "profil";
                     break;
                 case "depot":
-                    Main.network.sendToServer(new PacketDepoArgentServer(Minecraft.getMinecraft().player, 100, new ItemStack(WesterItem.CENTEUROS)));
+                    Main.network.sendToServer(new PacketDepoArgentServer(Minecraft.getMinecraft().player, 100, new ItemStack(ItemInit.CENT_EUROS)));
                     break;
                 case "retrait":
                     Main.network.sendToServer(new PacketRetirerArgentServer(Minecraft.getMinecraft().player, 100));
@@ -463,7 +459,7 @@ public class CSSGuiAtm extends GuiFrame {
                     Main.network.sendToServer(new PacketRetirerArgentServer(Minecraft.getMinecraft().player, 500));
                     break;
                 case "depot":
-                    Main.network.sendToServer(new PacketDepoArgentServer(Minecraft.getMinecraft().player, 500, new ItemStack(WesterItem.CINQCENTEUROS)));
+                    Main.network.sendToServer(new PacketDepoArgentServer(Minecraft.getMinecraft().player, 500, new ItemStack(ItemInit.CINQ_CENTS_EUROS)));
                     break;
                 case "transaction":
 

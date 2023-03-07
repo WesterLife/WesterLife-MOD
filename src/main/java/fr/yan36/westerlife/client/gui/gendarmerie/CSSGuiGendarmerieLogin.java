@@ -3,7 +3,6 @@ package fr.yan36.westerlife.client.gui.gendarmerie;
 import fr.aym.acsguis.component.layout.GuiScaler;
 import fr.aym.acsguis.component.panel.GuiFrame;
 import fr.aym.acsguis.component.panel.GuiPanel;
-import fr.aym.acsguis.component.panel.GuiScrollPane;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.aym.acsguis.component.textarea.GuiPasswordField;
 import fr.aym.acsguis.component.textarea.GuiTextArea;

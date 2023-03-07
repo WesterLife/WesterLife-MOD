@@ -1,4 +1,4 @@
-package fr.yan36.westerlife.common.blocks;
+package fr.yan36.westerlife.common.blocks.dynamx;
 
 import fr.dynamx.common.blocks.DynamXBlock;
 import fr.yan36.westerlife.Main;
@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 public class BlockDistributeur extends DynamXBlock {
     public BlockDistributeur(Material material, String modid, String blockName, ResourceLocation model) {
         super(material, modid, blockName, model);
-        setCreativeTab(Main.creativeTab);
+        setCreativeTab(Main.WESTER_TAB);
     }
 
     @Override

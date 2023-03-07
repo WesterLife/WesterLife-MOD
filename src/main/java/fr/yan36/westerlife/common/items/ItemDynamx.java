@@ -8,7 +8,6 @@ import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.Util;
 import fr.yan36.westerlife.common.network.BelierMessage;
 import fr.yan36.westerlife.common.registry.SoundsHandler;
-import net.minecraft.block.BlockDoor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -23,7 +22,7 @@ public class ItemDynamx extends DynamXItem {
 
     public ItemDynamx(String modid, String itemName, ResourceLocation model) {
         super(modid, itemName, model);
-        setCreativeTab(Main.creativeTab);
+        setCreativeTab(Main.WESTER_TAB);
     }
 
     @Override

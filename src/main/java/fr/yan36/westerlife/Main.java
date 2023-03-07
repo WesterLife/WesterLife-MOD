@@ -3,11 +3,10 @@ package fr.yan36.westerlife;
 import fr.dynamx.api.contentpack.DynamXAddon;
 import fr.yan36.westerlife.client.utils.creativetabs.WesterTab;
 import fr.yan36.westerlife.common.CommonProxy;
-import fr.yan36.westerlife.common.blocks.*;
+import fr.yan36.westerlife.common.blocks.dynamx.*;
 import fr.yan36.westerlife.common.items.ItemDynamx;
-import fr.yan36.westerlife.common.network.Network;
-import fr.yan36.westerlife.common.registry.RegisteringHandler;
-import fr.yan36.westerlife.utils.Discord;
+import fr.yan36.westerlife.common.init.Network;
+import fr.yan36.westerlife.common.registry.RegistryHandler;
 import fr.yan36.westerlife.utils.commands.WesterLifeCommand;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
@@ -86,7 +85,7 @@ public class Main {
         proxy.preInit();
         logger = event.getModLog();
         Network.init();
-        MinecraftForge.EVENT_BUS.register(new RegisteringHandler());
+        MinecraftForge.EVENT_BUS.register(new RegistryHandler());
 
             DISCORD_ID = "835564028528033852";
             DRP_DETAILS = "Le serveur rôle-play !";
@@ -108,7 +107,6 @@ public class Main {
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) throws LineUnavailableException {
         proxy.init();
-        RegisteringHandler.initRegistries();
         PermissionAPI.registerNode("westerlife.command.wlmod", DefaultPermissionLevel.OP, "Permission d'administration");
     }
 
@@ -121,6 +119,6 @@ public class Main {
 
 
 
-    public static final CreativeTabs creativeTab = new WesterTab("westertab");
+    public static final CreativeTabs WESTER_TAB = new WesterTab("westertab");
 
 }

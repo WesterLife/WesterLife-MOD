@@ -1,7 +1,6 @@
 package fr.yan36.westerlife.common.network;
 
 import fr.yan36.westerlife.client.Client;
-import fr.yan36.westerlife.server.bdd.MethodesBDD;
 import fr.yan36.westerlife.utils.list.Warp;
 import io.netty.buffer.ByteBuf;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
@@ -10,9 +9,6 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.lang.reflect.Array;
-import java.util.List;
 
 public class PacketSendWarpsToPlayer implements IMessage{
 

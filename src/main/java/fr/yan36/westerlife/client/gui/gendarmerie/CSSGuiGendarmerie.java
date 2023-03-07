@@ -1,6 +1,5 @@
 package fr.yan36.westerlife.client.gui.gendarmerie;
 
-import fr.aym.acsguis.component.button.GuiButton;
 import fr.aym.acsguis.component.layout.GridLayout;
 import fr.aym.acsguis.component.layout.GuiScaler;
 import fr.aym.acsguis.component.panel.GuiFrame;
@@ -8,9 +7,7 @@ import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.panel.GuiScrollPane;
 import fr.aym.acsguis.component.panel.GuiTabbedPane;
 import fr.aym.acsguis.component.textarea.GuiLabel;
-import fr.aym.acsguis.component.textarea.GuiSearchField;
 import fr.aym.acsguis.component.textarea.GuiTextArea;
-import fr.aym.acsguis.component.textarea.GuiTextField;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.network.PacketCreatePlainte;
 import fr.yan36.westerlife.utils.list.*;

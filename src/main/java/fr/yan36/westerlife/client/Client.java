@@ -1,13 +1,9 @@
 package fr.yan36.westerlife.client;
 
 import fr.aym.acsguis.api.ACsGuiApi;
-import fr.dynamx.api.events.PhysicsEvent;
-import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.client.gui.*;
-import fr.yan36.westerlife.client.gui.gendarmerie.CSSGuiGendarmerie;
 import fr.yan36.westerlife.client.gui.gendarmerie.CSSGuiGendarmerieLogin;
-import fr.yan36.westerlife.common.items.WesterItem;
-import fr.yan36.westerlife.common.network.PacketOpenGUIAdmin;
+import fr.yan36.westerlife.common.init.ItemInit;
 import fr.yan36.westerlife.common.registry.SoundsHandler;
 import fr.yan36.westerlife.utils.list.Warp;
 import net.minecraft.client.Minecraft;
@@ -126,9 +122,6 @@ public class Client {
 
     @SubscribeEvent
     public void onClickItem(PlayerInteractEvent.RightClickItem e) {
-        if (e.getItemStack().isItemEqual(new ItemStack(WesterItem.DISC_MARSEILLAISE))) {
-            e.getEntityPlayer().playSound(SoundsHandler.MARSEILLAISE, 0.8f, 1f);
-        }
     }
 
     private static KeyBinding keyBindTest;

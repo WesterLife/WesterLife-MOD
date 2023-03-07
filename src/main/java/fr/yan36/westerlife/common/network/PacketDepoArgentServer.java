@@ -1,7 +1,7 @@
 package fr.yan36.westerlife.common.network;
 
 import fr.yan36.westerlife.Main;
-import fr.yan36.westerlife.common.items.WesterItem;
+import fr.yan36.westerlife.common.init.ItemInit;
 import fr.yan36.westerlife.server.bdd.MethodesBDD;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
@@ -55,7 +55,7 @@ public class PacketDepoArgentServer implements IMessage {
             //Le packet est plutôt sécurisé mais une faille est possible.
 
             assert e != null;
-            if ((m.is.getItem().equals(WesterItem.CINQEUROS) || m.is.getItem().equals(WesterItem.CINQUANTEEUROS) || m.is.getItem().equals(WesterItem.CINQCENTEUROS) || m.is.getItem().equals(WesterItem.DIXEUROS) || m.is.getItem().equals(WesterItem.VINGTEUROS) || m.is.getItem().equals(WesterItem.CENTEUROS) || m.is.getItem().equals(WesterItem.DEUXCENTEUROS)) && (m.money == 5 || m.money == 50 || m.money == 100 || m.money == 200 || m.money == 500 || m.money == 10 || m.money == 20)){
+            if ((m.is.getItem().equals(ItemInit.CINQ_EUROS) || m.is.getItem().equals(ItemInit.CINQUANTE_EUROS) || m.is.getItem().equals(ItemInit.CINQ_CENTS_EUROS) || m.is.getItem().equals(ItemInit.DIX_EUROS) || m.is.getItem().equals(ItemInit.VINGT_EUROS) || m.is.getItem().equals(ItemInit.CENT_EUROS) || m.is.getItem().equals(ItemInit.DEUX_CENTS_EUROS)) && (m.money == 5 || m.money == 50 || m.money == 100 || m.money == 200 || m.money == 500 || m.money == 10 || m.money == 20)){
             if (e.inventory.hasItemStack(m.is)) {
                 int count = 0;
                 for (int i = 0; i < e.inventory.getSizeInventory(); i++) {

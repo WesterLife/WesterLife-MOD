@@ -1,6 +1,7 @@
-package fr.yan36.westerlife.common.network;
+package fr.yan36.westerlife.common.init;
 
 import fr.yan36.westerlife.Main;
+import fr.yan36.westerlife.common.network.*;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 

@@ -1,6 +1,6 @@
 package fr.yan36.westerlife.client.utils.creativetabs;
 
-import fr.yan36.westerlife.common.items.WesterItem;
+import fr.yan36.westerlife.common.init.ItemInit;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 
@@ -13,6 +13,6 @@ public class WesterTab extends CreativeTabs {
 
     @Override
     public ItemStack createIcon() {
-        return new ItemStack(WesterItem.CB);
+        return new ItemStack(ItemInit.CINQ_EUROS);
     }
 }
