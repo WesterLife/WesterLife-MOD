@@ -5,6 +5,7 @@ import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.client.gui.acs.CSSGuiCreateProfil;
 import fr.yan36.westerlife.client.gui.acs.CSSGuiIngameMenu;
 import fr.yan36.westerlife.client.gui.acs.CSSGuiMainMenu;
+import fr.yan36.westerlife.client.gui.mcef.BrowserHud;
 import fr.yan36.westerlife.client.gui.mcef.BrowserScreen;
 import fr.yan36.westerlife.utils.list.Warp;
 import net.minecraft.client.Minecraft;
@@ -124,8 +125,8 @@ public class Client {
     public void onClickItem(PlayerInteractEvent.RightClickItem e) {
     }
 
-    private static KeyBinding keyBindTest;
-    private static KeyBinding keyBindAnimation;
+    public static KeyBinding keyBindTest;
+    public static KeyBinding keyBindAnimation;
 
     public Client() {
         FMLCommonHandler.instance().bus().register(this);
@@ -165,6 +166,7 @@ public class Client {
         //ACsGuiApi.asyncLoadThenShowGui("gendarmerie", CSSGuiGendarmerieLogin::new);
         Main.browserScreen = new BrowserScreen();
         Main.browserScreen.openMenu();
+        Main.browserScreen.executeJS("window.vue.setWindowF4('test', 'test');");
         System.out.println("Ouverture du menu");
 
     }

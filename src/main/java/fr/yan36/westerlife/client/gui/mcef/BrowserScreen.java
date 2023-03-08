@@ -5,7 +5,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
-import net.montoyo.mcef.MCEF;
 import net.montoyo.mcef.api.*;
 import net.montoyo.mcef.example.ScreenCfg;
 import org.lwjgl.input.Keyboard;
@@ -13,6 +12,7 @@ import org.lwjgl.input.Mouse;
 
 import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
+import java.io.IOException;
 
 public class BrowserScreen extends GuiScreen implements IJSQueryHandler
 {
@@ -22,16 +22,16 @@ public class BrowserScreen extends GuiScreen implements IJSQueryHandler
 
     public BrowserScreen() {
         this("mod://westerlife/index.html");
-        System.out.println("0");
     }
 
     public BrowserScreen(String url) {
-        this.urlToLoad = ((url == null) ? MCEF.HOME_PAGE : url);
+        this.urlToLoad = (url);
         this.api = MCEFApi.getAPI();
         this.browser = this.api.createBrowser(this.urlToLoad, true);
+        Main.logger.debug(urlToLoad);
         this.urlToLoad = null;
         this.api.registerJSQueryHandler(this);
-        System.out.println("1");
+
     }
 
     public void initGui() {
@@ -79,10 +79,23 @@ public class BrowserScreen extends GuiScreen implements IJSQueryHandler
         browser.close();
     }
 
+    @Override
+    protected void keyTyped(char typedChar, int keyCode) throws IOException
+    {
+        if (keyCode == 1)
+        {
+            System.out.println("execute");
+            executeJS("window.angular.setText(\"etsettregt\")");
+        }
+    }
+    @Override
     public void handleInput() {
         while (Keyboard.next()) {
             if (Keyboard.getEventKey() == 1) {
                 this.closeActiveGui();
+
+                System.out.println("execute");
+                executeJS("window.angular.setText(\"test\")");
                 return;
             }
             final boolean pressed = Keyboard.getEventKeyState();
@@ -153,6 +166,7 @@ public class BrowserScreen extends GuiScreen implements IJSQueryHandler
     }
 
 
+    @Override
     protected void actionPerformed(final GuiButton src) {
         if (this.browser == null) {
             return;
@@ -178,7 +192,30 @@ public class BrowserScreen extends GuiScreen implements IJSQueryHandler
 
     @Override
     public boolean handleQuery(IBrowser b, long queryId, String query, boolean persistent, IJSQueryCallback cb) {
-        return true;
+        System.out.println(query);
+        if(b != null && query.equalsIgnoreCase("username")) {
+            if(b.getURL().startsWith("mod://")) {
+                //Only allow MCEF URLs to get the player's username to keep his identity secret
+
+                mc.addScheduledTask(() -> {
+                    //Add this to a scheduled task because this is NOT called from the main Minecraft thread...
+
+                    try {
+                        String name = mc.getSession().getUsername();
+                        cb.success(name);
+                    } catch(Throwable t) {
+                        cb.failure(500, "Internal error.");
+                        Main.logger.warn("Could not get username from JavaScript:");
+                        t.printStackTrace();
+                    }
+                });
+            } else
+                cb.failure(403, "Can't access username from external page");
+
+            return true;
+        }
+
+        return false;
     }
 
     public void closeActiveGui() {
