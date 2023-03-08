@@ -1,8 +1,8 @@
 package fr.yan36.westerlife.common.network;
 
 import fr.aym.acsguis.api.ACsGuiApi;
-import fr.yan36.westerlife.client.gui.gendarmerie.CSSGuiGendarmerie;
-import fr.yan36.westerlife.client.gui.gendarmerie.CSSGuiGendarmerieLogin;
+import fr.yan36.westerlife.client.gui.acs.gendarmerie.CSSGuiGendarmerie;
+import fr.yan36.westerlife.client.gui.acs.gendarmerie.CSSGuiGendarmerieLogin;
 import io.netty.buffer.ByteBuf;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;

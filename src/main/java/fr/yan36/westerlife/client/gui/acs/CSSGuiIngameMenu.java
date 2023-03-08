@@ -1,11 +1,10 @@
-package fr.yan36.westerlife.client.gui;
+package fr.yan36.westerlife.client.gui.acs;
 
 import fr.aym.acsguis.api.ACsGuiApi;
 import fr.aym.acsguis.component.layout.GuiScaler;
 import fr.aym.acsguis.component.panel.GuiFrame;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiControls;
 import net.minecraft.client.gui.GuiOptions;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.util.ResourceLocation;

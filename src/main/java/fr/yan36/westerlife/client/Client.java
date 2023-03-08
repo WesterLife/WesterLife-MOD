@@ -1,8 +1,11 @@
 package fr.yan36.westerlife.client;
 
 import fr.aym.acsguis.api.ACsGuiApi;
-import fr.yan36.westerlife.client.gui.*;
-import fr.yan36.westerlife.client.gui.gendarmerie.CSSGuiGendarmerieLogin;
+import fr.yan36.westerlife.Main;
+import fr.yan36.westerlife.client.gui.acs.CSSGuiCreateProfil;
+import fr.yan36.westerlife.client.gui.acs.CSSGuiIngameMenu;
+import fr.yan36.westerlife.client.gui.acs.CSSGuiMainMenu;
+import fr.yan36.westerlife.client.gui.mcef.BrowserScreen;
 import fr.yan36.westerlife.utils.list.Warp;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
@@ -159,11 +162,15 @@ public class Client {
     }
 
     private void keyTestTyped() {
-        ACsGuiApi.asyncLoadThenShowGui("gendarmerie", CSSGuiGendarmerieLogin::new);
+        //ACsGuiApi.asyncLoadThenShowGui("gendarmerie", CSSGuiGendarmerieLogin::new);
+        Main.browserScreen = new BrowserScreen();
+        Main.browserScreen.openMenu();
+        System.out.println("Ouverture du menu");
+
     }
 
     private void keyAnimationTyped() {
-
+        System.out.println("Ouverture du menu 24");
     }
 }
 

@@ -97,13 +97,19 @@ minecraft {
         implementation fg.deobf('fr.dynamx:DynamX:4.0.0-beta-17')
         implementation "fr.aym.acsguis:ACsGuis:1.2.5"
 
-        compile fileTree(dir: 'libs', include: '*.jar')
-//        implementation "curse.maven:lizardon-mcef-577541:3641377"
+        implementation fg.deobf(fileTree(dir: 'libs', include: '*.jar'))
+//      implementation "curse.maven:lizardon-mcef-577541:3641377"
         compile 'club.minnced:java-discord-rpc:2.0.1'
         implementation 'com.sedmelluq:lavaplayer:1.3.78'
 
 //        compile fg.deobf('curse.maven:obfuscate-289380:2912288')
 
+    }
+
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
     }
 
     jar {
@@ -119,11 +125,11 @@ minecraft {
 
             ])
         }
-        from {
-            configurations.compile
-                    .filter { it.name == 'java-discord-rpc-2.0.1.jar' || it.name == 'mcef-1.12.2-1.11-api.jar' }
-                    .collect { it.isDirectory() ? it : zipTree(it) }
-        }
+//        from {
+//            configurations.compile
+//                    .filter { it.name == 'java-discord-rpc-2.0.1.jar' || it.name == 'mcef-1.12.2-0.9-api.jar' }
+//                    .collect { it.isDirectory() ? it : zipTree(it) }
+//        }
     }
 
 }

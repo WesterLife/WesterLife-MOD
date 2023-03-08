@@ -1,6 +1,8 @@
 package fr.yan36.westerlife;
 
 import fr.dynamx.api.contentpack.DynamXAddon;
+import fr.yan36.westerlife.client.gui.mcef.BrowserHud;
+import fr.yan36.westerlife.client.gui.mcef.BrowserScreen;
 import fr.yan36.westerlife.client.utils.creativetabs.WesterTab;
 import fr.yan36.westerlife.common.CommonProxy;
 import fr.yan36.westerlife.common.init.DynamxInit;
@@ -11,6 +13,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.server.permission.DefaultPermissionLevel;
@@ -36,6 +39,9 @@ public class Main {
     @Mod.Instance(Main.MODID)
     public static Main instance;
     public static SimpleNetworkWrapper network;
+
+    public static BrowserScreen browserScreen;
+    public static BrowserHud browserHud;
 
     @DynamXAddon.AddonEventSubscriber
     public static void init() {
@@ -69,6 +75,12 @@ public class Main {
         proxy.init();
         PermissionAPI.registerNode("westerlife.command.wlmod", DefaultPermissionLevel.OP, "Permission d'administration");
     }
+
+    @Mod.EventHandler
+    public void postInit(FMLPostInitializationEvent event) {
+        MinecraftForge.EVENT_BUS.register(BrowserHud.class);
+    }
+
     public static final CreativeTabs WESTER_TAB = new WesterTab("westertab");
 
 }

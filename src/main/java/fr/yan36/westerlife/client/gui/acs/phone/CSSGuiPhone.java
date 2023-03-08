@@ -1,4 +1,4 @@
-package fr.yan36.westerlife.client.gui.phone;
+package fr.yan36.westerlife.client.gui.acs.phone;
 
 import fr.aym.acsguis.component.layout.GuiScaler;
 import fr.aym.acsguis.component.panel.GuiFrame;
