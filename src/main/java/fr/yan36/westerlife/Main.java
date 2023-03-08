@@ -38,7 +38,6 @@ public class Main {
     public static final String MODID = "westerlife";
     public static final String NAME = "WesterLife Mod";
     public static final String VERSION = "1.5";
-    public static String DISCORD_ID, DRP_DETAILS, DRP_IMAGE_LARGE, DRP_IMAGE_LARGE_TEXT, DRP_IMAGE_SMALL, DRP_STATE_SOLO, DRP_STATE_MULTIPLAYER, DRP_STATE_OTHER;
 
     @Mod.Instance(Main.MODID)
     public static Main instance;
@@ -48,9 +47,7 @@ public class Main {
 
     @DynamXAddon.AddonEventSubscriber
     public static void init() {
-
         DynamxInit.init();
-
     }
 
 
@@ -66,15 +63,6 @@ public class Main {
         logger = event.getModLog();
         Network.init();
         MinecraftForge.EVENT_BUS.register(new RegistryHandler());
-
-            DISCORD_ID = "835564028528033852";
-            DRP_DETAILS = "Le serveur rôle-play !";
-            DRP_IMAGE_LARGE = "logo_large";
-            DRP_IMAGE_LARGE_TEXT = "Serveur Minecraft RôlePlay";
-            DRP_IMAGE_SMALL = "head";
-            DRP_STATE_SOLO = "En solo";
-            DRP_STATE_MULTIPLAYER = "Connecté(e)";
-            DRP_STATE_OTHER = "Dans les menus";
             if(event.getSide().isClient()) {
                 try {
                     //new Discord().start();
