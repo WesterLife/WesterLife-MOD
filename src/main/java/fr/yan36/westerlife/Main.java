@@ -37,8 +37,6 @@ public class Main {
     public static Main instance;
     public static SimpleNetworkWrapper network;
 
-
-
     @DynamXAddon.AddonEventSubscriber
     public static void init() {
         DynamxInit.init();

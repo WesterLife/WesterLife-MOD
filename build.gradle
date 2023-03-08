@@ -121,7 +121,7 @@ minecraft {
         }
         from {
             configurations.compile
-                    .filter { it.name == 'java-discord-rpc-2.0.1.jar' }
+                    .filter { it.name == 'java-discord-rpc-2.0.1.jar' || it.name == 'mcef-1.12.2-1.11-api.jar' }
                     .collect { it.isDirectory() ? it : zipTree(it) }
         }
     }
