@@ -111,6 +111,10 @@ public class BrowserScreen extends GuiScreen implements IJSQueryHandler
             else {
                 this.browser.injectKeyReleasedByKeyCode(num, key, modifiers);
             }
+            if(num == 14 && pressed) {
+                this.browser.runJS("document.execCommand('delete');", null);
+                return;
+            }
             if (key == '.') {
                 final String dot = ".";
                 this.browser.injectKeyTyped(dot.charAt(0), 0);
