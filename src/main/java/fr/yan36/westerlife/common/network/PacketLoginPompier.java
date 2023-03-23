@@ -1,6 +1,6 @@
 package fr.yan36.westerlife.common.network;
 
-import fr.yan36.westerlife.client.gui.pompier.CSSGuiPompierLogin;
+import fr.yan36.westerlife.client.gui.acs.pompier.CSSGuiPompierLogin;
 import io.netty.buffer.ByteBuf;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;

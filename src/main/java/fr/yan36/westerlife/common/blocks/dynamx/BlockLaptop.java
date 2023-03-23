@@ -3,6 +3,7 @@ package fr.yan36.westerlife.common.blocks.dynamx;
 import fr.dynamx.common.blocks.DynamXBlock;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.network.PacketOpenGUIGendarmerieLogin;
+import fr.yan36.westerlife.common.network.PacketOpenGUIMcef;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -22,7 +23,7 @@ public class BlockLaptop extends DynamXBlock {
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if(!worldIn.isRemote) {
-            Main.network.sendTo(new PacketOpenGUIGendarmerieLogin(), (EntityPlayerMP) playerIn);
+            Main.network.sendTo(new PacketOpenGUIMcef("mod://westerlife/computer/index.html"), (EntityPlayerMP) playerIn);
         }
         return true;
     }

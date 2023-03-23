@@ -1,8 +1,12 @@
 package fr.yan36.westerlife.client;
 
 import fr.aym.acsguis.api.ACsGuiApi;
-import fr.yan36.westerlife.client.gui.*;
-import fr.yan36.westerlife.client.gui.gendarmerie.CSSGuiGendarmerieLogin;
+import fr.yan36.westerlife.Main;
+import fr.yan36.westerlife.client.gui.acs.CSSGuiCreateProfil;
+import fr.yan36.westerlife.client.gui.acs.CSSGuiIngameMenu;
+import fr.yan36.westerlife.client.gui.acs.CSSGuiMainMenu;
+import fr.yan36.westerlife.client.gui.mcef.BrowserHud;
+import fr.yan36.westerlife.client.gui.mcef.BrowserScreen;
 import fr.yan36.westerlife.utils.list.Warp;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
@@ -41,9 +45,9 @@ public class Client {
         if (e.getGui() instanceof GuiMainMenu) {
             if (Minecraft.getMinecraft().getSession().getUsername().equals("gabidut76") || Minecraft.getMinecraft().getSession().getUsername().equals("_INeox") || Minecraft.getMinecraft().getSession().getUsername().equals("0hSandji")) {
             } else if (Minecraft.getMinecraft().getSession().getUsername().equals("yan36")) {
-                ACsGuiApi.asyncLoadThenShowGui("mainmenu", CSSGuiMainMenu::new);
+
             } else {
-                ACsGuiApi.asyncLoadThenShowGui("mainmenu", CSSGuiMainMenu::new);
+
             }
         }
         if (e.getGui() instanceof GuiIngameMenu) {
@@ -121,8 +125,8 @@ public class Client {
     public void onClickItem(PlayerInteractEvent.RightClickItem e) {
     }
 
-    private static KeyBinding keyBindTest;
-    private static KeyBinding keyBindAnimation;
+    public static KeyBinding keyBindTest;
+    public static KeyBinding keyBindAnimation;
 
     public Client() {
         FMLCommonHandler.instance().bus().register(this);
@@ -159,11 +163,16 @@ public class Client {
     }
 
     private void keyTestTyped() {
-        ACsGuiApi.asyncLoadThenShowGui("gendarmerie", CSSGuiGendarmerieLogin::new);
+        //ACsGuiApi.asyncLoadThenShowGui("gendarmerie", CSSGuiGendarmerieLogin::new);
+        Main.browserScreen = new BrowserScreen();
+        Main.browserScreen.openMenu();
+        //Main.browserScreen.executeJS("window.vue.setWindowF4('test', 'test');");
+        System.out.println("Ouverture du menu");
+
     }
 
     private void keyAnimationTyped() {
-
+        System.out.println("Ouverture du menu 24");
     }
 }
 

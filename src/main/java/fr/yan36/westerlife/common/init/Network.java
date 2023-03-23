@@ -29,5 +29,6 @@ public class Network {
         Main.network.registerMessage(PacketChangerCodeServer.Handler.class, PacketChangerCodeServer.class, 18, Side.SERVER);
         Main.network.registerMessage(PacketOpenGUIAdmin.Handler.class, PacketOpenGUIAdmin.class, 19, Side.SERVER);
         Main.network.registerMessage(PacketATMTransaction.Handler.class, PacketATMTransaction.class, 20, Side.SERVER);
+        Main.network.registerMessage(PacketOpenGUIMcef.Handler.class, PacketOpenGUIMcef.class, 21, Side.CLIENT);
     }
 }

@@ -1,4 +1,4 @@
-package fr.yan36.westerlife.client.gui;
+package fr.yan36.westerlife.client.gui.acs;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -10,7 +10,6 @@ import fr.yan36.westerlife.client.utils.News;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiMultiplayer;
 import net.minecraft.client.gui.GuiOptions;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiWorldSelection;
 import net.minecraft.client.network.NetHandlerLoginClient;
 import net.minecraft.network.EnumConnectionState;

@@ -1,4 +1,4 @@
-package fr.yan36.westerlife.client.gui;
+package fr.yan36.westerlife.client.gui.acs;
 
 import fr.aym.acsguis.component.layout.GuiScaler;
 import fr.aym.acsguis.component.panel.GuiFrame;

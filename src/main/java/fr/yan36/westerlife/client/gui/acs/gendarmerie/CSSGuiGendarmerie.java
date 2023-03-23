@@ -1,4 +1,4 @@
-package fr.yan36.westerlife.client.gui.gendarmerie;
+package fr.yan36.westerlife.client.gui.acs.gendarmerie;
 
 import fr.aym.acsguis.component.layout.GridLayout;
 import fr.aym.acsguis.component.layout.GuiScaler;

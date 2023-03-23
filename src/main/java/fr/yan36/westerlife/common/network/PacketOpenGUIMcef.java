@@ -1,7 +1,9 @@
 package fr.yan36.westerlife.common.network;
 
 import fr.aym.acsguis.api.ACsGuiApi;
-import fr.yan36.westerlife.client.gui.acs.CSSGuiChangeSign;
+import fr.yan36.westerlife.Main;
+import fr.yan36.westerlife.client.gui.acs.CSSGuiAtm;
+import fr.yan36.westerlife.client.gui.mcef.BrowserScreen;
 import io.netty.buffer.ByteBuf;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -10,33 +12,35 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class PacketOpenGUIEditSign implements IMessage{
+public class PacketOpenGUIMcef implements IMessage{
 
-    private String pos;
+    public String url;
 
-    public PacketOpenGUIEditSign() {
+    public PacketOpenGUIMcef() {
+
     }
 
-    public PacketOpenGUIEditSign(String pos) {
-        this.pos = pos;
+    public PacketOpenGUIMcef(String url) {
+        this.url = url;
     }
 
 
     @Override
     public void fromBytes(ByteBuf buf) {
-        pos = ByteBufUtils.readUTF8String(buf);
+        url = ByteBufUtils.readUTF8String(buf);
     }
 
     @Override
     public void toBytes(ByteBuf buf) {
-        ByteBufUtils.writeUTF8String(buf, pos);
+        ByteBufUtils.writeUTF8String(buf, url);
     }
 
-    public static class Handler implements IMessageHandler<PacketOpenGUIEditSign, IMessage> {
+    public static class Handler implements IMessageHandler<PacketOpenGUIMcef, IMessage> {
         @Override
         @SideOnly(Side.CLIENT)
-        public IMessage onMessage(PacketOpenGUIEditSign m, MessageContext ctx) {
-                ACsGuiApi.asyncLoadThenShowGui("editsign", () -> new CSSGuiChangeSign(m.pos));
+        public IMessage onMessage(PacketOpenGUIMcef m, MessageContext ctx) {
+            Main.browserScreen = new BrowserScreen();
+            Main.browserScreen.openMenu();
             return null;
         }
     }
