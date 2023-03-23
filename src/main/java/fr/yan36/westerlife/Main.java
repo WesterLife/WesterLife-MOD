@@ -48,7 +48,6 @@ public class Main {
         DynamxInit.init();
     }
 
-
     @SidedProxy(clientSide = "fr.yan36.westerlife.client.ClientProxy", serverSide = "fr.yan36.westerlife.server.ServerProxy")
     public static CommonProxy proxy;
 
@@ -78,7 +77,7 @@ public class Main {
 
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
-        MinecraftForge.EVENT_BUS.register(BrowserHud.class);
+        //MinecraftForge.EVENT_BUS.register(BrowserHud.class);
     }
 
     public static final CreativeTabs WESTER_TAB = new WesterTab("westertab");

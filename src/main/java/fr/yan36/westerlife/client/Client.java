@@ -45,9 +45,9 @@ public class Client {
         if (e.getGui() instanceof GuiMainMenu) {
             if (Minecraft.getMinecraft().getSession().getUsername().equals("gabidut76") || Minecraft.getMinecraft().getSession().getUsername().equals("_INeox") || Minecraft.getMinecraft().getSession().getUsername().equals("0hSandji")) {
             } else if (Minecraft.getMinecraft().getSession().getUsername().equals("yan36")) {
-                ACsGuiApi.asyncLoadThenShowGui("mainmenu", CSSGuiMainMenu::new);
+
             } else {
-                ACsGuiApi.asyncLoadThenShowGui("mainmenu", CSSGuiMainMenu::new);
+
             }
         }
         if (e.getGui() instanceof GuiIngameMenu) {
@@ -166,7 +166,7 @@ public class Client {
         //ACsGuiApi.asyncLoadThenShowGui("gendarmerie", CSSGuiGendarmerieLogin::new);
         Main.browserScreen = new BrowserScreen();
         Main.browserScreen.openMenu();
-        Main.browserScreen.executeJS("window.vue.setWindowF4('test', 'test');");
+        //Main.browserScreen.executeJS("window.vue.setWindowF4('test', 'test');");
         System.out.println("Ouverture du menu");
 
     }
