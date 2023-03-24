@@ -55,11 +55,11 @@ public class Client {
     public void InteractWithEntity(FMLNetworkEvent.ClientConnectedToServerEvent e) {
     }
 
-
     @SubscribeEvent
     public void onTickEvent(TickEvent.ClientTickEvent event) {
             if (needToCreateCharacter == 1) {
-                Minecraft.getMinecraft().displayGuiScreen(new BrowserScreen());
+                Main.browserScreen = new BrowserScreen("mod://westerlife/create_perso/perso1.html");
+                Main.browserScreen.openMenu();
                 needToCreateCharacter = 2;
             }
     }
