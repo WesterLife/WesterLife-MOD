@@ -17,9 +17,9 @@ public class DatabaseManager {
             return;
         }
         host = props.getProperty("host");
-        user = props.getProperty("user");
+        user = props.getProperty("login");
         pwd = props.getProperty("pwd");
-        dbName = props.getProperty("dbName");
+        dbName = props.getProperty("database");
         System.out.println("\n------------------------------------------\n"+
                 "Config chargée"+
                 "\n------------------------------------------\n");
