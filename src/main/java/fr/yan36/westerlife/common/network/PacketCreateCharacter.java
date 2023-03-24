@@ -1,5 +1,6 @@
 package fr.yan36.westerlife.common.network;
 
+import fr.yan36.westerlife.server.bdd.DBUtils;
 import fr.yan36.westerlife.server.bdd.MethodesBDD;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
@@ -58,7 +59,7 @@ public class PacketCreateCharacter implements IMessage{
             EntityPlayer e = (EntityPlayer) ctx.getServerHandler().player.world.getEntityByID(m.player);
             if(Side.SERVER.isServer()) {
                 if (!MethodesBDD.getCharacterExists(e)) {
-                    MethodesBDD.createCharacter(e, m.familyname, m.firstnames, m.birthdate, m.birthplace, m.nationality, m.sex);
+                    DBUtils.createCharacter(e, m.familyname, m.firstnames, m.birthdate, m.birthplace, m.nationality, m.sex);
                     e.sendMessage(new TextComponentString("§cWesterLife §8» §aVotre personnage a bien été créé ! Bon jeu !"));
                 }
             }
