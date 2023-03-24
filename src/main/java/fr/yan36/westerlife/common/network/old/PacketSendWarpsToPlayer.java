@@ -1,4 +1,4 @@
-package fr.yan36.westerlife.common.network;
+package fr.yan36.westerlife.common.network.old;
 
 import fr.yan36.westerlife.client.Client;
 import fr.yan36.westerlife.common.utils.list.Warp;

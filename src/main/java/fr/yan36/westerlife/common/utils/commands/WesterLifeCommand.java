@@ -1,7 +1,7 @@
 package fr.yan36.westerlife.common.utils.commands;
 
 import fr.yan36.westerlife.Main;
-import fr.yan36.westerlife.common.network.PacketOpenGUIAdmin;
+import fr.yan36.westerlife.common.network.old.PacketOpenGUIAdmin;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;

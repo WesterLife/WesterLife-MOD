@@ -2,7 +2,6 @@ package fr.yan36.westerlife.client;
 
 import fr.aym.acsguis.api.ACsGuiApi;
 import fr.yan36.westerlife.Main;
-import fr.yan36.westerlife.client.gui.acs.CSSGuiCreateProfil;
 import fr.yan36.westerlife.client.gui.acs.CSSGuiIngameMenu;
 import fr.yan36.westerlife.client.gui.mcef.BrowserScreen;
 import fr.yan36.westerlife.common.utils.list.Warp;
@@ -33,7 +32,7 @@ public class Client {
 
     // TODO: Apprendre à développer à _INeox.
 
-    public static int create = 0;
+    public static int needToCreateCharacter = 0;
     public static String animationState = "default";
     public static List<Warp> warplist = new ArrayList<>();
 
@@ -41,21 +40,12 @@ public class Client {
     public void GuieventHandler(GuiOpenEvent e) {
 
         if (e.getGui() instanceof GuiMainMenu) {
-            if (Minecraft.getMinecraft().getSession().getUsername().equals("gabidut76") || Minecraft.getMinecraft().getSession().getUsername().equals("_INeox") || Minecraft.getMinecraft().getSession().getUsername().equals("0hSandji")) {
-            } else if (Minecraft.getMinecraft().getSession().getUsername().equals("yan36")) {
-
-            } else {
-
-            }
         }
+
         if (e.getGui() instanceof GuiIngameMenu) {
-            ACsGuiApi.asyncLoadThenShowGui("ingamemenu", CSSGuiIngameMenu::new);
         }
 
         if (e.getGui() == null) {
-            if (create == 1) {
-                ACsGuiApi.asyncLoadThenShowGui("createprofil", CSSGuiCreateProfil::new);
-            }
         }
 
     }

@@ -1,4 +1,4 @@
-package fr.yan36.westerlife.common.network;
+package fr.yan36.westerlife.common.network.old;
 
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.server.bdd.MethodesBDD;
@@ -43,7 +43,7 @@ public class PacketATMTransaction implements IMessage{
         @SideOnly(Side.SERVER)
         public IMessage onMessage(PacketATMTransaction m, MessageContext ctx) {
             EntityPlayer e = (EntityPlayer) ctx.getServerHandler().player;
-            if(MethodesBDD.getPlayerExist(e)){
+            if(MethodesBDD.getCharacterExists(e)){
                 if(MethodesBDD.getRibExist(m.rib)){
                     if(MethodesBDD.getArgent(ctx.getServerHandler().player) >= Double.parseDouble(m.montant)){
                         MethodesBDD.setArgent(e, MethodesBDD.getArgent(e) - Double.parseDouble(m.montant));

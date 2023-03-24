@@ -1,8 +1,7 @@
 package fr.yan36.westerlife;
 
 import fr.dynamx.api.contentpack.DynamXAddon;
-import fr.yan36.westerlife.client.gui.mcef.BrowserHud;
-import fr.yan36.westerlife.client.gui.mcef.BrowserScreen;
+import fr.yan36.westerlife.client.gui.mcef.*;
 import fr.yan36.westerlife.client.utils.creativetabs.WesterTab;
 import fr.yan36.westerlife.common.CommonProxy;
 import fr.yan36.westerlife.common.init.DynamxInit;
@@ -16,6 +15,8 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.server.permission.DefaultPermissionLevel;
 import net.minecraftforge.server.permission.PermissionAPI;
 import org.apache.logging.log4j.Logger;
@@ -40,7 +41,10 @@ public class Main {
     public static Main instance;
     public static SimpleNetworkWrapper network;
 
+    @SideOnly(Side.CLIENT)
     public static BrowserScreen browserScreen;
+
+    @SideOnly(Side.CLIENT)
     public static BrowserHud browserHud;
 
     @DynamXAddon.AddonEventSubscriber

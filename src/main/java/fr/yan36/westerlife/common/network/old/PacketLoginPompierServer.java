@@ -1,4 +1,4 @@
-package fr.yan36.westerlife.common.network;
+package fr.yan36.westerlife.common.network.old;
 
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.server.AuthSystem;
@@ -10,7 +10,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class PacketLoginGendarmerieServer implements IMessage {
+public class PacketLoginPompierServer implements IMessage {
 
     /**
      * TODO: Si jamais tu passes par la gabidut76, tu vérifiras ce packet car il m'énerve.
@@ -20,9 +20,9 @@ public class PacketLoginGendarmerieServer implements IMessage {
     private String login, password;
     private int player;
 
-    public PacketLoginGendarmerieServer() {}
+    public PacketLoginPompierServer() {}
 
-    public PacketLoginGendarmerieServer(String login, String password, EntityPlayer player) {
+    public PacketLoginPompierServer(String login, String password, EntityPlayer player) {
         this.login = login;
         this.password = password;
         this.player = player.getEntityId();
@@ -42,15 +42,15 @@ public class PacketLoginGendarmerieServer implements IMessage {
         buf.writeInt(this.player);
     }
 
-    public static class Handler implements IMessageHandler<PacketLoginGendarmerieServer, IMessage> {
+    public static class Handler implements IMessageHandler<PacketLoginPompierServer, IMessage> {
         @Override
-        public IMessage onMessage(PacketLoginGendarmerieServer m, MessageContext ctx) {
+        public IMessage onMessage(PacketLoginPompierServer m, MessageContext ctx) {
             EntityPlayer e = (EntityPlayer) ctx.getServerHandler().player.world.getEntityByID(m.player);
 
-            if(AuthSystem.loginGendarmerie(m.login, m.password)) {
-                Main.network.sendTo(new PacketLoginGendarmerie(true), (EntityPlayerMP) e);
+            if(AuthSystem.loginPompier(m.login, m.password)) {
+                Main.network.sendTo(new PacketLoginPompier(true), (EntityPlayerMP) e);
             } else {
-                Main.network.sendTo(new PacketLoginGendarmerie(false), (EntityPlayerMP) e);
+                Main.network.sendTo(new PacketLoginPompier(false), (EntityPlayerMP) e);
             }
             return null;
         }

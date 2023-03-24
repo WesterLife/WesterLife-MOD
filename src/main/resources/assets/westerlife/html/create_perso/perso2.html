@@ -23,19 +23,19 @@
             </div>
             <div class="form">
                 <form class="form" method="get" action="">
-                    <input type="text" id="prenoms" name="prenoms" placeholder="Prénom(s)" required>
-                    <input type="text" id="nom" name="nom" placeholder="Nom" required>
+                    <input type="text" id="prenoms" name="prenoms" placeholder="Prénom(s)" maxlength="50" required>
+                    <input type="text" id="nom" name="nom" placeholder="Nom" maxlength="50" required>
                     <input type="date" id="datedenaissance" name="datedenaissance" placeholder="Date de naissance" value="1990-01-01" required>
-                    <input type="text" id="lieudenaissance" name="lieudenaissance" placeholder="Lieu de naissance" required>
+                    <input type="text" id="lieudenaissance" name="lieudenaissance" maxlength="50" placeholder="Lieu de naissance" required>
                     <!-- <input type="text" placeholder="Nationalité"> -->
                     <select id="nationalite" name="nationalite" placeholder="Nationalité" required>
-                        <option value="FRANCE">Française</option>
-                        <option value="OTHER">Étrangère</option>
+                        <option value="Française">Française</option>
+                        <option value="Étrangère">Étrangère</option>
                     </select>
                     <!-- <input type="text" placeholder="Sexe"> -->
                     <select id="sexe" name="sexe" placeholder="Sexe" required>
-                        <option value="MALE">Homme</option>
-                        <option value="FEMALE">Femme</option>
+                        <option value="Masculin">Homme</option>
+                        <option value="Féminin">Femme</option>
                     </select>
                 </form>
             </div>
@@ -182,7 +182,7 @@
         }
         $(function() {
             window.mcefQuery({
-                "request": "$createPersoForm:" + document.getElementById("nom").value.replaceAll(":", "") + ":" + document.getElementById("prenoms").value.replaceAll(":", "") + ":" + document.getElementById("datedenaissance").value.replaceAll(":", "") + ":" + document.getElementById("lieudenaissance").value.replaceAll(":", "") + ":" + document.getElementById("nationalite").value.replaceAll(":", "") + ":" + perso + ":" + document.getElementById("sexe").value,
+                "request": "$createPersoForm:" + document.getElementById("nom").value + ":" + document.getElementById("prenoms").value + ":" + document.getElementById("datedenaissance").value + ":" + document.getElementById("lieudenaissance").value + ":" + document.getElementById("nationalite").value + ":" + document.getElementById("sexe").value,
                 "persistent": false
             });
             document.location.href="mod://westerlife/create_perso/perso3.html";

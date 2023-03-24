@@ -7,7 +7,7 @@ import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.aym.acsguis.component.textarea.GuiPasswordField;
 import fr.aym.acsguis.component.textarea.GuiTextArea;
 import fr.yan36.westerlife.Main;
-import fr.yan36.westerlife.common.network.PacketLoginGendarmerieServer;
+import fr.yan36.westerlife.common.network.old.PacketLoginGendarmerieServer;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;

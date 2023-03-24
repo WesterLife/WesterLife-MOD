@@ -1,8 +1,6 @@
-package fr.yan36.westerlife.common.network;
+package fr.yan36.westerlife.common.network.old;
 
-import fr.aym.acsguis.api.ACsGuiApi;
 import fr.yan36.westerlife.Main;
-import fr.yan36.westerlife.client.gui.acs.CSSGuiAtm;
 import fr.yan36.westerlife.client.gui.mcef.BrowserScreen;
 import io.netty.buffer.ByteBuf;
 import net.minecraftforge.fml.common.network.ByteBufUtils;

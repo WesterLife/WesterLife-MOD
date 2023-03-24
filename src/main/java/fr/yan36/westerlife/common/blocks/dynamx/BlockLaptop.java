@@ -2,8 +2,7 @@ package fr.yan36.westerlife.common.blocks.dynamx;
 
 import fr.dynamx.common.blocks.DynamXBlock;
 import fr.yan36.westerlife.Main;
-import fr.yan36.westerlife.common.network.PacketOpenGUIGendarmerieLogin;
-import fr.yan36.westerlife.common.network.PacketOpenGUIMcef;
+import fr.yan36.westerlife.common.network.old.PacketOpenGUIMcef;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;

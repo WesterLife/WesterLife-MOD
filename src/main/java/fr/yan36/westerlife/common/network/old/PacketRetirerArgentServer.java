@@ -1,4 +1,4 @@
-package fr.yan36.westerlife.common.network;
+package fr.yan36.westerlife.common.network.old;
 
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.init.ItemInit;
