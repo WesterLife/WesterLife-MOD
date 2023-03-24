@@ -231,6 +231,10 @@ public class MethodesBDD {
         System.out.println("Code CB updated for " + p.getName() + " : " + Code);
     }
 
+    public static String getData(EntityPlayer p, String WData, String from, String where, String whereValue){
+        return instance.getData("SELECT " + WData + " FROM " + from + " WHERE " + where + "=" + whereValue, p.getUniqueID()).getValue(0,0);
+    }
+
     public static String getPrenom(EntityPlayer p){
         String job = null;
         QueryResult qr = instance.getData("SELECT prenom FROM players WHERE uuid= ?", p.getUniqueID());
