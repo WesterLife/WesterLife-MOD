@@ -217,7 +217,7 @@ public class BrowserScreen extends GuiScreen implements IJSQueryHandler
                     System.out.println(name + " " + firstnames + " " + birthdate + " " + nationality + " " + sex);
 
                     Main.network.sendToServer(new PacketCreateCharacter(Minecraft.getMinecraft().player, name, firstnames, birthdate, birthplace, nationality, sex));
-//                    Client.create=0;
+                    Client.needToCreateCharacter = 0;
 //                    Minecraft.getMinecraft().displayGuiScreen(null);
                 }
             } else

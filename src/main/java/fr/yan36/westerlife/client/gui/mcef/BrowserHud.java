@@ -71,11 +71,6 @@ public class BrowserHud
             Main.browserScreen = new BrowserScreen("mod://westerlife/create_perso/perso1.html");
             Main.browserScreen.openMenu();
         }
-        if(Client.needToCreateCharacter == 1) {
-            Main.browserScreen = new BrowserScreen("mod://westerlife/create_perso/perso1.html");
-            Main.browserScreen.openMenu();
-            Client.needToCreateCharacter = 2;
-        }
     }
 
     public void runJS(final String js) {

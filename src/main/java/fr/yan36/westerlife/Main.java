@@ -57,7 +57,6 @@ public class Main {
 
     public static Logger logger;
 
-
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) throws IOException {
         proxy.preInit();

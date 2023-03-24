@@ -18,6 +18,7 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -52,6 +53,15 @@ public class Client {
 
     @SubscribeEvent
     public void InteractWithEntity(FMLNetworkEvent.ClientConnectedToServerEvent e) {
+    }
+
+
+    @SubscribeEvent
+    public void onTickEvent(TickEvent.ClientTickEvent event) {
+            if (needToCreateCharacter == 1) {
+                Minecraft.getMinecraft().displayGuiScreen(new BrowserScreen());
+                needToCreateCharacter = 2;
+            }
     }
 
     @SideOnly(Side.CLIENT)

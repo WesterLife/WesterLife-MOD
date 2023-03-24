@@ -59,7 +59,7 @@ public class PacketCreateCharacter implements IMessage{
             if(Side.SERVER.isServer()) {
                 if (!MethodesBDD.getCharacterExists(e)) {
                     MethodesBDD.createCharacter(e, m.familyname, m.firstnames, m.birthdate, m.birthplace, m.nationality, m.sex);
-                    e.sendMessage(new TextComponentString("&cWesterLife &8» &aVotre personnage a bien été créé ! Bon jeu !"));
+                    e.sendMessage(new TextComponentString("§cWesterLife §8» §aVotre personnage a bien été créé ! Bon jeu !"));
                 }
             }
             return null;

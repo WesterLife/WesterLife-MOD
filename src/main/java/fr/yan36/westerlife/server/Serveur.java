@@ -31,7 +31,10 @@ public class Serveur {
         boolean devmod = false;
         if(!devmod) {
             if(!MethodesBDD.getCharacterExists(e.player)){
+                System.out.println("Nj debug");
                 Main.network.sendTo(new PacketAskToCreateCharacter(), (EntityPlayerMP) e.player);
+                e.player.sendMessage(new TextComponentString("Vous n'avez pas de personnage, veuillez en créer un."));
+
             }
         }
     }
