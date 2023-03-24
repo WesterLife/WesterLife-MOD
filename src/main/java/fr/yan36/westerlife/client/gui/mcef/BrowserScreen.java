@@ -21,7 +21,7 @@ public class BrowserScreen extends GuiScreen implements IJSQueryHandler
     private String urlToLoad;
 
     public BrowserScreen() {
-        this("mod://westerlife/index.html");
+        this("mod://westerlife/create_perso/perso1.html");
     }
 
     public BrowserScreen(String url) {
@@ -196,23 +196,14 @@ public class BrowserScreen extends GuiScreen implements IJSQueryHandler
 
     @Override
     public boolean handleQuery(IBrowser b, long queryId, String query, boolean persistent, IJSQueryCallback cb) {
-        System.out.println(query);
-        if(b != null && query.equalsIgnoreCase("username")) {
+
+        if(b != null && query.startsWith("$")) {
             if(b.getURL().startsWith("mod://")) {
-                //Only allow MCEF URLs to get the player's username to keep his identity secret
-
-                mc.addScheduledTask(() -> {
-                    //Add this to a scheduled task because this is NOT called from the main Minecraft thread...
-
-                    try {
-                        String name = mc.getSession().getUsername();
-                        cb.success(name);
-                    } catch(Throwable t) {
-                        cb.failure(500, "Internal error.");
-                        Main.logger.warn("Could not get username from JavaScript:");
-                        t.printStackTrace();
-                    }
-                });
+                if(query.substring(1).equals("closeGui")) {
+                    Minecraft.getMinecraft().displayGuiScreen(null);
+                } else if(query.substring(1).equals("createPersoForm")) {
+                    System.out.println("createPersoForm");
+                }
             } else
                 cb.failure(403, "Can't access username from external page");
 

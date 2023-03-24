@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Création de Personnage</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+</head>
+<body>
+    <div class="base">
+        <section>
+            <div class="logo">
+                <img class="logo-img" src="../assets/logo.png">
+            </div>
+            <div class="title">
+                <h1>Bienvenue sur WesterLife !</h1>
+            </div>
+            <div class="text">
+                <div class="text-1">
+                    <p>L’ensemble de notre équipe te souhaite la bienvenue sur WesterLife, nous te rappelons que notre but est de proposer un serveur avec une véritable expérience de jeu ainsi qu’une ambiance saine, réaliste et rôle-play. <strong>C'est ce défi difficile mais pas impossible que nous avons fait le choix de relever, pour vous !</strong></p>
+                </div>
+                <div class="text-2">
+                    <p><strong>Avant de continuer, nous te rappelons que la lecture et l’adhésion à nos règlements sont obligatoires et considérées comme comprises et respectées.</strong></p>
+                </div>
+            </div>
+        </section>
+        <section>
+            <a href="mod://westerlife/create_perso/perso2.html">
+            <button class="button">
+                <p class="button-text">C’est parti !</p>
+                <i class="ri-arrow-right-s-line button-img"></i>
+            </button>
+            </a>
+        </section>
+    </div>
+</body>
+<style>
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        overflow: hidden;
+    }
+    * {
+        font-family: 'Montserrat', sans-serif;
+    }
+    .logo {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .logo-img {
+        width: 10%;
+    }
+    .text {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .base {
+        position: absolute;
+        background-color: #2E364A;
+        font-family: 'Montserrat', sans-serif;
+        border-radius: 15px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 40%;
+        height: 50%;
+        padding: 35px;
+        gap: 40px;
+    }
+    .section-title {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .section-pass {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    h1 {
+        color: #F6E7D8;
+        font-size: 32px;
+        text-align: center;
+    }
+    p {
+        color: #FFFFFF;
+        font-size: 16px;
+        text-align: center;
+    }
+    .button {
+        background-color: #FFFFFF;
+        border: none;
+        border-radius: 15px;
+        color: #2E364A;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        padding: 5px 30px;
+        gap: 5px;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 700;
+    }
+    .button:hover {
+        background-color: #F0F0F0;
+    }
+    .button:focus {
+        outline:none;
+    }
+    .button-text, button-img {
+        color: #2E364A;
+        font-size: 16px;
+    }
+    .button-img {
+        font-size: 24px;
+        font-weight: 700;
+    }
+    a {
+        text-decoration: none;
+    }
+</style>
+</html>
