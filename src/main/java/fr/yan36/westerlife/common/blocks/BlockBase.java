@@ -3,7 +3,7 @@ package fr.yan36.westerlife.common.blocks;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.init.BlockInit;
 import fr.yan36.westerlife.common.init.ItemInit;
-import fr.yan36.westerlife.utils.IHasModel;
+import fr.yan36.westerlife.common.utils.interfaces.IHasModel;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;

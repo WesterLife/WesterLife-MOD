@@ -1,6 +1,6 @@
 package fr.yan36.westerlife.server.bdd;
 
-import fr.yan36.westerlife.utils.list.*;
+import fr.yan36.westerlife.common.utils.list.*;
 import net.minecraft.entity.player.EntityPlayer;
 
 import java.util.ArrayList;
@@ -9,30 +9,36 @@ import java.util.UUID;
 
 public class MethodesBDD {
 
+    //New methods for V2.0
+
     static SQLUtils instance = new SQLUtils();
+
+    //Création d'un personnage rôle-play
+    public static void createCharacter(EntityPlayer p, String familyname, String firstnames, String birthdate, String birthplace, String nationality, String sex){
+        instance.execute("INSERT INTO `players` (`pseudo`,`uuid`, `familyname`, `firstnames`, `birthdate`, `birthplace`, `nationality`, `sex`) VALUES ('"+p.getDisplayNameString()+"','"+p.getUniqueID().toString()+"','"+familyname+"','"+firstnames+"','"+birthdate+"','"+birthplace+"','"+nationality+"','"+sex+"')");
+    }
+
+    //Vérifie si un personne rôle-play existe pour un joueur
+    public static boolean getCharacterExists(EntityPlayer p){
+        boolean exists = false;
+        String uuid = p.getUniqueID().toString();
+        QueryResult qr = instance.getData("SELECT uuid FROM players WHERE uuid= ?", uuid);
+        try {
+            exists = p.getUniqueID().toString().equals(qr.getValue(0, 0));
+        } catch (Exception e) {
+            //e.printStackTrace();
+        }
+        return exists;
+    }
+
+    //Old methods
+
     public static void addplayer(EntityPlayer p, String prenom, String nom,String date,String sex, String rib){
         instance.execute("INSERT INTO `players` (`uuid`,`prenom`, `nom`, `date`, `sex`, `rib`) VALUES ('"+p.getUniqueID()+"','"+prenom+"','"+nom+"','"+date+"','"+sex+"','"+rib+"')");
     }
 
     public static void addwarp(String name, int x, int y, int z){
         instance.execute("INSERT INTO `admin_warp` (`name`,`x`, `y`, `z`) VALUES ('"+name+"','"+x+"','"+y+"','"+z+"')");
-    }
-
-    public static boolean getPlayerExist(EntityPlayer p){
-        boolean exists = false;
-        String uuid = p.getUniqueID().toString();
-        QueryResult qr = instance.getData("SELECT uuid FROM players WHERE uuid= ?", uuid);
-        //System.out.println(uuid);
-
-        try {
-            //System.out.println(qr.getResultAsArray());
-            //System.out.println(qr.getValue(0, 0));
-            exists = p.getUniqueID().toString().equals(qr.getValue(0, 0));
-        } catch (Exception e) {
-            //e.printStackTrace();
-        }
-        return exists;
-
     }
 
     public static boolean getRibExist(String rib){

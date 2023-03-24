@@ -5,7 +5,7 @@ import fr.aym.acsguis.component.panel.GuiFrame;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.textarea.GuiTextArea;
 import fr.yan36.westerlife.Main;
-import fr.yan36.westerlife.common.network.PacketUpdateTileSign;
+import fr.yan36.westerlife.common.network.old.PacketUpdateTileSign;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;

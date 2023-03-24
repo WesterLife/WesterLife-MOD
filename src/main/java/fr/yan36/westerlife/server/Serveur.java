@@ -3,11 +3,11 @@ package fr.yan36.westerlife.server;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.blocks.dynamx.BlockDistributeur;
 import fr.yan36.westerlife.common.init.ItemInit;
-import fr.yan36.westerlife.common.network.PacketCreateIdentity;
-import fr.yan36.westerlife.common.network.PacketOpenGUIAtm;
-import fr.yan36.westerlife.common.network.PacketSyncPlayer;
+import fr.yan36.westerlife.common.network.PacketAskToCreateCharacter;
+import fr.yan36.westerlife.common.network.old.PacketOpenGUIAtm;
+import fr.yan36.westerlife.common.network.old.PacketSyncPlayer;
 import fr.yan36.westerlife.server.bdd.MethodesBDD;
-import fr.yan36.westerlife.utils.commands.WesterLifeCommand;
+import fr.yan36.westerlife.common.utils.commands.WesterLifeCommand;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -28,20 +28,15 @@ public class Serveur {
 
     @SubscribeEvent
     public void onConnectToServer(PlayerEvent.PlayerLoggedInEvent e) {
-        //System.out.println(MethodesBDD.getPlayerExist(e.player));
         boolean devmod = false;
         if(!devmod) {
-            if(!MethodesBDD.getPlayerExist(e.player)){
-                System.out.println("Nouveau joueur : "+e.player.getName());
-                Main.network.sendTo(new PacketCreateIdentity(), (EntityPlayerMP) e.player);
-            }else{
-                Main.network.sendTo(new PacketSyncPlayer(MethodesBDD.getNom(e.player),MethodesBDD.getPrenom(e.player),MethodesBDD.getSex(e.player),MethodesBDD.getDate(e.player),MethodesBDD.getArgent(e.player),MethodesBDD.getRIB(e.player)), (EntityPlayerMP) e.player);
-                //Main.network.sendTo(new Packet);
-                //send packet with data of player
-            }
-            //Main.network.sendTo(new PacketOpenFranceTravail(MethodesBDD.getJobs()), (EntityPlayerMP) e.player);
-        }
+            if(!MethodesBDD.getCharacterExists(e.player)){
+                System.out.println("Nj debug");
+                Main.network.sendTo(new PacketAskToCreateCharacter(), (EntityPlayerMP) e.player);
+                e.player.sendMessage(new TextComponentString("Vous n'avez pas de personnage, veuillez en créer un."));
 
+            }
+        }
     }
 
     @SubscribeEvent

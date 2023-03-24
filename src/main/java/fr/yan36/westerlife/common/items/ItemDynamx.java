@@ -7,7 +7,7 @@ import fr.dynamx.common.physics.entities.BaseVehiclePhysicsHandler;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.Util;
 import fr.yan36.westerlife.common.init.DynamxInit;
-import fr.yan36.westerlife.common.network.BelierMessage;
+import fr.yan36.westerlife.common.network.old.BelierMessage;
 import fr.yan36.westerlife.common.registry.SoundsHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;

@@ -1,6 +1,8 @@
 package fr.yan36.westerlife.client.gui.mcef;
 
 import fr.yan36.westerlife.Main;
+import fr.yan36.westerlife.client.Client;
+import fr.yan36.westerlife.common.network.PacketCreateCharacter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -21,7 +23,7 @@ public class BrowserScreen extends GuiScreen implements IJSQueryHandler
     private String urlToLoad;
 
     public BrowserScreen() {
-        this("mod://westerlife/index.html");
+        this("mod://westerlife/create_perso/perso1.html");
     }
 
     public BrowserScreen(String url) {
@@ -74,6 +76,9 @@ public class BrowserScreen extends GuiScreen implements IJSQueryHandler
     }
 
     public void onGuiClosed() {
+        if(Client.needToCreateCharacter == 2)
+            Client.needToCreateCharacter = 1;
+
         Main.browserScreen = null;
         Keyboard.enableRepeatEvents(false);
         browser.close();
@@ -196,23 +201,25 @@ public class BrowserScreen extends GuiScreen implements IJSQueryHandler
 
     @Override
     public boolean handleQuery(IBrowser b, long queryId, String query, boolean persistent, IJSQueryCallback cb) {
-        System.out.println(query);
-        if(b != null && query.equalsIgnoreCase("username")) {
+
+        if(b != null && query.startsWith("$")) {
             if(b.getURL().startsWith("mod://")) {
-                //Only allow MCEF URLs to get the player's username to keep his identity secret
+                if(query.substring(1).equals("closeGui")) {
+                    Minecraft.getMinecraft().displayGuiScreen(null);
+                } else if(query.substring(1).split(":")[0].equals("createPersoForm")){
+                    String name = query.split(":")[1];
+                    String firstnames = query.split(":")[2];
+                    String birthdate = query.split(":")[3];
+                    String birthplace = query.split(":")[4];
+                    String nationality = query.split(":")[5];
+                    String sex = query.split(":")[6];
 
-                mc.addScheduledTask(() -> {
-                    //Add this to a scheduled task because this is NOT called from the main Minecraft thread...
+                    System.out.println(name + " " + firstnames + " " + birthdate + " " + nationality + " " + sex);
 
-                    try {
-                        String name = mc.getSession().getUsername();
-                        cb.success(name);
-                    } catch(Throwable t) {
-                        cb.failure(500, "Internal error.");
-                        Main.logger.warn("Could not get username from JavaScript:");
-                        t.printStackTrace();
-                    }
-                });
+                    Main.network.sendToServer(new PacketCreateCharacter(Minecraft.getMinecraft().player, name, firstnames, birthdate, birthplace, nationality, sex));
+                    Client.needToCreateCharacter = 0;
+//                    Minecraft.getMinecraft().displayGuiScreen(null);
+                }
             } else
                 cb.failure(403, "Can't access username from external page");
 

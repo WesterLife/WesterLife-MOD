@@ -4,7 +4,7 @@ import fr.aym.acsguis.component.layout.GuiScaler;
 import fr.aym.acsguis.component.panel.GuiFrame;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.yan36.westerlife.Main;
-import fr.yan36.westerlife.common.network.PacketOpenPhoneFrame;
+import fr.yan36.westerlife.common.network.old.PacketOpenPhoneFrame;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ResourceLocation;
