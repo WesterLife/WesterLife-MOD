@@ -31,19 +31,15 @@ public class DBUtils {
         }
     }
 
-    public static void createBankAccount(EntityPlayer p){
+    public static void createBankAccount(EntityPlayer p, int rib, String cb_code, String date){
         try{
             Connection connection = ServerProxy.getDatabaseManager().getWesterLifeDB().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO `bank_account` (`account_number`,`owner`, `RIB`, `cb_code`, `creation_date`) VALUES (?,?,?,?,?)");
             preparedStatement.setInt(1, getMaxID("account_number", "bank_account"));
             preparedStatement.setString(2, p.getUniqueID().toString());
-            Random random = new Random();
-            int rib = random.nextInt(900000) + 100000;
             preparedStatement.setString(3, "FR769770000001" + rib + "F10");
-            preparedStatement.setString(4, String.valueOf(random.nextInt(9000) + 1000));
-            LocalDate currentDate = LocalDate.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            preparedStatement.setDate(5, java.sql.Date.valueOf(currentDate.format(formatter)));
+            preparedStatement.setString(4, cb_code);
+            preparedStatement.setString(5, date);
 
             preparedStatement.executeUpdate();
             connection.close();
