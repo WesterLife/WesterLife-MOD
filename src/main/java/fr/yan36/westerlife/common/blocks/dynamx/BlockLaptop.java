@@ -23,7 +23,7 @@ public class BlockLaptop extends DynamXBlock {
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if(!worldIn.isRemote) {
-            Main.network.sendTo(new PacketOpenGUIMcef("mod://westerlife/computer/index.html"), (EntityPlayerMP) playerIn);
+            Main.network.sendTo(new PacketOpenGUIMcef("mod://westerlife/computer/perso1.html"), (EntityPlayerMP) playerIn);
         }
         return true;
     }

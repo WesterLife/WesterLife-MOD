@@ -1,4 +1,4 @@
-package fr.yan36.westerlife.utils.discord;
+package fr.yan36.westerlife.common.utils.discord;
 
 import club.minnced.discord.rpc.DiscordEventHandlers;
 import club.minnced.discord.rpc.DiscordRPC;

@@ -1,4 +1,4 @@
-package fr.yan36.westerlife.utils.list;
+package fr.yan36.westerlife.common.utils.list;
 
 public class Job {
 

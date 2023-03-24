@@ -1,4 +1,4 @@
-package fr.yan36.westerlife.utils;
+package fr.yan36.westerlife.common.utils;
 
 public enum Animation {
     STOPPED,

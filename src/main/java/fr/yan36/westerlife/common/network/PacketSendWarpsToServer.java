@@ -2,7 +2,7 @@ package fr.yan36.westerlife.common.network;
 
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.server.bdd.MethodesBDD;
-import fr.yan36.westerlife.utils.list.Warp;
+import fr.yan36.westerlife.common.utils.list.Warp;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;

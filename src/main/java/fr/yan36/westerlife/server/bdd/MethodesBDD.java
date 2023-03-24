@@ -1,6 +1,6 @@
 package fr.yan36.westerlife.server.bdd;
 
-import fr.yan36.westerlife.utils.list.*;
+import fr.yan36.westerlife.common.utils.list.*;
 import net.minecraft.entity.player.EntityPlayer;
 
 import java.util.ArrayList;

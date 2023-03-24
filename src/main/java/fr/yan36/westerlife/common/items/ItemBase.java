@@ -2,7 +2,7 @@ package fr.yan36.westerlife.common.items;
 
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.init.ItemInit;
-import fr.yan36.westerlife.utils.IHasModel;
+import fr.yan36.westerlife.common.utils.interfaces.IHasModel;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 

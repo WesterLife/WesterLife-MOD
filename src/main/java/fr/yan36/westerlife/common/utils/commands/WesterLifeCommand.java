@@ -1,4 +1,4 @@
-package fr.yan36.westerlife.utils.commands;
+package fr.yan36.westerlife.common.utils.commands;
 
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.network.PacketOpenGUIAdmin;

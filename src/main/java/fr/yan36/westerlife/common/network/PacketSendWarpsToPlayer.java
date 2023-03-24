@@ -1,7 +1,7 @@
 package fr.yan36.westerlife.common.network;
 
 import fr.yan36.westerlife.client.Client;
-import fr.yan36.westerlife.utils.list.Warp;
+import fr.yan36.westerlife.common.utils.list.Warp;
 import io.netty.buffer.ByteBuf;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;

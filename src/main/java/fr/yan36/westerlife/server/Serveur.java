@@ -7,7 +7,7 @@ import fr.yan36.westerlife.common.network.PacketCreateIdentity;
 import fr.yan36.westerlife.common.network.PacketOpenGUIAtm;
 import fr.yan36.westerlife.common.network.PacketSyncPlayer;
 import fr.yan36.westerlife.server.bdd.MethodesBDD;
-import fr.yan36.westerlife.utils.commands.WesterLifeCommand;
+import fr.yan36.westerlife.common.utils.commands.WesterLifeCommand;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;

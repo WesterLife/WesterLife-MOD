@@ -2,7 +2,7 @@ package fr.yan36.westerlife.common.registry;
 
 import fr.yan36.westerlife.common.init.BlockInit;
 import fr.yan36.westerlife.common.init.ItemInit;
-import fr.yan36.westerlife.utils.IHasModel;
+import fr.yan36.westerlife.common.utils.interfaces.IHasModel;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;

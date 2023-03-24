@@ -10,7 +10,7 @@ import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.aym.acsguis.component.textarea.GuiTextArea;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.network.PacketCreatePlainte;
-import fr.yan36.westerlife.utils.list.*;
+import fr.yan36.westerlife.common.utils.list.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;

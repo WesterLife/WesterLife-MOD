@@ -2,7 +2,7 @@ package fr.yan36.westerlife.client.gui.acs;
 
 import fr.aym.acsguis.component.layout.GuiScaler;
 import fr.aym.acsguis.component.panel.GuiFrame;
-import fr.yan36.westerlife.utils.list.Job;
+import fr.yan36.westerlife.common.utils.list.Job;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.Collections;
