@@ -44,6 +44,9 @@ public class Client {
         }
 
         if (e.getGui() instanceof GuiIngameMenu) {
+            Main.browserScreen = new BrowserScreen("mod://westerlife/menu_echap/echap.html");
+            Main.browserScreen.openMenu();
+            e.setGui(Main.browserScreen);
         }
 
         if (e.getGui() == null) {
