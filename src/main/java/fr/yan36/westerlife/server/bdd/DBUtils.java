@@ -1,12 +1,18 @@
 package fr.yan36.westerlife.server.bdd;
 
 import fr.yan36.westerlife.server.ServerProxy;
+import javafx.scene.input.DataFormat;
 import net.minecraft.entity.player.EntityPlayer;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.Random;
 
 public class DBUtils {
 
@@ -18,6 +24,27 @@ public class DBUtils {
         try{
             Connection connection = ServerProxy.getDatabaseManager().getWesterLifeDB().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO `players` (`pseudo`,`uuid`, `familyname`, `firstnames`, `birthdate`, `birthplace`, `nationality`, `sex`) VALUES ('"+p.getDisplayNameString()+"','"+p.getUniqueID().toString()+"','"+familyname+"','"+firstnames+"','"+birthdate+"','"+birthplace+"','"+nationality+"','"+sex+"')");
+            preparedStatement.executeUpdate();
+            connection.close();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public static void createBankAccount(EntityPlayer p){
+        try{
+            Connection connection = ServerProxy.getDatabaseManager().getWesterLifeDB().getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO `bank_account` (`account_number`,`owner`, `RIB`, `cb_code`, `creation_date`) VALUES (?,?,?,?,?)");
+            preparedStatement.setInt(1, getMaxID("account_number", "bank_account"));
+            preparedStatement.setString(2, p.getUniqueID().toString());
+            Random random = new Random();
+            int rib = random.nextInt(900000) + 100000;
+            preparedStatement.setString(3, "FR769770000001" + rib + "F10");
+            preparedStatement.setString(4, String.valueOf(random.nextInt(9000) + 1000));
+            LocalDate currentDate = LocalDate.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            preparedStatement.setDate(5, java.sql.Date.valueOf(currentDate.format(formatter)));
+
             preparedStatement.executeUpdate();
             connection.close();
         } catch (SQLException e){
@@ -61,6 +88,24 @@ public class DBUtils {
     //===================================
     // Base De Données - Get Info
     //===================================
+
+    private static int getMaxID(String column, String table_name){
+        try {
+            Connection connection = ServerProxy.getDatabaseManager().getWesterLifeDB().getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT MAX(" + column +") FROM " + table_name);
+            preparedStatement.executeQuery();
+            ResultSet rs = preparedStatement.getResultSet();
+            if (rs.next()){
+                int result = rs.getInt(1);
+                connection.close();
+                return result;
+            }
+            connection.close();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return 0;
+    }
 
     private static String getStringInfo(String getting, String table_name, String where, String where_value){
         try {
