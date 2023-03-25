@@ -69,6 +69,22 @@ public class DBUtils {
     }
 
     //===================================
+    // Base De Données - Remove Data
+    //===================================
+
+    private static void removeRow(String table_name, String where, String where_value){
+        try{
+            Connection connection = ServerProxy.getDatabaseManager().getWesterLifeDB().getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM `" + table_name + "` WHERE `"+ where + "`= ?");
+            preparedStatement.setString(1, where_value);
+            preparedStatement.executeUpdate();
+            connection.close();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    //===================================
     // Base De Données - Set Info
     //===================================
 
