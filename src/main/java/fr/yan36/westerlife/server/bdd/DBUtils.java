@@ -72,7 +72,7 @@ public class DBUtils {
     // Base De Données - Remove Data
     //===================================
 
-    private static void removeRow(String table_name, String where, String where_value){
+    public static void removeRow(String table_name, String where, String where_value){
         try{
             Connection connection = ServerProxy.getDatabaseManager().getWesterLifeDB().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM `" + table_name + "` WHERE `"+ where + "`= ?");
@@ -88,7 +88,7 @@ public class DBUtils {
     // Base De Données - Set Info
     //===================================
 
-    private static void setInfo(String table_name, String where, String where_value, String setting, String settingsvalue){
+    public static void setInfo(String table_name, String where, String where_value, String setting, String settingsvalue){
         try {
             Connection connection = ServerProxy.getDatabaseManager().getWesterLifeDB().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("UPDATE " + table_name + " SET " + setting + "='" + settingsvalue + "' WHERE " + where + "= ?");
@@ -104,7 +104,7 @@ public class DBUtils {
     // Base De Données - Get Info
     //===================================
 
-    private static int getMaxID(String column, String table_name){
+    public static int getMaxID(String column, String table_name){
         try {
             Connection connection = ServerProxy.getDatabaseManager().getWesterLifeDB().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT MAX(" + column +") FROM " + table_name);
@@ -122,7 +122,7 @@ public class DBUtils {
         return 0;
     }
 
-    private static String getStringInfo(String getting, String table_name, String where, String where_value){
+    public static String getStringInfo(String getting, String table_name, String where, String where_value){
         try {
             Connection connection = ServerProxy.getDatabaseManager().getWesterLifeDB().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT  * FROM " + table_name + " WHERE " + where + "=?");
@@ -143,7 +143,7 @@ public class DBUtils {
         return null;
     }
 
-    private static boolean getBooleanInfo(String getting, String table_name, String where, String where_value){
+    public static boolean getBooleanInfo(String getting, String table_name, String where, String where_value){
         try {
             Connection connection = ServerProxy.getDatabaseManager().getWesterLifeDB().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT  * FROM " + table_name + " WHERE " + where + "=?");
@@ -164,7 +164,7 @@ public class DBUtils {
         return false;
     }
 
-    private static int getIntInfo(String getting, String table_name, String where, String where_value){
+    public static int getIntInfo(String getting, String table_name, String where, String where_value){
         try {
             Connection connection = ServerProxy.getDatabaseManager().getWesterLifeDB().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT  * FROM " + table_name + " WHERE " + where + "=?");
@@ -185,7 +185,7 @@ public class DBUtils {
         return 0;
     }
 
-    private static float getFloatInfo(String getting, String table_name, String where, String where_value){
+    public static float getFloatInfo(String getting, String table_name, String where, String where_value){
         try {
             Connection connection = ServerProxy.getDatabaseManager().getWesterLifeDB().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT  * FROM " + table_name + " WHERE " + where + "=?");
