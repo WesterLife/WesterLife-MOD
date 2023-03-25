@@ -5,7 +5,10 @@ import fr.yan36.westerlife.client.Client;
 import fr.yan36.westerlife.common.network.PacketCreateCharacter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiMainMenu;
+import net.minecraft.client.gui.GuiOptions;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.renderer.GlStateManager;
 import net.montoyo.mcef.api.*;
 import net.montoyo.mcef.example.ScreenCfg;
@@ -15,6 +18,8 @@ import org.lwjgl.input.Mouse;
 import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 public class BrowserScreen extends GuiScreen implements IJSQueryHandler
 {
@@ -23,7 +28,7 @@ public class BrowserScreen extends GuiScreen implements IJSQueryHandler
     private String urlToLoad;
 
     public BrowserScreen() {
-        this("mod://westerlife/create_perso/perso1.html");
+        this("mod://westerlife/menu_echap/echap.html");
     }
 
     public BrowserScreen(String url) {
@@ -216,7 +221,52 @@ public class BrowserScreen extends GuiScreen implements IJSQueryHandler
 
                     Main.network.sendToServer(new PacketCreateCharacter(Minecraft.getMinecraft().player, name, firstnames, birthdate, birthplace, nationality, sex));
                     Client.needToCreateCharacter = 0;
-//                    Minecraft.getMinecraft().displayGuiScreen(null);
+                } else if(query.substring(1).split(":")[0].equals("openLink")) {
+                    String link = query.split(":")[1];
+                    switch (link) {
+                        case "discord":
+                            try {
+                                Desktop.getDesktop().browse(new URI("https://discord.gg/"));
+                            } catch (IOException | URISyntaxException e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                        case "twitter":
+                            try {
+                                Desktop.getDesktop().browse(new URI("https://twitter.com/"));
+                            } catch (IOException | URISyntaxException e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                        case "instagram":
+                            try {
+                                Desktop.getDesktop().browse(new URI("https://www.instagram.com/"));
+                            } catch (IOException | URISyntaxException e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                        case "youtube":
+                            try {
+                                Desktop.getDesktop().browse(new URI("https://www.youtube.com/"));
+                            } catch (IOException | URISyntaxException e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                        case "website":
+                            try {
+                                Desktop.getDesktop().browse(new URI("https://westerlife.fr/"));
+                            } catch (IOException | URISyntaxException e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                    }
+                } else if(query.substring(1).split(":")[0].equals("disconnect")) {
+                    this.mc.world.sendQuittingDisconnectingPacket();
+                    this.mc.loadWorld((WorldClient)null);
+                    this.mc.displayGuiScreen(new GuiMainMenu());
+                } else if(query.substring(1).split(":")[0].equals("openSettings")) {
+                    Main.browserScreen = new BrowserScreen("mod://westerlife/menu_echap/echap.html");
+                    this.mc.displayGuiScreen(new GuiOptions(Main.browserScreen, this.mc.gameSettings));
                 }
             } else
                 cb.failure(403, "Can't access username from external page");
