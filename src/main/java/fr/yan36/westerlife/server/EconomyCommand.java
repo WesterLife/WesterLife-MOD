@@ -1,11 +1,16 @@
 package fr.yan36.westerlife.server;
 
+import fr.yan36.westerlife.server.bdd.DBUtils;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Random;
 
 public class EconomyCommand extends CommandBase {
     @Override
@@ -24,7 +29,16 @@ public class EconomyCommand extends CommandBase {
         switch (args.length){
             case 3:
                 if(args[0].equalsIgnoreCase("eco") && args[1].equalsIgnoreCase("info") && args[2].equalsIgnoreCase("global")){
-
+                    //WIP
+                }
+                if(args[0].equalsIgnoreCase("eco") && args[1].equalsIgnoreCase("create")){
+                    if(args[2].equalsIgnoreCase("personnal")){
+                        Random random = new Random();
+                        int rib = random.nextInt(900000) + 100000;
+                        LocalDate currentDate = LocalDate.now();
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                        DBUtils.createBankAccount(player, rib, String.valueOf(random.nextInt(9000) + 1000), currentDate.format(formatter));
+                    }
                 }
                 break;
             case 4:
