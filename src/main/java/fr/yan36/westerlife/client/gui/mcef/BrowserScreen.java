@@ -2,14 +2,17 @@ package fr.yan36.westerlife.client.gui.mcef;
 
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.client.Client;
+import fr.yan36.westerlife.client.gui.acs.CSSGuiMainMenu;
 import fr.yan36.westerlife.common.network.PacketCreateCharacter;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiMainMenu;
-import net.minecraft.client.gui.GuiOptions;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.*;
 import net.minecraft.client.multiplayer.WorldClient;
+import net.minecraft.client.network.NetHandlerLoginClient;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.network.EnumConnectionState;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.handshake.client.C00Handshake;
+import net.minecraft.network.login.client.CPacketLoginStart;
 import net.montoyo.mcef.api.*;
 import net.montoyo.mcef.example.ScreenCfg;
 import org.lwjgl.input.Keyboard;
@@ -18,8 +21,11 @@ import org.lwjgl.input.Mouse;
 import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.UnknownHostException;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class BrowserScreen extends GuiScreen implements IJSQueryHandler
 {
@@ -267,6 +273,18 @@ public class BrowserScreen extends GuiScreen implements IJSQueryHandler
                 } else if(query.substring(1).split(":")[0].equals("openSettings")) {
                     Main.browserScreen = new BrowserScreen("mod://westerlife/menu_echap/echap.html");
                     this.mc.displayGuiScreen(new GuiOptions(Main.browserScreen, this.mc.gameSettings));
+                } else if(query.substring(1).split(":")[0].equals("leaveGame")) {
+                    mc.shutdown();
+                } else if(query.substring(1).split(":")[0].equals("play")) {
+                    if(!Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
+                        connect("51.38.250.27",25739);
+                    } else {
+                        Main.browserScreen = new BrowserScreen("mod://westerlife/main_menu/main.html");
+                        mc.displayGuiScreen(new GuiMultiplayer(Main.browserScreen));
+                    }
+                } else if(query.substring(1).split(":")[0].equals("openSettings2")) {
+                    Main.browserScreen = new BrowserScreen("mod://westerlife/main_menu/main.html");
+                    this.mc.displayGuiScreen(new GuiOptions(Main.browserScreen, this.mc.gameSettings));
                 }
             } else
                 cb.failure(403, "Can't access username from external page");
@@ -275,6 +293,55 @@ public class BrowserScreen extends GuiScreen implements IJSQueryHandler
         }
 
         return false;
+    }
+
+
+    private static final AtomicInteger CONNECTION_ID = new AtomicInteger(0);
+    private NetworkManager networkManager;
+    private void connect(final String ip, final int port)
+    {
+        (new Thread("Server Connector #" + CONNECTION_ID.incrementAndGet())
+        {
+            public void run()
+            {
+                InetAddress inetaddress = null;
+
+                try
+                {
+
+                    inetaddress = InetAddress.getByName(ip);
+                    networkManager = NetworkManager.createNetworkManagerAndConnect(inetaddress, port, mc.gameSettings.isUsingNativeTransport());
+                    networkManager.setNetHandler(new NetHandlerLoginClient(networkManager, mc,new CSSGuiMainMenu().getGuiScreen()));
+                    networkManager.sendPacket(new C00Handshake(ip, port, EnumConnectionState.LOGIN, true));
+                    networkManager.sendPacket(new CPacketLoginStart(mc.getSession().getProfile()));
+                }
+                catch (UnknownHostException unknownhostexception)
+                {
+                    try {
+                        mc.displayGuiScreen(new CSSGuiMainMenu().getGuiScreen());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                catch (Exception exception)
+                {
+
+                    String s = exception.toString();
+
+                    if (inetaddress != null)
+                    {
+                        String s1 = inetaddress + ":" + port;
+                        s = s.replaceAll(s1, "");
+                    }
+                    try {
+                        mc.displayGuiScreen(new CSSGuiMainMenu().getGuiScreen());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+        }).start();
     }
 
     public void closeActiveGui() {
