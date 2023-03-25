@@ -31,16 +31,15 @@ public class DBUtils {
         }
     }
 
-    public static void createBankAccount(EntityPlayer p, int rib, String cb_code, String date){
+    public static void createBankAccount(String owner, int account_number, String cb_code, String date){
         try{
             Connection connection = ServerProxy.getDatabaseManager().getWesterLifeDB().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO `bank_account` (`account_number`,`owner`, `RIB`, `cb_code`, `creation_date`) VALUES (?,?,?,?,?)");
-            preparedStatement.setInt(1, getMaxID("account_number", "bank_account"));
-            preparedStatement.setString(2, p.getUniqueID().toString());
-            preparedStatement.setString(3, "FR769770000001" + rib + "F10");
+            preparedStatement.setString(1, account_number + "F");
+            preparedStatement.setString(2, owner);
+            preparedStatement.setString(3, "FR769770000001" + account_number + "F10");
             preparedStatement.setString(4, cb_code);
             preparedStatement.setString(5, date);
-
             preparedStatement.executeUpdate();
             connection.close();
         } catch (SQLException e){
