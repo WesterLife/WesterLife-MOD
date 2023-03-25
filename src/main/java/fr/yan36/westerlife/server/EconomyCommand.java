@@ -37,7 +37,7 @@ public class EconomyCommand extends CommandBase {
                         int rib = random.nextInt(900000) + 100000;
                         LocalDate currentDate = LocalDate.now();
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                        DBUtils.createBankAccount(player.getUniqueID().toString(), rib, String.valueOf(random.nextInt(9000) + 1000), currentDate.format(formatter));
+                        DBUtils.createBankAccount(player.getUniqueID().toString(), rib, String.valueOf(random.nextInt(9000) + 1000), currentDate.format(formatter), true);
                     }
                 }
                 break;
