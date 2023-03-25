@@ -1,8 +1,6 @@
 package fr.yan36.westerlife.client;
 
-import fr.aym.acsguis.api.ACsGuiApi;
 import fr.yan36.westerlife.Main;
-import fr.yan36.westerlife.client.gui.acs.CSSGuiIngameMenu;
 import fr.yan36.westerlife.client.gui.mcef.BrowserScreen;
 import fr.yan36.westerlife.common.utils.list.Warp;
 import net.minecraft.client.Minecraft;
@@ -41,6 +39,10 @@ public class Client {
     public void GuieventHandler(GuiOpenEvent e) {
 
         if (e.getGui() instanceof GuiMainMenu) {
+            e.setCanceled(true);
+            Main.browserScreen = new BrowserScreen("mod://westerlife/main_menu/main.html");
+            Minecraft.getMinecraft().displayGuiScreen(Main.browserScreen);
+            Main.browserScreen.openMenu();
         }
 
         if (e.getGui() instanceof GuiIngameMenu) {
