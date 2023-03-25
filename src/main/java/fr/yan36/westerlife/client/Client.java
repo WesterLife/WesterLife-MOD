@@ -44,9 +44,10 @@ public class Client {
         }
 
         if (e.getGui() instanceof GuiIngameMenu) {
+            e.setCanceled(true);
             Main.browserScreen = new BrowserScreen("mod://westerlife/menu_echap/echap.html");
+            Minecraft.getMinecraft().displayGuiScreen(Main.browserScreen);
             Main.browserScreen.openMenu();
-            e.setGui(Main.browserScreen);
         }
 
         if (e.getGui() == null) {
