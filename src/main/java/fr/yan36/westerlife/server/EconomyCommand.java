@@ -42,7 +42,13 @@ public class EconomyCommand extends CommandBase {
                 }
                 break;
             case 4:
-                //WIP
+                if(args[0].equalsIgnoreCase("eco") && args[1].equalsIgnoreCase("delete")){
+                    if(args[2].equalsIgnoreCase("personnal")){
+                        //Verification du compte -  Account_number Exists - A faire
+                        //Verification du compte -  Account_number is personnal and is yours - A faire
+                        DBUtils.removeRow("bank_account", "account_number", args[3]);
+                    }
+                }
                 break;
             default:
                 help(player);
@@ -55,7 +61,7 @@ public class EconomyCommand extends CommandBase {
         player.sendMessage(new TextComponentString("§6/westerlife eco info <account type> <pseudo/id/uuid/rib/N° de compte> §7: Affiche les informations d'un compte"));
         player.sendMessage(new TextComponentString("§6/westerlife eco info global §7: Affiche les informations globales de l'économie ( solde total etc )")); // En attente
         player.sendMessage(new TextComponentString("§6/westerlife eco create <account type> §7: Crée un compte bancaire"));
-        player.sendMessage(new TextComponentString("§6/westerlife eco delete <account type> <id> §7: Supprime un compte bancaire"));
+        player.sendMessage(new TextComponentString("§6/westerlife eco delete <account type> <account> §7: Supprime un compte bancaire"));
         player.sendMessage(new TextComponentString("§6/westerlife eco set <account type> <account> <parameter> <value> §7: Changer une valeur d'un compte"));
         player.sendMessage(new TextComponentString("§6/westerlife eco addmoney <account type> <account> <value> §7: Ajoute de l'argent à un compte"));
         player.sendMessage(new TextComponentString("§6/westerlife eco removemoney <account type> <account> <value> §7: Retire de l'argent à un compte"));
