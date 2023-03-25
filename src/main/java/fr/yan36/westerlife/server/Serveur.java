@@ -6,6 +6,7 @@ import fr.yan36.westerlife.common.init.ItemInit;
 import fr.yan36.westerlife.common.network.PacketAskToCreateCharacter;
 import fr.yan36.westerlife.common.network.old.PacketOpenGUIAtm;
 import fr.yan36.westerlife.common.network.old.PacketSyncPlayer;
+import fr.yan36.westerlife.server.bdd.DBUtils;
 import fr.yan36.westerlife.server.bdd.MethodesBDD;
 import fr.yan36.westerlife.common.utils.commands.WesterLifeCommand;
 import net.minecraft.block.Block;
@@ -30,7 +31,7 @@ public class Serveur {
     public void onConnectToServer(PlayerEvent.PlayerLoggedInEvent e) {
         boolean devmod = false;
         if(!devmod) {
-            if(!MethodesBDD.getCharacterExists(e.player)){
+            if(!DBUtils.getCharacterExists(e.player)){
                 System.out.println("Nj debug");
                 Main.network.sendTo(new PacketAskToCreateCharacter(), (EntityPlayerMP) e.player);
                 e.player.sendMessage(new TextComponentString("Vous n'avez pas de personnage, veuillez en créer un."));
