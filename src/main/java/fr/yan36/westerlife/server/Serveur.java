@@ -9,6 +9,7 @@ import fr.yan36.westerlife.common.network.old.PacketSyncPlayer;
 import fr.yan36.westerlife.server.bdd.DBUtils;
 import fr.yan36.westerlife.server.bdd.MethodesBDD;
 import fr.yan36.westerlife.common.utils.commands.WesterLifeCommand;
+import fr.yan36.westerlife.server.command.EconomyCommand;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -22,10 +23,6 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 
 
 public class Serveur {
-    @Mod.EventHandler
-    public void onserverStarting(FMLServerStartingEvent event) {
-        event.registerServerCommand(new WesterLifeCommand());
-    }
 
     @SubscribeEvent
     public void onConnectToServer(PlayerEvent.PlayerLoggedInEvent e) {
@@ -35,7 +32,6 @@ public class Serveur {
                 System.out.println("Nj debug");
                 Main.network.sendTo(new PacketAskToCreateCharacter(), (EntityPlayerMP) e.player);
                 e.player.sendMessage(new TextComponentString("Vous n'avez pas de personnage, veuillez en créer un."));
-
             }
         }
     }
