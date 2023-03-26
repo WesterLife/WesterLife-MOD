@@ -67,10 +67,10 @@ public class EconomyCommand extends CommandBase {
                         if(accountFind){
                             player.sendMessage(new TextComponentString("§b============================================="));
                             player.sendMessage(new TextComponentString("§6Informations du compte bancaire n°" + account_number));
-                            player.sendMessage(new TextComponentString("§6Propriétaire : " + DBUtils.getStringInfo("pseudo", "players", "uuid", DBUtils.getStringInfo("owner", "bank_account", "account_number", account_number))));
-                            player.sendMessage(new TextComponentString("§6RIB : " + DBUtils.getStringInfo("RIB", "bank_account", "account_number", account_number)));
-                            player.sendMessage(new TextComponentString("§6Solde : " + DBUtils.getStringInfo("balance", "bank_account", "account_number", account_number)));
-                            player.sendMessage(new TextComponentString("§6Date de création : " + DBUtils.getStringInfo("creation_date", "bank_account", "account_number", account_number)));
+                            player.sendMessage(new TextComponentString("§6Propriétaire : §9" + DBUtils.getStringInfo("pseudo", "players", "uuid", DBUtils.getStringInfo("owner", "bank_account", "account_number", account_number))));
+                            player.sendMessage(new TextComponentString("§6RIB : §9" + DBUtils.getStringInfo("RIB", "bank_account", "account_number", account_number)));
+                            player.sendMessage(new TextComponentString("§6Solde : §9" + DBUtils.getStringInfo("solde", "bank_account", "account_number", account_number)));
+                            player.sendMessage(new TextComponentString("§6Date de création : §9" + DBUtils.getStringInfo("creation_date", "bank_account", "account_number", account_number)));
                             player.sendMessage(new TextComponentString("§b============================================="));
                             break;
                         } else {
