@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
 
@@ -104,7 +105,23 @@ public class DBUtils {
     // Base De Données - Get Info
     //===================================
 
-    public static int getMaxID(String column, String table_name){
+    public static ArrayList getMultipleInfos(String table_name, String column){
+        ArrayList<String> result = new ArrayList<>();
+        try {
+            Connection connection = ServerProxy.getDatabaseManager().getWesterLifeDB().getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT " + column + " FROM " + table_name);
+            preparedStatement.executeQuery();
+            ResultSet rs = preparedStatement.getResultSet();
+            while (rs.next()){
+                result.add(rs.getString(1));
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public static int getMaxOfColumn(String table_name, String column){
         try {
             Connection connection = ServerProxy.getDatabaseManager().getWesterLifeDB().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT MAX(" + column +") FROM " + table_name);
