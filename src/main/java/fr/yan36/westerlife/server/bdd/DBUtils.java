@@ -63,6 +63,7 @@ public class DBUtils {
             if (rs.next()){
                 exists = true;
             }
+            connection.close();
         } catch (SQLException e){
             e.printStackTrace();
         }
@@ -121,7 +122,7 @@ public class DBUtils {
         return result;
     }
 
-    public static int getMaxOfColumn(String table_name, String column){
+    public static int getMaxIntOfColumn(String table_name, String column){
         try {
             Connection connection = ServerProxy.getDatabaseManager().getWesterLifeDB().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT MAX(" + column +") FROM " + table_name);
