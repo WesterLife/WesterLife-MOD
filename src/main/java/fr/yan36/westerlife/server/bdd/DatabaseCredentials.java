@@ -24,7 +24,8 @@ public class DatabaseCredentials {
                 .append(":")
                 .append(port)
                 .append("/")
-                .append(dbName);
+                .append(dbName)
+                .append("?serverTimezone=Europe/Paris");
 
         return sb.toString();
     }
