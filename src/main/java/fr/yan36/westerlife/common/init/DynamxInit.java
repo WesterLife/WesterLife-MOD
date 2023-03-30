@@ -7,9 +7,12 @@ import net.minecraft.block.material.Material;
 import net.minecraft.util.ResourceLocation;
 
 public class DynamxInit {
+
     public static ItemDynamx PistoletRadar;
     public static ItemDynamx Belier;
     public static ItemDynamx Menottes;
+    public static ItemDynamx Taser;
+
     public static BlockSignVillage SignVillage;
     public static BlockLaptop Laptop;
     public static BlockDistributeur Distributeur;
@@ -17,24 +20,31 @@ public class DynamxInit {
     public static BlockBisign doublefeurouge;
     public static BlockTerminalDePaiement TerminalDePaiement;
     public static BlockRadarFixe radarFixe;
-
+    public static BlockRalentisseur ralentisseur;
+    public static BlockBarriereLevante barriereLevante;
 
     public static void init() {
 
+        //Validated items
+        PistoletRadar = (ItemDynamx) new ItemDynamx(Main.MODID, "pistoletradar", new ResourceLocation("westerlife","models/dynamx/items/pistoletradar/pistoletradar.obj")).setMaxStackSize(1);
+        Menottes = (ItemDynamx) new ItemDynamx(Main.MODID, "menottes", new ResourceLocation("westerlife","models/dynamx/items/menottes/menotte.obj")).setMaxStackSize(1);
+        Taser = (ItemDynamx) new ItemDynamx(Main.MODID, "taser", new ResourceLocation("westerlife","models/dynamx/items/taser/taser.obj")).setMaxStackSize(1);
 
-        PistoletRadar = (ItemDynamx) new ItemDynamx(Main.MODID, "pistoletradar", new ResourceLocation("westerlife","models/dynamx/pistoletradar/pistoletradar.obj")).setMaxStackSize(1);
+        //Old items
         Belier = (ItemDynamx) new ItemDynamx(Main.MODID, "belier", new ResourceLocation("westerlife","models/dynamx/belier/belier.obj")).setMaxStackSize(1);
-        Menottes = (ItemDynamx) new ItemDynamx(Main.MODID, "menottes", new ResourceLocation("westerlife","models/dynamx/menottes/menotte.obj")).setMaxStackSize(1);
 
-        Distributeur = new BlockDistributeur(Material.ROCK, Main.MODID, "distributeur", new ResourceLocation("westerlife","models/dynamx/atm/atm.obj"));
+        //Validated blocks
+        Distributeur = new BlockDistributeur(Material.ROCK, Main.MODID, "distributeur", new ResourceLocation("westerlife","models/dynamx/blocks/atm/atm.obj"));
+        TerminalDePaiement = new BlockTerminalDePaiement(Material.ANVIL, Main.MODID, "tdp", new ResourceLocation("westerlife","models/dynamx/blocks/tdp/paiement.obj"));
+        radarFixe = new BlockRadarFixe(Material.ANVIL, Main.MODID, "radar", new ResourceLocation("westerlife","models/dynamx/blocks/radar/radarfixe.obj"));
+        ralentisseur = new BlockRalentisseur(Material.ANVIL, Main.MODID, "ralentisseur", new ResourceLocation("westerlife","models/dynamx/blocks/ralentisseur/ralentisseur.obj"));
+        barriereLevante = new BlockBarriereLevante(Material.ANVIL, Main.MODID, "barrierelevante", new ResourceLocation("westerlife","models/dynamx/blocks/barriere_levante/barrièrelevante.obj"));
+
+        //Old items
         SignVillage = new BlockSignVillage(Material.ANVIL, Main.MODID, "panneauvillage", new ResourceLocation("westerlife","models/dynamx/signvillage/sign.obj"));
         doublefeurouge = new BlockBisign(Material.ANVIL, Main.MODID, "doublefeurouge", new ResourceLocation("westerlife","models/dynamx/bisign/bicolor.obj"));
-//        feu_tricolore = new BlockDynamx(Material.ANVIL, Main.MODID, "feutricolore", "feut/feut.obj");
-
         Laptop = new BlockLaptop(Material.ANVIL, Main.MODID, "laptop", new ResourceLocation("westerlife","models/dynamx/laptop/pc.obj"));
-        TerminalDePaiement = new BlockTerminalDePaiement(Material.ANVIL, Main.MODID, "tdp", new ResourceLocation("westerlife","models/dynamx/tdp/paiement.obj"));
-        radarFixe = new BlockRadarFixe(Material.ANVIL, Main.MODID, "radarfixe", new ResourceLocation("westerlife","models/dynamx/radar/radarfixe.obj"));
-
+        //feu_tricolore = new BlockDynamx(Material.ANVIL, Main.MODID, "feutricolore", "feut/feut.obj");
         //Keypad = new BlockKeypad(Material.ANVIL, Main.MODID, "keypad", "keypad/keypad.obj");
     }
 }
