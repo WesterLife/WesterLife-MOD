@@ -33,6 +33,7 @@ import java.io.IOException;
 @DynamXAddon(modid = Main.MODID, name = Main.NAME, version = Main.VERSION)
 public class Main {
 
+    //Util variables
     public static final String MODID = "westerlife";
     public static final String NAME = "WesterLife Mod";
     public static final String VERSION = "1.5";
@@ -63,6 +64,7 @@ public class Main {
         logger = event.getModLog();
         Network.init();
         MinecraftForge.EVENT_BUS.register(new RegistryHandler());
+            //warn: Discord RPC must be reimplemented
             if(event.getSide().isClient()) {
                 try {
                     //new Discord().start();
@@ -80,7 +82,6 @@ public class Main {
 
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
-        //MinecraftForge.EVENT_BUS.register(BrowserHud.class);
     }
 
     public static final CreativeTabs WESTER_TAB = new WesterTab("westertab");
