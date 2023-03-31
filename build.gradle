@@ -43,7 +43,7 @@ tasks.withType(JavaCompile) {
 
 sourceSets { main { output.resourcesDir = output.classesDir } }
 
-version = '1.5'
+version = '1.5.2'
 group = 'fr.yan36.westerlife' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'westerlife'
 
@@ -89,7 +89,6 @@ minecraft {
 
 
     dependencies {
-
 //        testCompile group: 'junit', name: 'junit', version: '4.12'
         minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2860'
         compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.21'
@@ -126,13 +125,12 @@ minecraft {
 
             ])
         }
-//        from {
-//            configurations.compile
-//                    .filter { it.name == 'java-discord-rpc-2.0.1.jar' || it.name == 'mcef-1.12.2-0.9-api.jar' }
-//                    .collect { it.isDirectory() ? it : zipTree(it) }
-//        }
+        from {
+            configurations.compile
+                    .filter { it.name == 'java-discord-rpc-2.0.1.jar' }
+                    .collect { it.isDirectory() ? it : zipTree(it) }
+        }
     }
-
 }
 
 
