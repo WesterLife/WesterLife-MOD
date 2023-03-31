@@ -1,7 +1,8 @@
 package fr.yan36.westerlife;
 
 import fr.dynamx.api.contentpack.DynamXAddon;
-import fr.yan36.westerlife.client.gui.mcef.*;
+import fr.yan36.westerlife.client.gui.mcef.BrowserHud;
+import fr.yan36.westerlife.client.gui.mcef.BrowserScreen;
 import fr.yan36.westerlife.client.utils.creativetabs.WesterTab;
 import fr.yan36.westerlife.common.CommonProxy;
 import fr.yan36.westerlife.common.init.DynamxInit;
