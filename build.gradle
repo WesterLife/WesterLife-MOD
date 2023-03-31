@@ -99,8 +99,8 @@ minecraft {
         compile fileTree(dir: 'libs', include: '*.jar')
         //implementation "curse.maven:lizardon-mcef-577541:3641377"
         compile 'club.minnced:java-discord-rpc:2.0.1'
-        compile 'com.zaxxer:HikariCP:4.0.3'
-        compile 'org.slf4j:slf4j-api:1.7.3'
+        compile 'com.zaxxer:HikariCP:3.1.0'
+        compile 'org.slf4j:slf4j-api:1.7.25'
         compile 'mysql:mysql-connector-java:8.0.19'
         //implementation 'com.sedmelluq:lavaplayer:1.3.78'
         //compile fg.deobf('curse.maven:obfuscate-289380:2912288')
@@ -128,7 +128,7 @@ minecraft {
         }
         from {
             configurations.compile
-                    .filter { it.name == 'java-discord-rpc-2.0.1.jar' || it.name == 'mcef-1.12.2-1.32.jar' || it.name == 'HikariCP-4.0.3.jar' || it.name == 'slf4j-api-1.7.3.jar' || 'mysql-connector-java-8.0.19.jar' }
+                    .filter { it.name == 'java-discord-rpc-2.0.1.jar' || it.name == 'mcef-1.12.2-1.32.jar' || it.name == 'HikariCP-3.1.0.jar' || it.name == 'slf4j-api-1.7.25.jar' || it.name == 'mysql-connector-java-8.0.19.jar' }
                     .collect { it.isDirectory() ? it : zipTree(it) }
         }
     }
