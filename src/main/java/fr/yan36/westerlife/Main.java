@@ -7,6 +7,7 @@ import fr.yan36.westerlife.common.CommonProxy;
 import fr.yan36.westerlife.common.init.DynamxInit;
 import fr.yan36.westerlife.common.init.Network;
 import fr.yan36.westerlife.common.registry.RegistryHandler;
+import fr.yan36.westerlife.common.utils.discord.Discord;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -36,7 +37,7 @@ public class Main {
     //Util variables
     public static final String MODID = "westerlife";
     public static final String NAME = "WesterLife Mod";
-    public static final String VERSION = "1.5";
+    public static final String VERSION = "1.5.2";
 
     @Mod.Instance(Main.MODID)
     public static Main instance;
@@ -67,7 +68,7 @@ public class Main {
             //warn: Discord RPC must be reimplemented
             if(event.getSide().isClient()) {
                 try {
-                    //new Discord().start();
+                    new Discord().start();
                 } catch (Exception e) {
                     e.printStackTrace();
             }
