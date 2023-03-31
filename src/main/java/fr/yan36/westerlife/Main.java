@@ -69,7 +69,7 @@ public class Main {
             //warn: Discord RPC must be reimplemented
             if(event.getSide().isClient()) {
                 try {
-                    new Discord().start();
+                    //new Discord().start();
                 } catch (Exception e) {
                     e.printStackTrace();
             }
