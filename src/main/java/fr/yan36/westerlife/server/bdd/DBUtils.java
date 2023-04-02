@@ -116,6 +116,7 @@ public class DBUtils {
             while (rs.next()){
                 result.add(rs.getString(1));
             }
+            connection.close();
         } catch (SQLException e){
             e.printStackTrace();
         }
