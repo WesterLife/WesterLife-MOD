@@ -262,25 +262,67 @@ public class WesterLifeCommand extends CommandBase {
                     completions.add("removemoney");
                     completions.add("set");
                     completions.add("move");
+                } else if(args[0].equalsIgnoreCase("manageperso")){
+                    completions.add("help");
+                    completions.add("set");
+                    completions.add("get");
+                    completions.add("delete");
                 }
                 break;
             case 3:
-                if(args[0].equalsIgnoreCase("eco") && args[1].equalsIgnoreCase("info")){
-                    completions.add("global");
-                    completions.addAll(DBUtils.getMultipleInfos("bank_account", "account_number"));
-                } else if(args[0].equalsIgnoreCase("eco") && args[1].equalsIgnoreCase("create")){
-                    completions.add("personal");
-                    completions.add("entreprise");
-                } else if(args[0].equalsIgnoreCase("eco") && args[1].equalsIgnoreCase("delete")){
-                    completions.addAll(DBUtils.getMultipleInfos("bank_account", "account_number"));
-                } else if(args[0].equalsIgnoreCase("eco") && args[1].equalsIgnoreCase("addmoney")){
-                    completions.addAll(DBUtils.getMultipleInfos("bank_account", "account_number"));
-                } else if(args[0].equalsIgnoreCase("eco") && args[1].equalsIgnoreCase("removemoney")){
-                    completions.addAll(DBUtils.getMultipleInfos("bank_account", "account_number"));
-                } else if(args[0].equalsIgnoreCase("eco") && args[1].equalsIgnoreCase("set")){
-                    completions.addAll(DBUtils.getMultipleInfos("bank_account", "account_number"));
-                } else if(args[0].equalsIgnoreCase("eco") && args[1].equalsIgnoreCase("move")){
-                    completions.addAll(DBUtils.getMultipleInfos("bank_account", "account_number"));
+                if(args[0].equalsIgnoreCase("eco")){
+                    if(args[1].equalsIgnoreCase("info")){
+                        completions.add("global");
+                        completions.addAll(DBUtils.getMultipleInfos("bank_account", "account_number"));
+                    } else if(args[1].equalsIgnoreCase("create")){
+                        completions.add("personal");
+                        completions.add("entreprise");
+                    } else if(args[1].equalsIgnoreCase("delete")){
+                        completions.addAll(DBUtils.getMultipleInfos("bank_account", "account_number"));
+                    } else if(args[1].equalsIgnoreCase("addmoney")){
+                        completions.addAll(DBUtils.getMultipleInfos("bank_account", "account_number"));
+                    } else if(args[1].equalsIgnoreCase("removemoney")){
+                        completions.addAll(DBUtils.getMultipleInfos("bank_account", "account_number"));
+                    } else if(args[1].equalsIgnoreCase("set")){
+                        completions.addAll(DBUtils.getMultipleInfos("bank_account", "account_number"));
+                    } else if(args[1].equalsIgnoreCase("move")){
+                        completions.addAll(DBUtils.getMultipleInfos("bank_account", "account_number"));
+                    }
+                }
+                if(args[0].equalsIgnoreCase("manageperso")){
+                    if(args[1].equalsIgnoreCase("delete")){
+                        completions.addAll(DBUtils.getMultipleInfos("players", "pseudo"));
+                    } else if(args[1].equalsIgnoreCase("set")){
+                        completions.addAll(DBUtils.getMultipleInfos("players", "pseudo"));
+                    } else if(args[1].equalsIgnoreCase("get")){
+                        completions.addAll(DBUtils.getMultipleInfos("players", "pseudo"));
+                    }
+                }
+                break;
+            case 4:
+                if(args[0].equalsIgnoreCase("eco")){
+                    if(args[1].equalsIgnoreCase("set")){
+                        completions.add("solde");
+                        completions.add("account_number");
+                        completions.add("RIB");
+                        completions.add("cb_code");
+                        completions.add("owner");
+                        completions.add("creation_date");
+                    } else if(args[1].equalsIgnoreCase("move")){
+                        completions.addAll(DBUtils.getMultipleInfos("bank_account", "account_number"));
+                    }
+                } else if (args[0].equalsIgnoreCase("manageperso")){
+                    if(args[1].equalsIgnoreCase("set") || args[1].equalsIgnoreCase("get")){
+                        completions.add("id");
+                        completions.add("pseudo");
+                        completions.add("uuid");
+                        completions.add("familyname");
+                        completions.add("firstnames");
+                        completions.add("birthdate");
+                        completions.add("birthplace");
+                        completions.add("nationality");
+                        completions.add("sex");
+                    }
                 }
                 break;
         }
