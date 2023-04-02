@@ -58,7 +58,7 @@ public class PacketCreateCharacter implements IMessage{
         public IMessage onMessage(PacketCreateCharacter m, MessageContext ctx) {
             EntityPlayer e = (EntityPlayer) ctx.getServerHandler().player.world.getEntityByID(m.player);
             if(Side.SERVER.isServer()) {
-                if (!MethodesBDD.getCharacterExists(e)) {
+                if (!DBUtils.getCharacterExists(e)) {
                     DBUtils.createCharacter(e, m.familyname, m.firstnames, m.birthdate, m.birthplace, m.nationality, m.sex);
                     e.sendMessage(new TextComponentString("§cWesterLife §8» §aVotre personnage a bien été créé ! Bon jeu !"));
                 }

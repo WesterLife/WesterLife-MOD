@@ -8,6 +8,8 @@ import fr.yan36.westerlife.common.CommonProxy;
 import fr.yan36.westerlife.common.init.DynamxInit;
 import fr.yan36.westerlife.common.init.Network;
 import fr.yan36.westerlife.common.registry.RegistryHandler;
+import fr.yan36.westerlife.common.utils.commands.WesterLifeCommand;
+import fr.yan36.westerlife.server.command.EconomyCommand;
 import fr.yan36.westerlife.common.utils.discord.Discord;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.MinecraftForge;
@@ -16,6 +18,7 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -59,6 +62,13 @@ public class Main {
     public static CommonProxy proxy;
 
     public static Logger logger;
+
+    @SideOnly(Side.SERVER)
+    @Mod.EventHandler
+    public void onserverStarting(FMLServerStartingEvent event) {
+        event.registerServerCommand(new WesterLifeCommand());
+        event.registerServerCommand(new EconomyCommand());
+    }
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) throws IOException {
