@@ -244,7 +244,7 @@ public class EconomyCommand extends CommandBase {
         player.sendMessage(new TextComponentString("§6/westerlife eco addmoney <account> <value> §7: Ajoute de l'argent à un compte")); // Fait
         player.sendMessage(new TextComponentString("§6/westerlife eco removemoney <account> <value> §7: Retire de l'argent à un compte")); // Fait
         player.sendMessage(new TextComponentString("§6/westerlife eco givecard <account> §7: Donner la carte du compte bancaire")); // Fait
-        player.sendMessage(new TextComponentString("§6/westerlife eco move <from account> <to account> <montant> §7: Donner la carte du compte bancaire")); // En attente
+        player.sendMessage(new TextComponentString("§6/westerlife eco move <from account> <to account> <montant> §7: Donner la carte du compte bancaire")); // Fait
         player.sendMessage(new TextComponentString("§b============================================="));
     }
 }
