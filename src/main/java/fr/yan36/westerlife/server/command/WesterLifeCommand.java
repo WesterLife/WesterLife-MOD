@@ -6,22 +6,19 @@ import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 
 import javax.annotation.Nullable;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class EconomyCommand extends CommandBase {
+public class WesterLifeCommand extends CommandBase {
     @Override
     public String getName() {
         return "westerlife";
@@ -36,10 +33,20 @@ public class EconomyCommand extends CommandBase {
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
         EntityPlayer player = (EntityPlayer) sender;
         String account_number = "";
+        if(args.length >= 1){
+            // Commande sur l'économie
+            if(args[0].equalsIgnoreCase("eco")){
+
+            } // Commande sur les personnages
+            else if(args[0].equalsIgnoreCase("manageperso")){
+
+            }
+        } else {
+            help(player, "all");
+        }
         switch (args.length){
-            case 0:
             case 1:
-                help(player);
+                help(player, args[0]);
                 break;
             case 3:
                 if(args[0].equalsIgnoreCase("eco") && args[1].equalsIgnoreCase("info")){
@@ -154,7 +161,7 @@ public class EconomyCommand extends CommandBase {
                         break;
                     }
                 }
-                help(player);
+                help(player, args[0]);
                 break;
             case 4:
                 if(args[0].equalsIgnoreCase("eco") && args[1].equalsIgnoreCase("addmoney")){
@@ -244,6 +251,7 @@ public class EconomyCommand extends CommandBase {
         switch (args.length){
             case 1:
                 completions.add("eco");
+                completions.add("manageperso");
                 break;
             case 2:
                 if(args[0].equalsIgnoreCase("eco")){
@@ -281,18 +289,31 @@ public class EconomyCommand extends CommandBase {
         return completions;
     }
 
-    public void help(EntityPlayer player){
-        player.sendMessage(new TextComponentString("§b============================================="));
-        player.sendMessage(new TextComponentString("§6/westerlife eco help §7: Affiche l'aide")); // Fait
-        player.sendMessage(new TextComponentString("§6/westerlife eco info <pseudo/uuid/rib/N° de compte> §7: Affiche les informations d'un compte")); // Fait
-        player.sendMessage(new TextComponentString("§6/westerlife eco info global §7: Affiche les informations globales de l'économie ( solde total etc )")); // Fait
-        player.sendMessage(new TextComponentString("§6/westerlife eco create <account type> §7: Crée un compte bancaire")); // Fait
-        player.sendMessage(new TextComponentString("§6/westerlife eco delete <account> §7: Supprime un compte bancaire")); // Fait
-        player.sendMessage(new TextComponentString("§6/westerlife eco set <account> <parameter> <value> §7: Changer une valeur d'un compte")); // Fait
-        player.sendMessage(new TextComponentString("§6/westerlife eco addmoney <account> <value> §7: Ajoute de l'argent à un compte")); // Fait
-        player.sendMessage(new TextComponentString("§6/westerlife eco removemoney <account> <value> §7: Retire de l'argent à un compte")); // Fait
-        player.sendMessage(new TextComponentString("§6/westerlife eco givecard <account> §7: Donner la carte du compte bancaire")); // Fait
-        player.sendMessage(new TextComponentString("§6/westerlife eco move <from account> <to account> <montant> §7: Donner la carte du compte bancaire")); // Fait
-        player.sendMessage(new TextComponentString("§b============================================="));
+    public void help(EntityPlayer player, String args){
+        if (args.equalsIgnoreCase("all")){
+            player.sendMessage(new TextComponentString("§b============================================="));
+            player.sendMessage(new TextComponentString("§6/westerlife eco help §7: Commande pour gérer l'économie")); // Fait
+            player.sendMessage(new TextComponentString("§6/westerlife manageperso help §7: Commande pour gérer les personnages")); // Fait
+            player.sendMessage(new TextComponentString("§b============================================="));
+        } else if(args.equalsIgnoreCase("eco")) {
+            player.sendMessage(new TextComponentString("§b============================================="));
+            player.sendMessage(new TextComponentString("§6/westerlife eco help §7: Affiche l'aide")); // Fait
+            player.sendMessage(new TextComponentString("§6/westerlife eco info <pseudo/uuid/rib/N° de compte> §7: Affiche les informations d'un compte")); // Fait
+            player.sendMessage(new TextComponentString("§6/westerlife eco info global §7: Affiche les informations globales de l'économie ( solde total etc )")); // Fait
+            player.sendMessage(new TextComponentString("§6/westerlife eco create <account type> §7: Crée un compte bancaire")); // Fait
+            player.sendMessage(new TextComponentString("§6/westerlife eco delete <account> §7: Supprime un compte bancaire")); // Fait
+            player.sendMessage(new TextComponentString("§6/westerlife eco set <account> <parameter> <value> §7: Changer une valeur d'un compte")); // Fait
+            player.sendMessage(new TextComponentString("§6/westerlife eco addmoney <account> <value> §7: Ajoute de l'argent à un compte")); // Fait
+            player.sendMessage(new TextComponentString("§6/westerlife eco removemoney <account> <value> §7: Retire de l'argent à un compte")); // Fait
+            player.sendMessage(new TextComponentString("§6/westerlife eco givecard <account> §7: Donner la carte du compte bancaire")); // Fait
+            player.sendMessage(new TextComponentString("§6/westerlife eco move <from account> <to account> <montant> §7: Donner la carte du compte bancaire")); // Fait
+            player.sendMessage(new TextComponentString("§b============================================="));
+        } else if (args.equalsIgnoreCase("manageperso")){
+            player.sendMessage(new TextComponentString("§b============================================="));
+            player.sendMessage(new TextComponentString("§b= §f/westerlife manageperso set <player> <parameters> <value> §b- §fSet un paramètre d'un joueur"));
+            player.sendMessage(new TextComponentString("§b= §f/westerlife manageperso get <player> <parameters> §b- §fRécupère un paramètre d'un joueur"));
+            player.sendMessage(new TextComponentString("§b= §f/westerlife manageperso delete <player> §b- §fSupprime un joueur"));
+            player.sendMessage(new TextComponentString("§b============================================="));
+        }
     }
 }
