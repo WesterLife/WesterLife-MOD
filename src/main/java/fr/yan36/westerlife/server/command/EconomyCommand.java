@@ -10,11 +10,15 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 
+import javax.annotation.Nullable;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class EconomyCommand extends CommandBase {
@@ -111,7 +115,7 @@ public class EconomyCommand extends CommandBase {
                         }
                     }
                 } else if(args[0].equalsIgnoreCase("eco") && args[1].equalsIgnoreCase("create")){
-                    if(args[2].equalsIgnoreCase("personnal")){
+                    if(args[2].equalsIgnoreCase("personal")){
                         Random random = new Random();
                         account_number = String.valueOf(random.nextInt(900000) + 100000);
                         while (DBUtils.getMultipleInfos("bank_account", "account_number").contains(account_number)){
@@ -231,6 +235,50 @@ public class EconomyCommand extends CommandBase {
                 }
                 break;
         }
+    }
+
+    @Override
+    public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
+        List<String> completions = new ArrayList<String>();
+
+        switch (args.length){
+            case 1:
+                completions.add("eco");
+                break;
+            case 2:
+                if(args[0].equalsIgnoreCase("eco")){
+                    completions.add("help");
+                    completions.add("info");
+                    completions.add("create");
+                    completions.add("delete");
+                    completions.add("addmoney");
+                    completions.add("removemoney");
+                    completions.add("set");
+                    completions.add("move");
+                }
+                break;
+            case 3:
+                if(args[0].equalsIgnoreCase("eco") && args[1].equalsIgnoreCase("info")){
+                    completions.add("global");
+                    completions.addAll(DBUtils.getMultipleInfos("bank_account", "account_number"));
+                } else if(args[0].equalsIgnoreCase("eco") && args[1].equalsIgnoreCase("create")){
+                    completions.add("personal");
+                    completions.add("entreprise");
+                } else if(args[0].equalsIgnoreCase("eco") && args[1].equalsIgnoreCase("delete")){
+                    completions.addAll(DBUtils.getMultipleInfos("bank_account", "account_number"));
+                } else if(args[0].equalsIgnoreCase("eco") && args[1].equalsIgnoreCase("addmoney")){
+                    completions.addAll(DBUtils.getMultipleInfos("bank_account", "account_number"));
+                } else if(args[0].equalsIgnoreCase("eco") && args[1].equalsIgnoreCase("removemoney")){
+                    completions.addAll(DBUtils.getMultipleInfos("bank_account", "account_number"));
+                } else if(args[0].equalsIgnoreCase("eco") && args[1].equalsIgnoreCase("set")){
+                    completions.addAll(DBUtils.getMultipleInfos("bank_account", "account_number"));
+                } else if(args[0].equalsIgnoreCase("eco") && args[1].equalsIgnoreCase("move")){
+                    completions.addAll(DBUtils.getMultipleInfos("bank_account", "account_number"));
+                }
+                break;
+        }
+
+        return completions;
     }
 
     public void help(EntityPlayer player){
