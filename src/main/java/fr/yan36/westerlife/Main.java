@@ -1,7 +1,8 @@
 package fr.yan36.westerlife;
 
 import fr.dynamx.api.contentpack.DynamXAddon;
-import fr.yan36.westerlife.client.gui.mcef.*;
+import fr.yan36.westerlife.client.gui.mcef.BrowserHud;
+import fr.yan36.westerlife.client.gui.mcef.BrowserScreen;
 import fr.yan36.westerlife.client.utils.creativetabs.WesterTab;
 import fr.yan36.westerlife.common.CommonProxy;
 import fr.yan36.westerlife.common.init.DynamxInit;
@@ -9,6 +10,7 @@ import fr.yan36.westerlife.common.init.Network;
 import fr.yan36.westerlife.common.registry.RegistryHandler;
 import fr.yan36.westerlife.common.utils.commands.WesterLifeCommand;
 import fr.yan36.westerlife.server.command.EconomyCommand;
+import fr.yan36.westerlife.common.utils.discord.Discord;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -36,9 +38,10 @@ import java.io.IOException;
 @DynamXAddon(modid = Main.MODID, name = Main.NAME, version = Main.VERSION)
 public class Main {
 
+    //Util variables
     public static final String MODID = "westerlife";
     public static final String NAME = "WesterLife Mod";
-    public static final String VERSION = "1.5";
+    public static final String VERSION = "1.5.2";
 
     @Mod.Instance(Main.MODID)
     public static Main instance;
@@ -73,6 +76,7 @@ public class Main {
         logger = event.getModLog();
         Network.init();
         MinecraftForge.EVENT_BUS.register(new RegistryHandler());
+            //warn: Discord RPC must be reimplemented
             if(event.getSide().isClient()) {
                 try {
                     //new Discord().start();
@@ -90,7 +94,6 @@ public class Main {
 
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
-        //MinecraftForge.EVENT_BUS.register(BrowserHud.class);
     }
 
     public static final CreativeTabs WESTER_TAB = new WesterTab("westertab");

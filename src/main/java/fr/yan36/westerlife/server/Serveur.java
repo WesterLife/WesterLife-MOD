@@ -31,7 +31,7 @@ public class Serveur {
             if(!DBUtils.getCharacterExists(e.player)){
                 System.out.println("Nj debug");
                 Main.network.sendTo(new PacketAskToCreateCharacter(), (EntityPlayerMP) e.player);
-                e.player.sendMessage(new TextComponentString("Vous n'avez pas de personnage, veuillez en créer un."));
+                e.player.sendMessage(new TextComponentString("§cVous n'avez pas de personnage, veuillez en créer un."));
             }
         }
     }

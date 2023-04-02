@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Menu de Pause</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+</head>
+<body>
+    <div class="buttons">
+        <button class="button" onclick="openSettings()">
+            <i class="ri-settings-3-line button-img"></i>
+            <p>Paramètres</p>
+        </button>
+        <button class="button" onclick="play()">
+            <i class="ri-play-fill button-img"></i>
+            <p>Se connecter</p>
+        </button>
+        <button class="button" onclick="leaveGame()">
+            <i class="ri-logout-box-r-line button-img"></i>
+            <p>Quitter le jeu</p>
+        </button>
+    </div>
+</body>
+<style>
+    body {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        overflow: hidden;
+        background: linear-gradient(133.76deg, rgba(46, 54, 74, 0.8) 0%, rgba(55, 60, 73, 0.8) 97.92%), url(background.png);
+    }
+    * {
+        font-family: 'Montserrat', sans-serif;
+    }
+    .text {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .buttons {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        padding: 0px;
+        gap: 200px;
+    }
+    h1 {
+        color: #F6E7D8;
+        font-size: 32px;
+        text-align: center;
+        margin-bottom: 0px;
+    }
+    p {
+        background: linear-gradient(180deg, #F14902 0%, #F27841 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-fill-color: transparent;
+        font-size: 32px;
+        text-align: center;
+    }
+    .button {
+        background-color: #FFFFFF;
+        border: none;
+        border-radius: 15px;
+        color: #2E364A;
+        text-color: linear-gradient(180deg, #F14902 0%, #F27841 100%);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 15px 50px;
+        gap: 25px;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 700;
+        height: 100%;
+        padding: 125px 50px;
+    }
+    .button:hover {
+        background-color: #F0F0F0;
+    }
+    .button:focus {
+        outline:none;
+    }
+    .button-text, button-img {
+        color: #2E364A;
+        font-size: 16px;
+    }
+    .button-img {
+        font-size: 125px;
+        font-weight: 500;
+        background: linear-gradient(180deg, #F14902 0%, #F27841 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-fill-color: transparent;
+    }
+    a {
+        text-decoration: none;
+    }
+</style>
+<script>
+    function play() {
+        window.mcefQuery({
+            "request": "$play:",
+            "persistent": false
+        });
+    }
+
+    function leaveGame() {
+        window.mcefQuery({
+            "request": "$leaveGame",
+            "persistent": false
+        });
+    }
+
+    function openSettings() {
+        window.mcefQuery({
+            "request": "$openSettings2",
+            "persistent": false
+        });
+    }
+</script>
+</html>
