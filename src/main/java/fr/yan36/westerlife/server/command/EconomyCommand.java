@@ -12,6 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
@@ -39,7 +40,34 @@ public class EconomyCommand extends CommandBase {
             case 3:
                 if(args[0].equalsIgnoreCase("eco") && args[1].equalsIgnoreCase("info")){
                     if(args[2].equalsIgnoreCase("global")){
-                        player.sendMessage(new TextComponentString("§cFonctionnalité en cours de développement !"));
+                        int soldeGlobal = 0;
+                        int totalAccount = 0;
+                        int totalPersonnalAccount = 0;
+                        int totalEntrepriseAccount = 0;
+                        for (Object individualSolde : DBUtils.getMultipleInfos("bank_account", "solde")){
+                            try {
+                                soldeGlobal += Integer.parseInt(individualSolde.toString());
+                            } catch (NumberFormatException e){
+                                e.printStackTrace();
+                                break;
+                            }
+                        }
+                        for (Object individualAccount : DBUtils.getMultipleInfos("bank_account", "account_number")){
+                            totalAccount++;
+                            if(DBUtils.getStringInfo("RIB", "bank_account", "account_number", individualAccount.toString()).contains("F10")){
+                                totalPersonnalAccount++;
+                            } else {
+                                totalEntrepriseAccount++;
+                            }
+                        }
+                        player.sendMessage(new TextComponentString("§b============================================="));
+                        player.sendMessage(new TextComponentString("§6Informations globales de l'économie"));
+                        player.sendMessage(new TextComponentString("§6Solde global : §9" + soldeGlobal));
+                        player.sendMessage(new TextComponentString("§6Nombre de comptes : §9" + totalAccount));
+                        player.sendMessage(new TextComponentString("§6Nombre de comptes personnels : §9" + totalPersonnalAccount));
+                        player.sendMessage(new TextComponentString("§6Nombre de comptes entreprises : §9" + totalEntrepriseAccount));
+                        player.sendMessage(new TextComponentString("§6Moyenne de solde par compte : §9" + soldeGlobal / totalAccount));
+                        player.sendMessage(new TextComponentString("§b============================================="));
                         break;
                     } else {
                         boolean accountFind = false;
@@ -130,7 +158,7 @@ public class EconomyCommand extends CommandBase {
                         try {
                             int toAdd = Integer.parseInt(args[3]);
                             int solde = Integer.parseInt(DBUtils.getStringInfo("solde", "bank_account", "account_number", args[2]));
-                            DBUtils.setInfo("bank_account", "solde", String.valueOf(solde + toAdd), "account_number", args[2]);
+                            DBUtils.setInfo("bank_account", "account_number", args[2], "solde", String.valueOf(solde + toAdd));
                             player.sendMessage(new TextComponentString("§aVous avez ajouté §6" + toAdd + "§a au compte n°" + args[2]));
                             break;
                         } catch (NumberFormatException e){
@@ -150,7 +178,7 @@ public class EconomyCommand extends CommandBase {
                                 player.sendMessage(new TextComponentString("§cLe compte n°" + args[2] + " n'a pas assez d'argent !"));
                                 break;
                             } else {
-                                DBUtils.setInfo("bank_account", "solde", String.valueOf(solde - toRemove), "account_number", args[2]);
+                                DBUtils.setInfo("bank_account", "account_number", args[2], "solde", String.valueOf(solde - toRemove));
                                 player.sendMessage(new TextComponentString("§aVous avez retiré §6" + toRemove + "§a au compte n°" + args[2]));
                                 break;
                             }
@@ -164,6 +192,44 @@ public class EconomyCommand extends CommandBase {
                     }
                 }
                 break;
+            case 5:
+                if(args[0].equalsIgnoreCase("eco") && args[1].equalsIgnoreCase("set")){
+                    if(DBUtils.getMultipleInfos("bank_account", "account_number").contains(args[2])){
+                        try{
+                            DBUtils.setInfo("bank_account", args[3], args[4], "account_number", args[2]);
+                        } catch (Exception e){
+                            player.sendMessage(new TextComponentString("§cErreur !"));
+                            break;
+                        }
+                    } else {
+                        player.sendMessage(new TextComponentString("§cCe compte n'existe pas !"));
+                        break;
+                    }
+                } else if (args[0].equalsIgnoreCase("eco") && args[1].equalsIgnoreCase("move")){
+                    if(DBUtils.getMultipleInfos("bank_account", "account_number").contains(args[2]) && DBUtils.getMultipleInfos("bank_account", "account_number").contains(args[3])){
+                        try {
+                            int toMove = Integer.parseInt(args[4]);
+                            int solde = Integer.parseInt(DBUtils.getStringInfo("solde", "bank_account", "account_number", args[2]));
+                            if(solde - toMove < 0){
+                                player.sendMessage(new TextComponentString("§cLe compte n°" + args[2] + " n'a pas assez d'argent !"));
+                                break;
+                            } else {
+                                DBUtils.setInfo("bank_account", "account_number", args[2], "solde", String.valueOf(solde - toMove));
+                                int solde2 = Integer.parseInt(DBUtils.getStringInfo("solde", "bank_account", "account_number", args[3]));
+                                DBUtils.setInfo("bank_account", "account_number", args[3], "solde", String.valueOf(solde2 + toMove));
+                                player.sendMessage(new TextComponentString("§aVous avez déplacé §6" + toMove + "§a du compte n°" + args[2] + " au compte n°" + args[3]));
+                                break;
+                            }
+                        } catch (NumberFormatException e){
+                            player.sendMessage(new TextComponentString("§cLe montant doit être un nombre !"));
+                            break;
+                        }
+                    } else {
+                        player.sendMessage(new TextComponentString("§cUn des comptes n'existe pas !"));
+                        break;
+                    }
+                }
+                break;
         }
     }
 
@@ -171,13 +237,14 @@ public class EconomyCommand extends CommandBase {
         player.sendMessage(new TextComponentString("§b============================================="));
         player.sendMessage(new TextComponentString("§6/westerlife eco help §7: Affiche l'aide")); // Fait
         player.sendMessage(new TextComponentString("§6/westerlife eco info <pseudo/uuid/rib/N° de compte> §7: Affiche les informations d'un compte")); // Fait
-        player.sendMessage(new TextComponentString("§6/westerlife eco info global §7: Affiche les informations globales de l'économie ( solde total etc )")); // En attente
+        player.sendMessage(new TextComponentString("§6/westerlife eco info global §7: Affiche les informations globales de l'économie ( solde total etc )")); // Fait
         player.sendMessage(new TextComponentString("§6/westerlife eco create <account type> §7: Crée un compte bancaire")); // Fait
         player.sendMessage(new TextComponentString("§6/westerlife eco delete <account> §7: Supprime un compte bancaire")); // Fait
-        player.sendMessage(new TextComponentString("§6/westerlife eco set <account> <parameter> <value> §7: Changer une valeur d'un compte"));
+        player.sendMessage(new TextComponentString("§6/westerlife eco set <account> <parameter> <value> §7: Changer une valeur d'un compte")); // Fait
         player.sendMessage(new TextComponentString("§6/westerlife eco addmoney <account> <value> §7: Ajoute de l'argent à un compte")); // Fait
         player.sendMessage(new TextComponentString("§6/westerlife eco removemoney <account> <value> §7: Retire de l'argent à un compte")); // Fait
         player.sendMessage(new TextComponentString("§6/westerlife eco givecard <account> §7: Donner la carte du compte bancaire")); // Fait
+        player.sendMessage(new TextComponentString("§6/westerlife eco move <from account> <to account> <montant> §7: Donner la carte du compte bancaire")); // En attente
         player.sendMessage(new TextComponentString("§b============================================="));
     }
 }
