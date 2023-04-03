@@ -236,7 +236,48 @@ public class WesterLifeCommand extends CommandBase {
                 }
             } // Commande sur les personnages
             else if(args[0].equalsIgnoreCase("manageperso")){
-
+                switch (args.length){
+                    case 1:
+                        help(player, args[0]);
+                        break;
+                    case 2:
+                        if(args[1].equalsIgnoreCase("help")){
+                            help(player, args[0]);
+                            break;
+                        } else if(args[1].equalsIgnoreCase("set")){
+                            player.sendMessage(new TextComponentString("§cVous devez préciser un joueur !"));
+                            break;
+                        } else if(args[1].equalsIgnoreCase("get")){
+                            player.sendMessage(new TextComponentString("§cVous devez préciser un joueur !"));
+                            break;
+                        } else if (args[1].equalsIgnoreCase("delete")){
+                            player.sendMessage(new TextComponentString("§cVous devez préciser un joueur !"));
+                            break;
+                        }
+                        break;
+                    case 3:
+                        if(args[1].equalsIgnoreCase("set")){
+                            if(DBUtils.getMultipleInfos("player", "pseudo").contains(args[2])){
+                                player.sendMessage(new TextComponentString("§cVous devez préciser un argument !"));
+                            } else {
+                                player.sendMessage(new TextComponentString("§cCe joueur n'a pas de personnage !"));
+                            }
+                            break;
+                        } else if(args[1].equalsIgnoreCase("get")){
+                            if(DBUtils.getMultipleInfos("player", "pseudo").contains(args[2])) {
+                                player.sendMessage(new TextComponentString("§cVous devez préciser un argument !"));
+                            } else {
+                                player.sendMessage(new TextComponentString("§cCe joueur n'a pas de personnage !"));
+                            }
+                            break;
+                        } else if (args[1].equalsIgnoreCase("delete")){
+                            if(DBUtils.getMultipleInfos("player", "uuid").contains(args[2])){
+                                player.sendMessage(new TextComponentString("§aVous avez supprimé le personnage du joueur " + args[2]));
+                                break;
+                            }
+                        }
+                        break;
+                }
             }
         } else {
             help(player, "all");
