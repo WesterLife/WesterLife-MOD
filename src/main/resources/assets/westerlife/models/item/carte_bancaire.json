@@ -1,6 +1,6 @@
 {
 	"parent": "item/generated",
 	"textures": {
-		"layer0": "westerlife:items/cb"
+		"layer0": "westerlife:items/carte_bancaire"
 	}
 }
