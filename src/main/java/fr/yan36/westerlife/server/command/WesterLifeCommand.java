@@ -1,22 +1,26 @@
 package fr.yan36.westerlife.server.command;
 
+import com.mojang.authlib.GameProfile;
 import fr.yan36.westerlife.common.init.ItemInit;
 import fr.yan36.westerlife.server.bdd.DBUtils;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.management.UserList;
+import net.minecraft.server.management.UserListEntry;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 
 import javax.annotation.Nullable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class WesterLifeCommand extends CommandBase {
     @Override
@@ -38,7 +42,11 @@ public class WesterLifeCommand extends CommandBase {
             if(args[0].equalsIgnoreCase("eco")){
                 switch (args.length) {
                     case 1:
-                        help(player, args[0]);
+                        if(args[0].equalsIgnoreCase("eco") || args[0].equalsIgnoreCase("manageperso")){
+                            help(player, args[0]);
+                        } else {
+                            help(player, "all");
+                        }
                         break;
                     case 3:
                         if (args[0].equalsIgnoreCase("eco") && args[1].equalsIgnoreCase("info")) {
@@ -123,6 +131,7 @@ public class WesterLifeCommand extends CommandBase {
                                 LocalDate currentDate = LocalDate.now();
                                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                                 DBUtils.createBankAccount(player.getUniqueID().toString(), Integer.parseInt(account_number), String.valueOf(random.nextInt(9000) + 1000), currentDate.format(formatter), true);
+                                player.sendMessage(new TextComponentString("§aUn compte bancaire personnel a bien été créé !"));
                                 break;
                             } else if (args[2].equalsIgnoreCase("entreprise")) {
                                 Random random = new Random();
@@ -130,11 +139,13 @@ public class WesterLifeCommand extends CommandBase {
                                 LocalDate currentDate = LocalDate.now();
                                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                                 DBUtils.createBankAccount(player.getUniqueID().toString(), Integer.parseInt(account_number), String.valueOf(random.nextInt(9000) + 1000), currentDate.format(formatter), false);
+                                player.sendMessage(new TextComponentString("§aUn compte bancaire entreprise a bien été créé !"));
                                 break;
                             }
                         } else if (args[0].equalsIgnoreCase("eco") && args[1].equalsIgnoreCase("delete")) {
                             if (DBUtils.getMultipleInfos("bank_account", "account_number").contains(args[2])) {
                                 DBUtils.removeRow("bank_account", "account_number", args[2]);
+                                player.sendMessage(new TextComponentString("§aLe compte bancaire n°" + args[2] + " a bien été supprimé !"));
                                 break;
                             } else {
                                 player.sendMessage(new TextComponentString("§cCe compte n'existe pas !"));
@@ -148,6 +159,7 @@ public class WesterLifeCommand extends CommandBase {
                                 card.getTagCompound().setString("RIB", DBUtils.getStringInfo("RIB", "bank_account", "account_number", args[2]));
                                 card.getTagCompound().setString("owner", DBUtils.getStringInfo("owner", "bank_account", "account_number", args[2]));
                                 player.addItemStackToInventory(card);
+                                player.sendMessage(new TextComponentString("§aVous avez reçu une carte bancaire du compte n°" + args[2]));
                             } else {
                                 player.sendMessage(new TextComponentString("§cCe compte n'existe pas !"));
                                 break;
@@ -200,6 +212,7 @@ public class WesterLifeCommand extends CommandBase {
                             if (DBUtils.getMultipleInfos("bank_account", "account_number").contains(args[2])) {
                                 try {
                                     DBUtils.setInfo("bank_account", args[3], args[4], "account_number", args[2]);
+                                    player.sendMessage(new TextComponentString("§aLe compte n°" + args[2] + " a bien été modifié !"));
                                 } catch (Exception e) {
                                     player.sendMessage(new TextComponentString("§cErreur !"));
                                     break;
@@ -236,6 +249,13 @@ public class WesterLifeCommand extends CommandBase {
                 }
             } // Commande sur les personnages
             else if(args[0].equalsIgnoreCase("manageperso")){
+                ArrayList<String> BDDPlayers = DBUtils.getMultipleInfos("players", "uuid");
+                ArrayList<String> players = new ArrayList<String>();
+                players.addAll(BDDPlayers.stream()
+                        .map(UUID::fromString)
+                        .map(server.getPlayerProfileCache()::getProfileByUUID).filter(Objects::nonNull)
+                        .map(GameProfile::getName)
+                        .collect(Collectors.toList()));
                 switch (args.length){
                     case 1:
                         help(player, args[0]);
@@ -257,22 +277,89 @@ public class WesterLifeCommand extends CommandBase {
                         break;
                     case 3:
                         if(args[1].equalsIgnoreCase("set")){
-                            if(DBUtils.getMultipleInfos("player", "pseudo").contains(args[2])){
+                            if(players.contains(args[2])){
                                 player.sendMessage(new TextComponentString("§cVous devez préciser un argument !"));
                             } else {
                                 player.sendMessage(new TextComponentString("§cCe joueur n'a pas de personnage !"));
                             }
                             break;
                         } else if(args[1].equalsIgnoreCase("get")){
-                            if(DBUtils.getMultipleInfos("player", "pseudo").contains(args[2])) {
+                            if(players.contains(args[2])) {
                                 player.sendMessage(new TextComponentString("§cVous devez préciser un argument !"));
                             } else {
                                 player.sendMessage(new TextComponentString("§cCe joueur n'a pas de personnage !"));
                             }
                             break;
                         } else if (args[1].equalsIgnoreCase("delete")){
-                            if(DBUtils.getMultipleInfos("player", "uuid").contains(args[2])){
-                                player.sendMessage(new TextComponentString("§aVous avez supprimé le personnage du joueur " + args[2]));
+                            if (players.contains(args[2])) {
+                                EntityPlayerMP targetPlayer = server.getPlayerList().getPlayerByUUID(server.getPlayerProfileCache().getGameProfileForUsername(args[2]).getId());
+                                if (targetPlayer != null) {
+                                    targetPlayer.connection.disconnect(new TextComponentString("§cVous avez été expulsé du serveur ! §bRaison : §ePersonnage supprimé !"));
+                                }
+                                DBUtils.removeRow("players", "uuid", server.getPlayerProfileCache().getGameProfileForUsername(args[2]).getId().toString());
+                                player.sendMessage(new TextComponentString("§aLe joueur §6" + args[2] + "§a a bien été supprimé !"));
+                                break;
+                            } else {
+                                player.sendMessage(new TextComponentString("§cCe joueur n'a pas de personnage !"));
+                                break;
+                            }
+                        } else if(args[1].equalsIgnoreCase("info")){
+                            if(players.contains(args[2])){
+                                player.sendMessage(new TextComponentString("§b============================================="));
+                                player.sendMessage(new TextComponentString("§9Nom §7: §b" + DBUtils.getStringInfo("familyname", "players", "uuid", server.getPlayerProfileCache().getGameProfileForUsername(args[2]).getId().toString())));
+                                player.sendMessage(new TextComponentString("§9Prénom §7: §b" + DBUtils.getStringInfo("firstnames", "players", "uuid", server.getPlayerProfileCache().getGameProfileForUsername(args[2]).getId().toString())));
+                                player.sendMessage(new TextComponentString("§9Date de naissance §7: §b" + DBUtils.getStringInfo("birthdate", "players", "uuid", server.getPlayerProfileCache().getGameProfileForUsername(args[2]).getId().toString())));
+                                player.sendMessage(new TextComponentString("§9Lieu de naissance §7: §b" + DBUtils.getStringInfo("birthplace", "players", "uuid", server.getPlayerProfileCache().getGameProfileForUsername(args[2]).getId().toString())));
+                                player.sendMessage(new TextComponentString("§9Nationalité §7: §b" + DBUtils.getStringInfo("nationality", "players", "uuid", server.getPlayerProfileCache().getGameProfileForUsername(args[2]).getId().toString())));
+                                player.sendMessage(new TextComponentString("§9Sexe §7: §b" + DBUtils.getStringInfo("sex", "players", "uuid", server.getPlayerProfileCache().getGameProfileForUsername(args[2]).getId().toString())));
+                                player.sendMessage(new TextComponentString("§b============================================="));
+                            } else {
+                                player.sendMessage(new TextComponentString("§cCe joueur n'a pas de personnage !"));
+                                break;
+                            }
+                        }
+                        break;
+                    case 4:
+                        if(args[1].equalsIgnoreCase("get")){
+                            if(players.contains(args[2])) {
+                                if(DBUtils.getStringInfo(args[3], "players", "uuid", server.getPlayerProfileCache().getGameProfileForUsername(args[2]).getId().toString()) != null){
+                                    player.sendMessage(new TextComponentString("§a" + args[3] + " : " + DBUtils.getStringInfo(args[3], "players", "uuid", server.getPlayerProfileCache().getGameProfileForUsername(args[2]).getId().toString())));
+                                    break;
+                                } else {
+                                    player.sendMessage(new TextComponentString("§cCet argument n'existe pas !"));
+                                    break;
+                                }
+                            } else {
+                                player.sendMessage(new TextComponentString("§cCe joueur n'a pas de personnage !"));
+                                break;
+                            }
+                        }
+                        if(args[1].equalsIgnoreCase("set")){
+                            if(players.contains(args[2])) {
+                                if(DBUtils.getStringInfo(args[3], "players", "uuid", server.getPlayerProfileCache().getGameProfileForUsername(args[2]).getId().toString()) != null){
+                                    player.sendMessage(new TextComponentString("§cVous devez préciser une valeur !"));
+                                } else {
+                                    player.sendMessage(new TextComponentString("§cCet argument n'existe pas !"));
+                                }
+                                break;
+                            } else {
+                                player.sendMessage(new TextComponentString("§cCe joueur n'a pas de personnage !"));
+                                break;
+                            }
+                        }
+                        break;
+                    case 5:
+                        if(args[1].equalsIgnoreCase("set")){
+                            if(players.contains(args[2])) {
+                                if(DBUtils.getStringInfo(args[3], "players", "uuid", server.getPlayerProfileCache().getGameProfileForUsername(args[2]).getId().toString()) != null){
+                                    DBUtils.setInfo("players", "pseudo", args[2], args[3], args[4]);
+                                    player.sendMessage(new TextComponentString("§aVous avez modifié l'argument " + args[3] + " du joueur " + args[2] + " avec la valeur " + args[4]));
+                                } else {
+                                    player.sendMessage(new TextComponentString("§cCet argument n'existe pas !"));
+                                }
+                                break;
+                            } else {
+                                player.sendMessage(new TextComponentString("§cCe joueur n'a pas de personnage !"));
                                 break;
                             }
                         }
@@ -292,6 +379,7 @@ public class WesterLifeCommand extends CommandBase {
             case 1:
                 completions.add("eco");
                 completions.add("manageperso");
+                completions.add("help");
                 break;
             case 2:
                 if(args[0].equalsIgnoreCase("eco")){
@@ -308,6 +396,7 @@ public class WesterLifeCommand extends CommandBase {
                     completions.add("set");
                     completions.add("get");
                     completions.add("delete");
+                    completions.add("info");
                 }
                 break;
             case 3:
@@ -331,12 +420,21 @@ public class WesterLifeCommand extends CommandBase {
                     }
                 }
                 if(args[0].equalsIgnoreCase("manageperso")){
+                    ArrayList<String> BDDPlayers = DBUtils.getMultipleInfos("players", "uuid");
+                    ArrayList<String> onlinePlayers = new ArrayList<String>();
+                    onlinePlayers.addAll(BDDPlayers.stream()
+                            .map(UUID::fromString)
+                            .map(server.getPlayerProfileCache()::getProfileByUUID).filter(Objects::nonNull)
+                            .map(GameProfile::getName)
+                            .collect(Collectors.toList()));
                     if(args[1].equalsIgnoreCase("delete")){
-                        completions.addAll(DBUtils.getMultipleInfos("players", "pseudo"));
+                        completions.addAll(onlinePlayers);
                     } else if(args[1].equalsIgnoreCase("set")){
-                        completions.addAll(DBUtils.getMultipleInfos("players", "pseudo"));
+                        completions.addAll(onlinePlayers);
                     } else if(args[1].equalsIgnoreCase("get")){
-                        completions.addAll(DBUtils.getMultipleInfos("players", "pseudo"));
+                        completions.addAll(onlinePlayers);
+                    } else if(args[1].equalsIgnoreCase("info")) {
+                        completions.addAll(onlinePlayers);
                     }
                 }
                 break;
@@ -374,27 +472,28 @@ public class WesterLifeCommand extends CommandBase {
     public void help(EntityPlayer player, String args){
         if (args.equalsIgnoreCase("all")){
             player.sendMessage(new TextComponentString("§b============================================="));
-            player.sendMessage(new TextComponentString("§6/westerlife eco help §7: Commande pour gérer l'économie")); // Fait
-            player.sendMessage(new TextComponentString("§6/westerlife manageperso help §7: Commande pour gérer les personnages")); // Fait
+            player.sendMessage(new TextComponentString("§9/westerlife eco help §7- §bCommande pour gérer l'économie")); // Fait
+            player.sendMessage(new TextComponentString("§9/westerlife manageperso help §7- §bCommande pour gérer les personnages")); // Fait
             player.sendMessage(new TextComponentString("§b============================================="));
         } else if(args.equalsIgnoreCase("eco")) {
             player.sendMessage(new TextComponentString("§b============================================="));
-            player.sendMessage(new TextComponentString("§6/westerlife eco help §7: Affiche l'aide")); // Fait
-            player.sendMessage(new TextComponentString("§6/westerlife eco info <pseudo/uuid/rib/N° de compte> §7: Affiche les informations d'un compte")); // Fait
-            player.sendMessage(new TextComponentString("§6/westerlife eco info global §7: Affiche les informations globales de l'économie ( solde total etc )")); // Fait
-            player.sendMessage(new TextComponentString("§6/westerlife eco create <account type> §7: Crée un compte bancaire")); // Fait
-            player.sendMessage(new TextComponentString("§6/westerlife eco delete <account> §7: Supprime un compte bancaire")); // Fait
-            player.sendMessage(new TextComponentString("§6/westerlife eco set <account> <parameter> <value> §7: Changer une valeur d'un compte")); // Fait
-            player.sendMessage(new TextComponentString("§6/westerlife eco addmoney <account> <value> §7: Ajoute de l'argent à un compte")); // Fait
-            player.sendMessage(new TextComponentString("§6/westerlife eco removemoney <account> <value> §7: Retire de l'argent à un compte")); // Fait
-            player.sendMessage(new TextComponentString("§6/westerlife eco givecard <account> §7: Donner la carte du compte bancaire")); // Fait
-            player.sendMessage(new TextComponentString("§6/westerlife eco move <from account> <to account> <montant> §7: Donner la carte du compte bancaire")); // Fait
+            player.sendMessage(new TextComponentString("§9/westerlife eco help §7- §bAffiche l'aide")); // Fait
+            player.sendMessage(new TextComponentString("§9/westerlife eco info <pseudo/uuid/rib/N° de compte> §7- §bAffiche les informations d'un compte")); // Fait
+            player.sendMessage(new TextComponentString("§9/westerlife eco info global §7- §bAffiche les informations globales de l'économie ( solde total etc )")); // Fait
+            player.sendMessage(new TextComponentString("§9/westerlife eco create <account type> §7- §bCrée un compte bancaire")); // Fait
+            player.sendMessage(new TextComponentString("§9/westerlife eco delete <account> §7- §bSupprime un compte bancaire")); // Fait
+            player.sendMessage(new TextComponentString("§9/westerlife eco set <account> <parameter> <value> §7- §bChanger une valeur d'un compte")); // Fait
+            player.sendMessage(new TextComponentString("§9/westerlife eco addmoney <account> <value> §7- §bAjoute de l'argent à un compte")); // Fait
+            player.sendMessage(new TextComponentString("§9/westerlife eco removemoney <account> <value> §7- §bRetire de l'argent à un compte")); // Fait
+            player.sendMessage(new TextComponentString("§9/westerlife eco givecard <account> §7- §bDonner la carte du compte bancaire")); // Fait
+            player.sendMessage(new TextComponentString("§9/westerlife eco move <from account> <to account> <montant> §7- §bDonner la carte du compte bancaire")); // Fait
             player.sendMessage(new TextComponentString("§b============================================="));
         } else if (args.equalsIgnoreCase("manageperso")){
             player.sendMessage(new TextComponentString("§b============================================="));
-            player.sendMessage(new TextComponentString("§b= §f/westerlife manageperso set <player> <parameters> <value> §b- §fSet un paramètre d'un joueur"));
-            player.sendMessage(new TextComponentString("§b= §f/westerlife manageperso get <player> <parameters> §b- §fRécupère un paramètre d'un joueur"));
-            player.sendMessage(new TextComponentString("§b= §f/westerlife manageperso delete <player> §b- §fSupprime un joueur"));
+            player.sendMessage(new TextComponentString("§9§f/westerlife manageperso set <player> <parameters> <value> §7- §bSet un paramètre d'un joueur"));
+            player.sendMessage(new TextComponentString("§9/westerlife manageperso get <player> <parameters> §7- §bRécupère un paramètre d'un joueur"));
+            player.sendMessage(new TextComponentString("§9/westerlife manageperso delete <player> §7- §bSupprime un joueur"));
+            player.sendMessage(new TextComponentString("§9/westerlife manageperso info <player> §7- §bPermet d'avoir une fiche d'identité d'un joueur"));
             player.sendMessage(new TextComponentString("§b============================================="));
         }
     }
