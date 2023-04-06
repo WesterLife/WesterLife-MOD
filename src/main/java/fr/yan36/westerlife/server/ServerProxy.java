@@ -1,9 +1,7 @@
 package fr.yan36.westerlife.server;
 
 import fr.yan36.westerlife.common.CommonProxy;
-import fr.yan36.westerlife.common.utils.commands.WesterLifeCommand;
 import fr.yan36.westerlife.server.bdd.DatabaseManager;
-import fr.yan36.westerlife.server.command.EconomyCommand;
 import net.minecraftforge.common.MinecraftForge;
 
 import java.io.IOException;
