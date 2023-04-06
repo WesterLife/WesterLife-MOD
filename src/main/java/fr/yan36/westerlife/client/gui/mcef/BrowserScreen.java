@@ -229,10 +229,11 @@ public class BrowserScreen extends GuiScreen implements IJSQueryHandler
                     Client.needToCreateCharacter = 0;
                 } else if(query.substring(1).split(":")[0].equals("openLink")) {
                     String link = query.split(":")[1];
+                    System.out.println(link);
                     switch (link) {
                         case "discord":
                             try {
-                                Desktop.getDesktop().browse(new URI("https://discord.gg/"));
+                                Desktop.getDesktop().browse(new URI("https://discord.gg/mF73udJDkg"));
                             } catch (IOException | URISyntaxException e) {
                                 e.printStackTrace();
                             }
@@ -253,7 +254,7 @@ public class BrowserScreen extends GuiScreen implements IJSQueryHandler
                             break;
                         case "youtube":
                             try {
-                                Desktop.getDesktop().browse(new URI("https://www.youtube.com/"));
+                                Desktop.getDesktop().browse(new URI("https://www.youtube.com/channel/UCxLi0LAeg-iWEAtDyYF1cfA"));
                             } catch (IOException | URISyntaxException e) {
                                 e.printStackTrace();
                             }
