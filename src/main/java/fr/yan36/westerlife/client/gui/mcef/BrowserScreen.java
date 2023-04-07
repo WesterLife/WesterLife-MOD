@@ -6,6 +6,8 @@ import fr.yan36.westerlife.client.gui.acs.CSSGuiMainMenu;
 import fr.yan36.westerlife.common.network.PacketCreateCharacter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
+import net.minecraft.client.multiplayer.GuiConnecting;
+import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.network.NetHandlerLoginClient;
 import net.minecraft.client.renderer.GlStateManager;
@@ -90,9 +92,9 @@ public class BrowserScreen extends GuiScreen implements IJSQueryHandler
         if(Client.needToCreateCharacter == 2)
             Client.needToCreateCharacter = 1;
 
-        Main.browserScreen = null;
-        Keyboard.enableRepeatEvents(false);
-        browser.close();
+            Main.browserScreen = null;
+            Keyboard.enableRepeatEvents(false);
+            browser.close();
     }
 
     @Override
@@ -278,7 +280,8 @@ public class BrowserScreen extends GuiScreen implements IJSQueryHandler
                     mc.shutdown();
                 } else if(query.substring(1).split(":")[0].equals("play")) {
                     if(!Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
-                        connect("51.38.250.27",25739);
+                        Main.browserScreen = new BrowserScreen("mod://westerlife/main_menu/main.html");
+                        this.mc.displayGuiScreen(new GuiConnecting(Main.browserScreen, this.mc, "51.38.250.27", 25739));
                     } else {
                         Main.browserScreen = new BrowserScreen("mod://westerlife/main_menu/main.html");
                         mc.displayGuiScreen(new GuiMultiplayer(Main.browserScreen));
