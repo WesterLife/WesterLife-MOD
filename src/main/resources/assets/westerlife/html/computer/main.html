@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ordinateur</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="main">
+        <div class="frame">
+            <div class="apps">
+
+            </div>
+            <div class="icons">
+                <div class="icon">
+                    <i class="ri-search-line icon-icon"></i>
+                    <p>Navigateur</p>
+                </div>
+                <div class="icon">
+                    <i class="ri-file-chart-fill icon-icon"></i>
+                    <p>Documents</p>
+                </div>
+                <div class="icon">
+                    <i class="ri-calculator-fill icon-icon"></i>
+                    <p>Calculatrice</p>
+                </div>
+                <div class="icon" onclick="openWindow('https://gabidut76.live/')">
+                    <i class="ri-device-recover-fill icon-icon"></i>
+                    <p>Dev</p>
+                </div>
+            </div>
+        </div>
+        <div class="taskbar">
+            <div class="aligned-left">
+                <button class="btn btn-disconnect"><i class="ri-logout-box-r-line"></i></button>
+                <button class="btn btn-loginInfos"><i class="ri-account-circle-fill"></i></span>
+                    <span class="btn-loginInfos-text"><b>Philippe du Cresson de la Chardière</b></span></button>
+            </div>
+            <div class="aligned-right">
+                <div class="hour">
+                    <p id="hour"><b></b></p>
+                    <p id="date"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<style>
+
+    :root {
+        --bg-dark: #2E364A;
+        --bg-dark-selected: #3D475F;
+
+        --text-color: #FFFFFF;
+
+        --main-background: linear-gradient(107.56deg, #2E364A 0%, rgba(46, 54, 74, 0.25) 100%), url('assets/images/bg.png');
+        --font : 'Montserrat', sans-serif;
+    }
+
+    * {
+        font-family: var(--font);
+    }
+
+    body {
+        background: var(--main-background);
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-attachment: fixed;
+
+        display: flex;
+        flex-direction: column;
+
+        width: 100%;
+        height: 100vh;
+        margin: 0;
+
+    }
+
+    .frame {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 95vh;
+    }
+
+    .taskbar {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        height: 5vh;
+        background-color: var(--bg-dark);
+    }
+
+    .aligned-left {
+        width: 50%;
+        display: flex;
+        flex-direction: row;
+    }
+    .btn {
+        background: var(--bg-dark-selected);
+        border-radius: 10px;
+        border: none;
+        color: var(--text-color);
+        vertical-align: middle;
+        padding: 5px 10px;
+    }
+    .btn:not(:last-child) {
+        margin-right: 10px;
+    }
+    .btn:first-child {
+        margin-left: 20px;
+    }
+
+    .btn-loginInfos {
+        display: flex;
+        align-items: center;
+    }
+    .btn-loginInfos-text {
+        margin-left: 5px;
+    }
+
+    .aligned-right {
+        width: 50%;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
+        color: var(--text-color);
+        margin-right: 20px;
+        text-align: end;
+    }
+
+    p {
+        margin: 0;
+        padding: 0;
+    }
+
+    #hour {
+        font-weight: 700;
+    }
+
+    .icons {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        margin: 3%;
+        height: 100%;
+        gap: 25px;
+        flex-wrap: wrap;
+    }
+
+    .icon {
+        width: 90px;
+        height: 90px;
+        background-color: var(--bg-dark-selected);
+        border-radius: 10px;
+        margin-bottom: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        padding: 10px 10px;
+        gap: 10px;
+        color: var(--text-color);
+    }
+
+    .icon:hover {
+        background-color: var(--bg-dark);
+    }
+
+    .icon>p {
+        font-size: small;
+    }
+
+    .icon-icon {
+        font-size: 200% !important;
+        color: var(--text-color);
+    }
+
+    .window {
+        position: fixed;
+        display: flex;
+        flex-direction: column;
+        background-color: var(--bg-dark);
+        border-radius: 10px;
+        margin: 0;
+        padding: 0;
+        resize: both;
+        overflow: hidden;
+    }
+    .window-title-bar {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        height: 3vh;
+        background-color: var(--bg-dark-selected);
+        border-radius: 10px 10px 0 0;
+        cursor: move;
+    }
+    .window-frame {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        border: none;
+        overflow: hidden;
+        background-color: var(--bg-dark-selected);
+        padding: 5px;
+    }
+
+    .window-title-bar {
+        color: var(--text-color);
+    }
+
+    /* Change scrollbar */
+
+    /* width */
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: #888;
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+</style>
+
+<script src="assets/js/window-manager.js"></script>
+
+<script>
+    document.getElementById("date").innerHTML = new Date().toLocaleDateString();
+    document.getElementById("hour").innerHTML = new Date().getHours() + ":" + new Date().getMinutes();
+</script>
