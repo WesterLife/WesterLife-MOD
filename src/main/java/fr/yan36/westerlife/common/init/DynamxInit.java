@@ -14,7 +14,6 @@ public class DynamxInit {
     public static ItemDynamx Taser;
 
     public static BlockSignVillage SignVillage;
-    public static BlockLaptop Laptop;
     public static BlockDistributeur Distributeur;
     public static BlockKeypad Keypad;
     public static BlockBisign doublefeurouge;
@@ -22,6 +21,7 @@ public class DynamxInit {
     public static BlockRadarFixe radarFixe;
     public static BlockRalentisseur ralentisseur;
     public static BlockBarriereLevante barriereLevante;
+    public static BlockComputer computer;
 
     public static void init() {
 
@@ -39,11 +39,11 @@ public class DynamxInit {
         radarFixe = new BlockRadarFixe(Material.ANVIL, Main.MODID, "radar", new ResourceLocation("westerlife","models/dynamx/blocks/radar/radarfixe.obj"));
         ralentisseur = new BlockRalentisseur(Material.ANVIL, Main.MODID, "ralentisseur", new ResourceLocation("westerlife","models/dynamx/blocks/ralentisseur/ralentisseur.obj"));
         barriereLevante = new BlockBarriereLevante(Material.ANVIL, Main.MODID, "barrierelevante", new ResourceLocation("westerlife","models/dynamx/blocks/barriere_levante/barrièrelevante.obj"));
+        computer = new BlockComputer(Material.ANVIL, Main.MODID, "computer", new ResourceLocation("westerlife","models/dynamx/blocks/computer/pc.obj"));
 
         //Old items
         SignVillage = new BlockSignVillage(Material.ANVIL, Main.MODID, "panneauvillage", new ResourceLocation("westerlife","models/dynamx/signvillage/sign.obj"));
         doublefeurouge = new BlockBisign(Material.ANVIL, Main.MODID, "doublefeurouge", new ResourceLocation("westerlife","models/dynamx/bisign/bicolor.obj"));
-        Laptop = new BlockLaptop(Material.ANVIL, Main.MODID, "laptop", new ResourceLocation("westerlife","models/dynamx/laptop/pc.obj"));
         //feu_tricolore = new BlockDynamx(Material.ANVIL, Main.MODID, "feutricolore", "feut/feut.obj");
         //Keypad = new BlockKeypad(Material.ANVIL, Main.MODID, "keypad", "keypad/keypad.obj");
     }
