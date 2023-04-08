@@ -292,60 +292,9 @@ public class BrowserScreen extends GuiScreen implements IJSQueryHandler
                 }
             } else
                 cb.failure(403, "Can't access username from external page");
-
             return true;
         }
-
         return false;
-    }
-
-
-    private static final AtomicInteger CONNECTION_ID = new AtomicInteger(0);
-    private NetworkManager networkManager;
-    private void connect(final String ip, final int port)
-    {
-        (new Thread("Server Connector #" + CONNECTION_ID.incrementAndGet())
-        {
-            public void run()
-            {
-                InetAddress inetaddress = null;
-
-                try
-                {
-
-                    inetaddress = InetAddress.getByName(ip);
-                    networkManager = NetworkManager.createNetworkManagerAndConnect(inetaddress, port, mc.gameSettings.isUsingNativeTransport());
-                    networkManager.setNetHandler(new NetHandlerLoginClient(networkManager, mc,new CSSGuiMainMenu().getGuiScreen()));
-                    networkManager.sendPacket(new C00Handshake(ip, port, EnumConnectionState.LOGIN, true));
-                    networkManager.sendPacket(new CPacketLoginStart(mc.getSession().getProfile()));
-                }
-                catch (UnknownHostException unknownhostexception)
-                {
-                    try {
-                        mc.displayGuiScreen(new CSSGuiMainMenu().getGuiScreen());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-                catch (Exception exception)
-                {
-
-                    String s = exception.toString();
-
-                    if (inetaddress != null)
-                    {
-                        String s1 = inetaddress + ":" + port;
-                        s = s.replaceAll(s1, "");
-                    }
-                    try {
-                        mc.displayGuiScreen(new CSSGuiMainMenu().getGuiScreen());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-            }
-        }).start();
     }
 
     public void closeActiveGui() {

@@ -35,6 +35,12 @@ public class Client {
     public static String animationState = "default";
     public static List<Warp> warplist = new ArrayList<>();
 
+    public static String openScreenMcef = "none";
+
+    public static void setScreenMcef(String url) {
+        openScreenMcef = url;
+    }
+
     @SubscribeEvent
     public void GuieventHandler(GuiOpenEvent e) {
 
@@ -67,6 +73,14 @@ public class Client {
                 Main.browserScreen = new BrowserScreen("mod://westerlife/create_perso/perso1.html");
                 Main.browserScreen.openMenu();
                 needToCreateCharacter = 2;
+            }
+
+            switch (openScreenMcef) {
+                case "computer":
+                    Main.browserScreen = new BrowserScreen("mod://westerlife/computer/main.html");
+                    Main.browserScreen.openMenu();
+                    openScreenMcef = "none";
+                    break;
             }
     }
 

@@ -1,9 +1,11 @@
 package fr.yan36.westerlife.server;
 
 import fr.yan36.westerlife.Main;
+import fr.yan36.westerlife.common.blocks.dynamx.BlockComputer;
 import fr.yan36.westerlife.common.blocks.dynamx.BlockDistributeur;
 import fr.yan36.westerlife.common.init.ItemInit;
 import fr.yan36.westerlife.common.network.PacketAskToCreateCharacter;
+import fr.yan36.westerlife.common.network.PacketOpenMcefGui;
 import fr.yan36.westerlife.common.network.old.PacketOpenGUIAtm;
 import fr.yan36.westerlife.common.network.old.PacketSyncPlayer;
 import fr.yan36.westerlife.server.bdd.DBUtils;
@@ -43,6 +45,10 @@ public class Serveur {
             } else {
                 e.getEntityPlayer().sendMessage(new TextComponentString("§cVeuillez insérer votre carte bancaire."));
             }
+        }
+
+        if (block instanceof BlockComputer) {
+            Main.network.sendTo(new PacketOpenMcefGui("computer"), (EntityPlayerMP) e.getEntityPlayer());
         }
     }
 
