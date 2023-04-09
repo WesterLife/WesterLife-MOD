@@ -68,10 +68,6 @@ public class BrowserHud
 
     @SubscribeEvent
     public static void onRenderGameOverlayEvent(final InputEvent.KeyInputEvent event) {
-        if(Client.keyBindTest.isPressed()){
-            Main.browserScreen = new BrowserScreen("mod://westerlife/create_perso/perso1.html");
-            Main.browserScreen.openMenu();
-        }
     }
 
     public void runJS(final String js) {
