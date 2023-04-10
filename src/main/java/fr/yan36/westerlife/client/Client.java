@@ -45,6 +45,7 @@ public class Client {
     public void GuieventHandler(GuiOpenEvent e) {
 
         if (e.getGui() instanceof GuiMainMenu) {
+            // prout c'est chiant pour dev donc
             e.setCanceled(true);
             Main.browserScreen = new BrowserScreen("mod://westerlife/main_menu/main.html");
             Minecraft.getMinecraft().displayGuiScreen(Main.browserScreen);

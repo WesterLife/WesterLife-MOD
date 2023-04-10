@@ -8,27 +8,19 @@ import java.util.List;
 
 public class AuthSystem {
 
+    public static List<Gendarme> gendarmeList;
+    public static List<Pompier> pompierList;
+
+    public static void init() {
+            gendarmeList = MethodesBDD.getAccountGendarme();
+            pompierList = MethodesBDD.getAccountPompier();
+    }
+
     public static boolean loginGendarmerie(String login, String password) {
-        List<Gendarme> gendarmeList = MethodesBDD.getAccountGendarme();
-        for (Gendarme gendarme : gendarmeList) {
-
-            if (gendarme.getLogin().equals(login) && gendarme.getPassword().equals(password)) {
-
-                return true;
-            }
-        }
-        return false;
+        return gendarmeList.stream().anyMatch(gendarme -> gendarme.getLogin().equals(login) && gendarme.getPassword().equals(password));
     }
 
     public static boolean loginPompier(String login, String password) {
-        List<Pompier> pompierList = MethodesBDD.getAccountPompier();
-        for (Pompier pompier : pompierList) {
-
-            if (pompier.getLogin().equals(login) && pompier.getPassword().equals(password)) {
-
-                return true;
-            }
-        }
-        return false;
+        return pompierList.stream().anyMatch(gendarme -> gendarme.getLogin().equals(login) && gendarme.getPassword().equals(password));
     }
 }

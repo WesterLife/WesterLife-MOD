@@ -8,7 +8,8 @@ import fr.yan36.westerlife.common.CommonProxy;
 import fr.yan36.westerlife.common.init.DynamxInit;
 import fr.yan36.westerlife.common.init.Network;
 import fr.yan36.westerlife.common.registry.RegistryHandler;
-import fr.yan36.westerlife.server.command.WesterLifeCommand;
+import fr.yan36.westerlife.common.utils.commands.WesterLifeCommand;
+import fr.yan36.westerlife.server.AuthSystem;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -75,12 +76,14 @@ public class Main {
         Network.init();
         MinecraftForge.EVENT_BUS.register(new RegistryHandler());
             //warn: Discord RPC must be reimplemented
-            if(event.getSide().isClient()) {
-                try {
-                    //new Discord().start();
-                } catch (Exception e) {
-                    e.printStackTrace();
+        if(event.getSide().isClient()) {
+            try {
+                //new Discord().start();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+        } else {
+            AuthSystem.init();
         }
     }
 
