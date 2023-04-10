@@ -29,7 +29,7 @@ public class BlockBase extends Block implements IHasModel {
     public BlockBase(String name, Material material) {
         super(material);
         setRegistryName(name);
-        setCreativeTab(Main.WESTER_TAB);
+        setCreativeTab(Main.WESTER_MAIN);
         setDefaultState(getDefaultState());
         setBlockUnbreakable();
 
