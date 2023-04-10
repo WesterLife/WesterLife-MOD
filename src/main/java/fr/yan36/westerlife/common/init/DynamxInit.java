@@ -27,6 +27,8 @@ public class DynamxInit {
     public static BlockRoad clotureChantier;
     public static BlockRoad poteau;
     public static BlockRoad panneauxType1;
+    public static BlockRoad panneauxType2;
+    public static BlockRoad panneauxType3;
 
     public static void init() {
 
@@ -51,6 +53,8 @@ public class DynamxInit {
         clotureChantier = new BlockRoad(Material.ANVIL, Main.MODID, "cloturechantier", new ResourceLocation("westerlife","models/dynamx/blocks/cloture_chantier/cloturechantier.obj"));
         poteau = new BlockRoad(Material.ANVIL, Main.MODID, "poteau", new ResourceLocation("westerlife","models/dynamx/blocks/poteau/poteau.obj"));
         panneauxType1 = new BlockRoad(Material.ANVIL, Main.MODID, "panneautype1", new ResourceLocation("westerlife","models/dynamx/blocks/panneaux/type1/1.obj"));
+        panneauxType2 = new BlockRoad(Material.ANVIL, Main.MODID, "panneautype2", new ResourceLocation("westerlife","models/dynamx/blocks/panneaux/type2/2.obj"));
+        panneauxType3 = new BlockRoad(Material.ANVIL, Main.MODID, "panneautype3", new ResourceLocation("westerlife","models/dynamx/blocks/panneaux/type3/3.obj"));
 
         //Old items
         SignVillage = new BlockSignVillage(Material.ANVIL, Main.MODID, "panneauvillage", new ResourceLocation("westerlife","models/dynamx/signvillage/sign.obj"));
