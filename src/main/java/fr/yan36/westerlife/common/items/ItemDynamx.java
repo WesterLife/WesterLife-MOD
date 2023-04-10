@@ -23,7 +23,7 @@ public class ItemDynamx extends DynamXItem {
 
     public ItemDynamx(String modid, String itemName, ResourceLocation model) {
         super(modid, itemName, model);
-        setCreativeTab(Main.WESTER_TAB);
+        setCreativeTab(Main.WESTER_MAIN);
     }
 
     @Override
