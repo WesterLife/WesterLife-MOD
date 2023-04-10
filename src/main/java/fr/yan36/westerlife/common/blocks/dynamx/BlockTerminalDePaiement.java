@@ -18,7 +18,7 @@ import javax.annotation.Nullable;
 public class BlockTerminalDePaiement extends DynamXBlock {
     public BlockTerminalDePaiement(Material material, String modid, String blockName, ResourceLocation model) {
         super(material, modid, blockName, model);
-        setCreativeTab(Main.WESTER_TAB);
+        setCreativeTab(Main.WESTER_MAIN);
     }
 
     @Nullable
