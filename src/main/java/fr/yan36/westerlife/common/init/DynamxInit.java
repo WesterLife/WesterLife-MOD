@@ -29,6 +29,9 @@ public class DynamxInit {
     public static BlockRoad panneauxType1;
     public static BlockRoad panneauxType2;
     public static BlockRoad panneauxType3;
+    public static BlockRoad panneauxType4;
+    public static BlockRoad panneauxType5;
+    public static BlockRoad panneauxType6;
 
     public static void init() {
 
@@ -55,6 +58,9 @@ public class DynamxInit {
         panneauxType1 = new BlockRoad(Material.ANVIL, Main.MODID, "panneautype1", new ResourceLocation("westerlife","models/dynamx/blocks/panneaux/type1/1.obj"));
         panneauxType2 = new BlockRoad(Material.ANVIL, Main.MODID, "panneautype2", new ResourceLocation("westerlife","models/dynamx/blocks/panneaux/type2/2.obj"));
         panneauxType3 = new BlockRoad(Material.ANVIL, Main.MODID, "panneautype3", new ResourceLocation("westerlife","models/dynamx/blocks/panneaux/type3/3.obj"));
+        panneauxType4 = new BlockRoad(Material.ANVIL, Main.MODID, "panneautype4", new ResourceLocation("westerlife","models/dynamx/blocks/panneaux/type4/4.obj"));
+        panneauxType5 = new BlockRoad(Material.ANVIL, Main.MODID, "panneautype5", new ResourceLocation("westerlife","models/dynamx/blocks/panneaux/type5/5.obj"));
+        panneauxType6 = new BlockRoad(Material.ANVIL, Main.MODID, "panneautype6", new ResourceLocation("westerlife","models/dynamx/blocks/panneaux/type6/6.obj"));
 
         //Old items
         SignVillage = new BlockSignVillage(Material.ANVIL, Main.MODID, "panneauvillage", new ResourceLocation("westerlife","models/dynamx/signvillage/sign.obj"));
