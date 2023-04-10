@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 public class BlockRalentisseur extends DynamXBlock {
     public BlockRalentisseur(Material material, String modid, String blockName, ResourceLocation model) {
         super(material, modid, blockName, model);
-        setCreativeTab(Main.WESTER_TAB);
+        setCreativeTab(Main.WESTER_ROADS);
     }
 
     @Override
