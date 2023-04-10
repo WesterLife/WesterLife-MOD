@@ -12,7 +12,7 @@ public class ItemBase extends Item implements IHasModel {
     public ItemBase(String name)
     {
         setRegistryName(name);
-        setCreativeTab(Main.WESTER_TAB);
+        setCreativeTab(Main.WESTER_MAIN);
         ItemInit.ITEMS.add(this);
         setMaxDamage(1);
     }
@@ -21,7 +21,7 @@ public class ItemBase extends Item implements IHasModel {
     @Nullable
     @Override
     public CreativeTabs getCreativeTab() {
-        return Main.WESTER_TAB;
+        return Main.WESTER_MAIN;
     }
 
     @Override
