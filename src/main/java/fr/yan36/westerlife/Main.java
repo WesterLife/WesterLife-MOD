@@ -94,6 +94,7 @@ public class Main {
     public void postInit(FMLPostInitializationEvent event) {
     }
 
-    public static final CreativeTabs WESTER_TAB = new WesterTab("westertab");
+    public static final CreativeTabs WESTER_MAIN = new WesterTab("westertab");
+    public static final CreativeTabs WESTER_ROADS = new WesterTab("westertab_roads");
 
 }
