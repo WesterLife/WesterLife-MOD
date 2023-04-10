@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 public class BlockDistributeur extends DynamXBlock {
     public BlockDistributeur(Material material, String modid, String blockName, ResourceLocation model) {
         super(material, modid, blockName, model);
-        setCreativeTab(Main.WESTER_TAB);
+        setCreativeTab(Main.WESTER_MAIN);
     }
 
     @Override
