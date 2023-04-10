@@ -44,7 +44,7 @@ public class Client {
     @SubscribeEvent
     public void GuieventHandler(GuiOpenEvent e) {
 
-        if (e.getGui() instanceof GuiMainMenu) {
+        if (e.getGui() instanceof GuiMainMenu && !Main.isEnvDev) {
             // prout c'est chiant pour dev donc
             e.setCanceled(true);
             Main.browserScreen = new BrowserScreen("mod://westerlife/main_menu/main.html");

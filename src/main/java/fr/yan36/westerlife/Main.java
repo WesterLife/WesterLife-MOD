@@ -11,7 +11,9 @@ import fr.yan36.westerlife.common.registry.RegistryHandler;
 import fr.yan36.westerlife.common.utils.commands.WesterLifeCommand;
 import fr.yan36.westerlife.server.AuthSystem;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.launchwrapper.Launch;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -27,6 +29,7 @@ import org.apache.logging.log4j.Logger;
 
 import javax.sound.sampled.LineUnavailableException;
 import java.io.IOException;
+import java.util.Objects;
 
 @Mod(
         modid = Main.MODID,
@@ -52,6 +55,8 @@ public class Main {
     @SideOnly(Side.CLIENT)
     public static BrowserHud browserHud;
 
+    public static Boolean isEnvDev = false;
+
     @DynamXAddon.AddonEventSubscriber
     public static void init() {
         DynamxInit.init();
@@ -73,6 +78,9 @@ public class Main {
     public void preInit(FMLPreInitializationEvent event) throws IOException {
         proxy.preInit();
         logger = event.getModLog();
+
+        if(event.getSide().isClient() && event.getSourceFile().getName().endsWith(".jar") ||  (boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment") || Objects.requireNonNull(Loader.instance().activeModContainer()).getSource().isFile()) isEnvDev = true;
+        System.out.println("WesterLife is in dev mode: " + isEnvDev);
         Network.init();
         MinecraftForge.EVENT_BUS.register(new RegistryHandler());
             //warn: Discord RPC must be reimplemented
