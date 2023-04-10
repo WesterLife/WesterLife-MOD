@@ -67,18 +67,17 @@ public class Main {
 
     public static Logger logger;
 
-    @SideOnly(Side.SERVER)
+//    @SideOnly(Side.SERVER)
     @Mod.EventHandler
     public void onserverStarting(FMLServerStartingEvent event) {
-        event.registerServerCommand(new fr.yan36.westerlife.common.utils.commands.WesterLifeCommand());
         event.registerServerCommand(new WesterLifeCommand());
     }
 
     @Mod.EventHandler
-    public void preInit(FMLPreInitializationEvent event) throws IOException {
+    public void preInit(FMLPreInitializationEvent event) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         proxy.preInit();
         logger = event.getModLog();
-
+        WesterLifeCommand.initModules();
         if(event.getSide().isClient() && event.getSourceFile().getName().endsWith(".jar") ||  (boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment") || Objects.requireNonNull(Loader.instance().activeModContainer()).getSource().isFile()) isEnvDev = true;
         System.out.println("WesterLife is in dev mode: " + isEnvDev);
         Network.init();
