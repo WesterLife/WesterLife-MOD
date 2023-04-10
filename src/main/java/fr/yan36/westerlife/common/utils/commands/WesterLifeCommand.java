@@ -2,10 +2,7 @@ package fr.yan36.westerlife.common.utils.commands;
 
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.network.old.PacketOpenGUIAdmin;
-import fr.yan36.westerlife.common.utils.commands.modules.ModuleAdmin;
-import fr.yan36.westerlife.common.utils.commands.modules.ModuleHelp;
-import fr.yan36.westerlife.common.utils.commands.modules.ModuleInfo;
-import fr.yan36.westerlife.common.utils.commands.modules.ModuleWorld;
+import fr.yan36.westerlife.common.utils.commands.modules.*;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -33,6 +30,8 @@ public class WesterLifeCommand extends CommandBase {
         modules.add(new ModuleAdmin());
         modules.add(new ModuleHelp());
         modules.add(new ModuleInfo());
+        modules.add(new ModuleEconomy());
+        modules.add(new ModuleManagePerso());
     }
 
     @Override
@@ -76,6 +75,12 @@ public class WesterLifeCommand extends CommandBase {
         modules.forEach(module -> list.add(module.subCommand));
         if(args.length == 1) {
             return getListOfStringsMatchingLastWord(args, list);
+        } else {
+            for(CommandModule module : modules) {
+                if(Objects.equals(args[0], module.subCommand)) {
+                    return module.getTabCompletion(server, sender, args, targetPos);
+                }
+            }
         }
         return super.getTabCompletions(server, sender, args, targetPos);
     }

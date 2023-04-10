@@ -476,18 +476,7 @@ public class WesterLifeCommand extends CommandBase {
             player.sendMessage(new TextComponentString("§9/westerlife manageperso help §7- §bCommande pour gérer les personnages")); // Fait
             player.sendMessage(new TextComponentString("§b============================================="));
         } else if(args.equalsIgnoreCase("eco")) {
-            player.sendMessage(new TextComponentString("§b============================================="));
-            player.sendMessage(new TextComponentString("§9/westerlife eco help §7- §bAffiche l'aide")); // Fait
-            player.sendMessage(new TextComponentString("§9/westerlife eco info <pseudo/uuid/rib/N° de compte> §7- §bAffiche les informations d'un compte")); // Fait
-            player.sendMessage(new TextComponentString("§9/westerlife eco info global §7- §bAffiche les informations globales de l'économie ( solde total etc )")); // Fait
-            player.sendMessage(new TextComponentString("§9/westerlife eco create <account type> §7- §bCrée un compte bancaire")); // Fait
-            player.sendMessage(new TextComponentString("§9/westerlife eco delete <account> §7- §bSupprime un compte bancaire")); // Fait
-            player.sendMessage(new TextComponentString("§9/westerlife eco set <account> <parameter> <value> §7- §bChanger une valeur d'un compte")); // Fait
-            player.sendMessage(new TextComponentString("§9/westerlife eco addmoney <account> <value> §7- §bAjoute de l'argent à un compte")); // Fait
-            player.sendMessage(new TextComponentString("§9/westerlife eco removemoney <account> <value> §7- §bRetire de l'argent à un compte")); // Fait
-            player.sendMessage(new TextComponentString("§9/westerlife eco givecard <account> §7- §bDonner la carte du compte bancaire")); // Fait
-            player.sendMessage(new TextComponentString("§9/westerlife eco move <from account> <to account> <montant> §7- §bDonner la carte du compte bancaire")); // Fait
-            player.sendMessage(new TextComponentString("§b============================================="));
+
         } else if (args.equalsIgnoreCase("manageperso")){
             player.sendMessage(new TextComponentString("§b============================================="));
             player.sendMessage(new TextComponentString("§9§f/westerlife manageperso set <player> <parameters> <value> §7- §bSet un paramètre d'un joueur"));

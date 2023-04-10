@@ -6,10 +6,14 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.WorldServer;
 
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class ModuleWorld extends CommandModule {
@@ -57,5 +61,9 @@ public class ModuleWorld extends CommandModule {
         } else {
             sender.sendMessage(new TextComponentString("§c/wlmod world <help/barrierelevante>"));
         }
+    }
+    @Override
+    public List<String> getTabCompletion(MinecraftServer server, ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
+        return new ArrayList<>();
     }
 }
