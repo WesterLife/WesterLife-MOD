@@ -4,10 +4,8 @@ import fr.aym.acsguis.api.ACsGuiApi;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.client.phone.Apps;
 import fr.yan36.westerlife.common.CommonProxy;
-import fr.yan36.westerlife.common.blocks.tileentity.TEBisign;
-import fr.yan36.westerlife.common.blocks.tileentity.TEBisignRender;
-import fr.yan36.westerlife.common.blocks.tileentity.TESign;
-import fr.yan36.westerlife.common.blocks.tileentity.TESignRender;
+import fr.yan36.westerlife.common.blocks.tileentity.*;
+import fr.yan36.westerlife.common.blocks.tileentity.render.RenderTileMovingGate;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
@@ -52,6 +50,7 @@ public class ClientProxy extends CommonProxy {
         super.preInit();
 
         ClientRegistry.bindTileEntitySpecialRenderer(TESign.class, new TESignRender());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileMovingGate.class, new RenderTileMovingGate());
         ClientRegistry.bindTileEntitySpecialRenderer(TEBisign.class, new TEBisignRender());
 
         Display.setTitle("WesterLife - " + Minecraft.getMinecraft().getSession().getUsername());

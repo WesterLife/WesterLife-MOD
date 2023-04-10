@@ -55,6 +55,14 @@ public class WesterLifeCommand extends CommandBase {
 
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+        if(args.length == 0) {
+            for (CommandModule module : modules) {
+                if(Objects.equals("help", module.subCommand)) {
+                    module.execute(server, sender, args);
+                }
+            }
+            return;
+        }
         for(CommandModule module : modules) {
             if(Objects.equals(args[0], module.subCommand)) {
                 module.execute(server, sender, args);

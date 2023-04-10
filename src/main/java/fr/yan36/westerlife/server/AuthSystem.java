@@ -12,8 +12,8 @@ public class AuthSystem {
     public static List<Pompier> pompierList;
 
     public static void init() {
-            gendarmeList = MethodesBDD.getAccountGendarme();
-            pompierList = MethodesBDD.getAccountPompier();
+//            gendarmeList = MethodesBDD.getAccountGendarme();
+//            pompierList = MethodesBDD.getAccountPompier();
     }
 
     public static boolean loginGendarmerie(String login, String password) {
