@@ -15,6 +15,7 @@ public class ItemBillet extends Item implements IHasModel {
         setCreativeTab(Main.WESTER_MAIN);
         ItemInit.ITEMS.add(this);
         setMaxDamage(1);
+        setTranslationKey(name);
     }
 
 
