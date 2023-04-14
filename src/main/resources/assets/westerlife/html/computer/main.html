@@ -261,6 +261,6 @@
 <script src="assets/js/window-manager.js"></script>
 
 <script>
-    document.getElementById("date").innerHTML = new Date().toLocaleDateString();
+    document.getElementById("date").innerHTML = new Date().getDay() + "/" + new Date().getMonth() + "/" + new Date().getFullYear();
     document.getElementById("hour").innerHTML = new Date().getHours() + ":" + new Date().getMinutes();
 </script>
