@@ -1,4 +1,4 @@
-package fr.yan36.westerlife.common.items;
+package fr.yan36.westerlife.common.items.dynamx;
 
 import fr.dynamx.common.entities.BaseVehicleEntity;
 import fr.dynamx.common.entities.vehicles.CarEntity;
