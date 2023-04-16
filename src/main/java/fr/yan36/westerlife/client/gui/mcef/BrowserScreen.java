@@ -3,6 +3,7 @@ package fr.yan36.westerlife.client.gui.mcef;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.client.Client;
 import fr.yan36.westerlife.client.gui.acs.CSSGuiMainMenu;
+import fr.yan36.westerlife.common.network.PacketAnimation;
 import fr.yan36.westerlife.common.network.PacketCreateCharacter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
@@ -289,6 +290,8 @@ public class BrowserScreen extends GuiScreen implements IJSQueryHandler
                 } else if(query.substring(1).split(":")[0].equals("openSettings2")) {
                     Main.browserScreen = new BrowserScreen("mod://westerlife/main_menu/main.html");
                     this.mc.displayGuiScreen(new GuiOptions(Main.browserScreen, this.mc.gameSettings));
+                } else if(query.substring(1).split(":")[0].equals("animation")) {
+                    Main.network.sendToServer(new PacketAnimation(Integer.parseInt(query.split(":")[1])));
                 }
             } else
                 cb.failure(403, "Can't access username from external page");

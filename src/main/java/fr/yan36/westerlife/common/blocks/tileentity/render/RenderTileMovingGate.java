@@ -25,6 +25,7 @@ public class RenderTileMovingGate extends TESRDynamXBlock<TileMovingGate> {
             GlStateManager.rotate(te.getA(), -1.0F, 0.0F, 0);
 
             DynamXContext.getObjModelRegistry().getModel(te.getBlockObjectInfo().getModel()).renderGroups("move", (byte) te.getBlockMetadata());
+
             GlStateManager.popMatrix();
 
             GlStateManager.pushMatrix();
@@ -32,6 +33,13 @@ public class RenderTileMovingGate extends TESRDynamXBlock<TileMovingGate> {
             GlStateManager.scale((te.getBlockObjectInfo().getScaleModifier()).x, (te.getBlockObjectInfo().getScaleModifier()).y, (te.getBlockObjectInfo().getScaleModifier()).z);
             GlStateManager.rotate(te.getRotation() * 22.5F, 0.0F, -1.0F, 0.0F);
             GlStateManager.popMatrix();
+
+
         }
+    }
+
+    @Override
+    public boolean shouldRenderDebug() {
+        return true;
     }
 }

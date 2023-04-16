@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="https://kit.fontawesome.com/d6765927e3.js" crossorigin="anonymous"></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+</head>
+
+<body>
+<div class="wheel">
+    <div class="arc"><i class="fa-solid fa-chair"></i></div>
+    <div class="arc"><i class="fa-solid fa-person-military-pointing"></i></div>
+    <div class="arc"><i class="fa-solid fa-hand-point-up"></i></div>
+    <div class="arc"><i class="fa-solid fa-people-robbery"></i></div>
+    <div class="arc"><i class="fa-solid fa-ban"></i></div>
+    <div class="arc"><i class="fa-solid fa-person-walking"></i></div>
+    <div class="arc"><i class="fa-solid fa-hand-point-left"></i></div>
+    <div class="arc"></div>
+
+</div>
+
+</body>
+
+</html>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    html {
+        user-select: none;
+        overflow: hidden;
+    }
+
+    html body {
+        /* background-color: #222; */
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        margin: 0;
+
+    }
+
+    h1 {
+        position: absolute;
+        top: 30%;
+        color: rgba(255, 255, 255, 0.3);
+        padding: 0 1rem;
+        text-align: center;
+        width: 100%;
+    }
+
+    .wheel {
+        --x: 50vw;
+        --y: 50vh;
+        position: absolute;
+        top: var(--y);
+        left: var(--x);
+        width: 500px;
+        height: 500px;
+        transform: translate(-50%, -50%);
+        transform-origin: 0% 0%;
+    }
+
+    .wheel.on .arc {
+        opacity: 0.8;
+        transform: scale(1) rotate(var(--rotation)) !important;
+        transition-timing-function: cubic-bezier(0, 0.5, 0.5, 1.5);
+    }
+
+    .wheel .arc {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 50%;
+        height: 50%;
+        transform-origin: 0% 100%;
+        background-image: radial-gradient(circle at 0% 100%, transparent, transparent 29.5%, var(--color-border) 30%, var(--color-border) 30.5%, var(--color) 31%, var(--color) 50%, var(--color-border) 50.25%, var(--color-border) 51.5%, transparent 51.75%, transparent);
+        transition-property: transform, opacity;
+        transition-duration: 0.3s;
+        transition-timing-function: cubic-bezier(0.4, -0.4, 0.7, -0.3);
+        -webkit-clip-path: polygon(0 0, 0 99%, 99% 0);
+        clip-path: polygon(0 0, 0 99%, 99% 0);
+        opacity: 0;
+        transform: scale(0) rotate(var(--rotation));
+    }
+
+    .wheel .arc i {
+        position: absolute;
+        top: 40%;
+        left: 15%;
+        font-size: 2rem;
+        transform: rotate(calc(var(--rotation) * -1));
+        color: rgba(255, 255, 255, 0.8);
+        transition: color 0.3s;
+    }
+
+    .wheel[data-chosen="1"] .arc:nth-child(1) {
+        opacity: 1;
+        transform: scale(1.1) rotate(var(--rotation)) !important;
+        filter: brightness(150%);
+    }
+
+    .wheel[data-chosen="1"] .arc:nth-child(1) i {
+        color: rgba(0, 0, 0, 0.5);
+    }
+
+    .wheel .arc:nth-child(1) {
+        --rotation: -22.5deg;
+        --color: #A4A4A4;
+        --color-border: #494949;
+        transition-delay: 0.015s;
+    }
+
+    .wheel[data-chosen="2"] .arc:nth-child(2) {
+        opacity: 1;
+        transform: scale(1.1) rotate(var(--rotation)) !important;
+        filter: brightness(150%);
+    }
+
+    .wheel[data-chosen="2"] .arc:nth-child(2) i {
+        color: rgba(0, 0, 0, 0.5);
+    }
+
+    .wheel .arc:nth-child(2) {
+        --rotation: 22.5deg;
+        --color: #A4A4A4;
+        --color-border: #494949;
+        transition-delay: 0s;
+    }
+
+    .wheel[data-chosen="3"] .arc:nth-child(3) {
+        opacity: 1;
+        transform: scale(1.1) rotate(var(--rotation)) !important;
+        filter: brightness(150%);
+    }
+
+    .wheel[data-chosen="3"] .arc:nth-child(3) i {
+        color: rgba(0, 0, 0, 0.5);
+    }
+
+    .wheel .arc:nth-child(3) {
+        --rotation: 67.5deg;
+        --color: #A4A4A4;
+        --color-border: #494949;
+        transition-delay: 0.015s;
+    }
+
+    .wheel[data-chosen="4"] .arc:nth-child(4) {
+        opacity: 1;
+        transform: scale(1.1) rotate(var(--rotation)) !important;
+        filter: brightness(150%);
+    }
+
+    .wheel[data-chosen="4"] .arc:nth-child(4) i {
+        color: rgba(0, 0, 0, 0.5);
+    }
+
+    .wheel .arc:nth-child(4) {
+        --rotation: 112.5deg;
+        --color: #A4A4A4;
+        --color-border: #494949;
+        transition-delay: 0s;
+    }
+
+    .wheel[data-chosen="5"] .arc:nth-child(5) {
+        opacity: 1;
+        transform: scale(1.1) rotate(var(--rotation)) !important;
+        filter: brightness(150%);
+    }
+
+    .wheel[data-chosen="5"] .arc:nth-child(5) i {
+        color: rgba(0, 0, 0, 0.5);
+    }
+
+    .wheel .arc:nth-child(5) {
+        --rotation: 157.5deg;
+        --color: #A4A4A4;
+        --color-border: #494949;
+        transition-delay: 0.015s;
+    }
+
+    .wheel[data-chosen="6"] .arc:nth-child(6) {
+        opacity: 1;
+        transform: scale(1.1) rotate(var(--rotation)) !important;
+        filter: brightness(150%);
+    }
+
+    .wheel[data-chosen="6"] .arc:nth-child(6) i {
+        color: rgba(0, 0, 0, 0.5);
+    }
+
+    .wheel .arc:nth-child(6) {
+        --rotation: 202.5deg;
+        --color: #A4A4A4;
+        --color-border: #494949;
+        transition-delay: 0s;
+    }
+
+    .wheel[data-chosen="7"] .arc:nth-child(7) {
+        opacity: 1;
+        transform: scale(1.1) rotate(var(--rotation)) !important;
+        filter: brightness(150%);
+    }
+
+    .wheel[data-chosen="7"] .arc:nth-child(7) i {
+        color: rgba(0, 0, 0, 0.5);
+    }
+
+    .wheel .arc:nth-child(7) {
+        --rotation: 247.5deg;
+        --color: #A4A4A4;
+        --color-border: #494949;
+        transition-delay: 0.015s;
+    }
+
+    .wheel[data-chosen="8"] .arc:nth-child(8) {
+        opacity: 1;
+        transform: scale(1.1) rotate(var(--rotation)) !important;
+        filter: brightness(150%);
+    }
+
+    .wheel[data-chosen="8"] .arc:nth-child(8) i {
+        color: rgba(0, 0, 0, 0.5);
+    }
+
+    .wheel .arc:nth-child(8) {
+        --rotation: 292.5deg;
+        --color: #A4A4A4;
+        --color-border: #494949;
+        transition-delay: 0s;
+    }
+</style>
+
+<script>
+    document.body.addEventListener('contextmenu', e => e.preventDefault() & e.stopPropagation());
+    document.body.addEventListener('mousemove', onMouseMove);
+    document.body.addEventListener('keypress', onKeyPressed);
+    document.body.addEventListener('keyup', onkeyup);
+    document.querySelectorAll('.wheel .arc').forEach((arc, i) => {
+        arc.addEventListener('click', (c) => {
+            onMouseDown();
+        })
+    })
+    const wheel = document.querySelector('.wheel');
+    let index = 0;
+
+    function onKeyPressed(e) {
+        document.querySelector('.wheel').classList.remove('on');
+        document.querySelector('.wheel[data-chosen]').removeAttribute('data-chosen');
+
+
+        showing = false;
+    }
+
+    function onkeyup(e) {
+        document.querySelector('.wheel').classList.add('on');
+        showing = true;
+    }
+
+    let showing, anchorX, anchorY, min = 100;
+
+    function onMouseDown() {
+        console.log(index)
+        window.mcefQuery({
+            "request": "$animation:" + index,
+            "persistent": false
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        showing = true;
+        anchorX = document.body.clientWidth / 2;
+        anchorY = document.body.clientHeight / 2;
+
+        wheel.style.setProperty('--x', `${anchorX}px`);
+        wheel.style.setProperty('--y', `${anchorY}px`);
+        wheel.classList.add('on');
+    })
+
+    function onMouseMove({ clientX: x, clientY: y }) {
+        if (!showing) return;
+
+        let dx = x - anchorX;
+        let dy = y - anchorY;
+        let mag = Math.sqrt(dx * dx + dy * dy);
+
+
+        if (mag >= min) {
+            let deg = Math.atan2(dy, dx) + 0.625 * Math.PI;
+            while (deg < 0) deg += Math.PI * 2;
+            index = Math.floor(deg / Math.PI * 4) + 1;
+        }
+
+        wheel.setAttribute('data-chosen', index);
+    }
+</script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
