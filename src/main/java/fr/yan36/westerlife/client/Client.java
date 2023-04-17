@@ -172,54 +172,54 @@ public class Client {
             }
     }
 
-    @SideOnly(Side.CLIENT)
-    @SubscribeEvent
-    public void onRenderPre(RenderGameOverlayEvent.Pre event) {
-        if (event.getType() == RenderGameOverlayEvent.ElementType.DEBUG) {
-            Minecraft mc = Minecraft.getMinecraft();
-            event.setCanceled(true);
-            EnumFacing orientation = mc.player.getHorizontalFacing();
-            int dir = Math.round(orientation.getHorizontalAngle());
-            String dire;
-            switch (dir) {
-                case 0:
-                    dire = "North";
-                    break;
-                case 90:
-                    dire = "East";
-                    break;
-                case 180:
-                    dire = "South";
-                    break;
-                case 270:
-                    dire = "West";
-                    break;
-                default:
-                    dire = "undifined";
-                    break;
-            }
-
-            DecimalFormat df = new DecimalFormat("#.##");
-            df.setRoundingMode(RoundingMode.HALF_UP);
-//            this.drawString(Minecraft.getMinecraft().fontRenderer, "WesterLife - Menu de Débug", 5, 10, 0xFF5C5C);
-//            this.drawString(Minecraft.getMinecraft().fontRenderer, mc.debug.split(",", 2)[0].substring(0, 6), 5, 20, 0xFF5C5C);
-//            this.drawString(Minecraft.getMinecraft().fontRenderer, "Direction : " + dire, 5, 30, 0xFF5C5C);
-//            this.drawString(Minecraft.getMinecraft().fontRenderer, "GPS :", 5, 40, 0xFF5C5C);
-//            this.drawString(Minecraft.getMinecraft().fontRenderer, "X: " + df.format(Minecraft.getMinecraft().player.posX) + " Y: " + df.format(Minecraft.getMinecraft().player.posY) + " Z: " + df.format(Minecraft.getMinecraft().player.posZ), 5, 50, 0xFF5C5C);
-            GlStateManager.pushMatrix();
-            getFont().drawString(5, 10, "WesterLife - Menu de Débug", org.newdawn.slick.Color.white);
-            getFont().drawString(5, 20, mc.debug.split(",", 2)[0].substring(0, 6), org.newdawn.slick.Color.white);
-            getFont().drawString(5, 30, "Direction : " + dire, org.newdawn.slick.Color.white);
-            getFont().drawString(5, 40, "GPS :", org.newdawn.slick.Color.white);
-            getFont().drawString(5, 50, "X: " + df.format(Minecraft.getMinecraft().player.posX) + " Y: " + df.format(Minecraft.getMinecraft().player.posY) + " Z: " + df.format(Minecraft.getMinecraft().player.posZ), org.newdawn.slick.Color.white);
-            GlStateManager.popMatrix();
-        }
-
-        if (event.getType() == RenderGameOverlayEvent.ElementType.EXPERIENCE || event.getType() == RenderGameOverlayEvent.ElementType.FOOD || event.getType() == RenderGameOverlayEvent.ElementType.HEALTH || event.getType() == RenderGameOverlayEvent.ElementType.HEALTH) {
-            event.setCanceled(true);
-
-        }
-    }
+//    @SideOnly(Side.CLIENT)
+//    @SubscribeEvent
+//    public void onRenderPre(RenderGameOverlayEvent.Pre event) {
+//        if (event.getType() == RenderGameOverlayEvent.ElementType.DEBUG) {
+//            Minecraft mc = Minecraft.getMinecraft();
+//            event.setCanceled(true);
+//            EnumFacing orientation = mc.player.getHorizontalFacing();
+//            int dir = Math.round(orientation.getHorizontalAngle());
+//            String dire;
+//            switch (dir) {
+//                case 0:
+//                    dire = "North";
+//                    break;
+//                case 90:
+//                    dire = "East";
+//                    break;
+//                case 180:
+//                    dire = "South";
+//                    break;
+//                case 270:
+//                    dire = "West";
+//                    break;
+//                default:
+//                    dire = "undifined";
+//                    break;
+//            }
+//
+//            DecimalFormat df = new DecimalFormat("#.##");
+//            df.setRoundingMode(RoundingMode.HALF_UP);
+////            this.drawString(Minecraft.getMinecraft().fontRenderer, "WesterLife - Menu de Débug", 5, 10, 0xFF5C5C);
+////            this.drawString(Minecraft.getMinecraft().fontRenderer, mc.debug.split(",", 2)[0].substring(0, 6), 5, 20, 0xFF5C5C);
+////            this.drawString(Minecraft.getMinecraft().fontRenderer, "Direction : " + dire, 5, 30, 0xFF5C5C);
+////            this.drawString(Minecraft.getMinecraft().fontRenderer, "GPS :", 5, 40, 0xFF5C5C);
+////            this.drawString(Minecraft.getMinecraft().fontRenderer, "X: " + df.format(Minecraft.getMinecraft().player.posX) + " Y: " + df.format(Minecraft.getMinecraft().player.posY) + " Z: " + df.format(Minecraft.getMinecraft().player.posZ), 5, 50, 0xFF5C5C);
+//            GlStateManager.pushMatrix();
+//            getFont().drawString(5, 10, "WesterLife - Menu de Débug", org.newdawn.slick.Color.white);
+//            getFont().drawString(5, 20, mc.debug.split(",", 2)[0].substring(0, 6), org.newdawn.slick.Color.white);
+//            getFont().drawString(5, 30, "Direction : " + dire, org.newdawn.slick.Color.white);
+//            getFont().drawString(5, 40, "GPS :", org.newdawn.slick.Color.white);
+//            getFont().drawString(5, 50, "X: " + df.format(Minecraft.getMinecraft().player.posX) + " Y: " + df.format(Minecraft.getMinecraft().player.posY) + " Z: " + df.format(Minecraft.getMinecraft().player.posZ), org.newdawn.slick.Color.white);
+//            GlStateManager.popMatrix();
+//        }
+//
+//        if (event.getType() == RenderGameOverlayEvent.ElementType.EXPERIENCE || event.getType() == RenderGameOverlayEvent.ElementType.FOOD || event.getType() == RenderGameOverlayEvent.ElementType.HEALTH || event.getType() == RenderGameOverlayEvent.ElementType.HEALTH) {
+//            event.setCanceled(true);
+//
+//        }
+//    }
     @SideOnly(Side.CLIENT)
 
     public void drawString(FontRenderer fontRenderer, String str, int x, int y, int color) {

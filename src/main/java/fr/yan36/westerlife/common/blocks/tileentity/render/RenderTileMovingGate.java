@@ -2,6 +2,7 @@ package fr.yan36.westerlife.common.blocks.tileentity.render;
 
 import fr.dynamx.client.renders.TESRDynamXBlock;
 import fr.dynamx.common.DynamXContext;
+import fr.dynamx.common.blocks.TEDynamXBlock;
 import fr.yan36.westerlife.common.blocks.tileentity.TileMovingGate;
 import net.minecraft.client.renderer.GlStateManager;
 
@@ -36,10 +37,5 @@ public class RenderTileMovingGate extends TESRDynamXBlock<TileMovingGate> {
 
 
         }
-    }
-
-    @Override
-    public boolean shouldRenderDebug() {
-        return true;
     }
 }

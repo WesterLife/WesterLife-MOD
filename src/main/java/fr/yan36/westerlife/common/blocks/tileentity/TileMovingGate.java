@@ -29,6 +29,10 @@ public class TileMovingGate extends TileEntitySyncClient implements ITickable {
         super(blockObjectInfo);
     }
 
+    public TileMovingGate() {
+        super(null);
+    }
+
     @Override
     public void readFromNBT(NBTTagCompound tagCompound) {
         this.state = tagCompound.getString("state");
