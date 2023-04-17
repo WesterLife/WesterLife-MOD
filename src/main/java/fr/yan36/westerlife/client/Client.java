@@ -87,7 +87,8 @@ public class Client {
             modelBiped.bipedRightArm.rotateAngleX = (float) Math.toRadians(-180);
         }
         if(animationState.get(ep.getEntityId()).equals(Animation.STAND_AT)) {
-            modelBiped.bipedLeftArm.rotateAngleX = (float) Math.toRadians(-180);
+            modelBiped.bipedRightArm.rotateAngleX = (float) Math.toRadians(-180);
+            modelBiped.bipedRightArm.rotateAngleZ = (float) Math.toRadians(20);
         }
         if(animationState.get(ep.getEntityId()).equals(Animation.SITTED)) {
             modelBiped.bipedLeftLeg.rotateAngleX = (float) Math.toRadians(-90);
