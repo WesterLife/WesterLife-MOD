@@ -7,6 +7,7 @@ import fr.yan36.westerlife.client.phone.Apps;
 import fr.yan36.westerlife.common.CommonProxy;
 import fr.yan36.westerlife.common.blocks.tileentity.*;
 import fr.yan36.westerlife.common.blocks.tileentity.render.RenderTileMovingGate;
+import fr.yan36.westerlife.common.registry.RegistryHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -54,18 +55,18 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void preInit() throws IOException {
         super.preInit();
-
+        System.out.println("ClientProxy preInit");
         ClientRegistry.bindTileEntitySpecialRenderer(TESign.class, new TESignRender());
         ClientRegistry.bindTileEntitySpecialRenderer(TileMovingGate.class, new RenderTileMovingGate());
         ClientRegistry.bindTileEntitySpecialRenderer(TEBisign.class, new TEBisignRender());
-
+        MinecraftForge.EVENT_BUS.register(new Client());
         Display.setTitle("WesterLife - " + Minecraft.getMinecraft().getSession().getUsername());
 
         setWindowIcon();
 
 
 
-        MinecraftForge.EVENT_BUS.register(new Client());
+
         ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("dynamxmod", "css/mainmenu.css"));
         ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("dynamxmod", "css/ingame.css"));
         ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("dynamxmod", "css/createprofil.css"));

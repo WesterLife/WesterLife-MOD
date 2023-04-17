@@ -1,10 +1,7 @@
 package fr.yan36.westerlife.common.init;
 
 import fr.yan36.westerlife.Main;
-import fr.yan36.westerlife.common.network.PacketAnimation;
-import fr.yan36.westerlife.common.network.PacketAskToCreateCharacter;
-import fr.yan36.westerlife.common.network.PacketCreateCharacter;
-import fr.yan36.westerlife.common.network.PacketOpenMcefGui;
+import fr.yan36.westerlife.common.network.*;
 import fr.yan36.westerlife.common.network.old.*;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -35,5 +32,6 @@ public class Network {
         Main.network.registerMessage(PacketATMTransaction.Handler.class, PacketATMTransaction.class, 20, Side.SERVER);
         Main.network.registerMessage(PacketOpenMcefGui.Handler.class, PacketOpenMcefGui.class, 21, Side.CLIENT);
         Main.network.registerMessage(PacketAnimation.Handler.class, PacketAnimation.class, 22, Side.SERVER);
+        Main.network.registerMessage(PacketAnimationToAll.Handler.class, PacketAnimationToAll.class, 23, Side.CLIENT);
     }
 }

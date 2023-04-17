@@ -1,6 +1,8 @@
 package fr.yan36.westerlife;
 
+import com.mrcrayfish.obfuscate.client.event.ModelPlayerEvent;
 import fr.dynamx.api.contentpack.DynamXAddon;
+import fr.yan36.westerlife.client.Client;
 import fr.yan36.westerlife.client.gui.mcef.BrowserHud;
 import fr.yan36.westerlife.client.gui.mcef.BrowserScreen;
 import fr.yan36.westerlife.client.utils.creativetabs.WesterTab;
@@ -8,11 +10,15 @@ import fr.yan36.westerlife.common.CommonProxy;
 import fr.yan36.westerlife.common.init.DynamxInit;
 import fr.yan36.westerlife.common.init.Network;
 import fr.yan36.westerlife.common.registry.RegistryHandler;
+import fr.yan36.westerlife.common.utils.Animation;
 import fr.yan36.westerlife.common.utils.commands.WesterLifeCommand;
 import fr.yan36.westerlife.server.AuthSystem;
+import net.minecraft.client.model.ModelBiped;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -20,6 +26,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -82,8 +89,9 @@ public class Main {
         System.out.println("WesterLife is in dev mode: " + isEnvDev);
         Network.init();
         MinecraftForge.EVENT_BUS.register(new RegistryHandler());
-            //warn: Discord RPC must be reimplemented
+        //warn: Discord RPC must be reimplemented
         if(event.getSide().isClient()) {
+
             try {
                 //new Discord().start();
             } catch (Exception e) {
@@ -106,5 +114,7 @@ public class Main {
 
     public static final CreativeTabs WESTER_MAIN = new WesterTab("westertab");
     public static final CreativeTabs WESTER_ROADS = new WesterTab("westertab_roads");
+
+
 
 }

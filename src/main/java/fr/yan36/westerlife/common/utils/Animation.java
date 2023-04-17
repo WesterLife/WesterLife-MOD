@@ -6,11 +6,12 @@ public enum Animation {
     RIGHT_ARM_UP("Bras droit levé",3),
     HANDS_UP("Mains levées", 4),
     SITTED("Assis", 1),
-    POINTING_FINGER("Pointer du doigt", 6),
-    HANDS_BEHIND("Mains derrière le dos", 7);
+    POINTING_FINGER("Pointer du doigt", 7),
+    HELLO("Saluer", 8),
+    HANDS_BEHIND("Mains derrière le dos", 6);
 
-    private String name;
-    private int id;
+    private final String name;
+    private final int id;
 
     Animation(String name, int i) {
         this.name = name;

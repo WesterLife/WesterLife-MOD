@@ -19,6 +19,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -28,7 +29,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.util.ResourceLoader;
-import scala.Int;
 
 import java.awt.*;
 import java.io.InputStream;
@@ -37,7 +37,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
+@Mod.EventBusSubscriber
 public class Client {
 
     // TODO: Apprendre à développer à _INeox.
@@ -54,7 +54,9 @@ public class Client {
     }
 
     @SubscribeEvent
+    @SideOnly(Side.CLIENT)
     public void setupPlayerRotations(ModelPlayerEvent.SetupAngles event) {
+//        System.out.println(animationState);
         animationState.forEach((id, animation) -> {
             if (event.getEntityPlayer().getEntityId() == id) {
                 animatePlayer(event.getEntityPlayer(), event.getModelPlayer());
@@ -62,17 +64,58 @@ public class Client {
         });
 
     }
+    @SideOnly(Side.CLIENT)
 
     private void animatePlayer(EntityPlayer ep, ModelBiped modelBiped) {
 
-        animationState.putIfAbsent(ep.getEntityId(), Animation.NONE);
-        if(animationState.equals(Animation.HANDS_UP)) {
+        Client.animationState.putIfAbsent(ep.getEntityId(), Animation.NONE);
+        if(!animationState.get(ep.getEntityId()).equals(Animation.SITTED)) ep.eyeHeight = 2f;
+        if(animationState.get(ep.getEntityId()).equals(Animation.HANDS_UP)) {
             modelBiped.bipedRightArm.rotateAngleX = (float) Math.toRadians(-180);
             modelBiped.bipedLeftArm.rotateAngleX = (float) Math.toRadians(-180);
+        }
+        if(animationState.get(ep.getEntityId()).equals(Animation.POINTING_FINGER)) {
+            modelBiped.bipedRightArm.rotateAngleX = (float) Math.toRadians(-90);
+        }
+        if(animationState.get(ep.getEntityId()).equals(Animation.HANDS_BEHIND)) {
+            modelBiped.bipedRightArm.rotateAngleX = (float) Math.toRadians(25);
+            modelBiped.bipedLeftArm.rotateAngleX = (float) Math.toRadians(25);
+            modelBiped.bipedRightArm.rotateAngleZ = (float) Math.toRadians(-25);
+            modelBiped.bipedLeftArm.rotateAngleZ = (float) Math.toRadians(25);
+        }
+        if(animationState.get(ep.getEntityId()).equals(Animation.RIGHT_ARM_UP)) {
+            modelBiped.bipedRightArm.rotateAngleX = (float) Math.toRadians(-180);
+        }
+        if(animationState.get(ep.getEntityId()).equals(Animation.STAND_AT)) {
+            modelBiped.bipedLeftArm.rotateAngleX = (float) Math.toRadians(-180);
+        }
+        if(animationState.get(ep.getEntityId()).equals(Animation.SITTED)) {
+            modelBiped.bipedLeftLeg.rotateAngleX = (float) Math.toRadians(-90);
+            modelBiped.bipedRightLeg.rotateAngleX = (float) Math.toRadians(-90);
+            modelBiped.bipedRightLeg.offsetY = 0.58f;
+            modelBiped.bipedLeftLeg.offsetY = 0.58f;
+            modelBiped.bipedRightLeg.offsetZ = 0.04f;
+            modelBiped.bipedLeftLeg.offsetZ = 0.04f;
+            ep.eyeHeight = 1f;
+            modelBiped.bipedHead.offsetY = 0.5f;
+            modelBiped.bipedHeadwear.offsetY = 0.5f;
+            modelBiped.bipedBody.offsetY = 0.5f;
+            modelBiped.bipedRightArm.offsetY = 0.5f;
+            modelBiped.bipedLeftArm.offsetY = 0.5f;
+        }
+        if(animationState.get(ep.getEntityId()).equals(Animation.HELLO)) {
+            // make animation from -80 to -110 with ep.world.getTotalWorldTime()
+            int val = (int) ep.world.getTotalWorldTime() % 20;
+            if(val < 10) {
+                modelBiped.bipedRightArm.rotateAngleZ = (float) Math.toRadians(160 - (val * 1.5));
+            } else {
+                modelBiped.bipedRightArm.rotateAngleZ = (float) Math.toRadians(160 + (val * 1.5) - 30);
+            }
         }
     }
 
     @SubscribeEvent
+    @SideOnly(Side.CLIENT)
     public void GuieventHandler(GuiOpenEvent e) {
 
         if (e.getGui() instanceof GuiMainMenu && !Main.isEnvDev) {
@@ -96,10 +139,12 @@ public class Client {
     }
 
     @SubscribeEvent
+    @SideOnly(Side.CLIENT)
     public void InteractWithEntity(FMLNetworkEvent.ClientConnectedToServerEvent e) {
     }
 
     @SubscribeEvent
+    @SideOnly(Side.CLIENT)
     public void onTickEvent(TickEvent.ClientTickEvent event) {
             if (needToCreateCharacter == 1) {
                 Main.browserScreen = new BrowserScreen("mod://westerlife/create_perso/perso1.html");
@@ -174,12 +219,14 @@ public class Client {
 
         }
     }
+    @SideOnly(Side.CLIENT)
 
     public void drawString(FontRenderer fontRenderer, String str, int x, int y, int color) {
         fontRenderer.drawStringWithShadow(str, x, y, color);
     }
 
     @SubscribeEvent
+    @SideOnly(Side.CLIENT)
     public void renderPseudo(RenderLivingEvent.Specials.Pre e) {
 
         if (!(Minecraft.getMinecraft().player.isCreative())) {
@@ -189,12 +236,14 @@ public class Client {
     }
 
     @SubscribeEvent
+    @SideOnly(Side.CLIENT)
     public void onClickItem(PlayerInteractEvent.RightClickItem e) {
     }
-
+    @SideOnly(Side.CLIENT)
     public static KeyBinding keyBindTest;
+    @SideOnly(Side.CLIENT)
     public static KeyBinding keyBindAnimation;
-
+    @SideOnly(Side.CLIENT)
     public Client() {
         FMLCommonHandler.instance().bus().register(this);
         MinecraftForge.EVENT_BUS.register(this);
@@ -202,9 +251,11 @@ public class Client {
         keyBindAnimation = new KeyBinding("westerlife.animation", Keyboard.KEY_F4, "westerlife.keybind");
         ClientRegistry.registerKeyBinding(keyBindTest);
         ClientRegistry.registerKeyBinding(keyBindAnimation);
+        System.out.println("WesterLife - Client");
     }
 
     @SubscribeEvent
+    @SideOnly(Side.CLIENT)
     public void onEvent(InputEvent.KeyInputEvent event) {
         if (keyBindTest.isPressed()) {
             keyTestTyped();
@@ -216,6 +267,7 @@ public class Client {
     }
 
     @SubscribeEvent
+    @SideOnly(Side.CLIENT)
     public void onInteractEvent(PlayerInteractEvent.EntityInteract event) {
 //        System.out.println("target");
 //        Entity Target = event.getTarget();
@@ -228,7 +280,7 @@ public class Client {
 //            Minecraft.getMinecraft().ingameGUI.setOverlayMessage("§cVitesse du Véhicule : " + speed, true);
 //        }
     }
-
+    @SideOnly(Side.CLIENT)
     private void keyTestTyped() {
         //ACsGuiApi.asyncLoadThenShowGui("gendarmerie", CSSGuiGendarmerieLogin::new);
         Main.browserScreen = new BrowserScreen();
@@ -237,11 +289,11 @@ public class Client {
         System.out.println("Ouverture du menu");
 
     }
-
+    @SideOnly(Side.CLIENT)
     private static void keyAnimationTyped() {
         openScreenMcef = "animations";
     }
-
+    @SideOnly(Side.CLIENT)
     public static TrueTypeFont getFont() {
         TrueTypeFont font = null;
 

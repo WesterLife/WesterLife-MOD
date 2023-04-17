@@ -36,10 +36,9 @@ public class PacketAnimation implements IMessage{
 
     public static class Handler implements IMessageHandler<PacketAnimation, IMessage> {
         @Override
-        @SideOnly(Side.SERVER)
         public IMessage onMessage(PacketAnimation m, MessageContext ctx) {
-            Serveur.animations.put(ctx.getServerHandler().player, Animation.getAnimationById(m.id));
-            Main.network.sendToAll(new PacketAnimationToAll(ctx.getServerHandler().player.getEntityId(), m.id));
+            System.out.println("Animation " + m.id + " received from " + ctx.getServerHandler().player.getName());
+            Main.network.sendToAll(new PacketAnimationToAll(m.id, ctx.getServerHandler().player.getEntityId()));
             return null;
         }
     }

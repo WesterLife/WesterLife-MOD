@@ -1,9 +1,7 @@
 package fr.yan36.westerlife.common.network;
 
-import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.client.Client;
 import fr.yan36.westerlife.common.utils.Animation;
-import fr.yan36.westerlife.server.Serveur;
 import io.netty.buffer.ByteBuf;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -41,10 +39,12 @@ public class PacketAnimationToAll implements IMessage{
         @Override
         @SideOnly(Side.CLIENT)
         public IMessage onMessage(PacketAnimationToAll m, MessageContext ctx) {
+            System.out.println(Animation.getAnimationById(m.id).getName());
             if(Client.animationState.containsKey(m.entityId))
                 Client.animationState.replace(m.entityId, Animation.getAnimationById(m.id));
             else
                 Client.animationState.put(m.entityId, Animation.getAnimationById(m.id));
+            System.out.println("Animation " + m.id + " received from " + m.entityId);
             return null;
         }
     }

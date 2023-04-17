@@ -22,22 +22,20 @@ import java.util.List;
 
 public class TileMovingGate extends TileEntitySyncClient implements ITickable {
     public String state = "closed";
-    private BlockObject<?> blockObjectInfo;
     private int a = 0;
     private String player = "yan36;gabidut76;_INeox";
     private int timeleft = 0;
-    public TileMovingGate(BlockObject<?> blockObjectInfo) {
+    public TileMovingGate(BlockObject blockObjectInfo) {
         super(blockObjectInfo);
-        this.blockObjectInfo = blockObjectInfo;
     }
 
     @Override
     public void readFromNBT(NBTTagCompound tagCompound) {
-        super.readFromNBT(tagCompound);
         this.state = tagCompound.getString("state");
         this.a = tagCompound.getInteger("a");
         this.player = tagCompound.getString("player");
         this.timeleft = tagCompound.getInteger("timeleft");
+        super.readFromNBT(tagCompound);
     }
 
     @Override
@@ -86,7 +84,7 @@ public class TileMovingGate extends TileEntitySyncClient implements ITickable {
         this.computeBoundingBox();
         DynamXContext.getPhysicsWorld(world).schedule(this::markCollisionsDirty);
         this.world.markBlockRangeForRenderUpdate(pos, pos);
-
+        super.update();
     }
 
     public void setState(String s) {
