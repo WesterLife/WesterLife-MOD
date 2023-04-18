@@ -2,6 +2,7 @@ package fr.yan36.westerlife.common.blocks.tileentity;
 
 import com.jme3.bullet.collision.shapes.CompoundCollisionShape;
 import com.jme3.math.Vector3f;
+import fr.dynamx.client.DynamXModelRegistry;
 import fr.dynamx.common.DynamXContext;
 import fr.dynamx.common.contentpack.type.objects.BlockObject;
 import fr.dynamx.common.entities.vehicles.CarEntity;
@@ -85,9 +86,9 @@ public class TileMovingGate extends TileEntitySyncClient implements ITickable {
             }
             sync();
         }
-        this.computeBoundingBox();
-        DynamXContext.getPhysicsWorld(world).schedule(this::markCollisionsDirty);
-        this.world.markBlockRangeForRenderUpdate(pos, pos);
+//        this.computeBoundingBox();
+//        DynamXContext.getPhysicsWorld(world).schedule(this::markCollisionsDirty);
+//        this.world.markBlockRangeForRenderUpdate(pos, pos);
         super.update();
     }
 

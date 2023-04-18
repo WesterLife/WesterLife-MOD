@@ -38,7 +38,7 @@ public class PacketAnimation implements IMessage{
         @Override
         public IMessage onMessage(PacketAnimation m, MessageContext ctx) {
             System.out.println("Animation " + m.id + " received from " + ctx.getServerHandler().player.getName());
-            Main.network.sendToAll(new PacketAnimationToAll(m.id, ctx.getServerHandler().player.getEntityId()));
+            if(!Serveur.menottes.containsKey(ctx.getServerHandler().player)) Main.network.sendToAll(new PacketAnimationToAll(m.id, ctx.getServerHandler().player.getEntityId()));
             return null;
         }
     }

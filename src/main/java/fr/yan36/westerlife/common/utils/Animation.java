@@ -7,6 +7,7 @@ public enum Animation {
     HANDS_UP("Mains levées", 4),
     SITTED("Assis", 1),
     POINTING_FINGER("Pointer du doigt", 7),
+    MENOTTE("Menotter", -1),
     HELLO("Saluer", 8),
     HANDS_BEHIND("Mains derrière le dos", 6);
 

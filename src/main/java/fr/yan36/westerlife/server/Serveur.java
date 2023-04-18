@@ -3,7 +3,9 @@ package fr.yan36.westerlife.server;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.blocks.dynamx.BlockComputer;
 import fr.yan36.westerlife.common.blocks.dynamx.BlockDistributeur;
+import fr.yan36.westerlife.common.init.DynamxInit;
 import fr.yan36.westerlife.common.init.ItemInit;
+import fr.yan36.westerlife.common.network.PacketAnimationToAll;
 import fr.yan36.westerlife.common.network.PacketAskToCreateCharacter;
 import fr.yan36.westerlife.common.network.PacketOpenMcefGui;
 import fr.yan36.westerlife.common.network.old.PacketOpenGUIAtm;
@@ -12,31 +14,63 @@ import fr.yan36.westerlife.common.utils.Animation;
 import fr.yan36.westerlife.server.bdd.DBUtils;
 import fr.yan36.westerlife.server.bdd.MethodesBDD;
 import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 
 public class Serveur {
 
     public static HashMap<EntityPlayerMP, Animation> animations = new HashMap<>();
+    public static HashMap<EntityPlayer, Boolean> menottes = new HashMap<>();
     @SubscribeEvent
     public void onConnectToServer(PlayerEvent.PlayerLoggedInEvent e) {
         boolean devmod = false;
         if(!devmod) {
             if(!DBUtils.getCharacterExists(e.player)){
-                System.out.println("Nj debug");
                 Main.network.sendTo(new PacketAskToCreateCharacter(), (EntityPlayerMP) e.player);
                 e.player.sendMessage(new TextComponentString("§cVous n'avez pas de personnage, veuillez en créer un."));
             }
         }
     }
+
+    //TODO: Make staff unmenottable
+    //TODO: disable interaction with other blocks & find a way to disable jump better than jump boost
+    @SubscribeEvent
+    public void onRightClickPlayer(PlayerInteractEvent.EntityInteract e) {
+        if(e.getEntityPlayer().getHeldItemMainhand().getItem() == DynamxInit.Menottes.getItem()) {
+            Entity et = e.getTarget();
+            EntityPlayer target = et instanceof EntityPlayer ? (EntityPlayer) et : null;
+            assert target != null;
+            if(Serveur.menottes.containsKey(target)) {
+                target.clearActivePotions();
+                Main.network.sendToAll(new PacketAnimationToAll(Animation.NONE.getId(), target.getEntityId()));
+                target.sendMessage(new TextComponentString("Vous avez été démenotté."));
+                Serveur.menottes.remove(target);
+            } else {
+                Main.network.sendToAll(new PacketAnimationToAll(Animation.MENOTTE.getId(), target.getEntityId()));
+                target.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 1000000, 100));
+                // disable jump
+                target.addPotionEffect(new PotionEffect(MobEffects.JUMP_BOOST, 1000000, -100));
+                target.sendMessage(new TextComponentString("Vous avez été menotté."));
+                Serveur.menottes.put(target, true);
+            }
+        }
+    }
+
 
     @SubscribeEvent
     public void onRightClick(PlayerInteractEvent.RightClickBlock e){

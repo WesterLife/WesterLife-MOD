@@ -1,6 +1,7 @@
 package fr.yan36.westerlife;
 
 import com.mrcrayfish.obfuscate.client.event.ModelPlayerEvent;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import fr.dynamx.api.contentpack.DynamXAddon;
 import fr.yan36.westerlife.client.Client;
 import fr.yan36.westerlife.client.gui.mcef.BrowserHud;
@@ -36,6 +37,7 @@ import org.apache.logging.log4j.Logger;
 
 import javax.sound.sampled.LineUnavailableException;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Objects;
 
 @Mod(
@@ -64,6 +66,7 @@ public class Main {
 
     public static Boolean isEnvDev = false;
 
+
     @DynamXAddon.AddonEventSubscriber
     public static void init() {
         DynamxInit.init();
@@ -91,7 +94,7 @@ public class Main {
         MinecraftForge.EVENT_BUS.register(new RegistryHandler());
         //warn: Discord RPC must be reimplemented
         if(event.getSide().isClient()) {
-
+            
             try {
                 //new Discord().start();
             } catch (Exception e) {

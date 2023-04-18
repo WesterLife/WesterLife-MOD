@@ -6,14 +6,13 @@ import fr.yan36.westerlife.client.gui.mcef.BrowserScreen;
 import fr.yan36.westerlife.common.utils.Animation;
 import fr.yan36.westerlife.common.utils.list.Warp;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.*;
+import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.GuiIngameMenu;
+import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.model.ModelBiped;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.EnumFacing;
 import net.minecraftforge.client.event.GuiOpenEvent;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -32,8 +31,6 @@ import org.newdawn.slick.util.ResourceLoader;
 
 import java.awt.*;
 import java.io.InputStream;
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -77,7 +74,7 @@ public class Client {
         if(animationState.get(ep.getEntityId()).equals(Animation.POINTING_FINGER)) {
             modelBiped.bipedRightArm.rotateAngleX = (float) Math.toRadians(-90);
         }
-        if(animationState.get(ep.getEntityId()).equals(Animation.HANDS_BEHIND)) {
+        if(animationState.get(ep.getEntityId()).equals(Animation.HANDS_BEHIND) || animationState.get(ep.getEntityId()).equals(Animation.MENOTTE)) {
             modelBiped.bipedRightArm.rotateAngleX = (float) Math.toRadians(25);
             modelBiped.bipedLeftArm.rotateAngleX = (float) Math.toRadians(25);
             modelBiped.bipedRightArm.rotateAngleZ = (float) Math.toRadians(-25);
@@ -147,7 +144,7 @@ public class Client {
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
     public void onTickEvent(TickEvent.ClientTickEvent event) {
-            if (needToCreateCharacter == 1) {
+            if (needToCreateCharacter == 1 && Minecraft.getMinecraft().world != null) {
                 Main.browserScreen = new BrowserScreen("mod://westerlife/create_perso/perso1.html");
                 Main.browserScreen.openMenu();
                 needToCreateCharacter = 2;
