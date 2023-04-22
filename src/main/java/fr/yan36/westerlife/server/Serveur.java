@@ -1,5 +1,10 @@
 package fr.yan36.westerlife.server;
 
+import com.jme3.bullet.objects.infos.VehicleController;
+import fr.dynamx.api.events.PhysicsEvent;
+import fr.dynamx.api.events.VehicleEntityEvent;
+import fr.dynamx.api.physics.EnumBulletShapeType;
+import fr.dynamx.common.entities.BaseVehicleEntity;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.blocks.dynamx.BlockComputer;
 import fr.yan36.westerlife.common.blocks.dynamx.BlockDistributeur;
@@ -47,6 +52,19 @@ public class Serveur {
         }
     }
 
+
+//    @SubscribeEvent
+//    public void onDynxCollide(PhysicsEvent.PhysicsCollision e) {
+//        if(e.getObject1().getType().equals(EnumBulletShapeType.VEHICLE)) {
+//            BaseVehicleEntity vehicle = (BaseVehicleEntity) e.getObject1().getObjectIn();
+//            vehicle.setDead();
+//        }
+//        System.out.println(e.getObject1().getObjectIn());
+//        System.out.println("Collided with");
+//        System.out.println(e.getObject2().getObjectIn());
+//
+//    }
+
     //TODO: Make staff unmenottable
     //TODO: disable interaction with other blocks & find a way to disable jump better than jump boost
     @SubscribeEvent
@@ -54,6 +72,7 @@ public class Serveur {
         if(e.getEntityPlayer().getHeldItemMainhand().getItem() == DynamxInit.Menottes.getItem()) {
             Entity et = e.getTarget();
             EntityPlayer target = et instanceof EntityPlayer ? (EntityPlayer) et : null;
+            //TODO: Set range to 2 blocks
             assert target != null;
             if(Serveur.menottes.containsKey(target)) {
                 target.clearActivePotions();

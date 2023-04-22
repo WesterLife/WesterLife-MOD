@@ -66,7 +66,7 @@ public class Client {
     private void animatePlayer(EntityPlayer ep, ModelBiped modelBiped) {
 
         Client.animationState.putIfAbsent(ep.getEntityId(), Animation.NONE);
-        if(!animationState.get(ep.getEntityId()).equals(Animation.SITTED)) ep.eyeHeight = 2f;
+        if(!animationState.get(ep.getEntityId()).equals(Animation.SITTED)) ep.eyeHeight = 1.5f;
         if(animationState.get(ep.getEntityId()).equals(Animation.HANDS_UP)) {
             modelBiped.bipedRightArm.rotateAngleX = (float) Math.toRadians(-180);
             modelBiped.bipedLeftArm.rotateAngleX = (float) Math.toRadians(-180);
