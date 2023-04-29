@@ -17,7 +17,7 @@ public class DynamxInit {
 
     public static BlockSignVillage SignVillage;
     public static BlockDistributeur Distributeur;
-    public static BlockKeypad Keypad;
+    public static BlockDigicode digicode;
     public static BlockBisign doublefeurouge;
     public static BlockTerminalDePaiement TerminalDePaiement;
     public static BlockRadarFixe radarFixe;
@@ -25,6 +25,7 @@ public class DynamxInit {
     public static BlockBarriereLevante barriereLevante;
     public static BlockComputer computer;
     public static BlockPhotocopieuse photocopieuse;
+    public static BlockDeskPhone deskPhone;
 
     public static BlockRoad barrierePolice;
     public static BlockRoad clotureChantier;
@@ -49,6 +50,8 @@ public class DynamxInit {
         barriereLevante = new BlockBarriereLevante(Material.ANVIL, Main.MODID, "barrierelevante", new ResourceLocation("westerlife","models/dynamx/blocks/barriere_levante/barriere_levante.obj"));
         computer = new BlockComputer(Material.ANVIL, Main.MODID, "computer", new ResourceLocation("westerlife","models/dynamx/blocks/computer/pc.obj"));
         photocopieuse = new BlockPhotocopieuse(Material.ANVIL, Main.MODID, "photocopieuse", new ResourceLocation("westerlife","models/dynamx/blocks/photocopieuse/photocopieuse.obj"));
+        digicode = new BlockDigicode(Material.ANVIL, Main.MODID, "digicode", new ResourceLocation("westerlife","models/dynamx/blocks/digicode/digicode.obj"));
+        deskPhone = new BlockDeskPhone(Material.ANVIL, Main.MODID, "deskphone", new ResourceLocation("westerlife","models/dynamx/blocks/deskphone/telephonefixe.obj"));
 
         //Road blocks
         barrierePolice = new BlockRoad(Material.ANVIL, Main.MODID, "barrierepolice", new ResourceLocation("westerlife","models/dynamx/blocks/barriere_police/barriere.obj"));
