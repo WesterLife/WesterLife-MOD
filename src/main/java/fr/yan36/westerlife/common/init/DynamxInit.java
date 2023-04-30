@@ -14,6 +14,8 @@ public class DynamxInit {
     public static ItemDynamx Menottes;
     public static ItemDynamx Taser;
     public static ItemPaper Paper;
+    public static ItemDynamx Extincteur;
+    public static ItemDynamx Seringue;
 
     public static BlockSignVillage SignVillage;
     public static BlockDistributeur Distributeur;
@@ -38,6 +40,8 @@ public class DynamxInit {
         Menottes = (ItemDynamx) new ItemDynamx(Main.MODID, "menottes", new ResourceLocation("westerlife","models/dynamx/items/menottes/menotte.obj")).setMaxStackSize(1);
         Taser = (ItemDynamx) new ItemDynamx(Main.MODID, "taser", new ResourceLocation("westerlife","models/dynamx/items/taser/taser.obj")).setMaxStackSize(1);
         Paper = (ItemPaper) new ItemPaper(Main.MODID, "paper", new ResourceLocation("westerlife","models/dynamx/items/paper/paper.obj")).setMaxStackSize(1);
+        Extincteur = (ItemDynamx) new ItemDynamx(Main.MODID, "extincteur", new ResourceLocation("westerlife","models/dynamx/items/extincteur/extincteur.obj")).setMaxStackSize(1);
+        Seringue = (ItemDynamx) new ItemDynamx(Main.MODID, "seringue", new ResourceLocation("westerlife","models/dynamx/items/seringue/seringue.obj")).setMaxStackSize(1);
 
         //Old items
         Belier = (ItemDynamx) new ItemDynamx(Main.MODID, "belier", new ResourceLocation("westerlife","models/dynamx/belier/belier.obj")).setMaxStackSize(1);
