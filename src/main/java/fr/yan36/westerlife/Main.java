@@ -1,7 +1,5 @@
 package fr.yan36.westerlife;
 
-import com.mrcrayfish.obfuscate.client.event.ModelPlayerEvent;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import fr.dynamx.api.contentpack.DynamXAddon;
 import fr.yan36.westerlife.client.Client;
 import fr.yan36.westerlife.client.gui.mcef.BrowserHud;

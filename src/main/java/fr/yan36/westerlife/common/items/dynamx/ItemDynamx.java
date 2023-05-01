@@ -9,6 +9,7 @@ import fr.yan36.westerlife.common.Util;
 import fr.yan36.westerlife.common.init.DynamxInit;
 import fr.yan36.westerlife.common.network.old.BelierMessage;
 import fr.yan36.westerlife.common.registry.SoundsHandler;
+import net.minecraft.block.BlockFire;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -28,17 +29,16 @@ public class ItemDynamx extends DynamXItem {
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer player, EnumHand handIn) {
-        if (!worldIn.isRemote) {
-            System.out.println("clicked");
+        if(!worldIn.isRemote) {
             if (player.getHeldItemMainhand().isItemEqual(new ItemStack(DynamxInit.PistoletRadar))) {
                 player.getCooldownTracker().setCooldown(player.getHeldItemMainhand().getItem(), 30);
                 player.playSound(SoundsHandler.BIP, 0.5f, 1f);
                 Entity a = Util.getEntityLookAt(player, 80);
-                if(a instanceof CarEntity) {
+                if (a instanceof CarEntity) {
                     CarEntity car = (CarEntity) a;
                     System.out.println(((BaseVehicleEntity<?>) a).getPhysicsHandler().getSpeed(BaseVehiclePhysicsHandler.SpeedUnit.KMH));
                     float speed = ((BaseVehicleEntity<?>) a).getPhysicsHandler().getSpeed(BaseVehiclePhysicsHandler.SpeedUnit.KMH);
-                    if(Math.floor(speed) == -1.00 || Math.floor(speed) == -2.00 ) {
+                    if (Math.floor(speed) == -1.00 || Math.floor(speed) == -2.00) {
                         Minecraft.getMinecraft().ingameGUI.setOverlayMessage("§cVitesse du Véhicule : " + Math.floor(speed) + "KM/H", true);
                     } else {
                         Minecraft.getMinecraft().ingameGUI.setOverlayMessage("§cVitesse du Véhicule : 0.00 KM/H", true);
@@ -58,19 +58,43 @@ public class ItemDynamx extends DynamXItem {
         }
         return ActionResult.newResult(EnumActionResult.SUCCESS, player.getHeldItem(handIn));
     }
-    @Override
-    public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        if (!worldIn.isRemote) {
-            if (player.getHeldItemMainhand().isItemEqual(new ItemStack(DynamxInit.PistoletRadar))) {
-                player.getCooldownTracker().setCooldown(player.getHeldItemMainhand().getItem(), 30);
-                player.playSound(SoundsHandler.BIP, 0.5f, 1f);
-                Minecraft mc = Minecraft.getMinecraft();
-                RayTraceResult objectMouseOver = mc.objectMouseOver;
-                System.out.println(objectMouseOver);
-                System.out.println(Util.getEntityLookAt(player, 80));
 
+    @Override
+    public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos blockPos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        if (!worldIn.isRemote) {
+
+            System.out.println("ItemDynamx.onItemUse");
+//            if (player.getHeldItemMainhand().isItemEqual(new ItemStack(DynamxInit.PistoletRadar))) {
+//                player.getCooldownTracker().setCooldown(player.getHeldItemMainhand().getItem(), 30);
+//                player.playSound(SoundsHandler.BIP, 0.5f, 1f);
+//                Minecraft mc = Minecraft.getMinecraft();
+//                RayTraceResult objectMouseOver = mc.objectMouseOver;
+//                System.out.println(objectMouseOver);
+//                System.out.println(Util.getEntityLookAt(player, 80));
+//
+//            }
+
+            if (player.getHeldItemMainhand().isItemEqual(new ItemStack(DynamxInit.Extincteur))) {
+                System.out.println("ExtincteurTest");
+                // Vérifier si le bloc est en feu
+                System.out.println(worldIn.getBlockState(blockPos).getBlock().isFireSource(worldIn, blockPos, EnumFacing.UP));
+                if (worldIn.getBlockState(blockPos).getBlock() instanceof BlockFire) {
+                    System.out.println("Feu détecté");
+                    worldIn.extinguishFire(player, blockPos, player.getHorizontalFacing());
+
+                    for (int i = 0; i < 8; i++) {
+                        double x = blockPos.getX() + worldIn.rand.nextDouble();
+                        double y = blockPos.getY() + worldIn.rand.nextDouble();
+                        double z = blockPos.getZ() + worldIn.rand.nextDouble();
+                        worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, x, y, z, 0.0D, 0.0D, 0.0D);
+                    }
+
+                    // Décrémenter le nombre d'utilisation de l'extincteur de feu
+                    player.getHeldItem(hand).shrink(1);
                 }
             }
-        return super.onItemUse(player, worldIn, pos, hand, facing, hitX, hitY, hitZ);
+
+        }
+            return super.onItemUse(player, worldIn, blockPos, hand, facing, hitX, hitY, hitZ);
     }
 }
