@@ -1,7 +1,7 @@
 package fr.yan36.westerlife.common.init;
 
-import fr.yan36.westerlife.common.init.items.ItemBase;
-import fr.yan36.westerlife.common.init.items.ItemBillet;
+import fr.yan36.westerlife.common.items.ItemBase;
+import fr.yan36.westerlife.common.items.ItemBillet;
 import net.minecraft.item.Item;
 
 import java.util.ArrayList;

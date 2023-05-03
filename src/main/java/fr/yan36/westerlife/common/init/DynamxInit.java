@@ -2,8 +2,8 @@ package fr.yan36.westerlife.common.init;
 
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.blocks.dynamx.*;
-import fr.yan36.westerlife.common.init.items.dynamx.ItemDynamx;
-import fr.yan36.westerlife.common.init.items.dynamx.ItemPaper;
+import fr.yan36.westerlife.common.items.dynamx.ItemDynamx;
+import fr.yan36.westerlife.common.items.dynamx.ItemPaper;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.ResourceLocation;
 
