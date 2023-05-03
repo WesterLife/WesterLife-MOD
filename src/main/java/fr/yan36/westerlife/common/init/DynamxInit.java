@@ -14,10 +14,12 @@ public class DynamxInit {
     public static ItemDynamx Menottes;
     public static ItemDynamx Taser;
     public static ItemPaper Paper;
+    public static ItemDynamx Extincteur;
+    public static ItemDynamx Seringue;
 
     public static BlockSignVillage SignVillage;
     public static BlockDistributeur Distributeur;
-    public static BlockKeypad Keypad;
+    public static BlockDigicode digicode;
     public static BlockBisign doublefeurouge;
     public static BlockTerminalDePaiement TerminalDePaiement;
     public static BlockRadarFixe radarFixe;
@@ -25,6 +27,7 @@ public class DynamxInit {
     public static BlockBarriereLevante barriereLevante;
     public static BlockComputer computer;
     public static BlockPhotocopieuse photocopieuse;
+    public static BlockDeskPhone deskPhone;
 
     public static BlockRoad barrierePolice;
     public static BlockRoad clotureChantier;
@@ -37,6 +40,8 @@ public class DynamxInit {
         Menottes = (ItemDynamx) new ItemDynamx(Main.MODID, "menottes", new ResourceLocation("westerlife","models/dynamx/items/menottes/menotte.obj")).setMaxStackSize(1);
         Taser = (ItemDynamx) new ItemDynamx(Main.MODID, "taser", new ResourceLocation("westerlife","models/dynamx/items/taser/taser.obj")).setMaxStackSize(1);
         Paper = (ItemPaper) new ItemPaper(Main.MODID, "paper", new ResourceLocation("westerlife","models/dynamx/items/paper/paper.obj")).setMaxStackSize(1);
+        Extincteur = (ItemDynamx) new ItemDynamx(Main.MODID, "extincteur", new ResourceLocation("westerlife","models/dynamx/items/extincteur/extincteur.obj")).setMaxStackSize(1);
+        Seringue = (ItemDynamx) new ItemDynamx(Main.MODID, "seringue", new ResourceLocation("westerlife","models/dynamx/items/seringue/seringue.obj")).setMaxStackSize(1);
 
         //Old items
         Belier = (ItemDynamx) new ItemDynamx(Main.MODID, "belier", new ResourceLocation("westerlife","models/dynamx/belier/belier.obj")).setMaxStackSize(1);
@@ -49,6 +54,8 @@ public class DynamxInit {
         barriereLevante = new BlockBarriereLevante(Material.ANVIL, Main.MODID, "barrierelevante", new ResourceLocation("westerlife","models/dynamx/blocks/barriere_levante/barriere_levante.obj"));
         computer = new BlockComputer(Material.ANVIL, Main.MODID, "computer", new ResourceLocation("westerlife","models/dynamx/blocks/computer/pc.obj"));
         photocopieuse = new BlockPhotocopieuse(Material.ANVIL, Main.MODID, "photocopieuse", new ResourceLocation("westerlife","models/dynamx/blocks/photocopieuse/photocopieuse.obj"));
+        digicode = new BlockDigicode(Material.ANVIL, Main.MODID, "digicode", new ResourceLocation("westerlife","models/dynamx/blocks/digicode/digicode.obj"));
+        deskPhone = new BlockDeskPhone(Material.ANVIL, Main.MODID, "deskphone", new ResourceLocation("westerlife","models/dynamx/blocks/deskphone/telephonefixe.obj"));
 
         //Road blocks
         barrierePolice = new BlockRoad(Material.ANVIL, Main.MODID, "barrierepolice", new ResourceLocation("westerlife","models/dynamx/blocks/barriere_police/barriere.obj"));

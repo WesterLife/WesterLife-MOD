@@ -94,7 +94,7 @@ minecraft {
 //        compile group: 'com.zaxxer', name: 'HikariCP', version: '4.0.3'
 //        compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.3'
 
-        implementation fg.deobf('fr.dynamx:DynamX:4.0.0-beta-17')
+        implementation fg.deobf('fr.dynamx:DynamX:4.0.0-beta-18')
         implementation "fr.aym.acsguis:ACsGuis:1.2.5"
         compile fileTree(dir: 'libs', include: '*.jar')
         //implementation "curse.maven:lizardon-mcef-577541:3641377"

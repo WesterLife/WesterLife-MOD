@@ -17,8 +17,8 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-public class BlockKeypad extends DynamXBlock {
-    public BlockKeypad(Material material, String modid, String blockName, ResourceLocation model) {
+public class BlockDigicode extends DynamXBlock {
+    public BlockDigicode(Material material, String modid, String blockName, ResourceLocation model) {
         super(material, modid, blockName, model);
         setCreativeTab(Main.WESTER_MAIN);
     }
