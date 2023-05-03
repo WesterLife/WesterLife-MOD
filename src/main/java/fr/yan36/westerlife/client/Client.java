@@ -1,8 +1,11 @@
 package fr.yan36.westerlife.client;
 
 import com.mrcrayfish.obfuscate.client.event.ModelPlayerEvent;
+import fr.dynamx.api.events.VehicleEntityEvent;
+import fr.dynamx.client.handlers.hud.CarController;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.client.gui.mcef.BrowserScreen;
+import fr.yan36.westerlife.client.gui.other.EngineFailureIcon;
 import fr.yan36.westerlife.common.utils.Animation;
 import fr.yan36.westerlife.common.utils.list.Warp;
 import net.minecraft.client.Minecraft;
@@ -250,6 +253,12 @@ public class Client {
         ClientRegistry.registerKeyBinding(keyBindTest);
         ClientRegistry.registerKeyBinding(keyBindAnimation);
         System.out.println("WesterLife - Client");
+    }
+
+    @SubscribeEvent
+    public static void createHud(VehicleEntityEvent.CreateHud event) {
+        System.out.println("CreateHud");
+        CarController.setHudIcons(new EngineFailureIcon());
     }
 
     @SubscribeEvent

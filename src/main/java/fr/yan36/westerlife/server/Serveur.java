@@ -1,10 +1,16 @@
 package fr.yan36.westerlife.server;
 
 import com.jme3.bullet.objects.infos.VehicleController;
+import fr.dynamx.api.entities.VehicleEntityProperties;
+import fr.dynamx.api.entities.modules.IPhysicsModule;
 import fr.dynamx.api.events.PhysicsEvent;
 import fr.dynamx.api.events.VehicleEntityEvent;
 import fr.dynamx.api.physics.EnumBulletShapeType;
 import fr.dynamx.common.entities.BaseVehicleEntity;
+import fr.dynamx.common.entities.modules.BasicEngineModule;
+import fr.dynamx.common.entities.modules.CarEngineModule;
+import fr.dynamx.common.entities.vehicles.CarEntity;
+import fr.dynamx.common.physics.entities.BaseVehiclePhysicsHandler;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.blocks.dynamx.BlockComputer;
 import fr.yan36.westerlife.common.blocks.dynamx.BlockDistributeur;
@@ -33,7 +39,9 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -53,17 +61,20 @@ public class Serveur {
     }
 
 
-//    @SubscribeEvent
-//    public void onDynxCollide(PhysicsEvent.PhysicsCollision e) {
-//        if(e.getObject1().getType().equals(EnumBulletShapeType.VEHICLE)) {
-//            BaseVehicleEntity vehicle = (BaseVehicleEntity) e.getObject1().getObjectIn();
-//            vehicle.setDead();
-//        }
-//        System.out.println(e.getObject1().getObjectIn());
-//        System.out.println("Collided with");
-//        System.out.println(e.getObject2().getObjectIn());
-//
-//    }
+    @SubscribeEvent
+    public void onDynxCollide(PhysicsEvent.PhysicsCollision e) {
+        if(e.getObject1().getType().equals(EnumBulletShapeType.VEHICLE) && e.getObject2().getType().equals(EnumBulletShapeType.VEHICLE)) {
+            BaseVehicleEntity<?> vehicle1 = (BaseVehicleEntity<?>) e.getCollisionInfo().getEntityA().getObjectIn();
+            BaseVehicleEntity<?> vehicle2 = (BaseVehicleEntity<?>) e.getCollisionInfo().getEntityB().getObjectIn();
+            System.out.println(vehicle1.getPhysicsHandler().getSpeed(BaseVehiclePhysicsHandler.SpeedUnit.KMH));
+            System.out.println(getSpeed(vehicle1));
+
+
+            System.out.println(vehicle1.getName() + " à percuté " + vehicle2.getName() + " à " + getSpeed(vehicle1) +" km/h");
+
+        }
+
+    }
 
     //TODO: Make staff unmenottable
     //TODO: disable interaction with other blocks & find a way to disable jump better than jump boost
@@ -107,6 +118,19 @@ public class Serveur {
         if (block instanceof BlockComputer) {
             Main.network.sendTo(new PacketOpenMcefGui("computer"), (EntityPlayerMP) e.getEntityPlayer());
         }
+    }
+
+    public static int getSpeed(BaseVehicleEntity<?> entity) {
+        if (entity == null) {
+            return -1;
+        }
+        BasicEngineModule engine = entity.getModuleByType(BasicEngineModule.class);
+        if (engine != null) {
+            float[] ab = engine.getEngineProperties();
+            if (ab == null) return 0;
+            return (int) Math.abs(ab[VehicleEntityProperties.EnumEngineProperties.SPEED.ordinal()]);
+        }
+        return -1;
     }
 
 
