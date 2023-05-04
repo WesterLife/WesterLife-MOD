@@ -1,4 +1,4 @@
-package fr.yan36.westerlife.common.objects;
+package fr.yan36.westerlife.common.objects.economy;
 
 public class BankAccount {
     public enum Type { PERSONAL, PROFESSIONAL }
