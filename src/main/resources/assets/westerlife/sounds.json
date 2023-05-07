@@ -3,6 +3,10 @@
     "subtitle": "westerlife.subtitle.bip",
     "sounds": [ "westerlife:bip" ]
   },
+  "bip2": {
+    "subtitle": "westerlife.subtitle.bip2",
+    "sounds": [ "westerlife:bip2" ]
+  },
   "marseillaise": {
     "subtitle": "westerlife.subtitle.marseillaise",
     "sounds": [ "westerlife:marseillaise" ]
