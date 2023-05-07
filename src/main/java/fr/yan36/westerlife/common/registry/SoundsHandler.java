@@ -8,11 +8,13 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 public class SoundsHandler {
 
     public static SoundEvent BIP;
+    public static SoundEvent BIP2;
     public static SoundEvent MARSEILLAISE;
     public static SoundEvent ATMSOUNDBIP;
 
     public static void registerSounds() {
         BIP = registerSound("bip");
+        BIP2 = registerSound("bip2");
         MARSEILLAISE = registerSound("marseillaise");
         ATMSOUNDBIP = registerSound("atmsoundbip");
     }
