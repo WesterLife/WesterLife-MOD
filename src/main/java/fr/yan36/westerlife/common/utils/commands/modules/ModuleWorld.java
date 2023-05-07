@@ -59,6 +59,26 @@ public class ModuleWorld extends CommandModule {
                 }
             } else if(Objects.equals(args[1], "radar")) {
 
+                if(Objects.equals(args[2], "setspeed")) {
+                    if (sender instanceof EntityPlayer) {
+                        EntityPlayer player = (EntityPlayer) sender;
+                        RayTraceResult rayTraceResult = player.world.rayTraceBlocks(player.getPositionEyes(1), player.getPositionEyes(1).add(player.getLookVec().scale(10)));
+                        assert rayTraceResult != null;
+                        System.out.println(rayTraceResult.getBlockPos());
+                        if (rayTraceResult != null) {
+                            TileRadarFixe tileMovingGate = (TileRadarFixe) player.world.getTileEntity(rayTraceResult.getBlockPos());
+                            if (tileMovingGate != null) {
+                                if (Objects.equals(args[2], "setspeed")) {
+                                    tileMovingGate.setSpeed(Integer.parseInt(args[3]));
+                                    tileMovingGate.sync();
+                                    sender.sendMessage(new TextComponentString("§aSet speed to " + args[3] + " km/h"));
+                                }
+                            }
+                        }
+                    } else {
+                        sender.sendMessage(new TextComponentString("§c/wlmod world radar <setspeed>"));
+                    }
+                }
 
             } else if (Objects.equals(args[1], "digicode")) {
                 //Change the code of a digicode
@@ -81,26 +101,6 @@ public class ModuleWorld extends CommandModule {
                             }
                         }
 
-                    }
-                }
-                if(Objects.equals(args[2], "setspeed")) {
-                    if(sender instanceof EntityPlayer) {
-                        EntityPlayer player = (EntityPlayer) sender;
-                        RayTraceResult rayTraceResult = player.world.rayTraceBlocks(player.getPositionEyes(1), player.getPositionEyes(1).add(player.getLookVec().scale(10)));
-                        assert rayTraceResult != null;
-                        System.out.println(rayTraceResult.getBlockPos());
-                        if(rayTraceResult != null) {
-                            TileRadarFixe tileMovingGate = (TileRadarFixe) player.world.getTileEntity(rayTraceResult.getBlockPos());
-                            if(tileMovingGate != null) {
-                                if(Objects.equals(args[2], "setspeed")) {
-                                    tileMovingGate.setSpeed(Integer.parseInt(args[3]));
-                                    tileMovingGate.sync();
-                                    sender.sendMessage(new TextComponentString("§aSet speed to " + args[3] + " km/h"));
-                                }
-                            }
-                        }
-                    } else {
-                        sender.sendMessage(new TextComponentString("§c/wlmod world radar <setspeed>"));
                     }
                 }
             }
