@@ -1,14 +1,18 @@
 package fr.yan36.westerlife.common.network;
 
+import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.client.Client;
 import fr.yan36.westerlife.common.Util;
 import fr.yan36.westerlife.common.blocks.tileentity.TEDigicode;
+import fr.yan36.westerlife.common.registry.SoundsHandler;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -39,23 +43,25 @@ public class PacketTryCode implements IMessage{
     @Override
     public void toBytes(ByteBuf buf) {
         ByteBufUtils.writeUTF8String(buf, this.code);
-        ByteBufUtils.writeUTF8String(buf, Objects.requireNonNull(Util.blockPosToString(this.pos)));
+        ByteBufUtils.writeUTF8String(buf, Util.blockPosToString(this.pos));
     }
 
     public static class Handler implements IMessageHandler<PacketTryCode, IMessage> {
         @Override
         @SideOnly(Side.SERVER)
         public IMessage onMessage(PacketTryCode m, MessageContext ctx) {
+            System.out.println(Util.blockPosToString(m.pos));
             EntityPlayer player = (EntityPlayer) ctx.getServerHandler().player;
             TEDigicode teDigicode = (TEDigicode) player.world.getTileEntity(m.pos);
                 if(teDigicode != null) {
                     if(TEDigicode.getCode().equals(m.code)) {
                         player.sendMessage(new TextComponentString("§aCode correct"));
-                        //WIP : Accept sound & Emit redstone signal
+                        Main.network.sendToAllAround(new PacketPlaySound(1), new NetworkRegistry.TargetPoint(ctx.getServerHandler().player.dimension, m.pos.getX(), m.pos.getY(), m.pos.getZ() , 10));
+                        //WIP : Emit redstone signal
                     } else {
                         player.sendMessage(new TextComponentString("§cCode incorrect"));
-                        //WIP : Deny sound
-                    }
+                        Main.network.sendToAllAround(new PacketPlaySound(1), new NetworkRegistry.TargetPoint(ctx.getServerHandler().player.dimension, m.pos.getX(), m.pos.getY(), m.pos.getZ() , 10));
+                        }
                 }
             return null;
         }
