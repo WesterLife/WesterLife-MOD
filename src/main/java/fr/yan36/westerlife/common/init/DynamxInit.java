@@ -5,6 +5,7 @@ import fr.yan36.westerlife.common.blocks.dynamx.*;
 import fr.yan36.westerlife.common.items.dynamx.ItemDynamx;
 import fr.yan36.westerlife.common.items.dynamx.ItemPaper;
 import net.minecraft.block.material.Material;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 public class DynamxInit {
@@ -16,6 +17,7 @@ public class DynamxInit {
     public static ItemPaper Paper;
     public static ItemDynamx Extincteur;
     public static ItemDynamx Seringue;
+    public static ItemDynamx MatraqueTelescopique;
 
     public static BlockSignVillage SignVillage;
     public static BlockDistributeur Distributeur;
@@ -28,6 +30,7 @@ public class DynamxInit {
     public static BlockComputer computer;
     public static BlockPhotocopieuse photocopieuse;
     public static BlockDeskPhone deskPhone;
+    public static BlockPompeEssence pompeEssence;
 
     public static BlockRoad barrierePolice;
     public static BlockRoad clotureChantier;
@@ -43,6 +46,7 @@ public class DynamxInit {
         Paper = (ItemPaper) new ItemPaper(Main.MODID, "paper", new ResourceLocation("westerlife","models/dynamx/items/paper/paper.obj")).setMaxStackSize(1);
         Extincteur = (ItemDynamx) new ItemDynamx(Main.MODID, "extincteur", new ResourceLocation("westerlife","models/dynamx/items/extincteur/extincteur.obj")).setMaxStackSize(1);
         Seringue = (ItemDynamx) new ItemDynamx(Main.MODID, "seringue", new ResourceLocation("westerlife","models/dynamx/items/seringue/seringue.obj")).setMaxStackSize(1);
+        MatraqueTelescopique = (ItemDynamx) new ItemDynamx(Main.MODID, "matraquetelescopique", new ResourceLocation("westerlife","models/dynamx/items/matraquetelescopique/telesc.obj")).setMaxStackSize(1);
 
         //Old items
         Belier = (ItemDynamx) new ItemDynamx(Main.MODID, "belier", new ResourceLocation("westerlife","models/dynamx/belier/belier.obj")).setMaxStackSize(1);
@@ -57,6 +61,7 @@ public class DynamxInit {
         photocopieuse = new BlockPhotocopieuse(Material.ANVIL, Main.MODID, "photocopieuse", new ResourceLocation("westerlife","models/dynamx/blocks/photocopieuse/photocopieuse.obj"));
         digicode = new BlockDigicode(Material.ANVIL, Main.MODID, "digicode", new ResourceLocation("westerlife","models/dynamx/blocks/digicode/digicode.obj"));
         deskPhone = new BlockDeskPhone(Material.ANVIL, Main.MODID, "deskphone", new ResourceLocation("westerlife","models/dynamx/blocks/deskphone/telephonefixe.obj"));
+        pompeEssence = new BlockPompeEssence(Material.ANVIL, Main.MODID, "pompeessence", new ResourceLocation("westerlife","models/dynamx/blocks/pompe_essence/pompeessence.obj"));
 
         //Road blocks
         barrierePolice = new BlockRoad(Material.ANVIL, Main.MODID, "barrierepolice", new ResourceLocation("westerlife","models/dynamx/blocks/barriere_police/barriere.obj"));
