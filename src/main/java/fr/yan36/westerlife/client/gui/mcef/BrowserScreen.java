@@ -296,7 +296,6 @@ public class BrowserScreen extends GuiScreen implements IJSQueryHandler
                     Main.network.sendToServer(new PacketAnimation(Integer.parseInt(query.split(":")[1])));
                 } else if(query.substring(1).split(":")[0].equals("tryCode")) {
                     String code = query.split(":")[1];
-                    Minecraft.getMinecraft().player.sendMessage(new TextComponentString("§cTryCode " + code));
                     Main.network.sendToServer(new PacketTryCode(code, Client.openScreenMcefPos));
                     Minecraft.getMinecraft().displayGuiScreen(null);
                 }

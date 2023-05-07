@@ -2,6 +2,7 @@ package fr.yan36.westerlife.common.utils.commands.modules;
 
 import fr.yan36.westerlife.common.blocks.tileentity.TEDigicode;
 import fr.yan36.westerlife.common.blocks.tileentity.TileMovingGate;
+import fr.yan36.westerlife.common.blocks.tileentity.TileRadarFixe;
 import fr.yan36.westerlife.common.utils.commands.CommandModule;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
