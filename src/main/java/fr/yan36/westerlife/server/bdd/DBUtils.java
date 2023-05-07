@@ -18,7 +18,7 @@ public class DBUtils {
     public static void createCharacter(EntityPlayer p, String familyname, String firstnames, String birthdate, String birthplace, String nationality, String sex){
         try{
             Connection connection = ServerProxy.getDatabaseManager().getWesterLifeDB().getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO `players` (`uuid`, `familyname`, `firstnames`, `birthdate`, `birthplace`, `nationality`, `sex`) VALUES ('"+p.getUniqueID().toString()+"','"+familyname+"','"+firstnames+"','"+birthdate+"','"+birthplace+"','"+nationality+"','"+sex+"')");
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO `players` (`uuid`, `pseudo`, `familyname`, `firstnames`, `birthdate`, `birthplace`, `nationality`, `sex`) VALUES ('"+p.getUniqueID().toString()+"','"+p.getName()+"','"+familyname+"','"+firstnames+"','"+birthdate+"','"+birthplace+"','"+nationality+"','"+sex+"')");
             preparedStatement.executeUpdate();
             connection.close();
         } catch (SQLException e){
