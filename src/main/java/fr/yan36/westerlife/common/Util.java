@@ -1,16 +1,23 @@
 package fr.yan36.westerlife.common;
 
+import com.google.common.base.Predicate;
+import com.google.common.collect.Lists;
+import fr.yan36.westerlife.common.utils.AABB;
+import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.EntitySelectors;
+import net.minecraft.util.math.*;
 import net.minecraft.world.World;
+import net.minecraft.world.chunk.Chunk;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+
+import static net.minecraft.world.World.MAX_ENTITY_RADIUS;
 
 public class Util {
     public static BlockPos parseBlockPosFromString(String stringPos)
@@ -69,5 +76,66 @@ public class Util {
             }
         }
         return null;
+    }
+
+    public static RayTraceResult rayTracePlayer(EntityPlayer player, int max_dis) {
+        Vec3d vec3 = player.getPositionEyes(1.0F);
+        Vec3d vec31 = player.getLook(1.0F).scale(max_dis);
+        Vec3d vec32 = vec3.add(vec31);
+        return player.world.rayTraceBlocks(vec3, vec32, false, false, true);
+    }
+
+    public static HashMap<BlockPos, Block> getBlocksAround(BlockPos pos, World world, int i) {
+        HashMap<BlockPos, Block> blocks = new HashMap<>();
+        for (int x = pos.getX() - i; x <= pos.getX() + i; x++) {
+            for (int y = pos.getY() - i; y <= pos.getY() + i; y++) {
+                for (int z = pos.getZ() - i; z <= pos.getZ() + i; z++) {
+                    blocks.put(new BlockPos(x, y, z), world.getBlockState(new BlockPos(x, y, z)).getBlock());
+                }
+            }
+        }
+        return blocks;
+    }
+
+    public static <T extends Entity> List<T> getEntitiesWithinAABB(World w, Class<? extends T> clazz, AABB aabb)
+    {
+        int j2 = MathHelper.floor((aabb.minX - MAX_ENTITY_RADIUS) / 16.0D);
+        int k2 = MathHelper.ceil((aabb.maxX + MAX_ENTITY_RADIUS) / 16.0D);
+        int l2 = MathHelper.floor((aabb.minZ - MAX_ENTITY_RADIUS) / 16.0D);
+        int i3 = MathHelper.ceil((aabb.maxZ + MAX_ENTITY_RADIUS) / 16.0D);
+        List<T> list = Lists.newArrayList();
+
+        for (int j3 = j2; j3 < k2; ++j3)
+        {
+            for (int k3 = l2; k3 < i3; ++k3)
+            {
+                if (w.isChunkGeneratedAt(j3, k3))
+                {
+                    getEntitiesOfTypeWithinAABB(w.getChunk(j3, k3), clazz, aabb, list,  EntitySelectors.NOT_SPECTATING);
+                }
+            }
+        }
+
+        return list;
+    }
+
+
+    public static  <T extends Entity> void getEntitiesOfTypeWithinAABB(Chunk w, Class <? extends T > entityClass, AABB aabb, List<T> listToFill, Predicate <? super T > filter)
+    {
+        int i = MathHelper.floor((aabb.minY - World.MAX_ENTITY_RADIUS) / 16.0D);
+        int j = MathHelper.floor((aabb.maxY + World.MAX_ENTITY_RADIUS) / 16.0D);
+        i = MathHelper.clamp(i, 0, w.getEntityLists().length - 1);
+        j = MathHelper.clamp(j, 0, w.getEntityLists().length - 1);
+
+        for (int k = i; k <= j; ++k)
+        {
+            for (T t : w.getEntityLists()[k].getByClass(entityClass))
+            {
+                if (t.getEntityBoundingBox().intersects(aabb.minX, aabb.minY, aabb.minZ, aabb.maxX, aabb.maxY, aabb.maxZ) && (filter == null || filter.apply(t)))
+                {
+                    listToFill.add(t);
+                }
+            }
+        }
     }
 }

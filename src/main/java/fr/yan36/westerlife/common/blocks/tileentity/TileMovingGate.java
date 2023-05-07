@@ -7,6 +7,8 @@ import fr.dynamx.common.DynamXContext;
 import fr.dynamx.common.contentpack.type.objects.BlockObject;
 import fr.dynamx.common.entities.vehicles.CarEntity;
 import fr.dynamx.utils.optimization.MutableBoundingBox;
+import fr.yan36.westerlife.common.objects.justice.Conviction;
+import fr.yan36.westerlife.server.bdd.DBUtils;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -72,7 +74,12 @@ public class TileMovingGate extends TileEntitySyncClient implements ITickable {
                     this.a -= 5;
                 }
                 this.computeBoundingBox();
-                DynamXContext.getPhysicsWorld(world).schedule(this::markCollisionsDirty);
+                try {
+                    DynamXContext.getPhysicsWorld(world).schedule(this::markCollisionsDirty);
+                } catch (Exception e) {
+                    System.out.println("Error in TileMovingGate.java: " + e.getMessage() + " " + this.getPos());
+                }
+
                 this.timeleft++;
                 if(this.timeleft > 300) {
                     setState("closed");

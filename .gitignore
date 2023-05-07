@@ -22,9 +22,6 @@ eclipse
 run
 WesterLife
 
-# Make exeption for these files
-!WesterLife/DynamX/*
-!WesterLife/DynamX/**/*
 
 # Files from Forge MDK
 forge*changelog.txt

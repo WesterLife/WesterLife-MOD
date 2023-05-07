@@ -1,5 +1,6 @@
 package fr.yan36.westerlife.server.bdd;
 
+import fr.yan36.westerlife.common.objects.IDatabaseVariable;
 import fr.yan36.westerlife.server.ServerProxy;
 import net.minecraft.entity.player.EntityPlayer;
 
@@ -8,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class DBUtils {
 
@@ -218,4 +220,38 @@ public class DBUtils {
         }
         return 0F;
     }
+
+    // Bande de nulos
+
+    public static void saveToDB(IDatabaseVariable dbv){
+        List<String> values = dbv.getValues();
+        StringBuilder litteralValues = new StringBuilder();
+        for (String value : values){
+            if (values.indexOf(value) == values.size() - 1){
+                litteralValues.append("?");
+            } else {
+                litteralValues.append("?,");
+            }
+        }
+
+
+        try{
+            Connection connection = ServerProxy.getDatabaseManager().getWesterLifeDB().getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO `" + dbv.tableName() + "` VALUES (" + litteralValues + ")");
+
+            int i = 1;
+            for (String value : values) {
+                preparedStatement.setString(i, value);
+                i++;
+            }
+            System.out.println(preparedStatement.toString());
+            preparedStatement.execute();
+            connection.close();
+        } catch (SQLException e){
+            System.out.println(litteralValues);
+            e.printStackTrace();
+        }
+
+    }
+
 }

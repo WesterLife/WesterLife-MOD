@@ -1,8 +1,10 @@
 package fr.yan36.westerlife.server.bdd;
 
+import fr.yan36.westerlife.common.objects.IDatabaseVariable;
 import fr.yan36.westerlife.common.utils.list.*;
 import net.minecraft.entity.player.EntityPlayer;
 
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -17,6 +19,7 @@ public class MethodesBDD {
     public static void createCharacter(EntityPlayer p, String familyname, String firstnames, String birthdate, String birthplace, String nationality, String sex){
         instance.execute("INSERT INTO `players` (`pseudo`,`uuid`, `familyname`, `firstnames`, `birthdate`, `birthplace`, `nationality`, `sex`) VALUES ('"+p.getDisplayNameString()+"','"+p.getUniqueID().toString()+"','"+familyname+"','"+firstnames+"','"+birthdate+"','"+birthplace+"','"+nationality+"','"+sex+"')");
     }
+
 
     //Vérifie si un personne rôle-play existe pour un joueur
     public static boolean getCharacterExists(EntityPlayer p){
@@ -253,4 +256,6 @@ public class MethodesBDD {
         job = qr.getValue(0,0);
         return job;
     }
+    
+
 }

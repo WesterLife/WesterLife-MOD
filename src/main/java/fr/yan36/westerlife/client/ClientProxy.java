@@ -6,6 +6,7 @@ import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.client.phone.Apps;
 import fr.yan36.westerlife.common.CommonProxy;
 import fr.yan36.westerlife.common.blocks.tileentity.*;
+import fr.yan36.westerlife.common.blocks.tileentity.render.RenderRadarFixe;
 import fr.yan36.westerlife.common.blocks.tileentity.render.RenderTileMovingGate;
 import fr.yan36.westerlife.common.registry.RegistryHandler;
 import net.minecraft.client.Minecraft;
@@ -58,6 +59,7 @@ public class ClientProxy extends CommonProxy {
         System.out.println("ClientProxy preInit");
         ClientRegistry.bindTileEntitySpecialRenderer(TESign.class, new TESignRender());
         ClientRegistry.bindTileEntitySpecialRenderer(TileMovingGate.class, new RenderTileMovingGate());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileRadarFixe.class, new RenderRadarFixe());
         ClientRegistry.bindTileEntitySpecialRenderer(TEBisign.class, new TEBisignRender());
         MinecraftForge.EVENT_BUS.register(new Client());
         Display.setTitle("WesterLife - " + Minecraft.getMinecraft().getSession().getUsername());

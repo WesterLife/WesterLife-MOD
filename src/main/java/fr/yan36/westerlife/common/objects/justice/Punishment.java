@@ -30,7 +30,7 @@ public class Punishment {
     private Float amount;
     private Boolean executed;
 
-    Punishment(PunishmentType type, Float amount, Boolean executed) {
+    public Punishment(PunishmentType type, Float amount, Boolean executed) {
         this.type = type;
         this.amount = amount;
         this.executed = executed;
@@ -48,4 +48,14 @@ public class Punishment {
         return executed;
     }
 
+    @Override
+    public String toString() {
+        return type.name() + "!" + amount + "!" + executed;
+    }
+
+
+    public static Punishment fromString(String s) {
+        String[] split = s.split("!");
+        return new Punishment(PunishmentType.valueOf(split[0]), Float.parseFloat(split[1]), Boolean.parseBoolean(split[2]));
+    }
 }

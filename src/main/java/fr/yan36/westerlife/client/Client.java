@@ -256,6 +256,7 @@ public class Client {
     }
 
     @SubscribeEvent
+    @SideOnly(Side.CLIENT)
     public static void createHud(VehicleEntityEvent.CreateHud event) {
         System.out.println("CreateHud");
         CarController.setHudIcons(new EngineFailureIcon());

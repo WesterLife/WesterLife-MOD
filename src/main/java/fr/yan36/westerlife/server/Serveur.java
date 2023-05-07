@@ -73,8 +73,14 @@ public class Serveur {
             System.out.println(vehicle1.getName() + " à percuté " + vehicle2.getName() + " à " + getSpeed(vehicle1) +" km/h");
 
         }
-
     }
+
+//    @SubscribeEvent
+//    public void radarHandler(PhysicsEvent.StepSimulation e) {
+//        if(e.getPhysicsWorld().getTerrainManager().getWorld().getWorldTime() % 20 == 0) {
+//
+//        }
+//    }
 
     //TODO: Make staff unmenottable
     //TODO: disable interaction with other blocks & find a way to disable jump better than jump boost

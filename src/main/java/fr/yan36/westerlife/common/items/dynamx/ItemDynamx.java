@@ -9,6 +9,7 @@ import fr.yan36.westerlife.common.Util;
 import fr.yan36.westerlife.common.init.DynamxInit;
 import fr.yan36.westerlife.common.network.old.BelierMessage;
 import fr.yan36.westerlife.common.registry.SoundsHandler;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockFire;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
@@ -22,6 +23,10 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.obj.OBJModel;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
+import org.lwjgl.util.vector.Vector3f;
+
+import java.util.HashMap;
+import java.util.List;
 
 public class ItemDynamx extends DynamXItem {
 
@@ -80,11 +85,19 @@ public class ItemDynamx extends DynamXItem {
 
             if (player.getHeldItemMainhand().isItemEqual(new ItemStack(DynamxInit.Extincteur))) {
                 System.out.println("ExtincteurTest");
-                System.out.println(Util.getEntityLookAt(player, 5));
-                Entity entity = Util.getEntityLookAt(player, 5);
+                RayTraceResult r = Util.rayTracePlayer(player, 5);
+                HashMap<BlockPos, Block> blocks = Util.getBlocksAround(r.getBlockPos(), worldIn, 1);
+
+                blocks.forEach((pos, b) -> {
+                    if (b == Blocks.FIRE) {
+                        worldIn.setBlockState(pos, Blocks.AIR.getDefaultState());
+                    }
+                });
+
             }
 
+
         }
-            return super.onItemUse(player, worldIn, blockPos, hand, facing, hitX, hitY, hitZ);
+        return super.onItemUse(player, worldIn, blockPos, hand, facing, hitX, hitY, hitZ);
     }
 }
