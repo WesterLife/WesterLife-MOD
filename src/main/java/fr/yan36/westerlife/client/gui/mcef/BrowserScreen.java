@@ -5,6 +5,7 @@ import fr.yan36.westerlife.client.Client;
 import fr.yan36.westerlife.client.gui.acs.CSSGuiMainMenu;
 import fr.yan36.westerlife.common.network.PacketAnimation;
 import fr.yan36.westerlife.common.network.PacketCreateCharacter;
+import fr.yan36.westerlife.common.network.PacketTryCode;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.multiplayer.GuiConnecting;
@@ -16,6 +17,7 @@ import net.minecraft.network.EnumConnectionState;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.handshake.client.C00Handshake;
 import net.minecraft.network.login.client.CPacketLoginStart;
+import net.minecraft.util.text.TextComponentString;
 import net.montoyo.mcef.api.*;
 import net.montoyo.mcef.example.ScreenCfg;
 import org.lwjgl.input.Keyboard;
@@ -292,6 +294,11 @@ public class BrowserScreen extends GuiScreen implements IJSQueryHandler
                     this.mc.displayGuiScreen(new GuiOptions(Main.browserScreen, this.mc.gameSettings));
                 } else if(query.substring(1).split(":")[0].equals("animation")) {
                     Main.network.sendToServer(new PacketAnimation(Integer.parseInt(query.split(":")[1])));
+                } else if(query.substring(1).split(":")[0].equals("tryCode")) {
+                    String code = query.split(":")[1];
+                    Minecraft.getMinecraft().player.sendMessage(new TextComponentString("§cTryCode " + code));
+                    Main.network.sendToServer(new PacketTryCode(code, Client.openScreenMcefPos));
+                    Minecraft.getMinecraft().displayGuiScreen(null);
                 }
             } else
                 cb.failure(403, "Can't access username from external page");

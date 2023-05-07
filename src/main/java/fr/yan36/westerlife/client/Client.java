@@ -15,6 +15,7 @@ import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -48,9 +49,15 @@ public class Client {
     public static List<Warp> warplist = new ArrayList<>();
 
     public static String openScreenMcef = "none";
+    public static BlockPos openScreenMcefPos = null;
 
     public static void setScreenMcef(String screenName) {
         openScreenMcef = screenName;
+    }
+
+    public static void setScreenMcef(String screenName, BlockPos pos) {
+        openScreenMcef = screenName;
+        openScreenMcefPos = pos;
     }
 
     @SubscribeEvent
@@ -166,6 +173,11 @@ public class Client {
                     break;
                 case "animations":
                     Main.browserScreen = new BrowserScreen("mod://westerlife/animations/index.html");
+                    Main.browserScreen.openMenu();
+                    openScreenMcef = "none";
+                    break;
+                case "digicode":
+                    Main.browserScreen = new BrowserScreen("mod://westerlife/digicode/index.html");
                     Main.browserScreen.openMenu();
                     openScreenMcef = "none";
                     break;
