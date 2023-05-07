@@ -5,6 +5,7 @@ import fr.yan36.westerlife.common.blocks.dynamx.*;
 import fr.yan36.westerlife.common.items.dynamx.ItemDynamx;
 import fr.yan36.westerlife.common.items.dynamx.ItemPaper;
 import net.minecraft.block.material.Material;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 public class DynamxInit {
@@ -16,6 +17,7 @@ public class DynamxInit {
     public static ItemPaper Paper;
     public static ItemDynamx Extincteur;
     public static ItemDynamx Seringue;
+    public static ItemDynamx MatraqueTelescopique;
 
     public static BlockSignVillage SignVillage;
     public static BlockDistributeur Distributeur;
@@ -43,6 +45,7 @@ public class DynamxInit {
         Paper = (ItemPaper) new ItemPaper(Main.MODID, "paper", new ResourceLocation("westerlife","models/dynamx/items/paper/paper.obj")).setMaxStackSize(1);
         Extincteur = (ItemDynamx) new ItemDynamx(Main.MODID, "extincteur", new ResourceLocation("westerlife","models/dynamx/items/extincteur/extincteur.obj")).setMaxStackSize(1);
         Seringue = (ItemDynamx) new ItemDynamx(Main.MODID, "seringue", new ResourceLocation("westerlife","models/dynamx/items/seringue/seringue.obj")).setMaxStackSize(1);
+        MatraqueTelescopique = (ItemDynamx) new ItemDynamx(Main.MODID, "matraquetelescopique", new ResourceLocation("westerlife","models/dynamx/items/matraquetelescopique/telesc.obj")).setMaxStackSize(1);
 
         //Old items
         Belier = (ItemDynamx) new ItemDynamx(Main.MODID, "belier", new ResourceLocation("westerlife","models/dynamx/belier/belier.obj")).setMaxStackSize(1);
