@@ -83,20 +83,6 @@ public class ItemDynamx extends DynamXItem {
 //
 //            }
 
-            if (player.getHeldItemMainhand().isItemEqual(new ItemStack(DynamxInit.Extincteur))) {
-                System.out.println("ExtincteurTest");
-                RayTraceResult r = Util.rayTracePlayer(player, 5);
-                HashMap<BlockPos, Block> blocks = Util.getBlocksAround(r.getBlockPos(), worldIn, 1);
-
-                blocks.forEach((pos, b) -> {
-                    if (b == Blocks.FIRE) {
-                        worldIn.setBlockState(pos, Blocks.AIR.getDefaultState());
-                    }
-                });
-
-            }
-
-
         }
         return super.onItemUse(player, worldIn, blockPos, hand, facing, hitX, hitY, hitZ);
     }

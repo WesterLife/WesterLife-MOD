@@ -3,6 +3,7 @@ package fr.yan36.westerlife.common.init;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.blocks.dynamx.*;
 import fr.yan36.westerlife.common.items.dynamx.ItemDynamx;
+import fr.yan36.westerlife.common.items.dynamx.ItemExtincteur;
 import fr.yan36.westerlife.common.items.dynamx.ItemPaper;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemStack;
@@ -15,7 +16,7 @@ public class DynamxInit {
     public static ItemDynamx Menottes;
     public static ItemDynamx Taser;
     public static ItemPaper Paper;
-    public static ItemDynamx Extincteur;
+    public static ItemExtincteur Extincteur;
     public static ItemDynamx Seringue;
     public static ItemDynamx MatraqueTelescopique;
 
@@ -44,7 +45,7 @@ public class DynamxInit {
         Menottes = (ItemDynamx) new ItemDynamx(Main.MODID, "menottes", new ResourceLocation("westerlife","models/dynamx/items/menottes/menotte.obj")).setMaxStackSize(1);
         Taser = (ItemDynamx) new ItemDynamx(Main.MODID, "taser", new ResourceLocation("westerlife","models/dynamx/items/taser/taser.obj")).setMaxStackSize(1);
         Paper = (ItemPaper) new ItemPaper(Main.MODID, "paper", new ResourceLocation("westerlife","models/dynamx/items/paper/paper.obj")).setMaxStackSize(1);
-        Extincteur = (ItemDynamx) new ItemDynamx(Main.MODID, "extincteur", new ResourceLocation("westerlife","models/dynamx/items/extincteur/extincteur.obj")).setMaxStackSize(1);
+        Extincteur = (ItemExtincteur) new ItemExtincteur(Main.MODID, "extincteur", new ResourceLocation("westerlife","models/dynamx/items/extincteur/extincteur.obj"));
         Seringue = (ItemDynamx) new ItemDynamx(Main.MODID, "seringue", new ResourceLocation("westerlife","models/dynamx/items/seringue/seringue.obj")).setMaxStackSize(1);
         MatraqueTelescopique = (ItemDynamx) new ItemDynamx(Main.MODID, "matraquetelescopique", new ResourceLocation("westerlife","models/dynamx/items/matraquetelescopique/telesc.obj")).setMaxStackSize(1);
 
