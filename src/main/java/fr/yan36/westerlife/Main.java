@@ -7,6 +7,7 @@ import fr.yan36.westerlife.client.gui.mcef.BrowserHud;
 import fr.yan36.westerlife.client.gui.mcef.BrowserScreen;
 import fr.yan36.westerlife.client.utils.creativetabs.WesterTab;
 import fr.yan36.westerlife.common.CommonProxy;
+import fr.yan36.westerlife.common.entities.TestEntity2;
 import fr.yan36.westerlife.common.init.DynamxInit;
 import fr.yan36.westerlife.common.init.Network;
 import fr.yan36.westerlife.common.objects.entreprises.CompanyAssociation;
@@ -15,9 +16,11 @@ import fr.yan36.westerlife.common.objects.entreprises.CompanySARL;
 import fr.yan36.westerlife.common.objects.entreprises.types.Rank;
 import fr.yan36.westerlife.common.registry.RegistryHandler;
 import fr.yan36.westerlife.common.utils.commands.WesterLifeCommand;
+import fr.yan36.westerlife.common.utils.discord.Discord;
 import fr.yan36.westerlife.server.AuthSystem;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.launchwrapper.Launch;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
@@ -27,6 +30,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.server.permission.DefaultPermissionLevel;
@@ -34,6 +38,7 @@ import net.minecraftforge.server.permission.PermissionAPI;
 import org.apache.logging.log4j.Logger;
 
 import javax.sound.sampled.LineUnavailableException;
+import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -67,8 +72,9 @@ public class Main {
 
 
     @DynamXAddon.AddonEventSubscriber
-    public static void init() {
+    public void init() {
         DynamxInit.init();
+
     }
 
     @SidedProxy(clientSide = "fr.yan36.westerlife.client.ClientProxy", serverSide = "fr.yan36.westerlife.server.ServerProxy")
@@ -88,6 +94,7 @@ public class Main {
         proxy.preInit();
         logger = event.getModLog();
         WesterLifeCommand.initModules();
+        EntityRegistry.registerModEntity(new ResourceLocation(MODID, "seat"), TestEntity2.class, "test", 2, this, 64, 1, true, Color.WHITE.getRGB(), Color.BLACK.getRGB());
         if(event.getSide().isClient() && event.getSourceFile().getName().endsWith(".jar") ||  (boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment") || Objects.requireNonNull(Loader.instance().activeModContainer()).getSource().isFile()) isEnvDev = true;
         System.out.println("WesterLife is in dev mode: " + isEnvDev);
         Network.init();
@@ -97,7 +104,7 @@ public class Main {
         if(event.getSide().isClient()) {
             
             try {
-                //new Discord().start();
+                new Discord().start();
             } catch (Exception e) {
                 e.printStackTrace();
             }

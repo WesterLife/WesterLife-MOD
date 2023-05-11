@@ -1,6 +1,9 @@
 package fr.yan36.westerlife.common.utils.commands;
 
+import fr.dynamx.common.entities.PackPhysicsEntity;
+import fr.dynamx.common.entities.PhysicsEntity;
 import fr.yan36.westerlife.Main;
+import fr.yan36.westerlife.common.entities.TestEntity2;
 import fr.yan36.westerlife.common.network.old.PacketOpenGUIAdmin;
 import fr.yan36.westerlife.common.utils.commands.modules.*;
 import net.minecraft.command.CommandBase;
@@ -66,6 +69,15 @@ public class WesterLifeCommand extends CommandBase {
             if(Objects.equals(args[0], module.subCommand)) {
                 module.execute(server, sender, args);
             }
+        }
+
+        if(Objects.equals(args[0], "test")) {
+
+            PhysicsEntity<?> entity = new TestEntity2(sender.getEntityWorld());
+            entity.setPosition(sender.getPosition().getX(), sender.getPosition().getY(), sender.getPosition().getZ());
+            entity.setCustomNameTag("test");
+
+            sender.getEntityWorld().spawnEntity(entity);
         }
     }
 

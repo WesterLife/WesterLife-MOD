@@ -1,6 +1,6 @@
 package fr.yan36.westerlife.common.utils.commands.modules;
 
-import fr.yan36.westerlife.common.blocks.tileentity.TEDigicode;
+//import fr.yan36.westerlife.common.blocks.tileentity.TEDigicode;
 import fr.yan36.westerlife.common.blocks.tileentity.TileMovingGate;
 import fr.yan36.westerlife.common.blocks.tileentity.TileRadarFixe;
 import fr.yan36.westerlife.common.utils.commands.CommandModule;
@@ -88,18 +88,18 @@ public class ModuleWorld extends CommandModule {
                         RayTraceResult rayTraceResult = player.world.rayTraceBlocks(player.getPositionEyes(1), player.getPositionEyes(1).add(player.getLookVec().scale(10)));
                         assert rayTraceResult != null;
                         System.out.println(rayTraceResult.getBlockPos());
-                        if(rayTraceResult != null) {
-                            TEDigicode teDigicode = (TEDigicode) player.world.getTileEntity(rayTraceResult.getBlockPos());
-                            if(teDigicode != null) {
-                                if(Objects.equals(args[2], "setcode")) {
-                                    teDigicode.setCode(args[3]);
-                                    teDigicode.sync();
-                                    sender.sendMessage(new TextComponentString("§aCode changed"));
-                                } else if(Objects.equals(args[2], "getcode")) {
-                                    sender.sendMessage(new TextComponentString("§aCode: " + teDigicode.getCode()));
-                                }
-                            }
-                        }
+//                        if(rayTraceResult != null) {
+//                            TEDigicode teDigicode = (TEDigicode) player.world.getTileEntity(rayTraceResult.getBlockPos());
+//                            if(teDigicode != null) {
+//                                if(Objects.equals(args[2], "setcode")) {
+//                                    teDigicode.setCode(args[3]);
+//                                    teDigicode.sync();
+//                                    sender.sendMessage(new TextComponentString("§aCode changed"));
+//                                } else if(Objects.equals(args[2], "getcode")) {
+//                                    sender.sendMessage(new TextComponentString("§aCode: " + teDigicode.getCode()));
+//                                }
+//                            }
+//                        }
 
                     }
                 }
