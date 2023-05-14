@@ -37,6 +37,8 @@ repositories {
 }
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: "java"
+apply plugin: 'idea'
+
 tasks.withType(JavaCompile) {
     options.encoding = "UTF-8"
 }
@@ -155,3 +157,21 @@ jar {
 jar.finalizedBy('reobfJar')
 // However if you are in a multi-project build, dev time needs unobfed jar files, so you can delay the obfuscation until publishing by doing
 //publish.dependsOn('reobfJar')
+
+/** Shit that idea needs to process resources ? **/
+idea {
+    module {
+        inheritOutputDirs = true
+    }
+}
+subprojects {
+    apply plugin: 'idea'
+}
+task prepareAssets(type: Copy) {
+    group = 'build'
+    from project.file('src/main/resources')
+    into project.file('build/classes/java/main')
+}
+
+classes.dependsOn(prepareAssets)
+/** end of shit **/

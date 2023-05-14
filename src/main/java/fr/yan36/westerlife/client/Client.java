@@ -1,9 +1,20 @@
 package fr.yan36.westerlife.client;
 
 import com.mrcrayfish.obfuscate.client.event.ModelPlayerEvent;
+import fr.aym.acsguis.api.ACsGuiApi;
+import fr.dynamx.api.contentpack.object.part.IDrawablePart;
+import fr.dynamx.api.events.ArmorEvent;
+import fr.dynamx.api.events.DynamXModelRenderEvent;
+import fr.dynamx.api.events.PhysicsEntityEvent;
 import fr.dynamx.api.events.VehicleEntityEvent;
 import fr.dynamx.client.handlers.hud.CarController;
+import fr.dynamx.client.renders.model.ModelObjArmor;
+import fr.dynamx.client.renders.model.renderer.ArmorRenderer;
+import fr.dynamx.common.DynamXContext;
+import fr.dynamx.common.items.DynamXItemRegistry;
+import fr.dynamx.utils.client.DynamXRenderUtils;
 import fr.yan36.westerlife.Main;
+import fr.yan36.westerlife.client.gui.acs.CSSGuiClothes;
 import fr.yan36.westerlife.client.gui.mcef.BrowserScreen;
 import fr.yan36.westerlife.client.gui.other.EngineFailureIcon;
 import fr.yan36.westerlife.common.utils.Animation;
@@ -13,11 +24,13 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiIngameMenu;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.model.ModelBiped;
+import net.minecraft.client.renderer.entity.layers.LayerBipedArmor;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
+import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -36,6 +49,7 @@ import org.newdawn.slick.util.ResourceLoader;
 import java.awt.*;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 @Mod.EventBusSubscriber
@@ -46,6 +60,8 @@ public class Client {
     public static int needToCreateCharacter = 0;
 
     public static HashMap<Integer, Animation> animationState = new HashMap<>();
+    @SideOnly(Side.CLIENT)
+    public static HashMap<Integer, List<String>> superpositionState = new HashMap<>();
     public static List<Warp> warplist = new ArrayList<>();
 
     public static String openScreenMcef = "none";
@@ -257,13 +273,17 @@ public class Client {
     @SideOnly(Side.CLIENT)
     public static KeyBinding keyBindAnimation;
     @SideOnly(Side.CLIENT)
+    public static KeyBinding keyOpenClothes;
+    @SideOnly(Side.CLIENT)
     public Client() {
         FMLCommonHandler.instance().bus().register(this);
         MinecraftForge.EVENT_BUS.register(this);
         keyBindTest = new KeyBinding("westerlife.admin", Keyboard.KEY_F9, "westerlife.category");
         keyBindAnimation = new KeyBinding("westerlife.animation", Keyboard.KEY_F4, "westerlife.keybind");
+        keyOpenClothes = new KeyBinding("westerlife.clohtes", Keyboard.KEY_F10, "westerlife.keybind");
         ClientRegistry.registerKeyBinding(keyBindTest);
         ClientRegistry.registerKeyBinding(keyBindAnimation);
+        ClientRegistry.registerKeyBinding(keyOpenClothes);
         System.out.println("WesterLife - Client");
     }
 
@@ -276,6 +296,24 @@ public class Client {
 
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
+    public static void armorSuperpositor(RenderPlayerEvent event) {
+        superpositionState.forEach((entityID, registryNames) -> {
+            if(event.getEntityPlayer().getEntityId() == entityID) {
+                if(!registryNames.isEmpty()) {
+                    registryNames.forEach(registryName -> {
+                        if(registryName != null) {
+
+                        }
+                    });
+                }
+            }
+        });
+
+    }
+
+
+    @SubscribeEvent
+    @SideOnly(Side.CLIENT)
     public void onEvent(InputEvent.KeyInputEvent event) {
         if (keyBindTest.isPressed()) {
             keyTestTyped();
@@ -283,6 +321,10 @@ public class Client {
 
         if (keyBindAnimation.isPressed()) {
             keyAnimationTyped();
+        }
+
+        if (keyOpenClothes.isPressed()) {
+            ACsGuiApi.asyncLoadThenShowGui("clothes", CSSGuiClothes::new);
         }
     }
 

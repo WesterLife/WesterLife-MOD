@@ -72,7 +72,7 @@ public class Main {
 
 
     @DynamXAddon.AddonEventSubscriber
-    public void init() {
+    public static void init() {
         DynamxInit.init();
 
     }
@@ -94,7 +94,7 @@ public class Main {
         proxy.preInit();
         logger = event.getModLog();
         WesterLifeCommand.initModules();
-        EntityRegistry.registerModEntity(new ResourceLocation(MODID, "seat"), TestEntity2.class, "test", 2, this, 64, 1, true, Color.WHITE.getRGB(), Color.BLACK.getRGB());
+        EntityRegistry.registerModEntity(new ResourceLocation(MODID, "testentity2"), TestEntity2.class, "testentity2", 2, this, 64, 1, true, Color.WHITE.getRGB(), Color.BLACK.getRGB());
         if(event.getSide().isClient() && event.getSourceFile().getName().endsWith(".jar") ||  (boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment") || Objects.requireNonNull(Loader.instance().activeModContainer()).getSource().isFile()) isEnvDev = true;
         System.out.println("WesterLife is in dev mode: " + isEnvDev);
         Network.init();

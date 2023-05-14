@@ -75,7 +75,6 @@ public class WesterLifeCommand extends CommandBase {
 
             PhysicsEntity<?> entity = new TestEntity2(sender.getEntityWorld());
             entity.setPosition(sender.getPosition().getX(), sender.getPosition().getY(), sender.getPosition().getZ());
-            entity.setCustomNameTag("test");
 
             sender.getEntityWorld().spawnEntity(entity);
         }
