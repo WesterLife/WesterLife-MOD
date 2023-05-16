@@ -11,6 +11,7 @@ import fr.yan36.westerlife.common.CommonProxy;
 import fr.yan36.westerlife.common.blocks.tileentity.*;
 import fr.yan36.westerlife.common.blocks.tileentity.render.RenderRadarFixe;
 import fr.yan36.westerlife.common.blocks.tileentity.render.RenderTileMovingGate;
+import fr.yan36.westerlife.common.blocks.tileentity.render.RenderTombe;
 import fr.yan36.westerlife.common.entities.TestEntity2;
 import fr.yan36.westerlife.common.registry.RegistryHandler;
 import fr.yan36.westerlife.common.utils.WesterBuiltinPack;
@@ -67,11 +68,13 @@ public class ClientProxy extends CommonProxy {
         System.out.println("ClientProxy preInit");
         ClientRegistry.bindTileEntitySpecialRenderer(TESign.class, new TESignRender());
         ClientRegistry.bindTileEntitySpecialRenderer(TileMovingGate.class, new RenderTileMovingGate());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileTombe.class, new RenderTombe());
         ClientRegistry.bindTileEntitySpecialRenderer(TileRadarFixe.class, new RenderRadarFixe());
         ClientRegistry.bindTileEntitySpecialRenderer(TEBisign.class, new TEBisignRender());
 
         RenderingRegistry.registerEntityRenderingHandler(TestEntity2.class, TestEntity2Renderer::new);
         DynamXContext.getObjModelRegistry().registerModel(new ObjModelPath(new WesterBuiltinPack.WesterPackInfo(), new ResourceLocation(Main.MODID, "test.obj")));
+        DynamXContext.getObjModelRegistry().registerModel(new ObjModelPath(new WesterBuiltinPack.WesterPackInfo(), new ResourceLocation(Main.MODID, "punch.obj")));
 
         MinecraftForge.EVENT_BUS.register(new Client());
         Display.setTitle("WesterLife - " + Minecraft.getMinecraft().getSession().getUsername());

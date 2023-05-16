@@ -37,6 +37,8 @@ public class DynamxInit {
     public static BlockRoad poteau;
     public static BlockRoad herse;
 
+    public static BlockTombe tombe;
+
     public static void init() {
 
         //Validated items
@@ -62,6 +64,7 @@ public class DynamxInit {
         digicode = new BlockDigicode(Material.ANVIL, Main.MODID, "digicode", new ResourceLocation("westerlife","models/dynamx/blocks/digicode/digicode.obj"));
         deskPhone = new BlockDeskPhone(Material.ANVIL, Main.MODID, "deskphone", new ResourceLocation("westerlife","models/dynamx/blocks/deskphone/telephonefixe.obj"));
         pompeEssence = new BlockPompeEssence(Material.ANVIL, Main.MODID, "pompeessence", new ResourceLocation("westerlife","models/dynamx/blocks/pompe_essence/pompeessence.obj"));
+        tombe = new BlockTombe(Material.ANVIL, Main.MODID, "tombe", new ResourceLocation("westerlife","models/dynamx/tombe/tombe.obj"));
 
         //Road blocks
         barrierePolice = new BlockRoad(Material.ANVIL, Main.MODID, "barrierepolice", new ResourceLocation("westerlife","models/dynamx/blocks/barriere_police/barriere.obj"));

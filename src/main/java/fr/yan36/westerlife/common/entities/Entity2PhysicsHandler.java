@@ -37,11 +37,4 @@ public class Entity2PhysicsHandler extends EntityPhysicsHandler<TestEntity2> {
         return physA;
     }
 
-
-
-    @Override
-    public BoundingBox getBoundingBox() {
-        return new BoundingBox(new Vector3f(-0.5f, -0.5f, -0.5f), new Vector3f(0.5f, 0.5f, 0.5f));
-    }
-
 }

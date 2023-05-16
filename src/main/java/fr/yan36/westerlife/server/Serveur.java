@@ -107,7 +107,6 @@ public class Serveur {
         }
     }
 
-
     @SubscribeEvent
     public void onRightClick(PlayerInteractEvent.RightClickBlock e){
         BlockPos blockPos = e.getPos();

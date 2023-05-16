@@ -1,22 +1,29 @@
 package fr.yan36.westerlife.common.entities;
 
+import com.jme3.math.Vector3f;
 import fr.dynamx.api.entities.modules.ModuleListBuilder;
 import fr.dynamx.api.events.PhysicsEntityEvent;
 import fr.dynamx.common.DynamXContext;
 import fr.dynamx.common.entities.ModularPhysicsEntity;
-import fr.dynamx.common.entities.modules.MovableModule;
 import fr.dynamx.utils.DynamXConfig;
+import fr.dynamx.utils.DynamXUtils;
 import fr.dynamx.utils.optimization.MutableBoundingBox;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.relauncher.Side;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TestEntity2 extends ModularPhysicsEntity<Entity2PhysicsHandler> {
+
+    List<MutableBoundingBox> unrotatedBoxes = new ArrayList<>();
 
     public TestEntity2(World worldIn) {
         super(worldIn);
@@ -45,6 +52,7 @@ public class TestEntity2 extends ModularPhysicsEntity<Entity2PhysicsHandler> {
     @Override
     public void onUpdate() {
         super.onUpdate();
+
 //        System.out.println("ok");
     }
 
@@ -56,40 +64,33 @@ public class TestEntity2 extends ModularPhysicsEntity<Entity2PhysicsHandler> {
         }
     }
 
-    /* tentative désespéré */
-
-
     @Override
-    public AxisAlignedBB getRenderBoundingBox() {
-        return new AxisAlignedBB(-0.5f, -0.5f, -0.5f, 0.5f, 0.5f, 0.5f);
+    public boolean attackEntityFrom(DamageSource damageSource, float amount) {
+        if (damageSource.getImmediateSource() instanceof EntityPlayer && damageSource.getImmediateSource().isSneaking()) {
+            return super.attackEntityFrom(damageSource, amount);
+        }
+
+        if (damageSource.getImmediateSource() instanceof EntityPlayer && physicsHandler != null) {
+            EntityPlayer player = (EntityPlayer) damageSource.getImmediateSource();
+            Vec3d look = player.getLook(1);
+            TestEntityModule2 module2 = getModuleByType(TestEntityModule2.class);
+
+            if (module2.punchingBag != null) {
+                module2.punchingBag.applyImpulse(DynamXUtils.toVector3f(look.normalize().scale(10)),new Vector3f(0, 0, 0));
+            }
+
+        }
+        return false;
     }
 
-    @Nullable
-    @Override
-    public AxisAlignedBB getCollisionBoundingBox() {
-        return new AxisAlignedBB(-0.5f, -0.5f, -0.5f, 0.5f, 0.5f, 0.5f);
-    }
-
-    @Nullable
-    @Override
-    public AxisAlignedBB getCollisionBox(Entity entityIn) {
-        return new AxisAlignedBB(-0.5f, -0.5f, -0.5f, 0.5f, 0.5f, 0.5f);
-    }
 
     @Override
     public List<MutableBoundingBox> getCollisionBoxes() {
-        List<MutableBoundingBox> list = new java.util.ArrayList<>();
-        list.add(new MutableBoundingBox(-0.5f, -0.5f, -0.5f, 0.5f, 0.5f, 0.5f));
-        return list;
+        unrotatedBoxes.clear();
+        MutableBoundingBox b = new MutableBoundingBox(new Vec3d(0, 0, 0), new Vec3d(2, -3, 2));
+        b.offset(physicsPosition.add(new Vector3f(0, 1, 0)));
+        b.offset(-0.5, -3, -0.5);
+        unrotatedBoxes.add(b);
+        return unrotatedBoxes;
     }
-
-
-    @Override
-    public AxisAlignedBB getEntityBoundingBox() {
-        return new AxisAlignedBB(-0.5f, -0.5f, -0.5f, 0.5f, 0.5f, 0.5f);
-    }
-
-    /* fin du merdier */
-
-
 }
