@@ -1,26 +1,22 @@
 package fr.yan36.westerlife.client.gui.acs;
 
-import fr.aym.acsguis.component.layout.GridLayout;
 import fr.aym.acsguis.component.layout.GuiScaler;
 import fr.aym.acsguis.component.panel.GuiFrame;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.textarea.GuiLabel;
-import fr.aym.acsguis.component.textarea.GuiTextArea;
-import fr.dynamx.common.DynamXContext;
-import fr.dynamx.common.contentpack.DynamXObjectLoaders;
 import fr.dynamx.common.items.DynamXItemArmor;
-import fr.dynamx.common.items.DynamXItemRegistry;
 import fr.yan36.westerlife.Main;
+import fr.yan36.westerlife.client.Client;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
+import scala.Int;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 public class CSSGuiClothes extends GuiFrame {
     public CSSGuiClothes() {
@@ -40,16 +36,30 @@ public class CSSGuiClothes extends GuiFrame {
                 if(item instanceof DynamXItemArmor<?>) {
                     GuiLabel label = new GuiLabel(item.getItemStackDisplayName(i.getStackInSlot(k)));
                     label.setCssClass("item");
-                    System.out.println("ARMOR ! " + item.getItemStackDisplayName(i.getStackInSlot(k))) ;
                     label.allowLineBreak();
                     label.getStyle().setOffsetY(l * 20);
+                    label.addClickListener((mouseX, mouseY, mouseButton) -> {
+                        HashMap<Integer, List<Item>> list = Client.superpositionState;
+                        Integer k1 = mc.player.getEntityId();
+                        list.put(k1, Collections.singletonList(item));
+                    });
                     background.add(label);
                     l++;
                 }
-            } else {
-                System.out.println("air at slot " + k);
             }
         }
+
+        Item item = Items.AIR;
+        GuiLabel label = new GuiLabel(item.getItemStackDisplayName(new net.minecraft.item.ItemStack(item)));
+        label.setCssClass("item");
+        label.allowLineBreak();
+        label.getStyle().setOffsetY(l * 20);
+        label.addClickListener((mouseX, mouseY, mouseButton) -> {
+            HashMap<Integer, List<Item>> list = Client.superpositionState;
+            Integer k1 = mc.player.getEntityId();
+            list.put(k1, Collections.singletonList(item));
+        });
+        background.add(label);
 
         add(background);
 

@@ -63,6 +63,7 @@ public class TileHerse extends TileEntitySyncClient implements ITickable {
                     System.out.println("Car is moving");
                     new Thread(() -> {
                         try {
+                            world.setBlockState(pos, Blocks.AIR.getDefaultState());
                             v.getPhysicsHandler().setLinearVelocity(new Vector3f(
                                     v.getPhysicsHandler().getLinearVelocity().x / 2,
                                     v.getPhysicsHandler().getLinearVelocity().y / 2,
@@ -74,7 +75,7 @@ public class TileHerse extends TileEntitySyncClient implements ITickable {
                                     v.getPhysicsHandler().getLinearVelocity().y / 4,
                                     v.getPhysicsHandler().getLinearVelocity().z / 4
                             ));
-                            world.setBlockState(pos, Blocks.AIR.getDefaultState());
+
                             Thread.sleep(2000);
                             v.getPhysicsHandler().setFreezePhysics(true);
                         } catch (InterruptedException e) {
