@@ -1,11 +1,11 @@
 package fr.yan36.westerlife.client;
 
-import com.mrcrayfish.obfuscate.client.event.ModelPlayerEvent;
 import fr.aym.acsguis.api.ACsGuiApi;
 import fr.dynamx.api.obj.ObjModelPath;
 import fr.dynamx.common.DynamXContext;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.client.phone.Apps;
+import fr.yan36.westerlife.client.renderer.LayerArmorSuperposition;
 import fr.yan36.westerlife.client.utils.TestEntity2Renderer;
 import fr.yan36.westerlife.common.CommonProxy;
 import fr.yan36.westerlife.common.blocks.tileentity.*;
@@ -13,23 +13,17 @@ import fr.yan36.westerlife.common.blocks.tileentity.render.RenderRadarFixe;
 import fr.yan36.westerlife.common.blocks.tileentity.render.RenderTileMovingGate;
 import fr.yan36.westerlife.common.blocks.tileentity.render.RenderTombe;
 import fr.yan36.westerlife.common.entities.TestEntity2;
-import fr.yan36.westerlife.common.registry.RegistryHandler;
 import fr.yan36.westerlife.common.utils.WesterBuiltinPack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.renderer.entity.RenderEnderCrystal;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Util;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.apache.commons.io.IOUtils;
 import org.lwjgl.opengl.Display;
 
@@ -38,6 +32,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
+import java.util.Map;
 
 
 public class ClientProxy extends CommonProxy {
@@ -66,6 +61,8 @@ public class ClientProxy extends CommonProxy {
     public void preInit() throws IOException {
         super.preInit();
         System.out.println("ClientProxy preInit");
+
+
         ClientRegistry.bindTileEntitySpecialRenderer(TESign.class, new TESignRender());
         ClientRegistry.bindTileEntitySpecialRenderer(TileMovingGate.class, new RenderTileMovingGate());
         ClientRegistry.bindTileEntitySpecialRenderer(TileTombe.class, new RenderTombe());
@@ -73,8 +70,7 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.bindTileEntitySpecialRenderer(TEBisign.class, new TEBisignRender());
 
         RenderingRegistry.registerEntityRenderingHandler(TestEntity2.class, TestEntity2Renderer::new);
-        DynamXContext.getObjModelRegistry().registerModel(new ObjModelPath(new WesterBuiltinPack.WesterPackInfo(), new ResourceLocation(Main.MODID, "test.obj")));
-        DynamXContext.getObjModelRegistry().registerModel(new ObjModelPath(new WesterBuiltinPack.WesterPackInfo(), new ResourceLocation(Main.MODID, "punch.obj")));
+
 
         MinecraftForge.EVENT_BUS.register(new Client());
         Display.setTitle("WesterLife - " + Minecraft.getMinecraft().getSession().getUsername());
@@ -101,6 +97,8 @@ public class ClientProxy extends CommonProxy {
 
 
     }
+
+
 
     private void setWindowIcon()
     {
@@ -154,6 +152,8 @@ public class ClientProxy extends CommonProxy {
 
     @Override
     public void init() {
+        final Map<String, RenderPlayer> skinMap = Minecraft.getMinecraft().getRenderManager().getSkinMap();
+        skinMap.forEach((key, value) -> value.addLayer(new LayerArmorSuperposition(value)));
         super.init();
     }
 

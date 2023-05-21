@@ -1,17 +1,24 @@
 package fr.yan36.westerlife.common.registry;
 
+import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.init.BlockInit;
 import fr.yan36.westerlife.common.init.ItemInit;
 import fr.yan36.westerlife.common.utils.interfaces.IHasModel;
 import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @Mod.EventBusSubscriber
 public class RegistryHandler {
+
+    public static final ResourceLocation CAPABILITY_LOCATION = new ResourceLocation(Main.MODID, "armorsuperposition"); // On évite d'instancier à chaque fois le même objet
+
     @SubscribeEvent
     public static void onItemRegister(RegistryEvent.Register<Item> event)
     {
@@ -39,5 +46,6 @@ public class RegistryHandler {
             }
         }
     }
+
 }
 

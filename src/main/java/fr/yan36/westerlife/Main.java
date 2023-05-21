@@ -1,8 +1,15 @@
 package fr.yan36.westerlife;
 
 import fr.dynamx.api.contentpack.DynamXAddon;
+import fr.dynamx.api.obj.ObjModelPath;
+import fr.dynamx.common.DynamXContext;
+import fr.dynamx.common.contentpack.DynamXObjectLoaders;
+import fr.dynamx.common.items.DynamXItemArmor;
 import fr.dynamx.utils.debug.DynamXDebugOption;
 import fr.dynamx.utils.debug.DynamXDebugOptions;
+import fr.nathanael2611.simpledatabasemanager.core.Database;
+import fr.nathanael2611.simpledatabasemanager.core.Databases;
+import fr.nathanael2611.simpledatabasemanager.core.SyncedDatabases;
 import fr.yan36.westerlife.client.gui.mcef.BrowserHud;
 import fr.yan36.westerlife.client.gui.mcef.BrowserScreen;
 import fr.yan36.westerlife.client.utils.creativetabs.WesterTab;
@@ -12,9 +19,8 @@ import fr.yan36.westerlife.common.init.DynamxInit;
 import fr.yan36.westerlife.common.init.Network;
 import fr.yan36.westerlife.common.objects.entreprises.CompanyAssociation;
 import fr.yan36.westerlife.common.objects.entreprises.CompanyBase;
-import fr.yan36.westerlife.common.objects.entreprises.CompanySARL;
-import fr.yan36.westerlife.common.objects.entreprises.types.Rank;
 import fr.yan36.westerlife.common.registry.RegistryHandler;
+import fr.yan36.westerlife.common.utils.WesterBuiltinPack;
 import fr.yan36.westerlife.common.utils.commands.WesterLifeCommand;
 import fr.yan36.westerlife.common.utils.discord.Discord;
 import fr.yan36.westerlife.server.AuthSystem;
@@ -31,6 +37,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.server.permission.DefaultPermissionLevel;
@@ -41,8 +48,10 @@ import javax.sound.sampled.LineUnavailableException;
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Mod(
         modid = Main.MODID,
@@ -56,7 +65,7 @@ public class Main {
     //Util variables
     public static final String MODID = "westerlife";
     public static final String NAME = "WesterLife Mod";
-    public static final String VERSION = "1.5.5";
+    public static final String VERSION = "1.5.6-beta1";
 
     @Mod.Instance(Main.MODID)
     public static Main instance;
@@ -65,15 +74,22 @@ public class Main {
     @SideOnly(Side.CLIENT)
     public static BrowserScreen browserScreen;
 
+    HashMap<Integer, DynamXItemArmor<?>> tqt_frere = new HashMap<>();
+
     @SideOnly(Side.CLIENT)
     public static BrowserHud browserHud;
 
     public static Boolean isEnvDev = false;
 
+    public static Database wl_db;
+
 
     @DynamXAddon.AddonEventSubscriber
     public static void init() {
+//        ObjectLoader.registerObject(emptyArmor);
         DynamxInit.init();
+        DynamXContext.getObjModelRegistry().registerModel(new ObjModelPath(new WesterBuiltinPack.WesterPackInfo(), new ResourceLocation(Main.MODID, "test.obj")));
+        DynamXContext.getObjModelRegistry().registerModel(new ObjModelPath(new WesterBuiltinPack.WesterPackInfo(), new ResourceLocation(Main.MODID, "punch.obj")));
 
     }
 
@@ -87,6 +103,7 @@ public class Main {
     @Mod.EventHandler
     public void onserverStarting(FMLServerStartingEvent event) {
         event.registerServerCommand(new WesterLifeCommand());
+        Databases.onServerStarting(event);
     }
 
     @Mod.EventHandler
@@ -112,26 +129,35 @@ public class Main {
             AuthSystem.init();
         }
 
+        wl_db = Databases.getDatabase("westerlife_armorsuperposition");
+        SyncedDatabases.add("westerlife_armorsuperposition");
+
+        List<DynamXItemArmor<?>> globalitems = ForgeRegistries.ITEMS.getEntries().stream().filter(e -> e.getValue() instanceof DynamXItemArmor<?>).collect(Collectors.toCollection(ArrayList::new)).stream().map(e -> (DynamXItemArmor<?>) e.getValue()).collect(Collectors.toList());
+        for (DynamXItemArmor<?> item : globalitems) {
+            DynamxInit.fastRegistryAccess.put(item.getInfo().getFullName(), item);
+            System.out.println("added " + item.getInfo().getFullName() + " to fast registry access");
+        }
+
         CompanyBase companyBase = new CompanyBase("test", "somewhere", 0, "someone");
 
         CompanyAssociation companyAssociation = new CompanyAssociation(companyBase, "test", "somewhere", "objective", 50f);
         System.out.println(companyAssociation.getBaseCompany().getCreationDate());
 
-        List<Rank> ranks = new ArrayList<>();
-        ranks.add(new Rank("grade1", "description", 1, 1));
-
-        List<String> impots = new ArrayList<>();
-        impots.add("impot1");
-        impots.add("impot2");
-
-        List<String> cars = new ArrayList<>();
-        impots.add("voitureA");
-        impots.add("voitureB");
-
-        CompanyBase companyBase1 = new CompanyBase("test", "somewhere", 0, "someone");
-        CompanySARL companySARL = new CompanySARL(companyBase1, "test", ranks, impots, cars);
-        System.out.println(companySARL);
-        System.out.println("bbbb");
+//        List<Rank> ranks = new ArrayList<>();
+//        ranks.add(new Rank("grade1", "description", 1, 1));
+//
+//        List<String> impots = new ArrayList<>();
+//        impots.add("impot1");
+//        impots.add("impot2");
+//
+//        List<String> cars = new ArrayList<>();
+//        impots.add("voitureA");
+//        impots.add("voitureB");
+//
+//        CompanyBase companyBase1 = new CompanyBase("test", "somewhere", 0, "someone");
+//        CompanySARL companySARL = new CompanySARL(companyBase1, "test", ranks, impots, cars);
+//        System.out.println(companySARL);
+//        System.out.println("bbbb");
 
     }
 
@@ -143,6 +169,8 @@ public class Main {
 
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
+        System.out.println("caca");
+        System.out.println(DynamXObjectLoaders.ARMORS.getInfos());
     }
 
     public static final CreativeTabs WESTER_MAIN = new WesterTab("westertab");

@@ -10,6 +10,7 @@ import fr.dynamx.common.entities.BaseVehicleEntity;
 import fr.dynamx.common.entities.modules.BasicEngineModule;
 import fr.dynamx.common.entities.modules.CarEngineModule;
 import fr.dynamx.common.entities.vehicles.CarEntity;
+import fr.dynamx.common.items.DynamXItemArmor;
 import fr.dynamx.common.physics.entities.BaseVehiclePhysicsHandler;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.blocks.dynamx.BlockComputer;
@@ -39,15 +40,14 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 
 public class Serveur {
 
     public static HashMap<EntityPlayerMP, Animation> animations = new HashMap<>();
+
+    public static HashMap<UUID, List<String>> superpositionServer = new HashMap<>();
     public static HashMap<EntityPlayer, Boolean> menottes = new HashMap<>();
     @SubscribeEvent
     public void onConnectToServer(PlayerEvent.PlayerLoggedInEvent e) {

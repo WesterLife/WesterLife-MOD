@@ -35,5 +35,7 @@ public class Network {
         Main.network.registerMessage(PacketAnimationToAll.Handler.class, PacketAnimationToAll.class, 23, Side.CLIENT);
         Main.network.registerMessage(PacketTryCode.Handler.class, PacketTryCode.class, 24, Side.SERVER);
         Main.network.registerMessage(PacketPlaySound.Handler.class, PacketPlaySound.class, 25, Side.CLIENT);
+        Main.network.registerMessage(PacketSyncClothes.Handler.class, PacketSyncClothes.class, 26, Side.SERVER);
+        Main.network.registerMessage(PacketClothToAll.Handler.class, PacketClothToAll.class, 27, Side.CLIENT);
     }
 }

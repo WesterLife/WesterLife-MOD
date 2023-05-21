@@ -8,6 +8,7 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.util.EntitySelectors;
 import net.minecraft.util.math.*;
 import net.minecraft.world.World;
@@ -158,5 +159,18 @@ public class Util {
         while (text != null && text.endsWith("\n"))
             text = text.substring(0, text.length() - 1);
         return text;
+    }
+
+    public static EntityEquipmentSlot equipementFromSlotID(int slotID)
+    {
+        for (EntityEquipmentSlot entityequipmentslot : EntityEquipmentSlot.values())
+        {
+            if (entityequipmentslot.getSlotIndex() == slotID)
+            {
+                return entityequipmentslot;
+            }
+        }
+
+        throw new IllegalArgumentException("Invalid slot '" + slotID + "'");
     }
 }

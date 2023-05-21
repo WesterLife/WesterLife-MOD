@@ -1,5 +1,6 @@
 package fr.yan36.westerlife.client.gui.acs;
 
+import fr.aym.acsguis.api.ACsGuiApi;
 import fr.aym.acsguis.component.layout.GuiScaler;
 import fr.aym.acsguis.component.panel.GuiFrame;
 import fr.aym.acsguis.component.panel.GuiPanel;
@@ -7,16 +8,18 @@ import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.dynamx.common.items.DynamXItemArmor;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.client.Client;
+import fr.yan36.westerlife.common.init.DynamxInit;
+import fr.yan36.westerlife.common.network.PacketSyncClothes;
+import fr.yan36.westerlife.common.objects.ArmorSuperpositionState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
-import scala.Int;
+import net.minecraft.util.text.TextFormatting;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class CSSGuiClothes extends GuiFrame {
     public CSSGuiClothes() {
@@ -32,16 +35,40 @@ public class CSSGuiClothes extends GuiFrame {
         for (int k = 0; k < i.getSizeInventory(); k++) {
             Item item = i.getStackInSlot(k).getItem();
             if (!item.equals(Items.AIR)) {
-                System.out.println(item);
                 if(item instanceof DynamXItemArmor<?>) {
                     GuiLabel label = new GuiLabel(item.getItemStackDisplayName(i.getStackInSlot(k)));
                     label.setCssClass("item");
                     label.allowLineBreak();
+
+                    if(Main.wl_db.getString(Minecraft.getMinecraft().player.getUniqueID().toString()) == null) {
+                        label.getStyle().setFontColor(TextFormatting.RED);
+                    } else {
+                        ArrayList<String> itemsReadOnly = new ArrayList<>(Arrays.asList(Main.wl_db.getString(Minecraft.getMinecraft().player.getUniqueID().toString()).split(",")));
+                        if(itemsReadOnly.contains(((DynamXItemArmor<?>) item).getInfo().getFullName())) {
+                            label.getStyle().setFontColor(TextFormatting.GREEN);
+                        } else {
+                            label.getStyle().setFontColor(TextFormatting.RED);
+                        }
+                    }
+
                     label.getStyle().setOffsetY(l * 20);
+
                     label.addClickListener((mouseX, mouseY, mouseButton) -> {
-                        HashMap<Integer, List<Item>> list = Client.superpositionState;
-                        Integer k1 = mc.player.getEntityId();
-                        list.put(k1, Collections.singletonList(item));
+
+                        if(Main.wl_db.getString(Minecraft.getMinecraft().player.getUniqueID().toString()) == null) {
+                            Main.network.sendToServer(new PacketSyncClothes(Minecraft.getMinecraft().player.getUniqueID().toString(), ((DynamXItemArmor<?>) item).getInfo().getFullName(), "add", ((DynamXItemArmor<?>) item).getInfo().getObjArmor().getActiveTextureId(), ((DynamXItemArmor<?>) item).getInfo().getObjArmor().getActivePart().getSlotIndex()));
+
+                            label.getStyle().setFontColor(TextFormatting.GREEN);
+                        } else {
+                            ArrayList<String> itemsReadOnly = new ArrayList<>(Arrays.asList(Main.wl_db.getString(Minecraft.getMinecraft().player.getUniqueID().toString()).split(",")));
+                            if(itemsReadOnly.contains(((DynamXItemArmor<?>) item).getInfo().getFullName())) {
+                                label.getStyle().setFontColor(TextFormatting.RED);
+                                Main.network.sendToServer(new PacketSyncClothes(Minecraft.getMinecraft().player.getUniqueID().toString(), ((DynamXItemArmor<?>) item).getInfo().getFullName(), "remove", ((DynamXItemArmor<?>) item).getInfo().getObjArmor().getActiveTextureId(), ((DynamXItemArmor<?>) item).getInfo().getObjArmor().getActivePart().getSlotIndex()));
+
+                            } else {
+                                label.getStyle().setFontColor(TextFormatting.GREEN);
+                                Main.network.sendToServer(new PacketSyncClothes(Minecraft.getMinecraft().player.getUniqueID().toString(), ((DynamXItemArmor<?>) item).getInfo().getFullName(), "add", ((DynamXItemArmor<?>) item).getInfo().getObjArmor().getActiveTextureId(), ((DynamXItemArmor<?>) item).getInfo().getObjArmor().getActivePart().getSlotIndex()));                            }
+                        }
                     });
                     background.add(label);
                     l++;
@@ -50,17 +77,15 @@ public class CSSGuiClothes extends GuiFrame {
         }
 
         Item item = Items.AIR;
-        GuiLabel label = new GuiLabel(item.getItemStackDisplayName(new net.minecraft.item.ItemStack(item)));
+        GuiLabel label = new GuiLabel("Tout déséquiper");
         label.setCssClass("item");
         label.allowLineBreak();
         label.getStyle().setOffsetY(l * 20);
         label.addClickListener((mouseX, mouseY, mouseButton) -> {
-            HashMap<Integer, List<Item>> list = Client.superpositionState;
-            Integer k1 = mc.player.getEntityId();
-            list.put(k1, Collections.singletonList(item));
+            Main.network.sendToServer(new PacketSyncClothes(Minecraft.getMinecraft().player.getUniqueID().toString(), "removeall", "removeall", (byte) 0, 0));
+            ACsGuiApi.closeHudGui();
         });
         background.add(label);
-
         add(background);
 
     }

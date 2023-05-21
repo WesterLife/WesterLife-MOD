@@ -1,49 +1,26 @@
 package fr.yan36.westerlife.client;
 
-import com.mrcrayfish.obfuscate.Obfuscate;
 import com.mrcrayfish.obfuscate.client.event.ModelPlayerEvent;
-import com.mrcrayfish.obfuscate.client.model.CustomModelPlayer;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import fr.aym.acsguis.api.ACsGuiApi;
-import fr.dynamx.api.contentpack.object.part.IDrawablePart;
 import fr.dynamx.api.events.ArmorEvent;
-import fr.dynamx.api.events.DynamXModelRenderEvent;
-import fr.dynamx.api.events.PhysicsEntityEvent;
 import fr.dynamx.api.events.VehicleEntityEvent;
-import fr.dynamx.client.camera.CameraSystem;
 import fr.dynamx.client.handlers.hud.CarController;
-import fr.dynamx.client.renders.model.ModelObjArmor;
-import fr.dynamx.client.renders.model.renderer.ArmorRenderer;
-import fr.dynamx.common.DynamXContext;
-import fr.dynamx.common.DynamXMain;
-import fr.dynamx.common.contentpack.DynamXObjectLoaders;
-import fr.dynamx.common.contentpack.type.objects.ArmorObject;
 import fr.dynamx.common.items.DynamXItemArmor;
-import fr.dynamx.common.items.DynamXItemRegistry;
-import fr.dynamx.utils.DynamXUtils;
-import fr.dynamx.utils.client.DynamXRenderUtils;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.client.gui.acs.CSSGuiClothes;
 import fr.yan36.westerlife.client.gui.mcef.BrowserScreen;
 import fr.yan36.westerlife.client.gui.other.EngineFailureIcon;
+import fr.yan36.westerlife.common.init.DynamxInit;
 import fr.yan36.westerlife.common.utils.Animation;
 import fr.yan36.westerlife.common.utils.list.Warp;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiIngameMenu;
 import net.minecraft.client.gui.GuiMainMenu;
-import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelBiped;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.entity.layers.LayerBipedArmor;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
-import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.Item;
-import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
@@ -56,6 +33,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
@@ -64,10 +42,11 @@ import org.newdawn.slick.util.ResourceLoader;
 
 import java.awt.*;
 import java.io.InputStream;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-
-import static org.lwjgl.opengl.GL11.*;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Mod.EventBusSubscriber
 public class Client {
@@ -78,7 +57,7 @@ public class Client {
 
     public static HashMap<Integer, Animation> animationState = new HashMap<>();
     @SideOnly(Side.CLIENT)
-    public static HashMap<Integer, List<Item>> superpositionState = new HashMap<>();
+    public static HashMap<UUID, List<DynamXItemArmor<?>>> superpositionState = new HashMap<>();
     public static List<Warp> warplist = new ArrayList<>();
 
     public static String openScreenMcef = "none";
@@ -317,41 +296,18 @@ public class Client {
 
     }
 
+//    @SubscribeEvent
+//    @SideOnly(Side.CLIENT)
+//    public void addLayer(Set event) {
+//
+//    }
+
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
-    public void armorSuperpositor(RenderPlayerEvent.Pre event) {
-        superpositionState.forEach((entityID, registryNames) -> {
-            if(event.getEntityPlayer().getEntityId() == entityID) {
-                if(registryNames.contains(Items.AIR)) {
-                    superpositionState.remove(entityID);
-                }
-                if(!registryNames.isEmpty()) {
-                    registryNames.forEach(registryName -> {
-                        if(registryName != null) {
+    public void armorSuperpositor(RenderPlayerEvent.Post event) {
+//        LayerRenderer<EntityPlayer> renderer = new LayerArmorSuperposition(event.getRenderer());
+//        event.getRenderer().addLayer(renderer);
 
-//                                System.out.println(DynamXObjectLoaders.ARMORS.getInfos());
-                            DynamXItemArmor<?> i = (DynamXItemArmor<?>) registryName;
-                            if (i.getInfo().getObjArmor() != null) {
-
-                                glPushMatrix();
-                                EntityPlayer ep = event.getEntityPlayer();
-                                glTranslatef(0, 1.3f, 0);
-                                glRotatef(ep.getRotationYawHead(),  0,-1,0);
-                                glRotatef(ep.rotationPitch,  1,0,0);
-                                glRotatef(180, 0,1,-1);
-                                glRotatef(180, 0,-1,0);
-                                glRotatef(90, -1,0,0);
-                                i.getInfo().getObjArmor().render(ep, 0, 0, 0, 0, 0, 0);
-
-                                glPopMatrix();
-                            } else {
-                                System.out.println("null");
-                            }
-                        }
-                    });
-                }
-            }
-        });
     }
 
     @SubscribeEvent
@@ -383,6 +339,13 @@ public class Client {
 
         if (keyOpenClothes.isPressed()) {
             ACsGuiApi.asyncLoadThenShowGui("clothes", CSSGuiClothes::new);
+        }
+        if(Keyboard.isKeyDown(Keyboard.KEY_F3)) {
+            List<DynamXItemArmor<?>> globalitems = ForgeRegistries.ITEMS.getEntries().stream().filter(e -> e.getValue() instanceof DynamXItemArmor<?>).collect(Collectors.toCollection(ArrayList::new)).stream().map(e -> (DynamXItemArmor<?>) e.getValue()).collect(Collectors.toList());
+            for (DynamXItemArmor<?> item : globalitems) {
+                DynamxInit.fastRegistryAccess.put(item.getInfo().getFullName(), item);
+                System.out.println("added " + item.getInfo().getFullName() + " to fast registry access");
+            }
         }
     }
 

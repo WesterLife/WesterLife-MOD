@@ -1,5 +1,6 @@
 package fr.yan36.westerlife.common.init;
 
+import fr.dynamx.common.items.DynamXItemArmor;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.blocks.dynamx.*;
 import fr.yan36.westerlife.common.items.dynamx.ItemDynamx;
@@ -7,6 +8,12 @@ import fr.yan36.westerlife.common.items.dynamx.ItemPaper;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class DynamxInit {
 
@@ -38,6 +45,9 @@ public class DynamxInit {
     public static BlockHerse herse;
 
     public static BlockTombe tombe;
+
+    public static HashMap<String, DynamXItemArmor<?>> fastRegistryAccess = new HashMap<>();
+
 
     public static void init() {
 
@@ -77,5 +87,8 @@ public class DynamxInit {
         doublefeurouge = new BlockBisign(Material.ANVIL, Main.MODID, "doublefeurouge", new ResourceLocation("westerlife","models/dynamx/bisign/bicolor.obj"));
         //feu_tricolore = new BlockDynamx(Material.ANVIL, Main.MODID, "feutricolore", "feut/feut.obj");
         //Keypad = new BlockKeypad(Material.ANVIL, Main.MODID, "keypad", "keypad/keypad.obj");
+
+
+
     }
 }

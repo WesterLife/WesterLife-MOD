@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal" created-in="IU-221.6008.13">
+    <data-source name="@sql3.minestrator.com" uuid="16c16318-2ebb-4551-8cd9-ab45ef221b92">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="MYSQL" exact-version="0" />
+      <secret-storage>master_key</secret-storage>
+      <user-name>minesr_SagOLEz2</user-name>
+      <schema-mapping />
+    </data-source>
+  </component>
+</project>
