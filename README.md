@@ -6,7 +6,7 @@ Ce mod a été créé par l'équipe de développement de **WesterLife** composé
 
 L'accès au contenu de ce mod est réservé **aux membres agréés par l'administration de WesterLife** et **aux membres de l'équipe de développement de WesterLife** ainsi qu'au(x) prestataire(s) ou contributeur(s) extérieur(e/s) **autorisé(e/s)**.
 
-**Information aux développeurs(euses) :** `L'accès à la base de donnée est réservée aux membres agréés par l'administration de WesterLife. Si vous n'y avez pas accès certaines fonctionalités risquent de ne pas fonctionner.`
+**Information aux développeurs(euses) :** `L'accès à la base de donnée est réservé aux membres agréés par l'administration de WesterLife. Si vous n'y avez pas accès certaines fonctionalités risquent de ne pas fonctionner.`
 
 > **Vous pouvez utiliser [https://gitmoji.dev/](https://gitmoji.dev/) pour vos commits afin d'avoir des noms plus rapides de compréhension et plus imagés.**
 
