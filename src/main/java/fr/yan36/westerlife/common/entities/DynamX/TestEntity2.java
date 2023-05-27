@@ -1,4 +1,4 @@
-package fr.yan36.westerlife.common.entities;
+package fr.yan36.westerlife.common.entities.DynamX;
 
 import com.jme3.math.Vector3f;
 import fr.dynamx.api.entities.modules.ModuleListBuilder;
@@ -8,16 +8,13 @@ import fr.dynamx.common.entities.ModularPhysicsEntity;
 import fr.dynamx.utils.DynamXConfig;
 import fr.dynamx.utils.DynamXUtils;
 import fr.dynamx.utils.optimization.MutableBoundingBox;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.relauncher.Side;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 

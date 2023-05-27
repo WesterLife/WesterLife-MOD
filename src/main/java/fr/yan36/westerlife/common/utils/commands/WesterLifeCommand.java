@@ -1,10 +1,8 @@
 package fr.yan36.westerlife.common.utils.commands;
 
-import fr.dynamx.common.entities.PackPhysicsEntity;
 import fr.dynamx.common.entities.PhysicsEntity;
 import fr.yan36.westerlife.Main;
-import fr.yan36.westerlife.common.entities.TestEntity2;
-import fr.yan36.westerlife.common.network.old.PacketOpenGUIAdmin;
+import fr.yan36.westerlife.common.entities.DynamX.TestEntity2;
 import fr.yan36.westerlife.common.utils.commands.modules.*;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -13,12 +11,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.server.permission.PermissionAPI;
 
 import javax.annotation.Nullable;
-import java.io.File;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;

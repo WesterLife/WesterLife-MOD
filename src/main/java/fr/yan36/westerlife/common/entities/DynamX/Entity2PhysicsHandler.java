@@ -1,7 +1,6 @@
-package fr.yan36.westerlife.common.entities;
+package fr.yan36.westerlife.common.entities.DynamX;
 
 
-import com.jme3.bounding.BoundingBox;
 import com.jme3.bullet.collision.shapes.BoxCollisionShape;
 import com.jme3.bullet.collision.shapes.CollisionShape;
 import com.jme3.bullet.joints.Point2PointJoint;

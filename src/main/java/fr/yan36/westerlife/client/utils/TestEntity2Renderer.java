@@ -1,25 +1,18 @@
 package fr.yan36.westerlife.client.utils;
 
-import com.jme3.bullet.objects.PhysicsRigidBody;
 import com.jme3.math.Quaternion;
 import fr.dynamx.api.events.PhysicsEntityEvent;
 import fr.dynamx.client.renders.RenderPhysicsEntity;
 import fr.dynamx.common.DynamXContext;
 import fr.dynamx.common.entities.PropsEntity;
-import fr.dynamx.common.physics.joints.EntityJoint;
-import fr.dynamx.utils.client.ClientDynamXUtils;
-import fr.dynamx.utils.maths.DynamXMath;
-import fr.dynamx.utils.physics.DynamXPhysicsHelper;
 import fr.yan36.westerlife.Main;
-import fr.yan36.westerlife.common.entities.TestEntity2;
-import fr.yan36.westerlife.common.entities.TestEntityModule2;
+import fr.yan36.westerlife.common.entities.DynamX.TestEntity2;
+import fr.yan36.westerlife.common.entities.DynamX.TestEntityModule2;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.culling.ICamera;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
-
-import java.util.Objects;
 
 import static org.lwjgl.opengl.GL11.*;
 

@@ -1,10 +1,8 @@
-package fr.yan36.westerlife.common.entities;
+package fr.yan36.westerlife.common.entities.DynamX;
 
 import com.jme3.bullet.collision.shapes.BoxCollisionShape;
 import com.jme3.bullet.collision.shapes.CollisionShape;
-import com.jme3.bullet.collision.shapes.SphereCollisionShape;
 import com.jme3.bullet.joints.Constraint;
-import com.jme3.bullet.joints.HingeJoint;
 import com.jme3.bullet.joints.Point2PointJoint;
 import com.jme3.bullet.objects.PhysicsRigidBody;
 import com.jme3.math.Vector3f;
@@ -17,7 +15,6 @@ import fr.dynamx.common.DynamXMain;
 import fr.dynamx.common.entities.PhysicsEntity;
 import fr.dynamx.common.network.sync.variables.EntityTransformsVariable;
 import fr.dynamx.common.physics.entities.AbstractEntityPhysicsHandler;
-import fr.dynamx.common.physics.entities.BaseVehiclePhysicsHandler;
 import fr.dynamx.common.physics.joints.EntityJoint;
 import fr.dynamx.common.physics.joints.JointHandler;
 import fr.dynamx.common.physics.joints.JointHandlerRegistry;
@@ -26,14 +23,12 @@ import fr.dynamx.common.physics.utils.SynchronizedRigidBodyTransform;
 import fr.dynamx.utils.optimization.Vector3fPool;
 import fr.dynamx.utils.physics.DynamXPhysicsHelper;
 import fr.yan36.westerlife.Main;
-import net.minecraft.entity.Entity;
+import fr.yan36.westerlife.common.entities.DynamX.TestEntity2;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Objects;
 
 @SynchronizedEntityVariable.SynchronizedPhysicsModule
 public class TestEntityModule2 implements IPhysicsModule<AbstractEntityPhysicsHandler<?, ?>>, AttachModule.AttachToSelfModule, AttachedBodySynchronizer   {

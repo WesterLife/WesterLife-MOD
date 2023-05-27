@@ -29,10 +29,7 @@ public class RenderTombe extends TESRDynamXBlock<TileTombe> {
 
             GlStateManager.pushMatrix();
             GlStateManager.translate(0.2,0.15,0.737);
-//            GlStateManager.scale((te.getBlockObjectInfo().getScaleModifier()).x, (te.getBlockObjectInfo().getScaleModifier()).y, (te.getBlockObjectInfo().getScaleModifier()).z);
             GlStateManager.scale(0.01,-0.01,0.01);
-//            GlStateManager.translate(0,0.5d,0.5f);
-//            GlStateManager.rotate(te.getRotation() * 22.5f, 0.0F, -1.0F, 0.0F);
             GlStateManager.rotate(180f, 0.0F, -1.0F, 0.0F);
             GlStateManager.color(0.5f,0.5f,0.5f);
             Util.drawSplitString(Minecraft.getMinecraft().fontRenderer, te.getText(), 0,0, 50, new Color(50,50,50).getRGB());

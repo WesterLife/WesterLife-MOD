@@ -42,6 +42,7 @@ public class DynamxInit {
     public static BlockRoad barrierePolice;
     public static BlockRoad clotureChantier;
     public static BlockRoad poteau;
+    public static BlockFeuRouge feurouge;
     public static BlockHerse herse;
 
     public static BlockTombe tombe;
@@ -81,6 +82,7 @@ public class DynamxInit {
         clotureChantier = new BlockRoad(Material.ANVIL, Main.MODID, "cloturechantier", new ResourceLocation("westerlife","models/dynamx/blocks/cloture_chantier/cloturechantier.obj"));
         poteau = new BlockRoad(Material.ANVIL, Main.MODID, "poteau", new ResourceLocation("westerlife","models/dynamx/blocks/poteau/poteau.obj"));
         herse = new BlockHerse(Material.ANVIL, Main.MODID, "herse", new ResourceLocation("westerlife","models/dynamx/blocks/herse/herse.obj"));
+        feurouge = new BlockFeuRouge(Material.ANVIL, Main.MODID, "feurouge", new ResourceLocation("westerlife","models/dynamx/blocks/feurouge/feurouge.obj"));
 
         //Old items
         SignVillage = new BlockSignVillage(Material.ANVIL, Main.MODID, "panneauvillage", new ResourceLocation("westerlife","models/dynamx/signvillage/sign.obj"));

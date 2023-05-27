@@ -1,19 +1,20 @@
 package fr.yan36.westerlife.client;
 
 import fr.aym.acsguis.api.ACsGuiApi;
-import fr.dynamx.api.obj.ObjModelPath;
-import fr.dynamx.common.DynamXContext;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.client.phone.Apps;
 import fr.yan36.westerlife.client.renderer.LayerArmorSuperposition;
 import fr.yan36.westerlife.client.utils.TestEntity2Renderer;
 import fr.yan36.westerlife.common.CommonProxy;
 import fr.yan36.westerlife.common.blocks.tileentity.*;
+import fr.yan36.westerlife.common.blocks.tileentity.render.RenderFeuRouge;
 import fr.yan36.westerlife.common.blocks.tileentity.render.RenderRadarFixe;
 import fr.yan36.westerlife.common.blocks.tileentity.render.RenderTileMovingGate;
 import fr.yan36.westerlife.common.blocks.tileentity.render.RenderTombe;
-import fr.yan36.westerlife.common.entities.TestEntity2;
-import fr.yan36.westerlife.common.utils.WesterBuiltinPack;
+import fr.yan36.westerlife.common.entities.DynamX.TestEntity2;
+import fr.yan36.westerlife.common.entities.ModelNPC;
+import fr.yan36.westerlife.common.entities.NPCTestEntity;
+import fr.yan36.westerlife.common.entities.NpcRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.entity.RenderPlayer;
@@ -68,8 +69,10 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.bindTileEntitySpecialRenderer(TileTombe.class, new RenderTombe());
         ClientRegistry.bindTileEntitySpecialRenderer(TileRadarFixe.class, new RenderRadarFixe());
         ClientRegistry.bindTileEntitySpecialRenderer(TEBisign.class, new TEBisignRender());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileFeuRouge.class, new RenderFeuRouge());
 
         RenderingRegistry.registerEntityRenderingHandler(TestEntity2.class, TestEntity2Renderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(NPCTestEntity.class, new NpcRenderer(new ModelNPC(), 0.5F));
 
 
         MinecraftForge.EVENT_BUS.register(new Client());

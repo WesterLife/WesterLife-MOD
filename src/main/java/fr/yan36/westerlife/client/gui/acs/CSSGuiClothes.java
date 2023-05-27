@@ -7,19 +7,18 @@ import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.dynamx.common.items.DynamXItemArmor;
 import fr.yan36.westerlife.Main;
-import fr.yan36.westerlife.client.Client;
-import fr.yan36.westerlife.common.init.DynamxInit;
 import fr.yan36.westerlife.common.network.PacketSyncClothes;
-import fr.yan36.westerlife.common.objects.ArmorSuperpositionState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class CSSGuiClothes extends GuiFrame {
     public CSSGuiClothes() {

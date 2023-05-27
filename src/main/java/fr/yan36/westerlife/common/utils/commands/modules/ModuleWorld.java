@@ -1,6 +1,7 @@
 package fr.yan36.westerlife.common.utils.commands.modules;
 
 //import fr.yan36.westerlife.common.blocks.tileentity.TEDigicode;
+import fr.yan36.westerlife.common.blocks.tileentity.TileFeuRouge;
 import fr.yan36.westerlife.common.blocks.tileentity.TileMovingGate;
 import fr.yan36.westerlife.common.blocks.tileentity.TileRadarFixe;
 import fr.yan36.westerlife.common.blocks.tileentity.TileTombe;
@@ -94,6 +95,26 @@ public class ModuleWorld extends CommandModule {
                             tileTombe.setText(args[2].replaceAll("_", " "));
                             tileTombe.sync();
                             sender.sendMessage(new TextComponentString("§aSet text to '" + args[2] + "'."));
+                        }
+                    }
+                } else {
+                    sender.sendMessage(new TextComponentString("§c/wlmod world radar <setspeed>"));
+                }
+
+
+            } else if(Objects.equals(args[1], "feurouge")) {
+
+                if (sender instanceof EntityPlayer) {
+                    EntityPlayer player = (EntityPlayer) sender;
+                    RayTraceResult rayTraceResult = player.world.rayTraceBlocks(player.getPositionEyes(1), player.getPositionEyes(1).add(player.getLookVec().scale(10)));
+                    assert rayTraceResult != null;
+                    System.out.println(rayTraceResult.getBlockPos());
+                    if (rayTraceResult != null) {
+                        TileFeuRouge tilefeurouge = (TileFeuRouge) player.world.getTileEntity(rayTraceResult.getBlockPos());
+                        if (tilefeurouge != null) {
+                            tilefeurouge.setSyncvalue(Integer.parseInt(args[2]));
+                            tilefeurouge.sync();
+                            sender.sendMessage(new TextComponentString("§aSet sync time to '" + args[2] + "'."));
                         }
                     }
                 } else {
