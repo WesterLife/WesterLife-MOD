@@ -51,12 +51,6 @@ public class PacketSyncPlayer implements IMessage{
         @Override
         @SideOnly(Side.CLIENT)
         public IMessage onMessage(PacketSyncPlayer m, MessageContext ctx) {
-            Profil.setDate(m.date);
-            Profil.setNom(m.nom);
-            Profil.setPrenom(m.prenom);
-            Profil.setSex(m.sex);
-            Profil.setBank(m.bank);
-            Profil.setRib(m.rib);
             return null;
         }
     }
