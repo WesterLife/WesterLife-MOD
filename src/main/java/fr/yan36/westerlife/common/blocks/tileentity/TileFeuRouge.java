@@ -9,6 +9,7 @@ public class TileFeuRouge extends TileEntitySyncClient implements ITickable {
     private BlockObject b;
 
     private int syncvalue= 20;
+    private int position = 0;
 
     public TileFeuRouge(){
         super(null);
@@ -23,12 +24,14 @@ public class TileFeuRouge extends TileEntitySyncClient implements ITickable {
     public void readFromNBT(NBTTagCompound tagCompound) {
         super.readFromNBT(tagCompound);
         this.syncvalue = tagCompound.getInteger("syncvalue");
+        this.position = tagCompound.getInteger("position");
     }
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
         super.writeToNBT(tagCompound);
         tagCompound.setInteger("syncvalue", this.syncvalue);
+        tagCompound.setInteger("position", this.position);
         return tagCompound;
     }
 
@@ -41,6 +44,16 @@ public class TileFeuRouge extends TileEntitySyncClient implements ITickable {
 
     public int getSyncvalue() {
         return this.syncvalue;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+        sync();
+        markDirty();
+    }
+
+    public int getPosition() {
+        return this.position;
     }
 
     @Override

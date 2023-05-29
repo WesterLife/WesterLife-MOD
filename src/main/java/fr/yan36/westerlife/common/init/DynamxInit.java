@@ -47,6 +47,8 @@ public class DynamxInit {
 
     public static BlockTombe tombe;
 
+    public static BlockSpot spot;
+
     public static HashMap<String, DynamXItemArmor<?>> fastRegistryAccess = new HashMap<>();
 
 
@@ -89,6 +91,11 @@ public class DynamxInit {
         doublefeurouge = new BlockBisign(Material.ANVIL, Main.MODID, "doublefeurouge", new ResourceLocation("westerlife","models/dynamx/bisign/bicolor.obj"));
         //feu_tricolore = new BlockDynamx(Material.ANVIL, Main.MODID, "feutricolore", "feut/feut.obj");
         //Keypad = new BlockKeypad(Material.ANVIL, Main.MODID, "keypad", "keypad/keypad.obj");
+
+        // SCENE
+
+        spot = new BlockSpot(Material.ANVIL, Main.MODID, "spot", new ResourceLocation("westerlife","models/dynamx/blocks/spot/spot.obj"));
+
 
 
 

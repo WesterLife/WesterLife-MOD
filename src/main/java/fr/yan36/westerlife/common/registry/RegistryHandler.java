@@ -7,12 +7,14 @@ import fr.yan36.westerlife.common.utils.interfaces.IHasModel;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemFood;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 @Mod.EventBusSubscriber
 public class RegistryHandler {
@@ -24,6 +26,7 @@ public class RegistryHandler {
     {
         System.out.println("Enregistrement des items");
         event.getRegistry().registerAll(ItemInit.ITEMS.toArray(new Item[0]));
+        event.getRegistry().registerAll(ItemInit.ITEMS_FOOD.toArray(new Item[0]));
     }
     @SubscribeEvent
     public static void onBlockRegister(RegistryEvent.Register<Block> event)

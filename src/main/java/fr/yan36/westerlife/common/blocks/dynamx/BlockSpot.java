@@ -3,6 +3,7 @@ package fr.yan36.westerlife.common.blocks.dynamx;
 import fr.dynamx.common.blocks.DynamXBlock;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.blocks.tileentity.TileFeuRouge;
+import fr.yan36.westerlife.common.blocks.tileentity.TileSpot;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,9 +18,9 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-public class BlockFeuRouge extends DynamXBlock {
+public class BlockSpot extends DynamXBlock {
 
-    public BlockFeuRouge(Material material, String modid, String blockName, ResourceLocation model) {
+    public BlockSpot(Material material, String modid, String blockName, ResourceLocation model) {
         super(material, modid, blockName, model);
         setCreativeTab(Main.WESTER_ROADS);
     }
@@ -32,16 +33,6 @@ public class BlockFeuRouge extends DynamXBlock {
     @Nullable
     @Override
     public TileEntity createTileEntity(World world, IBlockState state) {
-        return new TileFeuRouge(this.blockObjectInfo);
-    }
-
-    @Override
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
-        return new AxisAlignedBB(0,0,0,1,1,1);
-    }
-
-    @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-        return new AxisAlignedBB(0,0,0,1,1,1);
+        return new TileSpot(this.blockObjectInfo);
     }
 }

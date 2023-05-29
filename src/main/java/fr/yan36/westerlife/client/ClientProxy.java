@@ -3,14 +3,12 @@ package fr.yan36.westerlife.client;
 import fr.aym.acsguis.api.ACsGuiApi;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.client.phone.Apps;
+import fr.yan36.westerlife.client.renderer.ClientHUD;
 import fr.yan36.westerlife.client.renderer.LayerArmorSuperposition;
 import fr.yan36.westerlife.client.utils.TestEntity2Renderer;
 import fr.yan36.westerlife.common.CommonProxy;
 import fr.yan36.westerlife.common.blocks.tileentity.*;
-import fr.yan36.westerlife.common.blocks.tileentity.render.RenderFeuRouge;
-import fr.yan36.westerlife.common.blocks.tileentity.render.RenderRadarFixe;
-import fr.yan36.westerlife.common.blocks.tileentity.render.RenderTileMovingGate;
-import fr.yan36.westerlife.common.blocks.tileentity.render.RenderTombe;
+import fr.yan36.westerlife.common.blocks.tileentity.render.*;
 import fr.yan36.westerlife.common.entities.DynamX.TestEntity2;
 import fr.yan36.westerlife.common.entities.ModelNPC;
 import fr.yan36.westerlife.common.entities.NPCTestEntity;
@@ -70,12 +68,14 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.bindTileEntitySpecialRenderer(TileRadarFixe.class, new RenderRadarFixe());
         ClientRegistry.bindTileEntitySpecialRenderer(TEBisign.class, new TEBisignRender());
         ClientRegistry.bindTileEntitySpecialRenderer(TileFeuRouge.class, new RenderFeuRouge());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileSpot.class, new RenderSpot());
 
         RenderingRegistry.registerEntityRenderingHandler(TestEntity2.class, TestEntity2Renderer::new);
         RenderingRegistry.registerEntityRenderingHandler(NPCTestEntity.class, new NpcRenderer(new ModelNPC(), 0.5F));
 
 
         MinecraftForge.EVENT_BUS.register(new Client());
+        MinecraftForge.EVENT_BUS.register(new ClientHUD());
         Display.setTitle("WesterLife - " + Minecraft.getMinecraft().getSession().getUsername());
 
         setWindowIcon();
