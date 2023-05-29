@@ -1,26 +1,28 @@
 package fr.yan36.westerlife.client;
 
-import com.mrcrayfish.obfuscate.client.event.ModelPlayerEvent;
 import fr.aym.acsguis.api.ACsGuiApi;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.client.phone.Apps;
+import fr.yan36.westerlife.client.renderer.ClientHUD;
+import fr.yan36.westerlife.client.renderer.LayerArmorSuperposition;
+import fr.yan36.westerlife.client.utils.TestEntity2Renderer;
 import fr.yan36.westerlife.common.CommonProxy;
 import fr.yan36.westerlife.common.blocks.tileentity.*;
-import fr.yan36.westerlife.common.blocks.tileentity.render.RenderRadarFixe;
-import fr.yan36.westerlife.common.blocks.tileentity.render.RenderTileMovingGate;
-import fr.yan36.westerlife.common.registry.RegistryHandler;
+import fr.yan36.westerlife.common.blocks.tileentity.render.*;
+import fr.yan36.westerlife.common.entities.DynamX.TestEntity2;
+import fr.yan36.westerlife.common.entities.ModelNPC;
+import fr.yan36.westerlife.common.entities.NPCTestEntity;
+import fr.yan36.westerlife.common.entities.NpcRenderer;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Util;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import org.apache.commons.io.IOUtils;
 import org.lwjgl.opengl.Display;
 
@@ -29,6 +31,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
+import java.util.Map;
 
 
 public class ClientProxy extends CommonProxy {
@@ -57,11 +60,22 @@ public class ClientProxy extends CommonProxy {
     public void preInit() throws IOException {
         super.preInit();
         System.out.println("ClientProxy preInit");
+
+
         ClientRegistry.bindTileEntitySpecialRenderer(TESign.class, new TESignRender());
         ClientRegistry.bindTileEntitySpecialRenderer(TileMovingGate.class, new RenderTileMovingGate());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileTombe.class, new RenderTombe());
         ClientRegistry.bindTileEntitySpecialRenderer(TileRadarFixe.class, new RenderRadarFixe());
         ClientRegistry.bindTileEntitySpecialRenderer(TEBisign.class, new TEBisignRender());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileFeuRouge.class, new RenderFeuRouge());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileSpot.class, new RenderSpot());
+
+        RenderingRegistry.registerEntityRenderingHandler(TestEntity2.class, TestEntity2Renderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(NPCTestEntity.class, new NpcRenderer(new ModelNPC(), 0.5F));
+
+
         MinecraftForge.EVENT_BUS.register(new Client());
+        MinecraftForge.EVENT_BUS.register(new ClientHUD());
         Display.setTitle("WesterLife - " + Minecraft.getMinecraft().getSession().getUsername());
 
         setWindowIcon();
@@ -69,22 +83,25 @@ public class ClientProxy extends CommonProxy {
 
 
 
-        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("dynamxmod", "css/mainmenu.css"));
-        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("dynamxmod", "css/ingame.css"));
-        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("dynamxmod", "css/createprofil.css"));
-        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("dynamxmod", "css/atm.css"));
-        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("dynamxmod", "css/gendarmerie.css"));
-        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("dynamxmod", "css/phone.css"));
-        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("dynamxmod", "css/gendarmerie_login.css"));
-        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("dynamxmod", "css/keypad.css"));
-        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("dynamxmod", "css/pompier_login.css"));
-        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("phoneframe", "css/phoneframe.css"));
-        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("dynamxmod", "css/admin.css"));
-        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("dynamxmod", "css/hudig.css"));
+//        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("dynamxmod", "css/mainmenu.css"));
+//        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("dynamxmod", "css/ingame.css"));
+//        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("dynamxmod", "css/createprofil.css"));
+//        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("dynamxmod", "css/atm.css"));
+//        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("dynamxmod", "css/gendarmerie.css"));
+//        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("dynamxmod", "css/phone.css"));
+//        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("dynamxmod", "css/gendarmerie_login.css"));
+//        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("dynamxmod", "css/keypad.css"));
+//        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("dynamxmod", "css/pompier_login.css"));
+//        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("phoneframe", "css/phoneframe.css"));
+//        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("dynamxmod", "css/admin.css"));
+//        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("dynamxmod", "css/hudig.css"));
+        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(Main.MODID, "acsgui/clothes.css"));
         Apps.Init(); // Gabi <3
 
 
     }
+
+
 
     private void setWindowIcon()
     {
@@ -138,6 +155,8 @@ public class ClientProxy extends CommonProxy {
 
     @Override
     public void init() {
+        final Map<String, RenderPlayer> skinMap = Minecraft.getMinecraft().getRenderManager().getSkinMap();
+        skinMap.forEach((key, value) -> value.addLayer(new LayerArmorSuperposition(value)));
         super.init();
     }
 

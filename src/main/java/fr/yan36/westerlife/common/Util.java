@@ -4,9 +4,11 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
 import fr.yan36.westerlife.common.utils.AABB;
 import net.minecraft.block.Block;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.util.EntitySelectors;
 import net.minecraft.util.math.*;
 import net.minecraft.world.World;
@@ -137,5 +139,38 @@ public class Util {
                 }
             }
         }
+    }
+
+    public static void drawSplitString(FontRenderer renderer, String str, int x, int y, int wrapWidth, int textColor) {
+        str = trimStringNewline(str);
+        renderSplitStringCentered(renderer, str, x, y, wrapWidth, textColor);
+    }
+    private static void renderSplitStringCentered(FontRenderer renderer, String str, int x, int y, int wrapWidth, int textColor) {
+        List<String> lines = renderer.listFormattedStringToWidth(str, 55);
+        for (int i = 0; i < lines.size() && i < 4; i++) {
+            String line = (String)lines.get(i);
+            x = (wrapWidth + -renderer.getStringWidth(line)) / 2;
+            renderer.drawString(line, x, y, textColor);
+            y += renderer.FONT_HEIGHT;
+        }
+    }
+
+    private static String trimStringNewline(String text) {
+        while (text != null && text.endsWith("\n"))
+            text = text.substring(0, text.length() - 1);
+        return text;
+    }
+
+    public static EntityEquipmentSlot equipementFromSlotID(int slotID)
+    {
+        for (EntityEquipmentSlot entityequipmentslot : EntityEquipmentSlot.values())
+        {
+            if (entityequipmentslot.getSlotIndex() == slotID)
+            {
+                return entityequipmentslot;
+            }
+        }
+
+        throw new IllegalArgumentException("Invalid slot '" + slotID + "'");
     }
 }

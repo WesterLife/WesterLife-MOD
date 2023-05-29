@@ -1,11 +1,16 @@
 package fr.yan36.westerlife.client;
 
 import com.mrcrayfish.obfuscate.client.event.ModelPlayerEvent;
+import fr.aym.acsguis.api.ACsGuiApi;
+import fr.dynamx.api.events.ArmorEvent;
 import fr.dynamx.api.events.VehicleEntityEvent;
 import fr.dynamx.client.handlers.hud.CarController;
+import fr.dynamx.common.items.DynamXItemArmor;
 import fr.yan36.westerlife.Main;
+import fr.yan36.westerlife.client.gui.acs.CSSGuiClothes;
 import fr.yan36.westerlife.client.gui.mcef.BrowserScreen;
 import fr.yan36.westerlife.client.gui.other.EngineFailureIcon;
+import fr.yan36.westerlife.common.init.DynamxInit;
 import fr.yan36.westerlife.common.utils.Animation;
 import fr.yan36.westerlife.common.utils.list.Warp;
 import net.minecraft.client.Minecraft;
@@ -18,6 +23,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
+import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -27,6 +33,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
@@ -38,6 +45,9 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
 @Mod.EventBusSubscriber
 public class Client {
 
@@ -46,6 +56,8 @@ public class Client {
     public static int needToCreateCharacter = 0;
 
     public static HashMap<Integer, Animation> animationState = new HashMap<>();
+    @SideOnly(Side.CLIENT)
+    public static HashMap<UUID, List<DynamXItemArmor<?>>> superpositionState = new HashMap<>();
     public static List<Warp> warplist = new ArrayList<>();
 
     public static String openScreenMcef = "none";
@@ -257,13 +269,17 @@ public class Client {
     @SideOnly(Side.CLIENT)
     public static KeyBinding keyBindAnimation;
     @SideOnly(Side.CLIENT)
+    public static KeyBinding keyOpenClothes;
+    @SideOnly(Side.CLIENT)
     public Client() {
         FMLCommonHandler.instance().bus().register(this);
         MinecraftForge.EVENT_BUS.register(this);
         keyBindTest = new KeyBinding("westerlife.admin", Keyboard.KEY_F9, "westerlife.category");
         keyBindAnimation = new KeyBinding("westerlife.animation", Keyboard.KEY_F4, "westerlife.keybind");
+        keyOpenClothes = new KeyBinding("westerlife.clohtes", Keyboard.KEY_F10, "westerlife.keybind");
         ClientRegistry.registerKeyBinding(keyBindTest);
         ClientRegistry.registerKeyBinding(keyBindAnimation);
+        ClientRegistry.registerKeyBinding(keyOpenClothes);
         System.out.println("WesterLife - Client");
     }
 
@@ -276,6 +292,42 @@ public class Client {
 
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
+    public void armorSuperpositor(ArmorEvent.Render event) {
+
+    }
+
+//    @SubscribeEvent
+//    @SideOnly(Side.CLIENT)
+//    public void addLayer(Set event) {
+//
+//    }
+
+    @SubscribeEvent
+    @SideOnly(Side.CLIENT)
+    public void armorSuperpositor(RenderPlayerEvent.Post event) {
+//        LayerRenderer<EntityPlayer> renderer = new LayerArmorSuperposition(event.getRenderer());
+//        event.getRenderer().addLayer(renderer);
+
+    }
+
+    @SubscribeEvent
+    @SideOnly(Side.CLIENT)
+    public void armorSuperpositor(TickEvent.RenderTickEvent event) {
+        // get all players arround the player
+        // check if player is ingame
+        boolean isPlayerInGame = Minecraft.getMinecraft().player != null && Minecraft.getMinecraft().world != null;
+        if(!isPlayerInGame) return;
+        List<EntityPlayer> players = Minecraft.getMinecraft().world.playerEntities;
+        players.forEach((entityPlayer -> {
+
+        }));
+
+
+    }
+
+
+    @SubscribeEvent
+    @SideOnly(Side.CLIENT)
     public void onEvent(InputEvent.KeyInputEvent event) {
         if (keyBindTest.isPressed()) {
             keyTestTyped();
@@ -283,6 +335,17 @@ public class Client {
 
         if (keyBindAnimation.isPressed()) {
             keyAnimationTyped();
+        }
+
+        if (keyOpenClothes.isPressed()) {
+            ACsGuiApi.asyncLoadThenShowGui("clothes", CSSGuiClothes::new);
+        }
+        if(Keyboard.isKeyDown(Keyboard.KEY_F3)) {
+            List<DynamXItemArmor<?>> globalitems = ForgeRegistries.ITEMS.getEntries().stream().filter(e -> e.getValue() instanceof DynamXItemArmor<?>).collect(Collectors.toCollection(ArrayList::new)).stream().map(e -> (DynamXItemArmor<?>) e.getValue()).collect(Collectors.toList());
+            for (DynamXItemArmor<?> item : globalitems) {
+                DynamxInit.fastRegistryAccess.put(item.getInfo().getFullName(), item);
+                System.out.println("added " + item.getInfo().getFullName() + " to fast registry access");
+            }
         }
     }
 

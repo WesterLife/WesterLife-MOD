@@ -3,7 +3,7 @@ package fr.yan36.westerlife.common.network;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.client.Client;
 import fr.yan36.westerlife.common.Util;
-import fr.yan36.westerlife.common.blocks.tileentity.TEDigicode;
+//import fr.yan36.westerlife.common.blocks.tileentity.TEDigicode;
 import fr.yan36.westerlife.common.registry.SoundsHandler;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
@@ -52,17 +52,17 @@ public class PacketTryCode implements IMessage{
         public IMessage onMessage(PacketTryCode m, MessageContext ctx) {
             System.out.println(Util.blockPosToString(m.pos));
             EntityPlayer player = (EntityPlayer) ctx.getServerHandler().player;
-            TEDigicode teDigicode = (TEDigicode) player.world.getTileEntity(m.pos);
-                if(teDigicode != null) {
-                    if(TEDigicode.getCode().equals(m.code)) {
-                        player.sendMessage(new TextComponentString("§aCode correct"));
-                        Main.network.sendToAllAround(new PacketPlaySound(1), new NetworkRegistry.TargetPoint(ctx.getServerHandler().player.dimension, m.pos.getX(), m.pos.getY(), m.pos.getZ() , 10));
-                        //WIP : Emit redstone signal
-                    } else {
-                        player.sendMessage(new TextComponentString("§cCode incorrect"));
-                        Main.network.sendToAllAround(new PacketPlaySound(1), new NetworkRegistry.TargetPoint(ctx.getServerHandler().player.dimension, m.pos.getX(), m.pos.getY(), m.pos.getZ() , 10));
-                        }
-                }
+//            TEDigicode teDigicode = (TEDigicode) player.world.getTileEntity(m.pos);
+//                if(teDigicode != null) {
+//                    if(TEDigicode.getCode().equals(m.code)) {
+//                        player.sendMessage(new TextComponentString("§aCode correct"));
+//                        Main.network.sendToAllAround(new PacketPlaySound(1), new NetworkRegistry.TargetPoint(ctx.getServerHandler().player.dimension, m.pos.getX(), m.pos.getY(), m.pos.getZ() , 10));
+//                        //WIP : Emit redstone signal
+//                    } else {
+//                        player.sendMessage(new TextComponentString("§cCode incorrect"));
+//                        Main.network.sendToAllAround(new PacketPlaySound(1), new NetworkRegistry.TargetPoint(ctx.getServerHandler().player.dimension, m.pos.getX(), m.pos.getY(), m.pos.getZ() , 10));
+//                        }
+//                }
             return null;
         }
     }

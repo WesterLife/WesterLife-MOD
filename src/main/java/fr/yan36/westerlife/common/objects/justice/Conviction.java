@@ -58,8 +58,14 @@ public class Conviction implements IDatabaseVariable {
             punishments.append(punishment.toString()).append(";");
         }
         vars.add(punishments.toString());
+        vars.add(IDatabaseVariable.ID_ROW);
 
         return vars;
+    }
+
+    @Override
+    public RowDetails getIDRow() {
+        return new RowDetails("id", true);
     }
 
     public String getAssociated_user() {
