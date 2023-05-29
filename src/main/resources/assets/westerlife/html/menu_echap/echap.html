@@ -34,6 +34,10 @@
                 <i class="ri-logout-box-r-line button-img"></i>
                 <p>Se déconnecter</p>
             </button>
+            <button class="button" onclick="openMicSettings()">
+                <i class="ri-mic-line button-img"></i>
+                <p>Paramètres micro</p>
+            </button>
         </section>
         <section>
             <div class="rs">
@@ -209,6 +213,12 @@
     function openSettings() {
         window.mcefQuery({
             "request": "$openSettings",
+            "persistent": false
+        });
+    }
+    function openMicSettings() {
+        window.mcefQuery({
+            "request": "$openMicSettings",
             "persistent": false
         });
     }

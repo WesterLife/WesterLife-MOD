@@ -1,5 +1,6 @@
 package fr.yan36.westerlife.common.init;
 
+import fr.dynamx.common.items.DynamXItemArmor;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.blocks.dynamx.*;
 import fr.yan36.westerlife.common.items.dynamx.ItemDynamx;
@@ -7,6 +8,12 @@ import fr.yan36.westerlife.common.items.dynamx.ItemPaper;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class DynamxInit {
 
@@ -35,7 +42,15 @@ public class DynamxInit {
     public static BlockRoad barrierePolice;
     public static BlockRoad clotureChantier;
     public static BlockRoad poteau;
-    public static BlockRoad herse;
+    public static BlockFeuRouge feurouge;
+    public static BlockHerse herse;
+
+    public static BlockTombe tombe;
+
+    public static BlockSpot spot;
+
+    public static HashMap<String, DynamXItemArmor<?>> fastRegistryAccess = new HashMap<>();
+
 
     public static void init() {
 
@@ -62,17 +77,27 @@ public class DynamxInit {
         digicode = new BlockDigicode(Material.ANVIL, Main.MODID, "digicode", new ResourceLocation("westerlife","models/dynamx/blocks/digicode/digicode.obj"));
         deskPhone = new BlockDeskPhone(Material.ANVIL, Main.MODID, "deskphone", new ResourceLocation("westerlife","models/dynamx/blocks/deskphone/telephonefixe.obj"));
         pompeEssence = new BlockPompeEssence(Material.ANVIL, Main.MODID, "pompeessence", new ResourceLocation("westerlife","models/dynamx/blocks/pompe_essence/pompeessence.obj"));
+        tombe = new BlockTombe(Material.ANVIL, Main.MODID, "tombe", new ResourceLocation("westerlife","models/dynamx/tombe/tombe.obj"));
 
         //Road blocks
         barrierePolice = new BlockRoad(Material.ANVIL, Main.MODID, "barrierepolice", new ResourceLocation("westerlife","models/dynamx/blocks/barriere_police/barriere.obj"));
         clotureChantier = new BlockRoad(Material.ANVIL, Main.MODID, "cloturechantier", new ResourceLocation("westerlife","models/dynamx/blocks/cloture_chantier/cloturechantier.obj"));
         poteau = new BlockRoad(Material.ANVIL, Main.MODID, "poteau", new ResourceLocation("westerlife","models/dynamx/blocks/poteau/poteau.obj"));
-        herse = new BlockRoad(Material.ANVIL, Main.MODID, "herse", new ResourceLocation("westerlife","models/dynamx/blocks/herse/herse.obj"));
+        herse = new BlockHerse(Material.ANVIL, Main.MODID, "herse", new ResourceLocation("westerlife","models/dynamx/blocks/herse/herse.obj"));
+        feurouge = new BlockFeuRouge(Material.ANVIL, Main.MODID, "feurouge", new ResourceLocation("westerlife","models/dynamx/blocks/feurouge/feurouge.obj"));
 
         //Old items
         SignVillage = new BlockSignVillage(Material.ANVIL, Main.MODID, "panneauvillage", new ResourceLocation("westerlife","models/dynamx/signvillage/sign.obj"));
         doublefeurouge = new BlockBisign(Material.ANVIL, Main.MODID, "doublefeurouge", new ResourceLocation("westerlife","models/dynamx/bisign/bicolor.obj"));
         //feu_tricolore = new BlockDynamx(Material.ANVIL, Main.MODID, "feutricolore", "feut/feut.obj");
         //Keypad = new BlockKeypad(Material.ANVIL, Main.MODID, "keypad", "keypad/keypad.obj");
+
+        // SCENE
+
+        spot = new BlockSpot(Material.ANVIL, Main.MODID, "spot", new ResourceLocation("westerlife","models/dynamx/blocks/spot/spot.obj"));
+
+
+
+
     }
 }

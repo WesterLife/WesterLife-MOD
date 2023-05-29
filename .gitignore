@@ -5,13 +5,13 @@ bin
 .metadata
 .classpath
 .project
+build/
 
 # idea
 out
 *.ipr
 *.iws
 *.iml
-.idea
 
 # gradle
 build
@@ -20,8 +20,8 @@ build
 # other
 eclipse
 run
-WesterLife
-
+jcef
 
 # Files from Forge MDK
 forge*changelog.txt
+.idea

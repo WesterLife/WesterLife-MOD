@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class DBUtils {
 
@@ -241,6 +242,10 @@ public class DBUtils {
 
             int i = 1;
             for (String value : values) {
+                if(Objects.equals(value, IDatabaseVariable.ID_ROW) && dbv.getIDRow().isDoesIDRowExist()) {
+                    preparedStatement.setInt(i, getMaxIntOfColumn(dbv.tableName(), dbv.getIDRow().getColumnName()) + 1);
+                    continue;
+                }
                 preparedStatement.setString(i, value);
                 i++;
             }

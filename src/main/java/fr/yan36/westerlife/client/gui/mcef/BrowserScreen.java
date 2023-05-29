@@ -1,5 +1,8 @@
 package fr.yan36.westerlife.client.gui.mcef;
 
+import fr.nathanael2611.modularvoicechat.client.gui.GuiConfig;
+import fr.nathanael2611.modularvoicechat.client.voice.audio.MicroManager;
+import fr.nathanael2611.modularvoicechat.client.voice.audio.SpeakerManager;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.client.Client;
 import fr.yan36.westerlife.client.gui.acs.CSSGuiMainMenu;
@@ -298,9 +301,14 @@ public class BrowserScreen extends GuiScreen implements IJSQueryHandler
                     String code = query.split(":")[1];
                     Main.network.sendToServer(new PacketTryCode(code, Client.openScreenMcefPos));
                     Minecraft.getMinecraft().displayGuiScreen(null);
+                } else if(query.substring(1).split(":")[0].equals("openMicSettings")) {
+                    if (MicroManager.isRunning() && SpeakerManager.isRunning()) {
+                        Minecraft.getMinecraft().displayGuiScreen(new GuiConfig());
+                    } else {
+                        Minecraft.getMinecraft().displayGuiScreen(new GuiErrorScreen("Erreur", "Erreur interne : " + MicroManager.isRunning() + "-" + SpeakerManager.isRunning() +  ". Cette erreur ne devrait survenir. Contactez le staff."));
+                    }
                 }
-            } else
-                cb.failure(403, "Can't access username from external page");
+            } else cb.failure(403, "Can't access username from external page");
             return true;
         }
         return false;
