@@ -37,7 +37,6 @@ public class PacketOpenGUIAtm implements IMessage{
         @Override
         @SideOnly(Side.CLIENT)
         public IMessage onMessage(PacketOpenGUIAtm m, MessageContext ctx) {
-            ACsGuiApi.asyncLoadThenShowGui("atm", () -> new CSSGuiAtm(m.code));
 
             return null;
         }
