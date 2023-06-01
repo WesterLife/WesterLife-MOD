@@ -1,10 +1,13 @@
 package fr.yan36.westerlife.client;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import fr.aym.acsguis.api.ACsGuiApi;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.client.phone.Apps;
 import fr.yan36.westerlife.client.renderer.ClientHUD;
 import fr.yan36.westerlife.client.renderer.LayerArmorSuperposition;
+import fr.yan36.westerlife.client.utils.News;
 import fr.yan36.westerlife.client.utils.TestEntity2Renderer;
 import fr.yan36.westerlife.common.CommonProxy;
 import fr.yan36.westerlife.common.blocks.tileentity.*;
@@ -28,8 +31,11 @@ import org.lwjgl.opengl.Display;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.nio.ByteBuffer;
 import java.util.Map;
 
@@ -54,13 +60,9 @@ public class ClientProxy extends CommonProxy {
         super.registerEntityRenderers();
     }
 
-
-
     @Override
     public void preInit() throws IOException {
         super.preInit();
-        System.out.println("ClientProxy preInit");
-
 
         ClientRegistry.bindTileEntitySpecialRenderer(TESign.class, new TESignRender());
         ClientRegistry.bindTileEntitySpecialRenderer(TileMovingGate.class, new RenderTileMovingGate());
@@ -73,31 +75,14 @@ public class ClientProxy extends CommonProxy {
         RenderingRegistry.registerEntityRenderingHandler(TestEntity2.class, TestEntity2Renderer::new);
         RenderingRegistry.registerEntityRenderingHandler(NPCTestEntity.class, new NpcRenderer(new ModelNPC(), 0.5F));
 
-
         MinecraftForge.EVENT_BUS.register(new Client());
         MinecraftForge.EVENT_BUS.register(new ClientHUD());
         Display.setTitle("WesterLife - " + Minecraft.getMinecraft().getSession().getUsername());
 
         setWindowIcon();
 
-
-
-
-//        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("dynamxmod", "css/mainmenu.css"));
-//        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("dynamxmod", "css/ingame.css"));
-//        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("dynamxmod", "css/createprofil.css"));
-//        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("dynamxmod", "css/atm.css"));
-//        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("dynamxmod", "css/gendarmerie.css"));
-//        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("dynamxmod", "css/phone.css"));
-//        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("dynamxmod", "css/gendarmerie_login.css"));
-//        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("dynamxmod", "css/keypad.css"));
-//        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("dynamxmod", "css/pompier_login.css"));
-//        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("phoneframe", "css/phoneframe.css"));
-//        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("dynamxmod", "css/admin.css"));
-//        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("dynamxmod", "css/hudig.css"));
         ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(Main.MODID, "acsgui/clothes.css"));
         Apps.Init(); // Gabi <3
-
 
     }
 
@@ -158,6 +143,7 @@ public class ClientProxy extends CommonProxy {
         final Map<String, RenderPlayer> skinMap = Minecraft.getMinecraft().getRenderManager().getSkinMap();
         skinMap.forEach((key, value) -> value.addLayer(new LayerArmorSuperposition(value)));
         super.init();
+
     }
 
 }
