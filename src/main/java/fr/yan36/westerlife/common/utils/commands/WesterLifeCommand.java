@@ -30,6 +30,7 @@ public class WesterLifeCommand extends CommandBase {
         modules.add(new ModuleInfo());
         modules.add(new ModuleEconomy());
         modules.add(new ModuleManagePerso());
+        modules.add(new ModuleWhitelist());
     }
 
     @Override

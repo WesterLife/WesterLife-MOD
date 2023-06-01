@@ -29,6 +29,19 @@ public class DBUtils {
         }
     }
 
+    public static void createWhitelist(String pseudo, String type){
+        try{
+            Connection connection = ServerProxy.getDatabaseManager().getWesterLifeDB().getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO `whitelists` (`pseudo`, `type`) VALUES (?, ?)");
+            preparedStatement.setString(1, pseudo);
+            preparedStatement.setString(2, type);
+            preparedStatement.executeUpdate();
+            connection.close();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
     public static void createBankAccount(String owner, int account_number, String cb_code, String date, boolean isPersonnal){
         try{
             Connection connection = ServerProxy.getDatabaseManager().getWesterLifeDB().getConnection();
@@ -55,6 +68,24 @@ public class DBUtils {
             Connection connection = ServerProxy.getDatabaseManager().getWesterLifeDB().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT uuid FROM players WHERE uuid= ?");
             preparedStatement.setString(1, p.getUniqueID().toString());
+            preparedStatement.executeQuery();
+            ResultSet rs = preparedStatement.getResultSet();
+            if (rs.next()){
+                exists = true;
+            }
+            connection.close();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return exists;
+    }
+
+    public static boolean getWhitelistExist(String pseudo){
+        boolean exists = false;
+        try{
+            Connection connection = ServerProxy.getDatabaseManager().getWesterLifeDB().getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT pseudo FROM whitelists WHERE pseudo= ?");
+            preparedStatement.setString(1, pseudo);
             preparedStatement.executeQuery();
             ResultSet rs = preparedStatement.getResultSet();
             if (rs.next()){
