@@ -27,6 +27,7 @@ import fr.yan36.westerlife.common.utils.Animation;
 import fr.yan36.westerlife.server.bdd.DBUtils;
 import fr.yan36.westerlife.server.bdd.MethodesBDD;
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -56,9 +57,14 @@ public class Serveur {
     public void onConnectToServer(PlayerEvent.PlayerLoggedInEvent e) {
         boolean devmod = false;
         if(!devmod) {
-            if(!DBUtils.getCharacterExists(e.player)){
-                Main.network.sendTo(new PacketAskToCreateCharacter(), (EntityPlayerMP) e.player);
-                e.player.sendMessage(new TextComponentString("§cVous n'avez pas de personnage, veuillez en créer un."));
+            if (DBUtils.getWhitelistExist(e.player.getName())) {
+                if (!DBUtils.getCharacterExists(e.player)) {
+                    Main.network.sendTo(new PacketAskToCreateCharacter(), (EntityPlayerMP) e.player);
+                    e.player.sendMessage(new TextComponentString("§cVous n'avez pas de personnage, veuillez en créer un."));
+                }
+            } else {
+                EntityPlayerMP targetPlayer = Objects.requireNonNull(e.player.getServer()).getPlayerList().getPlayerByUUID(Objects.requireNonNull(e.player.getUniqueID()));
+                targetPlayer.connection.disconnect(new TextComponentString("§cVous avez été expulsé du serveur ! §bRaison : §ePersonnage supprimé !"));
             }
         }
     }
@@ -80,7 +86,6 @@ public class Serveur {
 
     @SubscribeEvent
     public void on(TickEvent.PlayerTickEvent e) {
-        System.out.println("aa");
         Databases.getPlayerData(e.player).setFloat("watervalue", Databases.getPlayerData(e.player).getFloat("watervalue") - 0.00005f);
         if(e.player.isSprinting()) {
             Databases.getPlayerData(e.player).setFloat("watervalue", Databases.getPlayerData(e.player).getFloat("watervalue") - 0.005f);
