@@ -1,13 +1,71 @@
 package fr.yan36.westerlife.common.objects.character;
 
+import fr.yan36.westerlife.common.objects.IDatabaseResponse;
+import fr.yan36.westerlife.common.objects.IDatabaseVariable;
 import fr.yan36.westerlife.common.objects.justice.Conviction;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
 
-public class Character {
-    public enum Gender { MALE, FEMALE }
+public class Character implements IDatabaseVariable, IDatabaseResponse {
+    @Override
+    public String tableName() {
+        return "players";
+    }
 
+    @Override
+    public List<String> getValues() {
+        List<String> vars = new ArrayList<>();
+        vars.add(uuid.toString());
+        vars.add(firstNames);
+        vars.add(lastName);
+        vars.add(nationality);
+        vars.add(gender.getSex());
+        vars.add(birthPlace);
+        vars.add(birthDate);
+        return vars;
+    }
+
+
+    @Override
+    public RowDetails getIDRow() {
+        return new RowDetails("id", false, true);
+    }
+
+    @Override
+    public void assingValues(List<String> list) {
+        uuid = UUID.fromString(list.get(0));
+        firstNames = list.get(1);
+        lastName = list.get(2);
+        nationality = list.get(3);
+        Gender.getBySex(list.get(4));
+        birthPlace = list.get(5);
+        birthDate = list.get(6);
+    }
+
+    public enum Gender {
+        MALE("HOMME"), FEMALE("FEMME");
+
+        private final String sex;
+        Gender(String sex) {
+            this.sex = sex;
+        }
+
+        public String getSex() {
+            return sex;
+        }
+        public static Gender getBySex(String s) {
+            for (Gender value : Gender.values()) {
+                if(Objects.equals(value.getSex(), s)) {
+                    return value;
+                }
+            }
+            return Gender.MALE;
+        }
+    };
+    private UUID uuid;
     private String firstNames;
     private String lastName;
     private String nationality;
@@ -15,23 +73,69 @@ public class Character {
     private String birthPlace;
     private String birthDate;
 
-    private List<Diploma> diplomas;
-    private List<Conviction> convictions;
-    //WIP: private List<Job> jobs;
-    private List<Permis> permis;
-    //WIP: private List<Car> personalCars;
-
-    public Character(String firstNames, String lastName, String nationality, Gender gender, String birthPlace, String birthDate, List<Diploma> diplomas, List<Permis> permis) {
+    public Character(UUID uuid, String firstNames, String lastName, String nationality, Gender gender, String birthPlace, String birthDate) {
+        this.uuid = uuid;
         this.firstNames = firstNames;
         this.lastName = lastName;
         this.nationality = nationality;
         this.gender = gender;
         this.birthPlace = birthPlace;
         this.birthDate = birthDate;
-        this.diplomas = diplomas;
-        this.permis = permis;
     }
 
+    public UUID getUuid() {
+        return uuid;
+    }
 
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
+    }
 
+    public String getFirstNames() {
+        return firstNames;
+    }
+
+    public void setFirstNames(String firstNames) {
+        this.firstNames = firstNames;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getNationality() {
+        return nationality;
+    }
+
+    public void setNationality(String nationality) {
+        this.nationality = nationality;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public String getBirthPlace() {
+        return birthPlace;
+    }
+
+    public void setBirthPlace(String birthPlace) {
+        this.birthPlace = birthPlace;
+    }
+
+    public String getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(String birthDate) {
+        this.birthDate = birthDate;
+    }
 }

@@ -8,7 +8,7 @@ public class TileSpot extends TileEntitySyncClient implements ITickable {
 
     private BlockObject b;
 
-    private int angle = 20;
+    private int angle;
 
     public TileSpot(){
         super(null);
@@ -28,7 +28,7 @@ public class TileSpot extends TileEntitySyncClient implements ITickable {
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
         super.writeToNBT(tagCompound);
-        tagCompound.setInteger("syncvalue", this.angle);
+        tagCompound.setInteger("angle", this.angle);
         return tagCompound;
     }
 

@@ -9,13 +9,16 @@ public interface IDatabaseVariable {
     List<String> getValues();
     RowDetails getIDRow();
 
+
     class RowDetails {
         public boolean doesIDRowExist;
         public String columnName;
+        public boolean special;
 
-        public RowDetails(String column, boolean doesIDRowExist) {
+        public RowDetails(String column, boolean doesIDRowExist, boolean special) {
             this.columnName = column;
             this.doesIDRowExist = doesIDRowExist;
+            this.special = special;
         }
 
         public String getColumnName() {
@@ -24,6 +27,10 @@ public interface IDatabaseVariable {
 
         public boolean isDoesIDRowExist() {
             return doesIDRowExist;
+        }
+
+        public boolean isSpecial() {
+            return special;
         }
     }
 }

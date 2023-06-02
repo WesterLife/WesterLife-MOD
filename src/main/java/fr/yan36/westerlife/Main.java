@@ -18,6 +18,7 @@ import fr.yan36.westerlife.common.entities.DynamX.TestEntity2;
 import fr.yan36.westerlife.common.entities.NPCTestEntity;
 import fr.yan36.westerlife.common.init.DynamxInit;
 import fr.yan36.westerlife.common.init.Network;
+import fr.yan36.westerlife.common.objects.LightSequence;
 import fr.yan36.westerlife.common.objects.entreprises.CompanyAssociation;
 import fr.yan36.westerlife.common.objects.entreprises.CompanyBase;
 import fr.yan36.westerlife.common.registry.RegistryHandler;
@@ -25,10 +26,12 @@ import fr.yan36.westerlife.common.utils.WesterBuiltinPack;
 import fr.yan36.westerlife.common.utils.commands.WesterLifeCommand;
 import fr.yan36.westerlife.common.utils.discord.Discord;
 import fr.yan36.westerlife.server.AuthSystem;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelZombie;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
@@ -49,10 +52,10 @@ import org.apache.logging.log4j.Logger;
 import javax.sound.sampled.LineUnavailableException;
 import java.awt.*;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.util.*;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Mod(
@@ -67,6 +70,7 @@ public class Main {
     //Util variables
     public static final String MODID = "westerlife";
     public static final String NAME = "WesterLife Mod";
+
     public static final String VERSION = "1.5.6-beta1";
 
     @Mod.Instance(Main.MODID)
@@ -81,7 +85,7 @@ public class Main {
     @SideOnly(Side.CLIENT)
     public static BrowserHud browserHud;
 
-    public static Boolean isEnvDev = false;
+    public static Boolean isEnvDev = true;
 
     public static Database wl_db;
 
@@ -123,7 +127,7 @@ public class Main {
         radar = DynamXDebugOption.newOptionWithMask(DynamXDebugOptions.DebugCategories.GENERAL, "render radar debug", 32);
         //warn: Discord RPC must be reimplemented
         if(event.getSide().isClient()) {
-            
+            // check if account is premium
             try {
                 new Discord().start();
             } catch (Exception e) {
@@ -141,6 +145,7 @@ public class Main {
             DynamxInit.fastRegistryAccess.put(item.getInfo().getFullName(), item);
             System.out.println("added " + item.getInfo().getFullName() + " to fast registry access");
         }
+
 
         CompanyBase companyBase = new CompanyBase("test", "somewhere", 0, "someone");
 

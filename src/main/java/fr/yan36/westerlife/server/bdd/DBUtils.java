@@ -1,5 +1,6 @@
 package fr.yan36.westerlife.server.bdd;
 
+import fr.yan36.westerlife.common.objects.IDatabaseResponse;
 import fr.yan36.westerlife.common.objects.IDatabaseVariable;
 import fr.yan36.westerlife.server.ServerProxy;
 import net.minecraft.entity.player.EntityPlayer;
@@ -242,11 +243,19 @@ public class DBUtils {
 
             int i = 1;
             for (String value : values) {
+                if(dbv.getIDRow().isSpecial()) {
+                    preparedStatement.setInt(i, 0);
+                    continue;
+                } else {
+                    preparedStatement.setString(i, value);
+                }
                 if(Objects.equals(value, IDatabaseVariable.ID_ROW) && dbv.getIDRow().isDoesIDRowExist()) {
                     preparedStatement.setInt(i, getMaxIntOfColumn(dbv.tableName(), dbv.getIDRow().getColumnName()) + 1);
                     continue;
+                } else {
+                    preparedStatement.setString(i, value);
                 }
-                preparedStatement.setString(i, value);
+
                 i++;
             }
             System.out.println(preparedStatement.toString());
@@ -254,9 +263,31 @@ public class DBUtils {
             connection.close();
         } catch (SQLException e){
             System.out.println(litteralValues);
+
             e.printStackTrace();
         }
+    }
 
+    public static boolean isRowExistInDatabase(String table, String column, String value) {
+        try{
+            Connection connection = ServerProxy.getDatabaseManager().getWesterLifeDB().getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM " + table + " WHERE " + column + "=?");
+            preparedStatement.setString(1, value);
+            preparedStatement.execute();
+            ResultSet rs = preparedStatement.getResultSet();
+            if (rs.next()){
+                connection.close();
+                return true;
+            } else {
+                connection.close();
+                return false;
+            }
+
+        } catch (SQLException e){
+            System.out.println("Error while checking if row exist in database");
+            e.printStackTrace();
+            return false;
+        }
     }
 
 }

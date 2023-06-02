@@ -69,6 +69,8 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.bindTileEntitySpecialRenderer(TEBisign.class, new TEBisignRender());
         ClientRegistry.bindTileEntitySpecialRenderer(TileFeuRouge.class, new RenderFeuRouge());
         ClientRegistry.bindTileEntitySpecialRenderer(TileSpot.class, new RenderSpot());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileLyre.class, new RenderLyre());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileScreen.class, new RenderScreen());
 
         RenderingRegistry.registerEntityRenderingHandler(TestEntity2.class, TestEntity2Renderer::new);
         RenderingRegistry.registerEntityRenderingHandler(NPCTestEntity.class, new NpcRenderer(new ModelNPC(), 0.5F));
@@ -96,6 +98,7 @@ public class ClientProxy extends CommonProxy {
 //        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("dynamxmod", "css/admin.css"));
 //        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("dynamxmod", "css/hudig.css"));
         ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(Main.MODID, "acsgui/clothes.css"));
+        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(Main.MODID, "acsgui/lights.css"));
         Apps.Init(); // Gabi <3
 
 

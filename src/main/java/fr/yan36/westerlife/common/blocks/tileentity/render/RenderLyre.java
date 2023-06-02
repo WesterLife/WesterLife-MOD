@@ -1,0 +1,46 @@
+package fr.yan36.westerlife.common.blocks.tileentity.render;
+
+import fr.dynamx.client.renders.TESRDynamXBlock;
+import fr.dynamx.common.DynamXContext;
+import fr.yan36.westerlife.common.blocks.tileentity.TileLyre;
+import fr.yan36.westerlife.common.blocks.tileentity.TileSpot;
+import net.minecraft.client.renderer.GlStateManager;
+
+public class RenderLyre extends TESRDynamXBlock<TileLyre> {
+
+
+    @Override
+    public void render(TileLyre te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
+        GlStateManager.pushMatrix();
+        GlStateManager.translate(x + 0.5D + (te.getBlockObjectInfo().getTranslation()).x, y + (te.getBlockObjectInfo().getTranslation()).y, z + 0.5D + (te.getBlockObjectInfo().getTranslation()).z);
+        GlStateManager.scale((te.getBlockObjectInfo().getScaleModifier()).x, (te.getBlockObjectInfo().getScaleModifier()).y, (te.getBlockObjectInfo().getScaleModifier()).z);
+        if(te.isFlip()) {
+            GlStateManager.rotate(180, 0.0F, 0.0F, 1.0F);
+            GlStateManager.translate(0, -1.0f, 0);
+        }
+        if(te.isBlink()) {
+            // apply glowing effect arround the lyre
+            GlStateManager.disableDepth();
+            GlStateManager.disableLighting();
+            GlStateManager.depthMask(false);
+            // inverse color
+            GlStateManager.colorMask(true, false, true, true);
+        }
+        GlStateManager.rotate(te.getRotation() * 22.5F, 0.0F, -1.0F, 0.0F);
+        DynamXContext.getObjModelRegistry().getModel(te.getBlockObjectInfo().getModel()).renderGroups("base", (byte) te.getBlockMetadata());
+        if(te.isBlink()) {
+            GlStateManager.depthMask(true);
+            GlStateManager.colorMask(true, true, true, true);
+            GlStateManager.enableLighting();
+            GlStateManager.enableDepth();
+        }
+        GlStateManager.rotate(te.getActualrotation().x, 0.0F, 1.0F, 0.0F);
+        DynamXContext.getObjModelRegistry().getModel(te.getBlockObjectInfo().getModel()).renderGroups("yaw", (byte) te.getBlockMetadata());
+        GlStateManager.translate(0,1.094f,0);
+        GlStateManager.rotate(te.getActualrotation().y, 0.0F, 0.0F,1.0F);
+        DynamXContext.getObjModelRegistry().getModel(te.getBlockObjectInfo().getModel()).renderGroups("pitch", (byte) te.getBlockMetadata());
+        GlStateManager.popMatrix();
+    }
+
+
+}

@@ -1,11 +1,18 @@
 package fr.yan36.westerlife.common.utils.commands.modules;
 
 //import fr.yan36.westerlife.common.blocks.tileentity.TEDigicode;
+import com.jme3.math.Vector3f;
 import fr.nathanael2611.simpledatabasemanager.core.Databases;
+import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.blocks.tileentity.*;
+import fr.yan36.westerlife.common.network.PacketOpenAcsGui;
+import fr.yan36.westerlife.common.objects.LightSequence;
 import fr.yan36.westerlife.common.utils.commands.CommandModule;
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
@@ -14,6 +21,9 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.WorldServer;
 
 import javax.annotation.Nullable;
+import javax.vecmath.Vector2f;
+import javax.xml.crypto.Data;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -107,15 +117,109 @@ public class ModuleWorld extends CommandModule {
                     assert rayTraceResult != null;
                     System.out.println(rayTraceResult.getBlockPos());
                     if (rayTraceResult != null) {
-                        TileSpot tileTombe = (TileSpot) player.world.getTileEntity(rayTraceResult.getBlockPos());
-                        if (tileTombe != null) {
-                            tileTombe.setAngle(Integer.parseInt(args[2]));
-                            tileTombe.sync();
-                            sender.sendMessage(new TextComponentString("§aSet angle to '" + args[2] + "'."));
+                        TileSpot tilespot = (TileSpot) player.world.getTileEntity(rayTraceResult.getBlockPos());
+                        if (tilespot != null) {
+                            tilespot.setAngle(Integer.parseInt(args[2]));
+                            tilespot.sync();
+                            tilespot.syncToClient();
+                            sender.sendMessage(new TextComponentString("§aSet angle to '" + args[2] + "'°."));
                         }
                     }
                 } else {
-                    sender.sendMessage(new TextComponentString("§c/wlmod world radar <setspeed>"));
+                    sender.sendMessage(new TextComponentString("§c/wlmod world spot <angle>"));
+                }
+
+
+            } else if(Objects.equals(args[1], "sequence")) {
+                if(Objects.equals(args[2], "create")) {
+                    LightSequence lightSequence = new LightSequence();
+                    lightSequence.add(new BlockPos(0, -20, 0));
+                    Main.wl_db.setString("seq_" + args[3], new LightSequence().toString());
+                    sender.sendMessage(new TextComponentString("§aSequence " + args[3] +" created"));
+                } else if (Objects.equals(args[2], "addlyre")) {
+                    EntityPlayer player = (EntityPlayer) sender;
+                    RayTraceResult rayTraceResult = player.world.rayTraceBlocks(player.getPositionEyes(1), player.getPositionEyes(1).add(player.getLookVec().scale(10)));
+                    assert rayTraceResult != null;
+                    System.out.println(rayTraceResult.getBlockPos());
+                    if (rayTraceResult != null) {
+                        TileLyre tilespot = (TileLyre) player.world.getTileEntity(rayTraceResult.getBlockPos());
+                        if (tilespot != null) {
+                            LightSequence lightSequence = LightSequence.fromString(Main.wl_db.getString("seq_" + args[3]));
+                            lightSequence.add(tilespot.getPos());
+                            Main.wl_db.setString("seq_" + args[3], lightSequence.toString());
+                            sender.sendMessage(new TextComponentString("§aLyre added to sequence " + args[3]));
+                        }
+                    }
+                } else if (Objects.equals(args[2], "addseq")) {
+                    Vector3f vector3fTo = new Vector3f(Integer.parseInt(args[3]), Integer.parseInt(args[4]), Integer.parseInt(args[5]));
+                    LightSequence lightSequence = LightSequence.fromString(Main.wl_db.getString("seq_" + args[6]));
+                    lightSequence.add(new LightSequence.DoubleVector(new Vector3f(0,0,0), vector3fTo));
+                    Main.wl_db.setString("seq_" + args[6], lightSequence.toString());
+                    sender.sendMessage(new TextComponentString("§aSequence added to sequence " + args[3] + " " + args[4] + " " + args[5] + " " + args[6]));
+                } else if (Objects.equals(args[2], "play")) {
+                    LightSequence lightSequence = LightSequence.fromString(Main.wl_db.getString("seq_" + args[3]));
+                    lightSequence.play(sender.getEntityWorld());
+                }  else if (Objects.equals(args[2], "dump")) {
+                    LightSequence lightSequence = LightSequence.fromString(Main.wl_db.getString("seq_" + args[3]));
+                    sender.sendMessage(new TextComponentString(lightSequence.toString()));
+                } else if (Objects.equals(args[2], "bl")) {
+                    // make the block blink
+                    BlockPos blockPos = new BlockPos(Integer.parseInt(args[3]), Integer.parseInt(args[4]), Integer.parseInt(args[5]));
+                    TileLyre tileEntity = (TileLyre) sender.getEntityWorld().getTileEntity(blockPos);
+
+                    if(tileEntity != null) {
+                        tileEntity.setBlink(!tileEntity.isBlink());
+                        tileEntity.sync();
+                        tileEntity.syncToClient();
+                    }
+                } else if (Objects.equals(args[2], "gui")) {
+                    Main.network.sendTo(new PacketOpenAcsGui(1, Main.wl_db.getString("seq_" + args[3]), args[3]), (EntityPlayerMP) sender);
+                } else if (Objects.equals(args[2], "manuset")) {
+                    Main.wl_db.setString("seq_" + args[3], args[4]);
+                } else if (Objects.equals(args[2], "reset")) {
+                    LightSequence lightSequence = LightSequence.fromString(Main.wl_db.getString("seq_" + args[3]));
+                    lightSequence.reset(sender.getEntityWorld());
+                }
+
+
+            } else if(Objects.equals(args[1], "lyre")) {
+
+                if (sender instanceof EntityPlayer) {
+                    EntityPlayer player = (EntityPlayer) sender;
+                    RayTraceResult rayTraceResult = player.world.rayTraceBlocks(player.getPositionEyes(1), player.getPositionEyes(1).add(player.getLookVec().scale(10)));
+                    assert rayTraceResult != null;
+                    System.out.println(rayTraceResult.getBlockPos());
+                    if (rayTraceResult != null) {
+                        TileLyre tilespot = (TileLyre) player.world.getTileEntity(rayTraceResult.getBlockPos());
+                        if (tilespot != null) {
+                            if(Objects.equals(args[2], "setfrom")) {
+                                tilespot.setRotationfrom(new Vector2f(Integer.parseInt(args[3]), Integer.parseInt(args[4])));
+                                tilespot.sync();
+                                tilespot.syncToClient();
+                                sender.sendMessage(new TextComponentString("§aSet from to '" + args[3] + " " + args[4] + "'°."));
+                            }
+                            if(Objects.equals(args[2], "setto")) {
+                                tilespot.setRotationto(new Vector2f(Integer.parseInt(args[3]), Integer.parseInt(args[4])));
+                                tilespot.sync();
+                                tilespot.syncToClient();
+                                sender.sendMessage(new TextComponentString("§aSet to '" + args[3] + " " + args[4] + "'°."));
+                            }
+                            if(Objects.equals(args[2], "setmax")) {
+                                tilespot.setTimeMax(Integer.parseInt(args[3]));
+                                tilespot.sync();
+                                tilespot.syncToClient();
+                                sender.sendMessage(new TextComponentString("§aSet max '" + args[3] + "' ticks."));
+                            }
+                            if(Objects.equals(args[2], "flip")) {
+                                tilespot.setFlip(Boolean.parseBoolean(args[3]));
+                                tilespot.sync();
+                                tilespot.syncToClient();
+                                sender.sendMessage(new TextComponentString("§aSet flip : '" + args[3] + "' ."));
+                            }
+                        }
+                    }
+                } else {
+                    sender.sendMessage(new TextComponentString("§c/wlmod world spot <angle>"));
                 }
 
 
@@ -142,7 +246,7 @@ public class ModuleWorld extends CommandModule {
                             }
                         }
                     } else {
-                        sender.sendMessage(new TextComponentString("§c/wlmod world radar <setspeed>"));
+                        sender.sendMessage(new TextComponentString("§c/wlmod world feurouge <setpos/setsync>"));
                     }
                 }
 
@@ -181,6 +285,16 @@ public class ModuleWorld extends CommandModule {
     }
     @Override
     public List<String> getTabCompletion(MinecraftServer server, ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
-        return new ArrayList<>();
+        ArrayList<String> list = new ArrayList<>();
+        // if world lyre <setfrom/setto>
+        if(args.length == 3) {
+            if(Objects.equals(args[1], "lyre")) {
+                list.add("setfrom");
+                list.add("setto");
+                list.add("setmax");
+                list.add("flip");
+            }
+        }
+        return list;
     }
 }

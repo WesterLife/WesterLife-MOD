@@ -1,5 +1,6 @@
 package fr.yan36.westerlife.common.network;
 
+import fr.yan36.westerlife.common.objects.character.Character;
 import fr.yan36.westerlife.server.bdd.DBUtils;
 import fr.yan36.westerlife.server.bdd.MethodesBDD;
 import io.netty.buffer.ByteBuf;
@@ -58,8 +59,10 @@ public class PacketCreateCharacter implements IMessage{
         public IMessage onMessage(PacketCreateCharacter m, MessageContext ctx) {
             EntityPlayer e = (EntityPlayer) ctx.getServerHandler().player.world.getEntityByID(m.player);
             if(Side.SERVER.isServer()) {
-                if (!DBUtils.getCharacterExists(e)) {
-                    DBUtils.createCharacter(e, m.familyname, m.firstnames, m.birthdate, m.birthplace, m.nationality, m.sex);
+                assert e != null;
+                if (!DBUtils.isRowExistInDatabase("players", "uuid", e.getUniqueID().toString())) {
+                    System.out.println("Received packet from " + e.getUniqueID().toString() + " to create a character. (s=" + m.sex + ")");
+                    DBUtils.saveToDB(new Character(e.getUniqueID(), m.firstnames, m.familyname, m.nationality, Character.Gender.getBySex(m.sex), m.birthdate, m.birthplace));
                     e.sendMessage(new TextComponentString("§cWesterLife §8» §aVotre personnage a bien été créé ! Bon jeu !"));
                 }
             }

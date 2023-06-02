@@ -19,11 +19,11 @@ public class RenderSpot extends TESRDynamXBlock<TileSpot> {
         GlStateManager.translate(x + 0.5D + (te.getBlockObjectInfo().getTranslation()).x, y + 1.3D + (te.getBlockObjectInfo().getTranslation()).y, z + 0.5D + (te.getBlockObjectInfo().getTranslation()).z);
         GlStateManager.scale((te.getBlockObjectInfo().getScaleModifier()).x, (te.getBlockObjectInfo().getScaleModifier()).y, (te.getBlockObjectInfo().getScaleModifier()).z);
         GlStateManager.rotate(te.getRotation() * 22.5F, 0.0F, -1.0F, 0.0F);
-
-        GlStateManager.rotate(te.getAngle(), 0.0F, 1.0F, 0.0F);
         DynamXContext.getObjModelRegistry().getModel(te.getBlockObjectInfo().getModel()).renderGroups("base", (byte) te.getBlockMetadata());
+        GlStateManager.rotate(te.getAngle(), 1.0F, 0.0F, 0.0F);
         DynamXContext.getObjModelRegistry().getModel(te.getBlockObjectInfo().getModel()).renderGroups("moving", (byte) te.getBlockMetadata());
         GlStateManager.popMatrix();
-        super.render(te, x, y, z, partialTicks, destroyStage, alpha);
     }
+
+
 }

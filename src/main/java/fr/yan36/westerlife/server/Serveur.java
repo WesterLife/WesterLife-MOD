@@ -80,7 +80,6 @@ public class Serveur {
 
     @SubscribeEvent
     public void on(TickEvent.PlayerTickEvent e) {
-        System.out.println("aa");
         Databases.getPlayerData(e.player).setFloat("watervalue", Databases.getPlayerData(e.player).getFloat("watervalue") - 0.00005f);
         if(e.player.isSprinting()) {
             Databases.getPlayerData(e.player).setFloat("watervalue", Databases.getPlayerData(e.player).getFloat("watervalue") - 0.005f);

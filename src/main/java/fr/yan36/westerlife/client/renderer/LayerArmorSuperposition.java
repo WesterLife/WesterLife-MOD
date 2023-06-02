@@ -4,16 +4,11 @@ import fr.dynamx.client.renders.model.ModelObjArmor;
 import fr.dynamx.common.contentpack.DynamXObjectLoaders;
 import fr.nathanael2611.simpledatabasemanager.client.ClientDatabases;
 import fr.nathanael2611.simpledatabasemanager.core.DatabaseReadOnly;
-import fr.yan36.westerlife.Main;
-import fr.yan36.westerlife.client.Client;
 import fr.yan36.westerlife.common.Util;
 import fr.yan36.westerlife.common.init.DynamxInit;
-import fr.yan36.westerlife.common.objects.ArmorSuperpositionState;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.EntityEquipmentSlot;
 
 import java.util.Objects;
 

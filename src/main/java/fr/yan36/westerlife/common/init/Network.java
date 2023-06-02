@@ -37,5 +37,6 @@ public class Network {
         Main.network.registerMessage(PacketPlaySound.Handler.class, PacketPlaySound.class, 25, Side.CLIENT);
         Main.network.registerMessage(PacketSyncClothes.Handler.class, PacketSyncClothes.class, 26, Side.SERVER);
         Main.network.registerMessage(PacketClothToAll.Handler.class, PacketClothToAll.class, 27, Side.CLIENT);
+        Main.network.registerMessage(PacketOpenAcsGui.Handler.class, PacketOpenAcsGui.class, 28, Side.CLIENT);
     }
 }

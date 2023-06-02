@@ -65,7 +65,7 @@ public class Conviction implements IDatabaseVariable {
 
     @Override
     public RowDetails getIDRow() {
-        return new RowDetails("id", true);
+        return new RowDetails("id", true, false);
     }
 
     public String getAssociated_user() {

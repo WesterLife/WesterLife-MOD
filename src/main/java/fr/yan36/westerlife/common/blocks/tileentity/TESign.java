@@ -8,8 +8,8 @@ public class TESign extends TileEntitySyncClient implements ITickable {
 
     private BlockObject b;
 
-    private static String text="";
-    private static String color="black";
+    private String text="";
+    private String color="black";
 
     public TESign(){
         super(null);
@@ -36,7 +36,7 @@ public class TESign extends TileEntitySyncClient implements ITickable {
     }
 
     public void setText(String text) {
-        TESign.text = text;
+        this.text = text;
         sync();
         markDirty();
     }
@@ -50,7 +50,7 @@ public class TESign extends TileEntitySyncClient implements ITickable {
     }
 
     public void setColor(String color) {
-        TESign.color = color;
+        this.color = color;
         sync();
         markDirty();
     }

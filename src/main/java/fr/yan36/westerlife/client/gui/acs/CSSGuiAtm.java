@@ -26,5 +26,4 @@ import java.util.regex.Pattern;
 
 @SideOnly(Side.CLIENT)
 public class CSSGuiAtm {
-
 }

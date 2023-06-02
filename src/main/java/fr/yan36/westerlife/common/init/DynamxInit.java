@@ -39,7 +39,9 @@ public class DynamxInit {
     public static BlockPhotocopieuse photocopieuse;
     public static BlockDeskPhone deskPhone;
     public static BlockPompeEssence pompeEssence;
+    public static BlockDynamx bookshelf;
 
+    public static BlockDynamx videoprojector;
     public static BlockRoad barrierePolice;
     public static BlockRoad clotureChantier;
     public static BlockRoad poteau;
@@ -49,6 +51,8 @@ public class DynamxInit {
     public static BlockTombe tombe;
 
     public static BlockSpot spot;
+    public static BlockLyre lyre;
+    public static BlockScreen screen;
 
     public static HashMap<String, DynamXItemArmor<?>> fastRegistryAccess = new HashMap<>();
 
@@ -79,6 +83,9 @@ public class DynamxInit {
         deskPhone = new BlockDeskPhone(Material.ANVIL, Main.MODID, "deskphone", new ResourceLocation("westerlife","models/dynamx/blocks/deskphone/telephonefixe.obj"));
         pompeEssence = new BlockPompeEssence(Material.ANVIL, Main.MODID, "pompeessence", new ResourceLocation("westerlife","models/dynamx/blocks/pompe_essence/pompeessence.obj"));
         tombe = new BlockTombe(Material.ANVIL, Main.MODID, "tombe", new ResourceLocation("westerlife","models/dynamx/tombe/tombe.obj"));
+        screen = new BlockScreen(Material.ANVIL, Main.MODID, "screen", new ResourceLocation("westerlife","models/dynamx/blocks/screen/screen.obj"));
+        bookshelf = new BlockDynamx(Material.ANVIL, Main.MODID, "bookshelf", new ResourceLocation("westerlife","models/dynamx/blocks/bookshelf/bookshelf.obj"));
+        videoprojector = new BlockDynamx(Material.ANVIL, Main.MODID, "videoprojector", new ResourceLocation("westerlife","models/dynamx/blocks/videoprojector/videoprojector.obj"));
 
         //Road blocks
         barrierePolice = new BlockRoad(Material.ANVIL, Main.MODID, "barrierepolice", new ResourceLocation("westerlife","models/dynamx/blocks/barriere_police/barriere.obj"));
@@ -96,7 +103,7 @@ public class DynamxInit {
         // SCENE
 
         spot = new BlockSpot(Material.ANVIL, Main.MODID, "spot", new ResourceLocation("westerlife","models/dynamx/blocks/spot/spot.obj"));
-
+        lyre = new BlockLyre(Material.ANVIL, Main.MODID, "lyre", new ResourceLocation("westerlife","models/dynamx/blocks/lyre/lyre.obj"));
 
 
 
