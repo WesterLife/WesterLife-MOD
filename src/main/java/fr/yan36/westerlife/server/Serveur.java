@@ -1,28 +1,23 @@
 package fr.yan36.westerlife.server;
 
-import com.jme3.bullet.objects.infos.VehicleController;
 import fr.dynamx.api.entities.VehicleEntityProperties;
-import fr.dynamx.api.entities.modules.IPhysicsModule;
 import fr.dynamx.api.events.PhysicsEvent;
-import fr.dynamx.api.events.VehicleEntityEvent;
 import fr.dynamx.api.physics.EnumBulletShapeType;
 import fr.dynamx.common.entities.BaseVehicleEntity;
 import fr.dynamx.common.entities.modules.BasicEngineModule;
-import fr.dynamx.common.entities.modules.CarEngineModule;
-import fr.dynamx.common.entities.vehicles.CarEntity;
-import fr.dynamx.common.items.DynamXItemArmor;
 import fr.dynamx.common.physics.entities.BaseVehiclePhysicsHandler;
 import fr.nathanael2611.simpledatabasemanager.core.Databases;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.blocks.dynamx.BlockComputer;
 import fr.yan36.westerlife.common.blocks.dynamx.BlockDistributeur;
-import fr.yan36.westerlife.common.init.DynamxInit;
+import fr.yan36.westerlife.common.init.DynamXInit;
 import fr.yan36.westerlife.common.init.ItemInit;
 import fr.yan36.westerlife.common.network.PacketAnimationToAll;
 import fr.yan36.westerlife.common.network.PacketAskToCreateCharacter;
 import fr.yan36.westerlife.common.network.PacketOpenMcefGui;
 import fr.yan36.westerlife.common.network.old.PacketOpenGUIAtm;
 import fr.yan36.westerlife.common.network.old.PacketSyncPlayer;
+import fr.yan36.westerlife.common.objects.PlayerHealth;
 import fr.yan36.westerlife.common.utils.Animation;
 import fr.yan36.westerlife.server.bdd.DBUtils;
 import fr.yan36.westerlife.server.bdd.MethodesBDD;
@@ -30,14 +25,12 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
-import net.minecraftforge.event.entity.EntityEvent;
-import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
@@ -59,8 +52,18 @@ public class Serveur {
             if(!DBUtils.getCharacterExists(e.player)){
                 Main.network.sendTo(new PacketAskToCreateCharacter(), (EntityPlayerMP) e.player);
                 e.player.sendMessage(new TextComponentString("§cVous n'avez pas de personnage, veuillez en créer un."));
+                Databases.getPlayerData(e.player).setFloat("watervalue", 100f);
             }
         }
+
+        if(!Databases.getPlayerData(e.player).contains("watervalue")) {
+            Databases.getPlayerData(e.player).setFloat("watervalue", 100f);
+        }
+
+        if(!e.player.getEntityData().hasKey("health")) {
+            e.player.getEntityData().setString("health", new PlayerHealth(Collections.emptyList(), Collections.emptyList()).toString());
+        }
+
     }
 
 
@@ -75,6 +78,17 @@ public class Serveur {
 
             System.out.println(vehicle1.getName() + " à percuté " + vehicle2.getName() + " à " + getSpeed(vehicle1) +" km/h");
 
+        }
+    }
+    @SubscribeEvent
+    public void onPlayerFall(LivingFallEvent e) {
+        if(e.getEntityLiving() instanceof EntityPlayer) {
+            PlayerHealth health = PlayerHealth.getFromString(e.getEntityLiving().getEntityData().getString("health"));
+            if(e.getDistance() > 5) {
+                health.addBrokenPart(PlayerHealth.PlayerParts.JAMBE_DROITE);
+                health.addBrokenPart(PlayerHealth.PlayerParts.JAMBE_GAUCHE);
+            }
+            e.getEntityLiving().getEntityData().setString("health", health.toString());
         }
     }
 
@@ -100,7 +114,7 @@ public class Serveur {
     //TODO: disable interaction with other blocks & find a way to disable jump better than jump boost
     @SubscribeEvent
     public void onRightClickPlayer(PlayerInteractEvent.EntityInteract e) {
-        if(e.getEntityPlayer().getHeldItemMainhand().getItem() == DynamxInit.Menottes.getItem()) {
+        if(e.getEntityPlayer().getHeldItemMainhand().getItem() == DynamXInit.Menottes.getItem()) {
             Entity et = e.getTarget();
             EntityPlayer target = et instanceof EntityPlayer ? (EntityPlayer) et : null;
             //TODO: Set range to 2 blocks

@@ -2,6 +2,7 @@ package fr.yan36.westerlife.common.init;
 
 import fr.yan36.westerlife.common.items.ItemBase;
 import fr.yan36.westerlife.common.items.ItemBillet;
+import fr.yan36.westerlife.common.items.ItemCard;
 import fr.yan36.westerlife.common.items.ItemDrink;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
@@ -23,6 +24,13 @@ public class ItemInit {
     public static final Item CINQ_CENTS_EUROS = new ItemBillet("cinqcenteuros");
 
     public static final Item CARTE_BANCAIRE = new ItemBase("carte_bancaire");
+
+    public static final Item CNI = new ItemCard("cni", ItemCard.CardType.CNI);
+    public static final Item DIPLO = new ItemCard("diplo", ItemCard.CardType.DIPLO);
+    public static final Item GDI = new ItemCard("gdi", ItemCard.CardType.GDI);
+    public static final Item GOUV = new ItemCard("gouv", ItemCard.CardType.GOUV);
+    public static final Item PERM = new ItemCard("perm", ItemCard.CardType.PERM);
+    public static final Item PREF = new ItemCard("pref", ItemCard.CardType.PREF);
 
     public static final Item BOISSON = new ItemDrink("bouteille",1, 0.0F);
 }

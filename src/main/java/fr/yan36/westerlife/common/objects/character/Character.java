@@ -18,6 +18,7 @@ public class Character implements IDatabaseVariable, IDatabaseResponse {
     @Override
     public List<String> getValues() {
         List<String> vars = new ArrayList<>();
+        vars.add(IDatabaseVariable.ID_ROW);
         vars.add(uuid.toString());
         vars.add(firstNames);
         vars.add(lastName);
@@ -31,7 +32,7 @@ public class Character implements IDatabaseVariable, IDatabaseResponse {
 
     @Override
     public RowDetails getIDRow() {
-        return new RowDetails("id", false, true);
+        return new RowDetails("id", true, true);
     }
 
     @Override
@@ -40,7 +41,7 @@ public class Character implements IDatabaseVariable, IDatabaseResponse {
         firstNames = list.get(1);
         lastName = list.get(2);
         nationality = list.get(3);
-        Gender.getBySex(list.get(4));
+        gender = Gender.getBySex(list.get(4));
         birthPlace = list.get(5);
         birthDate = list.get(6);
     }
@@ -81,6 +82,16 @@ public class Character implements IDatabaseVariable, IDatabaseResponse {
         this.gender = gender;
         this.birthPlace = birthPlace;
         this.birthDate = birthDate;
+    }
+
+    public Character() {
+        this.uuid = UUID.fromString("00000000-0000-0000-0000-000000000000");
+        this.firstNames = "null";
+        this.lastName = "null";
+        this.nationality = "null";
+        this.gender = Gender.MALE;
+        this.birthPlace = "null";
+        this.birthDate = "null";
     }
 
     public UUID getUuid() {
@@ -137,5 +148,15 @@ public class Character implements IDatabaseVariable, IDatabaseResponse {
 
     public void setBirthDate(String birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public String toString() {
+        return uuid.toString() + ";" + firstNames + ";" + lastName + ";" + nationality + ";" + gender.getSex() + ";" + birthPlace + ";" + birthDate;
+    }
+
+    public static Character fromString(String s) {
+        String[] split = s.split(";");
+
+        return new Character(UUID.fromString(split[0]), split[1], split[2], split[3], Gender.getBySex(split[4]), split[5], split[6]);
     }
 }

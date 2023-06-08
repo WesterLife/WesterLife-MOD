@@ -1,8 +1,5 @@
 package fr.yan36.westerlife.common.blocks.tileentity;
 
-import com.elytradev.mirage.event.GatherLightsEvent;
-import com.elytradev.mirage.lighting.ILightEventConsumer;
-import com.elytradev.mirage.lighting.Light;
 import fr.dynamx.common.contentpack.type.objects.BlockObject;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;

@@ -1,17 +1,10 @@
 package fr.yan36.westerlife.common.items.dynamx;
 
-import fr.dynamx.common.entities.BaseVehicleEntity;
-import fr.dynamx.common.entities.vehicles.CarEntity;
 import fr.dynamx.common.items.DynamXItem;
-import fr.dynamx.common.physics.entities.BaseVehiclePhysicsHandler;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.Util;
-import fr.yan36.westerlife.common.init.DynamxInit;
-import fr.yan36.westerlife.common.network.old.BelierMessage;
-import fr.yan36.westerlife.common.registry.SoundsHandler;
+import fr.yan36.westerlife.common.init.DynamXInit;
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -35,7 +28,7 @@ public class ItemExtincteur extends DynamXItem {
     @Override
     public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos blockPos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if (!worldIn.isRemote) {
-            if (player.getHeldItemMainhand().isItemEqual(new ItemStack(DynamxInit.Extincteur))) {
+            if (player.getHeldItemMainhand().isItemEqual(new ItemStack(DynamXInit.Extincteur))) {
                 RayTraceResult r = Util.rayTracePlayer(player, 5);
                 HashMap<BlockPos, Block> blocks = Util.getBlocksAround(r.getBlockPos(), worldIn, 1);
 

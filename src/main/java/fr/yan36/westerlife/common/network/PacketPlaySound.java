@@ -1,6 +1,6 @@
 package fr.yan36.westerlife.common.network;
 
-import fr.yan36.westerlife.common.registry.SoundsHandler;
+import fr.yan36.westerlife.common.handlers.SoundsHandler;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;

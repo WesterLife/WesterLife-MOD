@@ -42,6 +42,8 @@ public class CommonProxy {
         GameRegistry.registerTileEntity(TileSpot.class, new ResourceLocation("westerlife", "spot"));
         GameRegistry.registerTileEntity(TileLyre.class, new ResourceLocation("westerlife", "lyre"));
         GameRegistry.registerTileEntity(TileScreen.class, new ResourceLocation("westerlife", "screen"));
+        GameRegistry.registerTileEntity(TilePoteauLevant.class, new ResourceLocation("westerlife", "tilepoteaulevant"));
+        GameRegistry.registerTileEntity(TileChair.class, new ResourceLocation("westerlife", "chair"));
 
         MinecraftForge.EVENT_BUS.register(this);
 

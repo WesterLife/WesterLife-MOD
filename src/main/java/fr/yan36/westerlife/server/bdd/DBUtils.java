@@ -2,16 +2,17 @@ package fr.yan36.westerlife.server.bdd;
 
 import fr.yan36.westerlife.common.objects.IDatabaseResponse;
 import fr.yan36.westerlife.common.objects.IDatabaseVariable;
+import fr.yan36.westerlife.common.objects.character.Character;
+import fr.yan36.westerlife.common.objects.character.Permis;
 import fr.yan36.westerlife.server.ServerProxy;
 import net.minecraft.entity.player.EntityPlayer;
+import scala.Char;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class DBUtils {
 
@@ -231,6 +232,7 @@ public class DBUtils {
         for (String value : values){
             if (values.indexOf(value) == values.size() - 1){
                 litteralValues.append("?");
+                System.out.println("LAST");
             } else {
                 litteralValues.append("?,");
             }
@@ -243,15 +245,9 @@ public class DBUtils {
 
             int i = 1;
             for (String value : values) {
-                if(dbv.getIDRow().isSpecial()) {
-                    preparedStatement.setInt(i, 0);
-                    continue;
-                } else {
-                    preparedStatement.setString(i, value);
-                }
                 if(Objects.equals(value, IDatabaseVariable.ID_ROW) && dbv.getIDRow().isDoesIDRowExist()) {
-                    preparedStatement.setInt(i, getMaxIntOfColumn(dbv.tableName(), dbv.getIDRow().getColumnName()) + 1);
-                    continue;
+                    System.out.println("ID ROW DOES EXIST");
+                    preparedStatement.setInt(i, 0);
                 } else {
                     preparedStatement.setString(i, value);
                 }
@@ -262,7 +258,6 @@ public class DBUtils {
             preparedStatement.execute();
             connection.close();
         } catch (SQLException e){
-            System.out.println(litteralValues);
 
             e.printStackTrace();
         }
@@ -287,6 +282,75 @@ public class DBUtils {
             System.out.println("Error while checking if row exist in database");
             e.printStackTrace();
             return false;
+        }
+    }
+
+    public static Character getCharacter(UUID uuid) {
+        try{
+            Connection connection = ServerProxy.getDatabaseManager().getWesterLifeDB().getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM `players` WHERE UUID=?");
+            preparedStatement.setString(1, String.valueOf(uuid));
+            preparedStatement.execute();
+            ResultSet rs = preparedStatement.getResultSet();
+            if (rs.next()){
+                Character character = new Character();
+                character.setUuid(uuid);
+                character.setBirthDate(rs.getString("birthdate"));
+                character.setBirthPlace(rs.getString("birthplace"));
+                character.setGender(Character.Gender.getBySex(rs.getString("birthplace")));
+                character.setNationality(rs.getString("nationality"));
+                character.setLastName(rs.getString("lastname"));
+                character.setFirstNames(rs.getString("firstname"));
+
+
+                connection.close();
+
+                return character;
+            } else {
+
+                Character character = new Character();
+                character.setUuid(uuid);
+                character.setBirthDate("error");
+                character.setBirthPlace("error");
+                character.setGender(Character.Gender.MALE);
+                character.setNationality("error");
+                character.setLastName("Vous n'êtes pas enregistré dans la base de données. Contactez un administrateur.");
+                character.setFirstNames("error");
+                connection.close();
+                return character;
+
+            }
+
+        } catch (SQLException e){
+            System.out.println("Error while checking if row exist in database");
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static Permis getPermis(UUID uuid) {
+        try{
+            Connection connection = ServerProxy.getDatabaseManager().getWesterLifeDB().getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM `permis` WHERE UUID=?");
+            preparedStatement.setString(1, String.valueOf(uuid));
+            preparedStatement.execute();
+            ResultSet rs = preparedStatement.getResultSet();
+            if (rs.next()){
+                Permis character = new Permis(UUID.fromString(rs.getString("uuid")), Permis.deserializePermisList(rs.getString("type")), rs.getString("points"), rs.getString("date"));
+                connection.close();
+                return character;
+            } else {
+
+                Permis character = new Permis(uuid, Collections.singletonList(Permis.PermisType.PERMIS_E), "error", "error");
+                connection.close();
+                return character;
+
+            }
+
+        } catch (SQLException e){
+            System.out.println("Error while checking if row exist in database");
+            e.printStackTrace();
+            return null;
         }
     }
 

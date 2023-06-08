@@ -235,6 +235,10 @@ public class BrowserScreen extends GuiScreen implements IJSQueryHandler
 
                     Main.network.sendToServer(new PacketCreateCharacter(Minecraft.getMinecraft().player, name, firstnames, birthdate, birthplace, nationality, sex));
                     Client.needToCreateCharacter = 0;
+                } else if(query.substring(1).split(":")[0].equals("openlan")){
+                    if(Minecraft.getMinecraft().isSingleplayer()) {
+                        Minecraft.getMinecraft().displayGuiScreen(new GuiShareToLan(this));
+                    }
                 } else if(query.substring(1).split(":")[0].equals("openLink")) {
                     String link = query.split(":")[1];
                     System.out.println(link);

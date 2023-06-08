@@ -5,7 +5,7 @@ import fr.dynamx.common.contentpack.DynamXObjectLoaders;
 import fr.nathanael2611.simpledatabasemanager.client.ClientDatabases;
 import fr.nathanael2611.simpledatabasemanager.core.DatabaseReadOnly;
 import fr.yan36.westerlife.common.Util;
-import fr.yan36.westerlife.common.init.DynamxInit;
+import fr.yan36.westerlife.common.init.DynamXInit;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.entity.player.EntityPlayer;
@@ -28,7 +28,7 @@ public class LayerArmorSuperposition implements LayerRenderer<EntityPlayer> {
         for (String s : db.getString(entitylivingbaseIn.getUniqueID().toString()).split(",")) {
             if(s == null || s.equals("")) continue;
             else {
-                if(DynamxInit.fastRegistryAccess.get(s.split("!")[0]) == null) {
+                if(DynamXInit.fastRegistryAccess.get(s.split("!")[0]) == null) {
                     System.out.println("Armor " + s + " is currently null (unable to find it in the fast registry access)");
                     continue;
                 }

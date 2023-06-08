@@ -1,8 +1,5 @@
 package fr.yan36.westerlife.common.blocks.tileentity;
 
-import com.elytradev.mirage.event.GatherLightsEvent;
-import com.elytradev.mirage.lighting.ILightEventConsumer;
-import com.elytradev.mirage.lighting.Light;
 import fr.dynamx.common.contentpack.type.objects.BlockObject;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
@@ -10,8 +7,7 @@ import net.minecraftforge.fml.common.Optional;
 
 import javax.vecmath.Vector2f;
 
-@Optional.Interface(iface="com.elytradev.mirage.lighting.ILightEventConsumer", modid="mirage")
-public class TileLyre extends TileEntitySyncClient implements ITickable, ILightEventConsumer {
+public class TileLyre extends TileEntitySyncClient implements ITickable {
 
     private BlockObject b;
 
@@ -140,15 +136,4 @@ public class TileLyre extends TileEntitySyncClient implements ITickable, ILightE
         }
     }
 
-    @Optional.Method(modid="mirage")
-    @Override
-    public void gatherLights(GatherLightsEvent evt) {
-        evt.add(
-                Light.builder()
-                .pos(getPos())
-                .color(1, 0, 0)
-                .radius(2)
-                .build()
-        );
-    }
 }

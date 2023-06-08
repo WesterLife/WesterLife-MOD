@@ -38,6 +38,10 @@
                 <i class="ri-mic-line button-img"></i>
                 <p>Paramètres micro</p>
             </button>
+            <button class="button" onclick="dev()">
+<!--                <i class="ri-mic-line button-img"></i>-->
+                <p>Dev only</p>
+            </button>
         </section>
         <section>
             <div class="rs">
@@ -219,6 +223,12 @@
     function openMicSettings() {
         window.mcefQuery({
             "request": "$openMicSettings",
+            "persistent": false
+        });
+    }
+    function dev() {
+        window.mcefQuery({
+            "request": "$openLan",
             "persistent": false
         });
     }

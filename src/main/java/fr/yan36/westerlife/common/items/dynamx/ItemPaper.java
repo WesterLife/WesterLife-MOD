@@ -6,9 +6,9 @@ import fr.dynamx.common.items.DynamXItem;
 import fr.dynamx.common.physics.entities.BaseVehiclePhysicsHandler;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.Util;
-import fr.yan36.westerlife.common.init.DynamxInit;
+import fr.yan36.westerlife.common.init.DynamXInit;
 import fr.yan36.westerlife.common.network.old.BelierMessage;
-import fr.yan36.westerlife.common.registry.SoundsHandler;
+import fr.yan36.westerlife.common.handlers.SoundsHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -30,7 +30,7 @@ public class ItemPaper extends DynamXItem {
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer player, EnumHand handIn) {
         if (!worldIn.isRemote) {
             System.out.println("clicked");
-            if (player.getHeldItemMainhand().isItemEqual(new ItemStack(DynamxInit.PistoletRadar))) {
+            if (player.getHeldItemMainhand().isItemEqual(new ItemStack(DynamXInit.PistoletRadar))) {
                 player.getCooldownTracker().setCooldown(player.getHeldItemMainhand().getItem(), 30);
                 player.playSound(SoundsHandler.BIP, 0.5f, 1f);
                 Entity a = Util.getEntityLookAt(player, 80);
@@ -48,7 +48,7 @@ public class ItemPaper extends DynamXItem {
 
                 }
             }
-            if (player.getHeldItemMainhand().isItemEqual(new ItemStack(DynamxInit.Belier))) {
+            if (player.getHeldItemMainhand().isItemEqual(new ItemStack(DynamXInit.Belier))) {
                 player.getCooldownTracker().setCooldown(player.getHeldItemMainhand().getItem(), 10);
                 Minecraft instance = Minecraft.getMinecraft();
                 BlockPos pos = instance.objectMouseOver.getBlockPos();
@@ -61,7 +61,7 @@ public class ItemPaper extends DynamXItem {
     @Override
     public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if (!worldIn.isRemote) {
-            if (player.getHeldItemMainhand().isItemEqual(new ItemStack(DynamxInit.PistoletRadar))) {
+            if (player.getHeldItemMainhand().isItemEqual(new ItemStack(DynamXInit.PistoletRadar))) {
                 player.getCooldownTracker().setCooldown(player.getHeldItemMainhand().getItem(), 30);
                 player.playSound(SoundsHandler.BIP, 0.5f, 1f);
                 Minecraft mc = Minecraft.getMinecraft();

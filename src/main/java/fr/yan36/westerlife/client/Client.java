@@ -10,7 +10,9 @@ import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.client.gui.acs.CSSGuiClothes;
 import fr.yan36.westerlife.client.gui.mcef.BrowserScreen;
 import fr.yan36.westerlife.client.gui.other.EngineFailureIcon;
-import fr.yan36.westerlife.common.init.DynamxInit;
+import fr.yan36.westerlife.common.init.DynamXInit;
+import fr.yan36.westerlife.common.objects.character.Character;
+import fr.yan36.westerlife.common.objects.character.Permis;
 import fr.yan36.westerlife.common.utils.Animation;
 import fr.yan36.westerlife.common.utils.list.Warp;
 import net.minecraft.client.Minecraft;
@@ -56,6 +58,10 @@ public class Client {
     public static int needToCreateCharacter = 0;
 
     public static HashMap<Integer, Animation> animationState = new HashMap<>();
+    public static HashMap<UUID, Character> knowCharacters = new HashMap<>();
+    public static HashMap<UUID, Permis> knowPermis = new HashMap<>();
+    public static HashMap<String, Boolean> waitForSomething = new HashMap<>();
+
     @SideOnly(Side.CLIENT)
     public static HashMap<UUID, List<DynamXItemArmor<?>>> superpositionState = new HashMap<>();
     public static List<Warp> warplist = new ArrayList<>();
@@ -343,9 +349,12 @@ public class Client {
         if(Keyboard.isKeyDown(Keyboard.KEY_F3)) {
             List<DynamXItemArmor<?>> globalitems = ForgeRegistries.ITEMS.getEntries().stream().filter(e -> e.getValue() instanceof DynamXItemArmor<?>).collect(Collectors.toCollection(ArrayList::new)).stream().map(e -> (DynamXItemArmor<?>) e.getValue()).collect(Collectors.toList());
             for (DynamXItemArmor<?> item : globalitems) {
-                DynamxInit.fastRegistryAccess.put(item.getInfo().getFullName(), item);
+                DynamXInit.fastRegistryAccess.put(item.getInfo().getFullName(), item);
                 System.out.println("added " + item.getInfo().getFullName() + " to fast registry access");
             }
+            Client.knowCharacters.clear();
+            Client.knowPermis.clear();
+            Client.waitForSomething.clear();
         }
     }
 

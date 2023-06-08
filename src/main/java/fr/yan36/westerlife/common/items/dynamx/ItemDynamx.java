@@ -6,27 +6,16 @@ import fr.dynamx.common.items.DynamXItem;
 import fr.dynamx.common.physics.entities.BaseVehiclePhysicsHandler;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.Util;
-import fr.yan36.westerlife.common.init.DynamxInit;
+import fr.yan36.westerlife.common.init.DynamXInit;
 import fr.yan36.westerlife.common.network.old.BelierMessage;
-import fr.yan36.westerlife.common.registry.SoundsHandler;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockFire;
-import net.minecraft.block.material.Material;
+import fr.yan36.westerlife.common.handlers.SoundsHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
-import net.minecraftforge.client.model.obj.OBJModel;
-import net.minecraftforge.event.entity.ProjectileImpactEvent;
-import org.lwjgl.util.vector.Vector3f;
-
-import java.util.HashMap;
-import java.util.List;
 
 public class ItemDynamx extends DynamXItem {
 
@@ -39,7 +28,7 @@ public class ItemDynamx extends DynamXItem {
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer player, EnumHand handIn) {
         if(!worldIn.isRemote) {
-            if (player.getHeldItemMainhand().isItemEqual(new ItemStack(DynamxInit.PistoletRadar))) {
+            if (player.getHeldItemMainhand().isItemEqual(new ItemStack(DynamXInit.PistoletRadar))) {
                 player.getCooldownTracker().setCooldown(player.getHeldItemMainhand().getItem(), 30);
                 player.playSound(SoundsHandler.BIP, 0.5f, 1f);
                 Entity a = Util.getEntityLookAt(player, 80);
@@ -57,7 +46,7 @@ public class ItemDynamx extends DynamXItem {
 
                 }
             }
-            if (player.getHeldItemMainhand().isItemEqual(new ItemStack(DynamxInit.Belier))) {
+            if (player.getHeldItemMainhand().isItemEqual(new ItemStack(DynamXInit.Belier))) {
                 player.getCooldownTracker().setCooldown(player.getHeldItemMainhand().getItem(), 10);
                 Minecraft instance = Minecraft.getMinecraft();
                 BlockPos pos = instance.objectMouseOver.getBlockPos();
@@ -73,7 +62,7 @@ public class ItemDynamx extends DynamXItem {
         if (!worldIn.isRemote) {
 
             System.out.println("ItemDynamx.onItemUse");
-//            if (player.getHeldItemMainhand().isItemEqual(new ItemStack(DynamxInit.PistoletRadar))) {
+//            if (player.getHeldItemMainhand().isItemEqual(new ItemStack(DynamXInit.PistoletRadar))) {
 //                player.getCooldownTracker().setCooldown(player.getHeldItemMainhand().getItem(), 30);
 //                player.playSound(SoundsHandler.BIP, 0.5f, 1f);
 //                Minecraft mc = Minecraft.getMinecraft();

@@ -15,23 +15,20 @@ import fr.yan36.westerlife.client.gui.mcef.BrowserScreen;
 import fr.yan36.westerlife.client.utils.creativetabs.WesterTab;
 import fr.yan36.westerlife.common.CommonProxy;
 import fr.yan36.westerlife.common.entities.DynamX.TestEntity2;
+import fr.yan36.westerlife.common.entities.EntitySeat;
 import fr.yan36.westerlife.common.entities.NPCTestEntity;
-import fr.yan36.westerlife.common.init.DynamxInit;
+import fr.yan36.westerlife.common.init.DynamXInit;
 import fr.yan36.westerlife.common.init.Network;
-import fr.yan36.westerlife.common.objects.LightSequence;
 import fr.yan36.westerlife.common.objects.entreprises.CompanyAssociation;
 import fr.yan36.westerlife.common.objects.entreprises.CompanyBase;
-import fr.yan36.westerlife.common.registry.RegistryHandler;
+import fr.yan36.westerlife.common.handlers.RegistryHandler;
 import fr.yan36.westerlife.common.utils.WesterBuiltinPack;
 import fr.yan36.westerlife.common.utils.commands.WesterLifeCommand;
 import fr.yan36.westerlife.common.utils.discord.Discord;
 import fr.yan36.westerlife.server.AuthSystem;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.ModelZombie;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
@@ -52,8 +49,6 @@ import org.apache.logging.log4j.Logger;
 import javax.sound.sampled.LineUnavailableException;
 import java.awt.*;
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -93,7 +88,7 @@ public class Main {
     @DynamXAddon.AddonEventSubscriber
     public static void init() {
 //        ObjectLoader.registerObject(emptyArmor);
-        DynamxInit.init();
+        DynamXInit.init();
         DynamXContext.getObjModelRegistry().registerModel(new ObjModelPath(new WesterBuiltinPack.WesterPackInfo(), new ResourceLocation(Main.MODID, "test.obj")));
         DynamXContext.getObjModelRegistry().registerModel(new ObjModelPath(new WesterBuiltinPack.WesterPackInfo(), new ResourceLocation(Main.MODID, "punch.obj")));
 
@@ -119,6 +114,8 @@ public class Main {
         WesterLifeCommand.initModules();
         EntityRegistry.registerModEntity(new ResourceLocation(MODID, "testentity2"), TestEntity2.class, "testentity2", 2, this, 64, 1, true, Color.WHITE.getRGB(), Color.BLACK.getRGB());
         EntityRegistry.registerModEntity(new ResourceLocation(MODID, "npcai"), NPCTestEntity.class, "npcai", 3, this, 64, 1, true, Color.WHITE.getRGB(), Color.BLACK.getRGB());
+        EntityRegistry.registerModEntity(new ResourceLocation(MODID, "entity_sit"), EntitySeat.class, "entity_sit", 4, this, 256, 20, false);
+
 //        EntityRegistry.registerEgg(new ResourceLocation(MODID, "npcai"), Color.WHITE.getRGB(), Color.BLACK.getRGB());
         if(event.getSide().isClient() && event.getSourceFile().getName().endsWith(".jar") ||  (boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment") || Objects.requireNonNull(Loader.instance().activeModContainer()).getSource().isFile()) isEnvDev = true;
         System.out.println("WesterLife is in dev mode: " + isEnvDev);
@@ -142,7 +139,7 @@ public class Main {
 
         List<DynamXItemArmor<?>> globalitems = ForgeRegistries.ITEMS.getEntries().stream().filter(e -> e.getValue() instanceof DynamXItemArmor<?>).collect(Collectors.toCollection(ArrayList::new)).stream().map(e -> (DynamXItemArmor<?>) e.getValue()).collect(Collectors.toList());
         for (DynamXItemArmor<?> item : globalitems) {
-            DynamxInit.fastRegistryAccess.put(item.getInfo().getFullName(), item);
+            DynamXInit.fastRegistryAccess.put(item.getInfo().getFullName(), item);
             System.out.println("added " + item.getInfo().getFullName() + " to fast registry access");
         }
 
@@ -184,6 +181,7 @@ public class Main {
 
     public static final CreativeTabs WESTER_MAIN = new WesterTab("westertab");
     public static final CreativeTabs WESTER_ROADS = new WesterTab("westertab_roads");
+    public static final CreativeTabs WESTER_CARDS = new WesterTab("westertab_cards");
 
 
 
