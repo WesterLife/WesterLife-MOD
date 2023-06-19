@@ -14,5 +14,13 @@
   "atmsoundbip": {
     "subtitle": "westerlife.subtitle.atmsoundbip",
     "sounds": [ "westerlife:atmsoundbip" ]
+  },
+  "irm": {
+    "subtitle": "westerlife.subtitle.irm",
+    "sounds": [ "westerlife:irm" ]
+  },
+  "alarmbip": {
+    "subtitle": "westerlife.subtitle.alarmbip",
+    "sounds": [ "westerlife:alarmbip" ]
   }
 }

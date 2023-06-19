@@ -1,5 +1,9 @@
 package fr.yan36.westerlife;
 
+import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
+import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
+import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
+import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
 import fr.dynamx.api.contentpack.DynamXAddon;
 import fr.dynamx.api.obj.ObjModelPath;
 import fr.dynamx.common.DynamXContext;
@@ -10,6 +14,7 @@ import fr.dynamx.utils.debug.DynamXDebugOptions;
 import fr.nathanael2611.simpledatabasemanager.core.Database;
 import fr.nathanael2611.simpledatabasemanager.core.Databases;
 import fr.nathanael2611.simpledatabasemanager.core.SyncedDatabases;
+import fr.yan36.westerlife.client.audio.PlayerManager;
 import fr.yan36.westerlife.client.gui.mcef.BrowserHud;
 import fr.yan36.westerlife.client.gui.mcef.BrowserScreen;
 import fr.yan36.westerlife.client.utils.creativetabs.WesterTab;
@@ -67,6 +72,8 @@ public class Main {
     public static final String NAME = "WesterLife Mod";
 
     public static final String VERSION = "1.5.6-beta1";
+    private static PlayerManager playerManager;
+
 
     @Mod.Instance(Main.MODID)
     public static Main instance;
@@ -84,6 +91,9 @@ public class Main {
 
     public static Database wl_db;
 
+    public static PlayerManager getPlayerManager() {
+        return playerManager;
+    }
 
     @DynamXAddon.AddonEventSubscriber
     public static void init() {
@@ -108,7 +118,7 @@ public class Main {
     }
 
     @Mod.EventHandler
-    public void preInit(FMLPreInitializationEvent event) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public void preInit(FMLPreInitializationEvent event) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, LineUnavailableException {
         proxy.preInit();
         logger = event.getModLog();
         WesterLifeCommand.initModules();
@@ -130,6 +140,7 @@ public class Main {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            playerManager = new PlayerManager();
         } else {
             AuthSystem.init();
         }

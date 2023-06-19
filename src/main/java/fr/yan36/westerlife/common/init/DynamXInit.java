@@ -36,9 +36,11 @@ public class DynamXInit {
     public static BlockPhotocopieuse photocopieuse;
     public static BlockDeskPhone deskPhone;
     public static BlockPompeEssence pompeEssence;
-    public static BlockDynamx bookshelf;
+    public static BlockColored bookshelf;
 
     public static BlockDynamx videoprojector;
+    public static BlockDynamx relay;
+    public static BlockIRM irm;
     public static BlockRoad barrierePolice;
     public static BlockRoad clotureChantier;
     public static BlockRoad poteau;
@@ -54,6 +56,7 @@ public class DynamXInit {
     public static BlockPoteauLevant poteauLevant;
 
     public static BlockChair chair;
+    public static BlockColored table;
     public static HashMap<String, DynamXItemArmor<?>> fastRegistryAccess = new HashMap<>();
 
 
@@ -85,10 +88,11 @@ public class DynamXInit {
         pompeEssence = new BlockPompeEssence(Material.ANVIL, Main.MODID, "pompeessence", new ResourceLocation("westerlife","models/dynamx/blocks/pompe_essence/pompeessence.obj"));
         tombe = new BlockTombe(Material.ANVIL, Main.MODID, "tombe", new ResourceLocation("westerlife","models/dynamx/tombe/tombe.obj"));
         screen = new BlockScreen(Material.ANVIL, Main.MODID, "screen", new ResourceLocation("westerlife","models/dynamx/blocks/screen/screen.obj"));
-        bookshelf = new BlockDynamx(Material.ANVIL, Main.MODID, "bookshelf", new ResourceLocation("westerlife","models/dynamx/blocks/bookshelf/bookshelf.obj"));
+        bookshelf = new BlockColored(Material.ANVIL, Main.MODID, "bookshelf", new ResourceLocation("westerlife","models/dynamx/blocks/bookshelf/bookshelf.obj"));
         videoprojector = new BlockDynamx(Material.ANVIL, Main.MODID, "videoprojector", new ResourceLocation("westerlife","models/dynamx/blocks/videoprojector/videoprojector.obj"));
         chair = new BlockChair(Material.ANVIL, Main.MODID, "chair_white", new ResourceLocation("westerlife","models/dynamx/blocks/chair_white/chair_white.obj"));
-
+        table = new BlockColored(Material.ANVIL, Main.MODID, "table", new ResourceLocation("westerlife","models/dynamx/blocks/table/table.obj"));
+        irm = new BlockIRM(Material.ANVIL, Main.MODID, "irm", new ResourceLocation("westerlife","models/dynamx/blocks/irm/irm.obj"));
         //Road blocks
         barrierePolice = new BlockRoad(Material.ANVIL, Main.MODID, "barrierepolice", new ResourceLocation("westerlife","models/dynamx/blocks/barriere_police/barriere.obj"));
         clotureChantier = new BlockRoad(Material.ANVIL, Main.MODID, "cloturechantier", new ResourceLocation("westerlife","models/dynamx/blocks/cloture_chantier/cloturechantier.obj"));
@@ -96,6 +100,7 @@ public class DynamXInit {
         herse = new BlockHerse(Material.ANVIL, Main.MODID, "herse", new ResourceLocation("westerlife","models/dynamx/blocks/herse/herse.obj"));
         feurouge = new BlockFeuRouge(Material.ANVIL, Main.MODID, "feurouge", new ResourceLocation("westerlife","models/dynamx/blocks/feurouge/feurouge.obj"));
         poteauLevant = new BlockPoteauLevant(Material.ANVIL, Main.MODID, "poteaulevant", new ResourceLocation("westerlife","models/dynamx/blocks/poteau_levant/poteau.obj"));
+        relay = new BlockDynamx(Material.ANVIL, Main.MODID, "relay", new ResourceLocation("westerlife","models/dynamx/blocks/relay/relay.obj"));
 
         //Old items
         SignVillage = new BlockSignVillage(Material.ANVIL, Main.MODID, "panneauvillage", new ResourceLocation("westerlife","models/dynamx/signvillage/sign.obj"));

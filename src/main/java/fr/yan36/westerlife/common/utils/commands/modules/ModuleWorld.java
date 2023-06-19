@@ -183,6 +183,43 @@ public class ModuleWorld extends CommandModule {
                 }
 
 
+            } else if(Objects.equals(args[1], "blockcolor")) {
+
+                if (sender instanceof EntityPlayer) {
+                    EntityPlayer player = (EntityPlayer) sender;
+                    RayTraceResult rayTraceResult = player.world.rayTraceBlocks(player.getPositionEyes(1), player.getPositionEyes(1).add(player.getLookVec().scale(10)));
+                    assert rayTraceResult != null;
+                    System.out.println(rayTraceResult.getBlockPos());
+                    if (rayTraceResult != null) {
+                        TileColoredBlock tilechair = (TileColoredBlock) player.world.getTileEntity(rayTraceResult.getBlockPos());
+                        if (tilechair != null) {
+
+                            if(args.length == 3) {
+                                tilechair.setColor(Integer.parseInt(args[2]));
+                                tilechair.sync();
+                                tilechair.syncToClient();
+                                sender.sendMessage(new TextComponentString("§aSet color to '" + args[2] + "'."));
+                            } else {
+                                // rbg color of arg 2, 3, 4
+                                int r = Integer.parseInt(args[2]);
+                                int g = Integer.parseInt(args[3]);
+                                int b = Integer.parseInt(args[4]);
+
+                                // convert to 0xRRGGBB
+                                int color = (r << 16) + (g << 8) + b;
+                                tilechair.setColor(color);
+                                tilechair.sync();
+                                tilechair.syncToClient();
+
+                                sender.sendMessage(new TextComponentString("§aSet color to '" + args[2] + " " + args[3] + " " + args[4] + "'."));
+                            }
+                        }
+                    }
+                } else {
+                    sender.sendMessage(new TextComponentString("§c/wlmod world spot <angle>"));
+                }
+
+
             } else if(Objects.equals(args[1], "chair")) {
 
                 if (sender instanceof EntityPlayer) {

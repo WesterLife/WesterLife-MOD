@@ -3,7 +3,9 @@ package fr.yan36.westerlife.common.items;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.init.ItemInit;
 import fr.yan36.westerlife.common.utils.interfaces.IHasModel;
+import fr.yan36.westerlife.server.DiscordWebhook;
 import fr.yan36.westerlife.server.bdd.DBUtils;
+import fr.yan36.westerlife.server.bdd.DatabaseManager;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
@@ -17,7 +19,12 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
+import javax.xml.crypto.Data;
+import java.awt.*;
+import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
 
 public class ItemCard extends Item implements IHasModel {
 
@@ -67,6 +74,19 @@ public class ItemCard extends Item implements IHasModel {
     }
 
     @Override
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+        if(worldIn != null) {
+            if(!worldIn.isRemote) {
+                if(stack.hasTagCompound()) {
+                    if(stack.getTagCompound().hasKey("link")) {
+                        tooltip.add("§aCarte synchronisée au profil de : " + Objects.requireNonNull(DBUtils.getCharacter(UUID.fromString(stack.getTagCompound().getString("link")))).getLastName());
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
         System.out.println("onCreated");
         ItemStack stack = playerIn.getHeldItem(handIn);
@@ -76,7 +96,29 @@ public class ItemCard extends Item implements IHasModel {
             }
             if(!stack.getTagCompound().hasKey("link")) {
                 stack.getTagCompound().setString("link", String.valueOf(playerIn.getUniqueID()));
+                String a = this.getType().name().substring(0, 3) + Math.round(Float.parseFloat(Math.random() * 10000000 + ""));
+                stack.getTagCompound().setString("uniqueIdentifier", String.valueOf(a));
                 playerIn.sendMessage(new TextComponentString("§aCarte synchronisée le profil de : " + DBUtils.getCharacter(playerIn.getUniqueID()).getLastName() + " !"));
+                DiscordWebhook webhook = new DiscordWebhook(DatabaseManager.discordLogger);
+
+                webhook.addEmbed(
+                        new DiscordWebhook.EmbedObject()
+                                .setTitle("Mise en circulation d'une carte")
+                                .setColor(new Color(0x00FF00))
+                                .setFooter("WesterLife - logger", "https://cdn.discordapp.com/icons/813796868537581588/a424290da4df55b736153d20e46f6770.webp?size=96")
+                                .addField("Type de carte", this.getType().name(), true)
+                                .addField("Activé par", playerIn.getUniqueID() + " " + playerIn.getName(), true)
+                                .addField("Identifiant unique carte", String.valueOf(a), true)
+                );
+
+                webhook.setAvatarUrl("https://cdn.discordapp.com/icons/813796868537581588/a424290da4df55b736153d20e46f6770.webp?size=96");
+                webhook.setUsername("WesterLife - logger");
+                try {
+                    webhook.execute();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+
             } else {
                 playerIn.sendMessage(new TextComponentString("§cCette carte est déjà synchronisée ça serait trop facile de la voler sinon :)"));
             }

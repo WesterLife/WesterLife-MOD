@@ -4,6 +4,7 @@ import fr.yan36.westerlife.Main;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import org.newdawn.slick.Sound;
 
 public class SoundsHandler {
 
@@ -11,12 +12,16 @@ public class SoundsHandler {
     public static SoundEvent BIP2;
     public static SoundEvent MARSEILLAISE;
     public static SoundEvent ATMSOUNDBIP;
+    public static SoundEvent IRM_RUNNING;
+    public static SoundEvent IRM_ALARM;
 
     public static void registerSounds() {
         BIP = registerSound("bip");
         BIP2 = registerSound("bip2");
         MARSEILLAISE = registerSound("marseillaise");
         ATMSOUNDBIP = registerSound("atmsoundbip");
+        IRM_RUNNING = registerSound("irm");
+        IRM_ALARM = registerSound("alarmbip");
     }
 
     private static SoundEvent registerSound(String name) {

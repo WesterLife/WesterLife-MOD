@@ -41,17 +41,17 @@ public class ClientHUD {
     public void healthRender(RenderGameOverlayEvent.Post event) {
         EntityPlayer player = Minecraft.getMinecraft().player;
         if(!(player == null)) {
-            if(player.getHeldItem(EnumHand.MAIN_HAND).getItem() instanceof ItemCard) {
+            if (player.getHeldItem(EnumHand.MAIN_HAND).getItem() instanceof ItemCard) {
                 ItemCard card = (ItemCard) player.getHeldItem(EnumHand.MAIN_HAND).getItem();
                 GlStateManager.enableAlpha();
                 Minecraft.getMinecraft().getTextureManager().bindTexture(card.getType().getResourceLocation());
                 Gui.drawScaledCustomSizeModalRect(0, 0, 0, 0, 256, 256, 165, 110, 256, 256);
                 GlStateManager.disableAlpha();
-                if(card.getType().equals(ItemCard.CardType.CNI)) {
-                    if(player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound() != null) {
-                        if(Client.knowCharacters.containsKey(UUID.fromString(player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().getString("link")))) {
+                if (player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound() != null) {
+                    if (card.getType().equals(ItemCard.CardType.CNI)) {
+                        if (Client.knowCharacters.containsKey(UUID.fromString(player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().getString("link")))) {
                             Character target = Client.knowCharacters.get(UUID.fromString(player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().getString("link")));
-                            if(target != null) {
+                            if (target != null) {
                                 GlStateManager.pushMatrix();
                                 GlStateManager.scale(0.5, 0.5, 0.5);
                                 Minecraft.getMinecraft().fontRenderer.drawString(target.getLastName(), 135, 65, 0x050505);
@@ -60,7 +60,12 @@ public class ClientHUD {
                                 Minecraft.getMinecraft().fontRenderer.drawString(Objects.equals(target.getNationality(), "Française") ? "FRA" : "AUT", 170, 110, 0x050505);
                                 Minecraft.getMinecraft().fontRenderer.drawString(target.getBirthPlace(), 235, 110, 0x050505);
                                 Minecraft.getMinecraft().fontRenderer.drawString(target.getBirthDate(), 135, 125, 0x050505);
-                                Minecraft.getMinecraft().fontRenderer.drawString("WESTX48ADEZ", 135, 140, 0x050505);
+
+                                if(player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().hasKey("uniqueIdentifier")) {
+                                    Minecraft.getMinecraft().fontRenderer.drawString(player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().getString("uniqueIdentifier"), 135, 140, 0x050505);
+                                } else {
+                                    Minecraft.getMinecraft().fontRenderer.drawString("WESTX48ADEZ", 135, 140, 0x050505);
+                                }
                                 Minecraft.getMinecraft().fontRenderer.drawString("2030-01-01", 235, 155, 0x050505);
                                 GlStateManager.popMatrix();
 
@@ -68,19 +73,16 @@ public class ClientHUD {
 //                                System.out.println("null");
                             }
                         } else {
-                            if(!Client.waitForSomething.containsKey("cni")) {
+                            if (!Client.waitForSomething.containsKey("cni")) {
                                 Main.network.sendToServer(new PacketRequestCharacter(UUID.fromString(player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().getString("link"))));
                                 Client.waitForSomething.put("cni", true);
                             }
                         }
-                    }
-                } else if (card.getType().equals(ItemCard.CardType.PERM)) {
-                    if(player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound() != null) {
-
-                        if(Client.knowPermis.containsKey(UUID.fromString(player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().getString("link"))) && Client.knowCharacters.containsKey(UUID.fromString(player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().getString("link")))) {
+                    } else if (card.getType().equals(ItemCard.CardType.PERM)) {
+                        if (Client.knowPermis.containsKey(UUID.fromString(player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().getString("link"))) && Client.knowCharacters.containsKey(UUID.fromString(player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().getString("link")))) {
                             Permis target = Client.knowPermis.get(UUID.fromString(player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().getString("link")));
                             Character target2 = Client.knowCharacters.get(UUID.fromString(player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().getString("link")));
-                            if(target != null) {
+                            if (target != null) {
                                 GlStateManager.pushMatrix();
                                 GlStateManager.scale(0.5, 0.5, 0.5);
                                 Minecraft.getMinecraft().fontRenderer.drawString(target2.getLastName(), 135, 65, 0x050505);
@@ -88,6 +90,11 @@ public class ClientHUD {
                                 Minecraft.getMinecraft().fontRenderer.drawString(target2.getBirthPlace(), 135, 105, 0x050505);
                                 Minecraft.getMinecraft().fontRenderer.drawString(target.getType().stream().map(Permis.PermisType::getLetterName).collect(Collectors.joining(", ")), 135, 125, 0x050505);
 
+                                if(player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().hasKey("uniqueIdentifier")) {
+                                    Minecraft.getMinecraft().fontRenderer.drawString(player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().getString("uniqueIdentifier"), 135, 155, 0x050505);
+                                } else {
+                                    Minecraft.getMinecraft().fontRenderer.drawString("WESTX48ADEZ", 130, 150, 0x050505);
+                                }
 
                                 Minecraft.getMinecraft().fontRenderer.drawString("2030-01-01", 235, 155, 0x050505);
                                 GlStateManager.popMatrix();
@@ -96,19 +103,73 @@ public class ClientHUD {
                                 System.out.println("null");
                             }
                         } else {
-                            if(!Client.waitForSomething.containsKey("permis")) {
+                            if (!Client.waitForSomething.containsKey("permis")) {
                                 System.out.println("send req for permis");
                                 Main.network.sendToServer(new PacketRequestCharacter(UUID.fromString(player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().getString("link"))));
                                 Client.waitForSomething.put("permis", true);
                             }
                         }
+                    } else if (card.getType().equals(ItemCard.CardType.DIPLO)) {
+                        if (Client.knowCharacters.containsKey(UUID.fromString(player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().getString("link")))) {
+                            Character target = Client.knowCharacters.get(UUID.fromString(player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().getString("link")));
+                            if (target != null) {
+                                GlStateManager.pushMatrix();
+                                GlStateManager.scale(0.5, 0.5, 0.5);
+                                Minecraft.getMinecraft().fontRenderer.drawString(target.getLastName(), 130, 65, 0x050505);
+                                Minecraft.getMinecraft().fontRenderer.drawString(target.getFirstNames(), 130, 100, 0x050505);
+                                Minecraft.getMinecraft().fontRenderer.drawString(target.getBirthPlace(), 130, 130, 0x050505);
+                                if(player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().hasKey("uniqueIdentifier")) {
+                                    Minecraft.getMinecraft().fontRenderer.drawString(player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().getString("uniqueIdentifier"), 130, 150, 0x050505);
+                                } else {
+                                    Minecraft.getMinecraft().fontRenderer.drawString("WESTX48ADEZ", 130, 150, 0x050505);
+                                }
+
+                                Minecraft.getMinecraft().fontRenderer.drawString("2030-01-01", 235, 155, 0x050505);
+                                GlStateManager.popMatrix();
+
+                            } else {
+//                                System.out.println("null");
+                            }
+                        } else {
+                            if (!Client.waitForSomething.containsKey("cni")) {
+                                Main.network.sendToServer(new PacketRequestCharacter(UUID.fromString(player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().getString("link"))));
+                                Client.waitForSomething.put("cni", true);
+                            }
+                        }
+                    } else if (card.getType().equals(ItemCard.CardType.GDI) || card.getType().equals(ItemCard.CardType.PREF) || card.getType().equals(ItemCard.CardType.GOUV)) {
+                        if (Client.knowCharacters.containsKey(UUID.fromString(player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().getString("link")))) {
+                            Character target = Client.knowCharacters.get(UUID.fromString(player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().getString("link")));
+                            if (target != null) {
+                                GlStateManager.pushMatrix();
+                                GlStateManager.scale(0.5, 0.5, 0.5);
+                                Minecraft.getMinecraft().fontRenderer.drawString(target.getLastName(), 135, 65, 0x050505);
+                                Minecraft.getMinecraft().fontRenderer.drawString(target.getFirstNames(), 135, 85, 0x050505);
+                                Minecraft.getMinecraft().fontRenderer.drawString(target.getBirthPlace(), 135, 105, 0x050505);
+                                if(player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().hasKey("uniqueIdentifier")) {
+                                    Minecraft.getMinecraft().fontRenderer.drawString(player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().getString("uniqueIdentifier"), 135, 125, 0x050505);
+                                } else {
+                                    Minecraft.getMinecraft().fontRenderer.drawString("WESTX48ADEZ", 130, 150, 0x050505);
+                                }
+
+                                Minecraft.getMinecraft().fontRenderer.drawString("2030-01-01", 235, 155, 0x050505);
+                                GlStateManager.popMatrix();
+
+                            } else {
+//                                System.out.println("null");
+                            }
+                        } else {
+                            if (!Client.waitForSomething.containsKey("cni")) {
+                                Main.network.sendToServer(new PacketRequestCharacter(UUID.fromString(player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().getString("link"))));
+                                Client.waitForSomething.put("cni", true);
+                            }
+                        }
                     }
                 }
-
             }
         } else {
             System.out.println(player.getPrimaryHand());
         }
+
 
 
         ScaledResolution scaledresolution = event.getResolution();

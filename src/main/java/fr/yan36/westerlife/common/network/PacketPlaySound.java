@@ -36,6 +36,12 @@ public class PacketPlaySound implements IMessage{
                 case 1:
                     Minecraft.getMinecraft().player.playSound(SoundsHandler.BIP2, 1.0F, 1.0F);
                     break;
+                case 2:
+                    Minecraft.getMinecraft().player.playSound(SoundsHandler.IRM_RUNNING, 1.0F, 1.0F);
+                    break;
+                case 3:
+                    Minecraft.getMinecraft().player.playSound(SoundsHandler.IRM_ALARM, 1.0F, 1.0F);
+                    break;
             }
             return null;
         }

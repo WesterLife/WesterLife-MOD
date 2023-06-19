@@ -226,6 +226,14 @@ public class DBUtils {
 
     // Bande de nulos
 
+    public static void updateToDb(String table, String column, String where, String replaceBy) {
+        try {
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void saveToDB(IDatabaseVariable dbv){
         List<String> values = dbv.getValues();
         StringBuilder litteralValues = new StringBuilder();

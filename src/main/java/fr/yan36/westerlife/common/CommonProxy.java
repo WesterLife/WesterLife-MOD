@@ -3,6 +3,7 @@ package fr.yan36.westerlife.common;
 import fr.dynamx.api.events.PhysicsEvent;
 import fr.dynamx.common.entities.PhysicsEntity;
 import fr.yan36.westerlife.common.blocks.tileentity.*;
+import fr.yan36.westerlife.common.handlers.SoundsHandler;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
@@ -44,7 +45,9 @@ public class CommonProxy {
         GameRegistry.registerTileEntity(TileScreen.class, new ResourceLocation("westerlife", "screen"));
         GameRegistry.registerTileEntity(TilePoteauLevant.class, new ResourceLocation("westerlife", "tilepoteaulevant"));
         GameRegistry.registerTileEntity(TileChair.class, new ResourceLocation("westerlife", "chair"));
-
+        GameRegistry.registerTileEntity(TileColoredBlock.class, new ResourceLocation("westerlife", "coloredblock"));
+        GameRegistry.registerTileEntity(TileIrm.class, new ResourceLocation("westerlife", "irm"));
+        SoundsHandler.registerSounds();
         MinecraftForge.EVENT_BUS.register(this);
 
 

@@ -12,6 +12,7 @@ import fr.yan36.westerlife.common.blocks.dynamx.BlockComputer;
 import fr.yan36.westerlife.common.blocks.dynamx.BlockDistributeur;
 import fr.yan36.westerlife.common.init.DynamXInit;
 import fr.yan36.westerlife.common.init.ItemInit;
+import fr.yan36.westerlife.common.items.ItemCard;
 import fr.yan36.westerlife.common.network.PacketAnimationToAll;
 import fr.yan36.westerlife.common.network.PacketAskToCreateCharacter;
 import fr.yan36.westerlife.common.network.PacketOpenMcefGui;
@@ -26,11 +27,16 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.MobEffects;
+import net.minecraft.inventory.ContainerChest;
+import net.minecraft.inventory.ContainerPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.server.management.PlayerInteractionManager;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraftforge.event.entity.item.ItemEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
+import net.minecraftforge.event.entity.player.PlayerContainerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
@@ -100,6 +106,18 @@ public class Serveur {
         }
         if(e.player.isBurning()) {
             Databases.getPlayerData(e.player).setFloat("watervalue", Databases.getPlayerData(e.player).getFloat("watervalue") - 0.005f);
+        }
+    }
+
+    @SubscribeEvent
+    public void cardProtection(PlayerContainerEvent e) {
+        if(!(e.getContainer() instanceof ContainerPlayer)) {
+            for (int i = 0; i < e.getContainer().getInventory().size(); i++) {
+                ItemStack stack = e.getContainer().getInventory().get(i);
+                if(stack.getItem() instanceof ItemCard) {
+                    e.getContainer().getInventory().set(i, ItemStack.EMPTY);
+                }
+            }
         }
     }
 

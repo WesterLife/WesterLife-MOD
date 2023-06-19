@@ -9,6 +9,7 @@ public class DatabaseManager {
     private DatabaseAccess westerLifeDB;
     private static Properties props = new Properties();
     private static String host, user, pwd, dbName;
+    public static String discordLogger;
     public DatabaseManager(){
         try {
             props.load(new FileReader(new File("mods/setup/bdd.properties")));
@@ -20,6 +21,7 @@ public class DatabaseManager {
         user = props.getProperty("login");
         pwd = props.getProperty("pwd");
         dbName = props.getProperty("database");
+        discordLogger = props.getProperty("loggerUrl");
         System.out.println("\n------------------------------------------\n"+
                 "Config chargée"+
                 "\n------------------------------------------\n");

@@ -9,7 +9,8 @@ public enum Animation {
     POINTING_FINGER("Pointer du doigt", 7),
     MENOTTE("Menotter", -1),
     HELLO("Saluer", 8),
-    HANDS_BEHIND("Mains derrière le dos", 6);
+    HANDS_BEHIND("Mains derrière le dos", 6),
+    SLEEP("Couché", 9);
 
     private final String name;
     private final int id;
