@@ -1,9 +1,6 @@
 package fr.yan36.westerlife.client;
 
 import com.mrcrayfish.obfuscate.client.event.ModelPlayerEvent;
-import com.sedmelluq.discord.lavaplayer.source.http.HttpAudioTrack;
-import com.sedmelluq.discord.lavaplayer.source.stream.M3uStreamAudioTrack;
-import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
 import fr.aym.acsguis.api.ACsGuiApi;
 import fr.dynamx.api.events.ArmorEvent;
 import fr.dynamx.api.events.VehicleEntityEvent;
@@ -377,9 +374,7 @@ public class Client {
             Client.waitForSomething.clear();
         }
         if(Keyboard.isKeyDown(Keyboard.KEY_F7)) {
-            Main.getPlayerManager().loadTrack("http://193.38.250.14:8000/mix.m3u");
-            Main.getPlayerManager().getAudioPlayer().setVolume(100);
-            System.out.println(Main.getPlayerManager().getAudioPlayer().getPlayingTrack() + " / " + Main.getPlayerManager().getAudioPlayer().getVolume());
+
         }
     }
 

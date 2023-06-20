@@ -37,7 +37,7 @@ public class DynamXInit {
     public static BlockDeskPhone deskPhone;
     public static BlockPompeEssence pompeEssence;
     public static BlockColored bookshelf;
-
+    public static BlockColored desklamp;
     public static BlockDynamx videoprojector;
     public static BlockDynamx relay;
     public static BlockIRM irm;
@@ -101,6 +101,7 @@ public class DynamXInit {
         feurouge = new BlockFeuRouge(Material.ANVIL, Main.MODID, "feurouge", new ResourceLocation("westerlife","models/dynamx/blocks/feurouge/feurouge.obj"));
         poteauLevant = new BlockPoteauLevant(Material.ANVIL, Main.MODID, "poteaulevant", new ResourceLocation("westerlife","models/dynamx/blocks/poteau_levant/poteau.obj"));
         relay = new BlockDynamx(Material.ANVIL, Main.MODID, "relay", new ResourceLocation("westerlife","models/dynamx/blocks/relay/relay.obj"));
+        desklamp = new BlockColored(Material.ANVIL, Main.MODID, "desklamp", new ResourceLocation("westerlife","models/dynamx/blocks/desklamp/desklamp.obj"));
 
         //Old items
         SignVillage = new BlockSignVillage(Material.ANVIL, Main.MODID, "panneauvillage", new ResourceLocation("westerlife","models/dynamx/signvillage/sign.obj"));

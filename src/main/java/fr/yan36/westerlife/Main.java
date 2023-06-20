@@ -1,9 +1,5 @@
 package fr.yan36.westerlife;
 
-import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
-import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
-import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
-import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
 import fr.dynamx.api.contentpack.DynamXAddon;
 import fr.dynamx.api.obj.ObjModelPath;
 import fr.dynamx.common.DynamXContext;
@@ -14,7 +10,7 @@ import fr.dynamx.utils.debug.DynamXDebugOptions;
 import fr.nathanael2611.simpledatabasemanager.core.Database;
 import fr.nathanael2611.simpledatabasemanager.core.Databases;
 import fr.nathanael2611.simpledatabasemanager.core.SyncedDatabases;
-import fr.yan36.westerlife.client.audio.PlayerManager;
+
 import fr.yan36.westerlife.client.gui.mcef.BrowserHud;
 import fr.yan36.westerlife.client.gui.mcef.BrowserScreen;
 import fr.yan36.westerlife.client.utils.creativetabs.WesterTab;
@@ -22,11 +18,11 @@ import fr.yan36.westerlife.common.CommonProxy;
 import fr.yan36.westerlife.common.entities.DynamX.TestEntity2;
 import fr.yan36.westerlife.common.entities.EntitySeat;
 import fr.yan36.westerlife.common.entities.NPCTestEntity;
+import fr.yan36.westerlife.common.handlers.RegistryHandler;
 import fr.yan36.westerlife.common.init.DynamXInit;
 import fr.yan36.westerlife.common.init.Network;
 import fr.yan36.westerlife.common.objects.entreprises.CompanyAssociation;
 import fr.yan36.westerlife.common.objects.entreprises.CompanyBase;
-import fr.yan36.westerlife.common.handlers.RegistryHandler;
 import fr.yan36.westerlife.common.utils.WesterBuiltinPack;
 import fr.yan36.westerlife.common.utils.commands.WesterLifeCommand;
 import fr.yan36.westerlife.common.utils.discord.Discord;
@@ -54,8 +50,10 @@ import org.apache.logging.log4j.Logger;
 import javax.sound.sampled.LineUnavailableException;
 import java.awt.*;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Mod(
@@ -71,8 +69,7 @@ public class Main {
     public static final String MODID = "westerlife";
     public static final String NAME = "WesterLife Mod";
 
-    public static final String VERSION = "1.5.6-beta1";
-    private static PlayerManager playerManager;
+    public static final String VERSION = "1.5.6-out1";
 
 
     @Mod.Instance(Main.MODID)
@@ -91,9 +88,6 @@ public class Main {
 
     public static Database wl_db;
 
-    public static PlayerManager getPlayerManager() {
-        return playerManager;
-    }
 
     @DynamXAddon.AddonEventSubscriber
     public static void init() {
@@ -140,7 +134,6 @@ public class Main {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            playerManager = new PlayerManager();
         } else {
             AuthSystem.init();
         }
