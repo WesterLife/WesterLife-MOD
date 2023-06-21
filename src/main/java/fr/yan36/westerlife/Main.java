@@ -130,7 +130,7 @@ public class Main {
         if(event.getSide().isClient()) {
             // check if account is premium
             try {
-                new Discord().start();
+//                new Discord().start();
             } catch (Exception e) {
                 e.printStackTrace();
             }
