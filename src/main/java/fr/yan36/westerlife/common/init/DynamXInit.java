@@ -46,6 +46,12 @@ public class DynamXInit {
     public static BlockRoad poteau;
     public static BlockFeuRouge feurouge;
     public static BlockHerse herse;
+    public static BlockRoad trafficcone;
+    public static BlockRoad balisep;
+    public static BlockRoad balise_white;
+    public static BlockRoad balise_yellow;
+    public static BlockRoad balise_green;
+    public static BlockRoad balise_orange;
 
     public static BlockTombe tombe;
 
@@ -102,6 +108,12 @@ public class DynamXInit {
         poteauLevant = new BlockPoteauLevant(Material.ANVIL, Main.MODID, "poteaulevant", new ResourceLocation("westerlife","models/dynamx/blocks/poteau_levant/poteau.obj"));
         relay = new BlockDynamx(Material.ANVIL, Main.MODID, "relay", new ResourceLocation("westerlife","models/dynamx/blocks/relay/relay.obj"));
         desklamp = new BlockColored(Material.ANVIL, Main.MODID, "desklamp", new ResourceLocation("westerlife","models/dynamx/blocks/desklamp/desklamp.obj"));
+        trafficcone = new BlockRoad(Material.ANVIL, Main.MODID, "trafficcone", new ResourceLocation("westerlife","models/dynamx/blocks/trafficcone/cone.obj"));
+        balisep = new BlockRoad(Material.ANVIL, Main.MODID, "balisep", new ResourceLocation("westerlife","models/dynamx/blocks/balisep/balisep.obj"));
+        balise_white = new BlockRoad(Material.ANVIL, Main.MODID, "balise_white", new ResourceLocation("westerlife","models/dynamx/blocks/balise/white/balise.obj"));
+        balise_orange = new BlockRoad(Material.ANVIL, Main.MODID, "balise_orange", new ResourceLocation("westerlife","models/dynamx/blocks/balise/orange/balise.obj"));
+        balise_yellow = new BlockRoad(Material.ANVIL, Main.MODID, "balise_yellow", new ResourceLocation("westerlife","models/dynamx/blocks/balise/yellow/balise.obj"));
+        balise_green = new BlockRoad(Material.ANVIL, Main.MODID, "balise_green", new ResourceLocation("westerlife","models/dynamx/blocks/balise/green/balise.obj"));
 
         //Old items
         SignVillage = new BlockSignVillage(Material.ANVIL, Main.MODID, "panneauvillage", new ResourceLocation("westerlife","models/dynamx/signvillage/sign.obj"));
