@@ -40,6 +40,10 @@ public class DynamXInit {
     public static BlockColored desklamp;
     public static BlockDynamx videoprojector;
     public static BlockDynamx relay;
+    public static BlockDynamx flag;
+    public static BlockDynamx flageu;
+    public static BlockDynamx officeflag;
+    public static BlockDynamx officeflageu;
     public static BlockIRM irm;
     public static BlockRoad barrierePolice;
     public static BlockRoad clotureChantier;
@@ -99,6 +103,11 @@ public class DynamXInit {
         chair = new BlockChair(Material.ANVIL, Main.MODID, "chair_white", new ResourceLocation("westerlife","models/dynamx/blocks/chair_white/chair_white.obj"));
         table = new BlockColored(Material.ANVIL, Main.MODID, "table", new ResourceLocation("westerlife","models/dynamx/blocks/table/table.obj"));
         irm = new BlockIRM(Material.ANVIL, Main.MODID, "irm", new ResourceLocation("westerlife","models/dynamx/blocks/irm/irm.obj"));
+        flag = new BlockDynamx(Material.ANVIL, Main.MODID, "flag", new ResourceLocation("westerlife","models/dynamx/blocks/flag/flag.obj"));
+        flageu = new BlockDynamx(Material.ANVIL, Main.MODID, "flageu", new ResourceLocation("westerlife","models/dynamx/blocks/flag/flageu.obj"));
+        officeflag = new BlockDynamx(Material.ANVIL, Main.MODID, "officeflag", new ResourceLocation("westerlife","models/dynamx/blocks/officeflag/officeflag.obj"));
+        officeflageu = new BlockDynamx(Material.ANVIL, Main.MODID, "officeflageu", new ResourceLocation("westerlife","models/dynamx/blocks/officeflag/officeflageu.obj"));
+
         //Road blocks
         barrierePolice = new BlockRoad(Material.ANVIL, Main.MODID, "barrierepolice", new ResourceLocation("westerlife","models/dynamx/blocks/barriere_police/barriere.obj"));
         clotureChantier = new BlockRoad(Material.ANVIL, Main.MODID, "cloturechantier", new ResourceLocation("westerlife","models/dynamx/blocks/cloture_chantier/cloturechantier.obj"));
