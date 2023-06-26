@@ -74,7 +74,6 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.bindTileEntitySpecialRenderer(TileChair.class, new RenderChair());
         ClientRegistry.bindTileEntitySpecialRenderer(TileColoredBlock.class, new RenderColoredBlock());
         ClientRegistry.bindTileEntitySpecialRenderer(TileIrm.class, new RenderIRM());
-        ClientRegistry.bindTileEntitySpecialRenderer(TilePorteNom.class, new RenderPorteNom());
 
         RenderingRegistry.registerEntityRenderingHandler(TestEntity2.class, TestEntity2Renderer::new);
         RenderingRegistry.registerEntityRenderingHandler(NPCTestEntity.class, new NpcRenderer(new ModelNPC(), 0.5F));
