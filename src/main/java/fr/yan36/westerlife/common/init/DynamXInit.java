@@ -56,6 +56,7 @@ public class DynamXInit {
     public static BlockRoad balise_yellow;
     public static BlockRoad balise_green;
     public static BlockRoad balise_orange;
+    public static BlockPorteNom porteNom;
 
     public static BlockTombe tombe;
 
@@ -107,6 +108,7 @@ public class DynamXInit {
         flageu = new BlockDynamx(Material.ANVIL, Main.MODID, "flageu", new ResourceLocation("westerlife","models/dynamx/blocks/flag/flageu.obj"));
         officeflag = new BlockDynamx(Material.ANVIL, Main.MODID, "officeflag", new ResourceLocation("westerlife","models/dynamx/blocks/officeflag/officeflag.obj"));
         officeflageu = new BlockDynamx(Material.ANVIL, Main.MODID, "officeflageu", new ResourceLocation("westerlife","models/dynamx/blocks/officeflag/officeflageu.obj"));
+        porteNom = new BlockPorteNom(Material.ANVIL, Main.MODID, "portenom", new ResourceLocation("westerlife","models/dynamx/blocks/portenom/portenom.obj"));
 
         //Road blocks
         barrierePolice = new BlockRoad(Material.ANVIL, Main.MODID, "barrierepolice", new ResourceLocation("westerlife","models/dynamx/blocks/barriere_police/barriere.obj"));

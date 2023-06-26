@@ -20,13 +20,7 @@ public class Network {
         Main.network.registerMessage(PacketOpenGUIEditSign.Handler.class, PacketOpenGUIEditSign.class, 8, Side.CLIENT);
         Main.network.registerMessage(PacketUpdateTileSign.Handler.class, PacketUpdateTileSign.class, 9, Side.SERVER);
         Main.network.registerMessage(PacketReqSyncPlayer.Handler.class, PacketReqSyncPlayer.class, 10, Side.SERVER);
-        Main.network.registerMessage(PacketOpenGUIGendarmerie.Handler.class, PacketOpenGUIGendarmerie.class, 11, Side.CLIENT);
-        Main.network.registerMessage(PacketLoginGendarmerieServer.Handler.class, PacketLoginGendarmerieServer.class, 12, Side.SERVER);
-        Main.network.registerMessage(PacketLoginGendarmerie.Handler.class, PacketLoginGendarmerie.class, 13, Side.CLIENT);
         Main.network.registerMessage(PacketOpenGUIKeypad.Handler.class, PacketOpenGUIKeypad.class, 14, Side.CLIENT);
-        Main.network.registerMessage(PacketLoginPompierServer.Handler.class, PacketLoginPompierServer.class, 15, Side.SERVER);
-        Main.network.registerMessage(PacketLoginPompier.Handler.class, PacketLoginPompier.class, 16, Side.CLIENT);
-        Main.network.registerMessage(PacketOpenGUIGendarmerieServer.Handler.class, PacketOpenGUIGendarmerieServer.class, 17, Side.SERVER);
         Main.network.registerMessage(PacketChangerCodeServer.Handler.class, PacketChangerCodeServer.class, 18, Side.SERVER);
         Main.network.registerMessage(PacketOpenGUIAdmin.Handler.class, PacketOpenGUIAdmin.class, 19, Side.SERVER);
         Main.network.registerMessage(PacketATMTransaction.Handler.class, PacketATMTransaction.class, 20, Side.SERVER);

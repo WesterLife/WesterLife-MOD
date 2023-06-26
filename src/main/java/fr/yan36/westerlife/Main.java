@@ -25,8 +25,6 @@ import fr.yan36.westerlife.common.objects.entreprises.CompanyAssociation;
 import fr.yan36.westerlife.common.objects.entreprises.CompanyBase;
 import fr.yan36.westerlife.common.utils.WesterBuiltinPack;
 import fr.yan36.westerlife.common.utils.commands.WesterLifeCommand;
-import fr.yan36.westerlife.common.utils.discord.Discord;
-import fr.yan36.westerlife.server.AuthSystem;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraft.util.ResourceLocation;
@@ -134,8 +132,6 @@ public class Main {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } else {
-            AuthSystem.init();
         }
 
         wl_db = Databases.getDatabase("westerlife_armorsuperposition");
