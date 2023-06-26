@@ -1,0 +1,90 @@
+.background {
+    background-color: #2E364A;
+    z-index: -1;
+    width: 40%;
+    height: 90%;
+    left: 50%;
+    right: 50%;
+    top: 50%;
+    bottom: 50%;
+    border-radius: 25px;
+}
+
+.perf {
+    color: #F14902;
+    bottom: 1%;
+    text-align: right;
+}
+
+.prenoms {
+    text-align: center;
+    top: 5%;
+    height: 10%;
+    width: 90%;
+    left: 50%;
+    right: 50%;
+    z-index: 1000;
+}
+
+.birthplace {
+    text-align: center;
+    top: 15%;
+    height: 10%;
+    width: 90%;
+    left: 50%;
+    right: 50%;
+    z-index: 1000;
+}
+
+.birthdate {
+    text-align: center;
+    top: 25%;
+    height: 10%;
+    width: 90%;
+    left: 50%;
+    right: 50%;
+    z-index: 1000;
+}
+
+.nom {
+    text-align: center;
+    top: 35%;
+    height: 10%;
+    width: 90%;
+    left: 50%;
+    right: 50%;
+    z-index: 1000;
+}
+
+.nationalite {
+    text-align: center;
+    top: 45%;
+    height: 10%;
+    width: 90%;
+    left: 50%;
+    right: 50%;
+    z-index: 1000;
+}
+
+.sexe {
+    text-align: center;
+    top: 55%;
+    height: 10%;
+    width: 90%;
+    left: 50%;
+    right: 50%;
+    z-index: 1000;
+}
+
+.create {
+    text-align: center;
+    top: 75%;
+    height: 10%;
+    width: 50%;
+    left: 50%;
+    right: 50%;
+    z-index: 1000;
+    color: #31384A;
+    background: white;
+    border: none;
+}

@@ -83,6 +83,7 @@ public class Main {
     public static BrowserHud browserHud;
 
     public static Boolean isEnvDev = true;
+    public static Boolean isOpti = false;
 
     public static Database wl_db;
 
@@ -142,28 +143,6 @@ public class Main {
             DynamXInit.fastRegistryAccess.put(item.getInfo().getFullName(), item);
             System.out.println("added " + item.getInfo().getFullName() + " to fast registry access");
         }
-
-
-        CompanyBase companyBase = new CompanyBase("test", "somewhere", 0, "someone");
-
-        CompanyAssociation companyAssociation = new CompanyAssociation(companyBase, "test", "somewhere", "objective", 50f);
-        System.out.println(companyAssociation.getBaseCompany().getCreationDate());
-
-//        List<Rank> ranks = new ArrayList<>();
-//        ranks.add(new Rank("grade1", "description", 1, 1));
-//
-//        List<String> impots = new ArrayList<>();
-//        impots.add("impot1");
-//        impots.add("impot2");
-//
-//        List<String> cars = new ArrayList<>();
-//        impots.add("voitureA");
-//        impots.add("voitureB");
-//
-//        CompanyBase companyBase1 = new CompanyBase("test", "somewhere", 0, "someone");
-//        CompanySARL companySARL = new CompanySARL(companyBase1, "test", ranks, impots, cars);
-//        System.out.println(companySARL);
-//        System.out.println("bbbb");
 
     }
 

@@ -5,6 +5,7 @@ import fr.nathanael2611.modularvoicechat.client.voice.audio.MicroManager;
 import fr.nathanael2611.modularvoicechat.client.voice.audio.SpeakerManager;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.client.Client;
+import fr.yan36.westerlife.client.gui.acs.CSSCreateCharacter;
 import fr.yan36.westerlife.client.gui.acs.CSSGuiMainMenu;
 import fr.yan36.westerlife.common.network.PacketAnimation;
 import fr.yan36.westerlife.common.network.PacketCreateCharacter;
@@ -35,11 +36,12 @@ import java.net.URISyntaxException;
 import java.net.UnknownHostException;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class BrowserScreen extends GuiScreen implements IJSQueryHandler
-{
+public class BrowserScreen extends GuiScreen implements IJSQueryHandler {
     IBrowser browser;
     private API api;
     private String urlToLoad;
+
+    public static int closecooldown = 0;
 
     public BrowserScreen() {
         this("mod://westerlife/menu_echap/echap.html");
@@ -50,7 +52,6 @@ public class BrowserScreen extends GuiScreen implements IJSQueryHandler
         this.api = MCEFApi.getAPI();
         this.browser = this.api.createBrowser(this.urlToLoad, true);
         Main.logger.debug(urlToLoad);
-        this.urlToLoad = null;
         this.api.registerJSQueryHandler(this);
 
     }
@@ -62,15 +63,14 @@ public class BrowserScreen extends GuiScreen implements IJSQueryHandler
     }
 
     public int scaleY(final int y) {
-        final double sy = y / (double)this.height * this.mc.displayHeight;
-        return (int)sy;
+        final double sy = y / (double) this.height * this.mc.displayHeight;
+        return (int) sy;
     }
 
     public void loadURL(final String url) {
         if (this.browser == null) {
             this.urlToLoad = url;
-        }
-        else {
+        } else {
             this.browser.loadURL(url);
         }
     }
@@ -80,6 +80,7 @@ public class BrowserScreen extends GuiScreen implements IJSQueryHandler
             this.browser.loadURL(this.urlToLoad);
             this.urlToLoad = null;
         }
+        closecooldown++;
     }
 
     public void drawScreen(final int i1, final int i2, final float f) {
@@ -89,37 +90,49 @@ public class BrowserScreen extends GuiScreen implements IJSQueryHandler
             GlStateManager.enableTexture2D();
             GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
             this.browser.resize(this.mc.displayWidth, this.mc.displayHeight);
-            this.browser.draw(0.0, (double)this.height, (double)this.width, 0.0);
+            this.browser.draw(0.0, (double) this.height, (double) this.width, 0.0);
             GlStateManager.enableDepth();
         }
     }
 
     public void onGuiClosed() {
-        if(Client.needToCreateCharacter == 2)
+        if (Client.needToCreateCharacter == 2) {
             Client.needToCreateCharacter = 1;
+            if (Main.isOpti) {
+                Minecraft.getMinecraft().displayGuiScreen(new CSSCreateCharacter().getGuiScreen());
+            } else {
+                Main.browserScreen = new BrowserScreen("mod://westerlife/create_perso/perso1.html");
+                Minecraft.getMinecraft().displayGuiScreen(Main.browserScreen);
+                Main.browserScreen.openMenu();
+            }
+        }
 
-            Main.browserScreen = null;
-            Keyboard.enableRepeatEvents(false);
-            browser.close();
+        Main.browserScreen = null;
+        Keyboard.enableRepeatEvents(false);
+        browser.close();
     }
 
     @Override
-    protected void keyTyped(char typedChar, int keyCode) throws IOException
-    {
-        if (keyCode == 1)
-        {
+    protected void keyTyped(char typedChar, int keyCode) throws IOException {
+        if (keyCode == 1) {
             System.out.println("execute");
             executeJS("window.angular.setText(\"etsettregt\")");
         }
     }
+
     @Override
     public void handleInput() {
         while (Keyboard.next()) {
-            if (Keyboard.getEventKey() == 1) {
-                this.closeActiveGui();
+            if (Keyboard.getEventKey() == 1) { // Quand echap appuyé dans le GUI
 
-                System.out.println("execute");
-                executeJS("window.angular.setText(\"test\")");
+
+                if (closecooldown >= 5) {
+                    this.closeActiveGui();
+                } else {
+                    closecooldown++;
+                }
+
+
                 return;
             }
             final boolean pressed = Keyboard.getEventKeyState();
@@ -131,11 +144,10 @@ public class BrowserScreen extends GuiScreen implements IJSQueryHandler
             }
             if (pressed) {
                 this.browser.injectKeyPressedByKeyCode(num, key, modifiers);
-            }
-            else {
+            } else {
                 this.browser.injectKeyReleasedByKeyCode(num, key, modifiers);
             }
-            if(num == 14 && pressed) {
+            if (num == 14 && pressed) {
                 this.browser.runJS("document.execCommand('delete');", null);
                 return;
             }
@@ -146,16 +158,14 @@ public class BrowserScreen extends GuiScreen implements IJSQueryHandler
             }
             if (modifiers == 4 && num == 47 && !pressed) {
                 try {
-                    final String data = (String)Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
+                    final String data = (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
                     for (final char c : data.toCharArray()) {
                         this.browser.injectKeyTyped(c, 0);
                     }
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }
-            else {
+            } else {
                 if (key == '\0') {
                     continue;
                 }
@@ -172,11 +182,9 @@ public class BrowserScreen extends GuiScreen implements IJSQueryHandler
                 final int y = this.mc.displayHeight - sy;
                 if (wheel != 0) {
                     this.browser.injectMouseWheel(sx, y, 0, 1, wheel);
-                }
-                else if (btn == -1) {
+                } else if (btn == -1) {
                     this.browser.injectMouseMove(sx, y, 0, y < 0);
-                }
-                else {
+                } else {
                     this.browser.injectMouseButton(sx, y, 0, btn + 1, pressed2, 1);
                 }
             }
@@ -185,8 +193,7 @@ public class BrowserScreen extends GuiScreen implements IJSQueryHandler
                 final int y2 = this.height - sy * this.height / this.mc.displayHeight - 1;
                 try {
                     this.mouseClicked(x, y2, btn);
-                }
-                catch (Throwable t) {
+                } catch (Throwable t) {
                     t.printStackTrace();
                 }
             }
@@ -201,14 +208,11 @@ public class BrowserScreen extends GuiScreen implements IJSQueryHandler
         }
         if (src.id == 0) {
             this.browser.goBack();
-        }
-        else if (src.id == 1) {
+        } else if (src.id == 1) {
             this.browser.goForward();
-        }
-        else if (src.id == 3) {
+        } else if (src.id == 3) {
             this.mc.displayGuiScreen(null);
-        }
-        else if (src.id == 4) {
+        } else if (src.id == 4) {
             final String loc = this.browser.getURL();
             final String vId = null;
             final boolean redo = false;
@@ -221,11 +225,12 @@ public class BrowserScreen extends GuiScreen implements IJSQueryHandler
     @Override
     public boolean handleQuery(IBrowser b, long queryId, String query, boolean persistent, IJSQueryCallback cb) {
 
-        if(b != null && query.startsWith("$")) {
-            if(b.getURL().startsWith("mod://")) {
-                if(query.substring(1).equals("closeGui")) {
+        if (b != null && query.startsWith("$")) {
+            if (b.getURL().startsWith("mod://")) {
+                if (query.substring(1).equals("closeGui")) {
+                    System.out.println("closeGui");
                     Minecraft.getMinecraft().displayGuiScreen(null);
-                } else if(query.substring(1).split(":")[0].equals("createPersoForm")){
+                } else if (query.substring(1).split(":")[0].equals("createPersoForm")) {
                     String name = query.split(":")[1];
                     String firstnames = query.split(":")[2];
                     String birthdate = query.split(":")[3];
@@ -235,11 +240,11 @@ public class BrowserScreen extends GuiScreen implements IJSQueryHandler
 
                     Main.network.sendToServer(new PacketCreateCharacter(Minecraft.getMinecraft().player, name, firstnames, birthdate, birthplace, nationality, sex));
                     Client.needToCreateCharacter = 0;
-                } else if(query.substring(1).split(":")[0].equals("openlan")){
-                    if(Minecraft.getMinecraft().isSingleplayer()) {
+                } else if (query.substring(1).split(":")[0].equals("openlan")) {
+                    if (Minecraft.getMinecraft().isSingleplayer()) {
                         Minecraft.getMinecraft().displayGuiScreen(new GuiShareToLan(this));
                     }
-                } else if(query.substring(1).split(":")[0].equals("openLink")) {
+                } else if (query.substring(1).split(":")[0].equals("openLink")) {
                     String link = query.split(":")[1];
                     System.out.println(link);
                     switch (link) {
@@ -279,37 +284,39 @@ public class BrowserScreen extends GuiScreen implements IJSQueryHandler
                             }
                             break;
                     }
-                } else if(query.substring(1).split(":")[0].equals("disconnect")) {
+                } else if (query.substring(1).split(":")[0].equals("disconnect")) {
                     this.mc.world.sendQuittingDisconnectingPacket();
-                    this.mc.loadWorld((WorldClient)null);
+                    this.mc.loadWorld((WorldClient) null);
                     this.mc.displayGuiScreen(new GuiMainMenu());
-                } else if(query.substring(1).split(":")[0].equals("openSettings")) {
+                } else if (query.substring(1).split(":")[0].equals("openSettings")) {
                     Main.browserScreen = new BrowserScreen("mod://westerlife/menu_echap/echap.html");
                     this.mc.displayGuiScreen(new GuiOptions(Main.browserScreen, this.mc.gameSettings));
-                } else if(query.substring(1).split(":")[0].equals("leaveGame")) {
+                } else if (query.substring(1).split(":")[0].equals("leaveGame")) {
                     mc.shutdown();
-                } else if(query.substring(1).split(":")[0].equals("play")) {
-                    if(!Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
+                } else if (query.substring(1).split(":")[0].equals("play")) {
+                    if (!Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
                         Main.browserScreen = new BrowserScreen("mod://westerlife/main_menu/main.html");
                         this.mc.displayGuiScreen(new GuiConnecting(Main.browserScreen, this.mc, "51.38.250.27", 25739));
+                    } else if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)) {
+                        mc.displayGuiScreen(new GuiScreenServerList(Main.browserScreen, new ServerData("WesterLife", "localhost", false)));
                     } else {
                         Main.browserScreen = new BrowserScreen("mod://westerlife/main_menu/main.html");
-                        mc.displayGuiScreen(new GuiMultiplayer(Main.browserScreen));
+                        mc.displayGuiScreen(new GuiWorldSelection(Main.browserScreen));
                     }
-                } else if(query.substring(1).split(":")[0].equals("openSettings2")) {
+                } else if (query.substring(1).split(":")[0].equals("openSettings2")) {
                     Main.browserScreen = new BrowserScreen("mod://westerlife/main_menu/main.html");
                     this.mc.displayGuiScreen(new GuiOptions(Main.browserScreen, this.mc.gameSettings));
-                } else if(query.substring(1).split(":")[0].equals("animation")) {
+                } else if (query.substring(1).split(":")[0].equals("animation")) {
                     Main.network.sendToServer(new PacketAnimation(Integer.parseInt(query.split(":")[1])));
-                } else if(query.substring(1).split(":")[0].equals("tryCode")) {
+                } else if (query.substring(1).split(":")[0].equals("tryCode")) {
                     String code = query.split(":")[1];
                     Main.network.sendToServer(new PacketTryCode(code, Client.openScreenMcefPos));
                     Minecraft.getMinecraft().displayGuiScreen(null);
-                } else if(query.substring(1).split(":")[0].equals("openMicSettings")) {
+                } else if (query.substring(1).split(":")[0].equals("openMicSettings")) {
                     if (MicroManager.isRunning() && SpeakerManager.isRunning()) {
                         Minecraft.getMinecraft().displayGuiScreen(new GuiConfig());
                     } else {
-                        Minecraft.getMinecraft().displayGuiScreen(new GuiErrorScreen("Erreur", "Erreur interne : " + MicroManager.isRunning() + "-" + SpeakerManager.isRunning() +  ". Cette erreur ne devrait survenir. Contactez le staff."));
+                        Minecraft.getMinecraft().displayGuiScreen(new GuiErrorScreen("Erreur", "Erreur interne : " + MicroManager.isRunning() + "-" + SpeakerManager.isRunning() + ". Cette erreur ne devrait survenir. Contactez le staff."));
                     }
                 }
             } else cb.failure(403, "Can't access username from external page");
@@ -320,7 +327,8 @@ public class BrowserScreen extends GuiScreen implements IJSQueryHandler
 
     public void closeActiveGui() {
         //this.executeJS("vue.closeAll();");
-        this.mc.displayGuiScreen((GuiScreen)null);
+        this.mc.displayGuiScreen((GuiScreen) null);
+        closecooldown = 0;
     }
 
     public void cancelQuery(final IBrowser iBrowser, final long l) {

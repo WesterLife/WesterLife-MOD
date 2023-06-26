@@ -131,6 +131,28 @@ public class ModuleWorld extends CommandModule {
                 }
 
 
+            }  else if(Objects.equals(args[1], "portenom")) {
+
+                if (sender instanceof EntityPlayer) {
+                    EntityPlayer player = (EntityPlayer) sender;
+                    RayTraceResult rayTraceResult = player.world.rayTraceBlocks(player.getPositionEyes(1), player.getPositionEyes(1).add(player.getLookVec().scale(10)));
+                    assert rayTraceResult != null;
+                    System.out.println(rayTraceResult.getBlockPos());
+                    if (rayTraceResult != null) {
+                        TilePorteNom tilePorteNom = (TilePorteNom) player.world.getTileEntity(rayTraceResult.getBlockPos());
+                        if (tilePorteNom != null) {
+                            tilePorteNom.setName(args[2].replaceAll("_", " "));
+                            tilePorteNom.setFunction(args[3].replaceAll("_", " "));
+                            tilePorteNom.sync();
+                            tilePorteNom.syncToClient();
+                            sender.sendMessage(new TextComponentString("§aSet angle to '" + args[2] + "'°."));
+                        }
+                    }
+                } else {
+                    sender.sendMessage(new TextComponentString("§c/wlmod world spot <angle>"));
+                }
+
+
             } else if(Objects.equals(args[1], "sequence")) {
                 if(Objects.equals(args[2], "create")) {
                     LightSequence lightSequence = new LightSequence();

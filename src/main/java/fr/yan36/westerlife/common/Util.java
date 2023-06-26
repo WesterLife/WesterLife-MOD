@@ -145,11 +145,25 @@ public class Util {
         str = trimStringNewline(str);
         renderSplitStringCentered(renderer, str, x, y, wrapWidth, textColor);
     }
+    public static void drawSplitString2(FontRenderer renderer, String str, int x, int y, int wrapWidth, int textColor) {
+        str = trimStringNewline(str);
+        renderSplitStringCentered2(renderer, str, x, y, wrapWidth, textColor);
+    }
     private static void renderSplitStringCentered(FontRenderer renderer, String str, int x, int y, int wrapWidth, int textColor) {
         List<String> lines = renderer.listFormattedStringToWidth(str, 55);
         for (int i = 0; i < lines.size() && i < 4; i++) {
             String line = (String)lines.get(i);
             x = (wrapWidth + -renderer.getStringWidth(line)) / 2;
+            renderer.drawString(line, x, y, textColor);
+            y += renderer.FONT_HEIGHT;
+        }
+    }
+
+    private static void renderSplitStringCentered2(FontRenderer renderer, String str, int x, int y, int wrapWidth, int textColor) {
+        List<String> lines = renderer.listFormattedStringToWidth(str, wrapWidth);
+        for (int i = 0; i < lines.size() && i < 4; i++) {
+            String line = (String)lines.get(i);
+            x = -renderer.getStringWidth(line) / 2;
             renderer.drawString(line, x, y, textColor);
             y += renderer.FONT_HEIGHT;
         }

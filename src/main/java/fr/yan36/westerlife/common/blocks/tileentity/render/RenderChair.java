@@ -7,6 +7,7 @@ import fr.yan36.westerlife.common.blocks.tileentity.TileChair;
 import fr.yan36.westerlife.common.blocks.tileentity.TileTombe;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.launchwrapper.Launch;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
@@ -38,8 +39,6 @@ public class RenderChair extends TESRDynamXBlock<TileChair> {
             DynamXContext.getObjModelRegistry().getModel(te.getBlockObjectInfo().getModel()).renderGroups("chair", (byte) te.getBlockMetadata());
             GL11.glColor3f(1, 1, 1);
             GlStateManager.popMatrix();
-
-
 
 
 

@@ -11,6 +11,7 @@ buildscript {
         maven {
             url 'https://m2.dv8tion.net/releases'
         }
+        jcenter()
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
@@ -107,7 +108,7 @@ minecraft {
         implementation "fr.aym.acsguis:ACsGuis:1.2.5"
         compile fileTree(dir: 'libs', include: '*.jar')
         //implementation "curse.maven:lizardon-mcef-577541:3641377"
-        compile 'club.minnced:java-discord-rpc:2.0.1'
+//        compile 'club.minnced:java-discord-rpc:2.0.1'
         compile 'com.zaxxer:HikariCP:3.1.0'
         compile 'org.slf4j:slf4j-api:1.7.25'
         compile 'mysql:mysql-connector-java:8.0.19'

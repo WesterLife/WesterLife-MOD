@@ -1,8 +1,8 @@
 package fr.yan36.westerlife.common.utils;
 
 public enum Animation {
-    STAND_AT("Garde à vous", 2),
     NONE("", 5),
+    STAND_AT("Garde à vous", 2),
     RIGHT_ARM_UP("Bras droit levé",3),
     HANDS_UP("Mains levées", 4),
     SITTED("Assis", 1),

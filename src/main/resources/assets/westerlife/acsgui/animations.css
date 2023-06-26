@@ -1,0 +1,17 @@
+.background {
+    background-color: #2E364A;
+    z-index: -1;
+    width: 30%;
+    height: 90%;
+    left: 50%;
+    right: 50%;
+    top: 50%;
+    bottom: 50%;
+    border-radius: 25px;
+}
+
+.perf {
+    color: #F14902;
+    bottom: 1%;
+    text-align: right;
+}

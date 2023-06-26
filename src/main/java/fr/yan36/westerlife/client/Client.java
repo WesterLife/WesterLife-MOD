@@ -7,7 +7,7 @@ import fr.dynamx.api.events.VehicleEntityEvent;
 import fr.dynamx.client.handlers.hud.CarController;
 import fr.dynamx.common.items.DynamXItemArmor;
 import fr.yan36.westerlife.Main;
-import fr.yan36.westerlife.client.gui.acs.CSSGuiClothes;
+import fr.yan36.westerlife.client.gui.acs.*;
 import fr.yan36.westerlife.client.gui.mcef.BrowserScreen;
 import fr.yan36.westerlife.client.gui.other.EngineFailureIcon;
 import fr.yan36.westerlife.common.init.DynamXInit;
@@ -19,6 +19,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiIngameMenu;
 import net.minecraft.client.gui.GuiMainMenu;
+import net.minecraft.client.gui.GuiScreenServerList;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
@@ -43,6 +44,7 @@ import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.util.ResourceLoader;
 
 import java.awt.*;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -81,8 +83,9 @@ public class Client {
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
     public void setupPlayerRotations(ModelPlayerEvent.SetupAngles.Pre event) {
+        event.getModelPlayer().bipedRightArm.rotateAngleZ = 0;
         animationState.forEach((id, animation) -> {
-            System.out.println(id + " " + event.getEntityPlayer().getEntityId() + " " + animation);
+
             if (event.getEntityPlayer().getEntityId() == id) {
                 animatePlayer(event.getEntityPlayer(), event.getModelPlayer());
 
@@ -90,33 +93,35 @@ public class Client {
         });
 
     }
+
     @SideOnly(Side.CLIENT)
 
     private void animatePlayer(EntityPlayer ep, ModelBiped modelBiped) {
 
         Client.animationState.putIfAbsent(ep.getEntityId(), Animation.NONE);
-        if(!animationState.get(ep.getEntityId()).equals(Animation.SITTED)) ep.eyeHeight = 1.5f;
-        if(animationState.get(ep.getEntityId()).equals(Animation.HANDS_UP)) {
+        if (!animationState.get(ep.getEntityId()).equals(Animation.SITTED)) ep.eyeHeight = 1.5f;
+        if (animationState.get(ep.getEntityId()).equals(Animation.HANDS_UP)) {
             modelBiped.bipedRightArm.rotateAngleX = (float) Math.toRadians(-180);
             modelBiped.bipedLeftArm.rotateAngleX = (float) Math.toRadians(-180);
+
         }
-        if(animationState.get(ep.getEntityId()).equals(Animation.POINTING_FINGER)) {
+        if (animationState.get(ep.getEntityId()).equals(Animation.POINTING_FINGER)) {
             modelBiped.bipedRightArm.rotateAngleX = (float) Math.toRadians(-90);
         }
-        if(animationState.get(ep.getEntityId()).equals(Animation.HANDS_BEHIND) || animationState.get(ep.getEntityId()).equals(Animation.MENOTTE)) {
+        if (animationState.get(ep.getEntityId()).equals(Animation.HANDS_BEHIND) || animationState.get(ep.getEntityId()).equals(Animation.MENOTTE)) {
             modelBiped.bipedRightArm.rotateAngleX = (float) Math.toRadians(25);
             modelBiped.bipedLeftArm.rotateAngleX = (float) Math.toRadians(25);
             modelBiped.bipedRightArm.rotateAngleZ = (float) Math.toRadians(-25);
             modelBiped.bipedLeftArm.rotateAngleZ = (float) Math.toRadians(25);
         }
-        if(animationState.get(ep.getEntityId()).equals(Animation.RIGHT_ARM_UP)) {
+        if (animationState.get(ep.getEntityId()).equals(Animation.RIGHT_ARM_UP)) {
             modelBiped.bipedRightArm.rotateAngleX = (float) Math.toRadians(-180);
         }
-        if(animationState.get(ep.getEntityId()).equals(Animation.STAND_AT)) {
+        if (animationState.get(ep.getEntityId()).equals(Animation.STAND_AT)) {
             modelBiped.bipedRightArm.rotateAngleX = (float) Math.toRadians(-180);
             modelBiped.bipedRightArm.rotateAngleZ = (float) Math.toRadians(20);
         }
-        if(animationState.get(ep.getEntityId()).equals(Animation.SITTED)) {
+        if (animationState.get(ep.getEntityId()).equals(Animation.SITTED)) {
             modelBiped.bipedLeftLeg.rotateAngleX = (float) Math.toRadians(-90);
             modelBiped.bipedRightLeg.rotateAngleX = (float) Math.toRadians(-90);
             modelBiped.bipedRightLeg.offsetY = 0.58f;
@@ -130,17 +135,17 @@ public class Client {
             modelBiped.bipedRightArm.offsetY = 0.5f;
             modelBiped.bipedLeftArm.offsetY = 0.5f;
         }
-        if(animationState.get(ep.getEntityId()).equals(Animation.HELLO)) {
+        if (animationState.get(ep.getEntityId()).equals(Animation.HELLO)) {
             // make animation from -80 to -110 with ep.world.getTotalWorldTime()
             int val = (int) ep.world.getTotalWorldTime() % 20;
-            if(val < 10) {
+            if (val < 10) {
                 modelBiped.bipedRightArm.rotateAngleZ = (float) Math.toRadians(160 - (val * 1.5));
             } else {
                 modelBiped.bipedRightArm.rotateAngleZ = (float) Math.toRadians(160 + (val * 1.5) - 30);
             }
         }
 
-        if(animationState.get(ep.getEntityId()).equals(Animation.SLEEP)) {
+        if (animationState.get(ep.getEntityId()).equals(Animation.SLEEP)) {
             modelBiped.bipedLeftLeg.rotateAngleX = (float) Math.toRadians(-90);
             modelBiped.bipedRightLeg.rotateAngleX = (float) Math.toRadians(-90);
             modelBiped.bipedRightLeg.offsetY = 0.58f;
@@ -158,22 +163,36 @@ public class Client {
 
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
-    public void GuieventHandler(GuiOpenEvent e) {
+    public void GuieventHandler(GuiOpenEvent e) throws IOException, InterruptedException {
 
-        if (e.getGui() instanceof GuiMainMenu && !Main.isEnvDev) {
-            // prout c'est chiant pour dev donc
+        if (e.getGui() instanceof GuiMainMenu) {
+//             prout c'est chiant pour dev donc
             e.setCanceled(true);
-            Main.browserScreen = new BrowserScreen("mod://westerlife/main_menu/main.html");
-            Minecraft.getMinecraft().displayGuiScreen(Main.browserScreen);
-            Main.browserScreen.openMenu();
+            if(Main.isOpti) {
+                Minecraft.getMinecraft().displayGuiScreen(new CSSGuiMainMenu().getGuiScreen());
+            } else {
+                Main.browserScreen = new BrowserScreen("mod://westerlife/main_menu/main.html");
+                Minecraft.getMinecraft().displayGuiScreen(Main.browserScreen);
+//                Main.browserScreen.openMenu();
+            }
         }
 
+
+        if (e.getGui() instanceof GuiScreenServerList) {
+
+        }
         if (e.getGui() instanceof GuiIngameMenu) {
 
-            Main.browserScreen = new BrowserScreen("mod://westerlife/menu_echap/echap.html");
-            Main.browserScreen.openMenu();
-            setScreenMcef("ingamemenu");
-            e.setCanceled(true);
+            if (Main.isOpti) {
+                e.setGui(new CSSGuiPauseMenu().getGuiScreen());
+            } else {
+                e.setCanceled(true);
+                Thread.sleep(100);
+                Main.browserScreen = new BrowserScreen("mod://westerlife/menu_echap/echap.html");
+                Main.browserScreen.openMenu();
+
+            }
+
         }
 
         if (e.getGui() == null) {
@@ -183,43 +202,56 @@ public class Client {
 
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
-    public void InteractWithEntity(FMLNetworkEvent.ClientConnectedToServerEvent e) {
+    public void InteractWithEntity(GuiOpenEvent e) {
     }
+
 
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
     public void onTickEvent(TickEvent.ClientTickEvent event) {
-            if (needToCreateCharacter == 1 && Minecraft.getMinecraft().world != null) {
+        if (needToCreateCharacter == 1 && Minecraft.getMinecraft().world != null) {
+            if (Main.isOpti) {
+                Minecraft.getMinecraft().displayGuiScreen(new CSSCreateCharacter().getGuiScreen());
+                needToCreateCharacter = 2;
+            } else {
                 Main.browserScreen = new BrowserScreen("mod://westerlife/create_perso/perso1.html");
+                Minecraft.getMinecraft().displayGuiScreen(Main.browserScreen);
                 Main.browserScreen.openMenu();
                 needToCreateCharacter = 2;
             }
+        }
 
-            switch (openScreenMcef) {
-                case "computer":
-                    Main.browserScreen = new BrowserScreen("mod://westerlife/computer/main.html");
-                    Main.browserScreen.openMenu();
-                    openScreenMcef = "none";
-                    break;
-                case "ingamemenu":
-                    Main.browserScreen = new BrowserScreen("mod://westerlife/menu_echap/echap.html");
-                    Main.browserScreen.openMenu();
-                    openScreenMcef = "none";
-                    break;
-                case "animations":
+        switch (openScreenMcef) {
+            case "computer":
+                Main.browserScreen = new BrowserScreen("mod://westerlife/computer/main.html");
+                Main.browserScreen.openMenu();
+                openScreenMcef = "none";
+                break;
+            case "ingamemenu":
+                Main.browserScreen = new BrowserScreen("mod://westerlife/menu_echap/echap.html");
+                Main.browserScreen.openMenu();
+                openScreenMcef = "none";
+                break;
+            case "animations":
+                if (!Main.isOpti) {
                     Main.browserScreen = new BrowserScreen("mod://westerlife/animations/index.html");
                     Main.browserScreen.openMenu();
-                    openScreenMcef = "none";
-                    break;
-                case "digicode":
-                    Main.browserScreen = new BrowserScreen("mod://westerlife/digicode/index.html");
-                    Main.browserScreen.openMenu();
-                    openScreenMcef = "none";
-                    break;
-            }
+                } else {
+                    Minecraft.getMinecraft().displayGuiScreen(new CSSGuiAnimations().getGuiScreen());
+                }
+                openScreenMcef = "none";
+                break;
+            case "digicode":
+                Main.browserScreen = new BrowserScreen("mod://westerlife/digicode/index.html");
+                Main.browserScreen.openMenu();
+                openScreenMcef = "none";
+                break;
+            case "none":
+                break;
+        }
     }
 
-//    @SideOnly(Side.CLIENT)
+    //    @SideOnly(Side.CLIENT)
 //    @SubscribeEvent
 //    public void onRenderPre(RenderGameOverlayEvent.Pre event) {
 //        if (event.getType() == RenderGameOverlayEvent.ElementType.DEBUG) {
@@ -287,12 +319,14 @@ public class Client {
     @SideOnly(Side.CLIENT)
     public void onClickItem(PlayerInteractEvent.RightClickItem e) {
     }
+
     @SideOnly(Side.CLIENT)
     public static KeyBinding keyBindTest;
     @SideOnly(Side.CLIENT)
     public static KeyBinding keyBindAnimation;
     @SideOnly(Side.CLIENT)
     public static KeyBinding keyOpenClothes;
+
     @SideOnly(Side.CLIENT)
     public Client() {
         FMLCommonHandler.instance().bus().register(this);
@@ -339,7 +373,7 @@ public class Client {
         // get all players arround the player
         // check if player is ingame
         boolean isPlayerInGame = Minecraft.getMinecraft().player != null && Minecraft.getMinecraft().world != null;
-        if(!isPlayerInGame) return;
+        if (!isPlayerInGame) return;
         List<EntityPlayer> players = Minecraft.getMinecraft().world.playerEntities;
         players.forEach((entityPlayer -> {
 
@@ -363,7 +397,7 @@ public class Client {
         if (keyOpenClothes.isPressed()) {
             ACsGuiApi.asyncLoadThenShowGui("clothes", CSSGuiClothes::new);
         }
-        if(Keyboard.isKeyDown(Keyboard.KEY_F3)) {
+        if (Keyboard.isKeyDown(Keyboard.KEY_F3)) {
             List<DynamXItemArmor<?>> globalitems = ForgeRegistries.ITEMS.getEntries().stream().filter(e -> e.getValue() instanceof DynamXItemArmor<?>).collect(Collectors.toCollection(ArrayList::new)).stream().map(e -> (DynamXItemArmor<?>) e.getValue()).collect(Collectors.toList());
             for (DynamXItemArmor<?> item : globalitems) {
                 DynamXInit.fastRegistryAccess.put(item.getInfo().getFullName(), item);
@@ -373,8 +407,13 @@ public class Client {
             Client.knowPermis.clear();
             Client.waitForSomething.clear();
         }
-        if(Keyboard.isKeyDown(Keyboard.KEY_F7)) {
-
+        if (Keyboard.isKeyDown(Keyboard.KEY_F7)) {
+            Main.isOpti = !Main.isOpti;
+        }
+        if (Keyboard.isKeyDown(Keyboard.KEY_F12)) {
+            Main.browserScreen = new BrowserScreen("mod://westerlife/create_perso/perso1.html");
+            Minecraft.getMinecraft().displayGuiScreen(Main.browserScreen);
+            Main.browserScreen.openMenu();
         }
     }
 
@@ -392,6 +431,7 @@ public class Client {
 //            Minecraft.getMinecraft().ingameGUI.setOverlayMessage("§cVitesse du Véhicule : " + speed, true);
 //        }
     }
+
     @SideOnly(Side.CLIENT)
     private void keyTestTyped() {
         //ACsGuiApi.asyncLoadThenShowGui("gendarmerie", CSSGuiGendarmerieLogin::new);
@@ -401,10 +441,12 @@ public class Client {
         System.out.println("Ouverture du menu");
 
     }
+
     @SideOnly(Side.CLIENT)
     private static void keyAnimationTyped() {
         openScreenMcef = "animations";
     }
+
     @SideOnly(Side.CLIENT)
     public static TrueTypeFont getFont() {
         TrueTypeFont font = null;

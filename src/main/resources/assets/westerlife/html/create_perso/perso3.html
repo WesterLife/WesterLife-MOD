@@ -44,10 +44,12 @@
         align-items: center;
         height: 100vh;
         overflow: hidden;
+        margin: 0;
     }
     * {
         font-family: 'Montserrat', sans-serif;
     }
+
     .logo {
         display: flex;
         flex-direction: column;
@@ -133,6 +135,17 @@
     }
     a {
         text-decoration: none;
+    }
+    @media screen and (max-width: 1200px) {
+        .logo-img {
+            display:none;
+        }
+        .base {
+            height: 82vh;
+            padding-bottom: 5%;
+            gap: 20px;
+            width: 40%;
+        }
     }
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

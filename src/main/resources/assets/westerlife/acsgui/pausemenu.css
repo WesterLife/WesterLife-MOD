@@ -1,0 +1,73 @@
+.background {
+    background-color: #2E364A;
+    z-index: -1;
+    width: 30%;
+    height: 70%;
+    left: 50%;
+    right: 50%;
+    top: 50%;
+    bottom: 50%;
+}
+.title {
+    color: #FFFFFF;
+    top: 2%;
+    text-align: center;
+    width: 100%;
+    z-index: 1000;
+}
+
+.notice {
+    text-align: center;
+    top: 85%;
+    font-size: 5px;
+    width: 95%;
+    height: 20%;
+    z-index: 1000;
+}
+
+.returnInGame {
+    text-align: center;
+    background-image: url("westerlife:textures/pause/return.png");
+    width: 70%;
+    height: 25px;
+    left: 50%;
+    right: 50%;
+    top: 20%;
+    z-index: 1000;
+}
+
+.options {
+    text-align: center;
+    background-image: url("westerlife:textures/pause/options.png");
+    width: 70%;
+    height: 25px;
+    left: 50%;
+    right: 50%;
+    top: 35%;
+    z-index: 1000;
+}
+.disconnect {
+    text-align: center;
+    background-image: url("westerlife:textures/pause/disconnect.png");
+    width: 70%;
+    height: 25px;
+    left: 50%;
+    right: 50%;
+    top: 50%;
+    z-index: 1000;
+}
+.micSettings {
+    text-align: center;
+    background-image: url("westerlife:textures/pause/micsettings.png");
+    width: 70%;
+    height: 25px;
+    left: 50%;
+    right: 50%;
+    top: 65%;
+    z-index: 1000;
+}
+.perf {
+    color: #F14902;
+    bottom: 1%;
+    text-align: right;
+}

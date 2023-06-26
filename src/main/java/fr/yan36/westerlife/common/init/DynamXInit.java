@@ -67,6 +67,7 @@ public class DynamXInit {
 
     public static BlockChair chair;
     public static BlockColored table;
+    public static BlockPorteNom porteNom;
     public static HashMap<String, DynamXItemArmor<?>> fastRegistryAccess = new HashMap<>();
 
 
@@ -123,6 +124,7 @@ public class DynamXInit {
         balise_orange = new BlockRoad(Material.ANVIL, Main.MODID, "balise_orange", new ResourceLocation("westerlife","models/dynamx/blocks/balise/orange/balise.obj"));
         balise_yellow = new BlockRoad(Material.ANVIL, Main.MODID, "balise_yellow", new ResourceLocation("westerlife","models/dynamx/blocks/balise/yellow/balise.obj"));
         balise_green = new BlockRoad(Material.ANVIL, Main.MODID, "balise_green", new ResourceLocation("westerlife","models/dynamx/blocks/balise/green/balise.obj"));
+        porteNom = new BlockPorteNom(Material.ANVIL, Main.MODID, "portenom", new ResourceLocation("westerlife","models/dynamx/blocks/portenom/portenom.obj"));
 
         //Old items
         SignVillage = new BlockSignVillage(Material.ANVIL, Main.MODID, "panneauvillage", new ResourceLocation("westerlife","models/dynamx/signvillage/sign.obj"));
