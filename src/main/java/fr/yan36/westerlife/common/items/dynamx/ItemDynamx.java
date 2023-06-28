@@ -1,5 +1,7 @@
 package fr.yan36.westerlife.common.items.dynamx;
 
+import com.jme3.math.Vector3f;
+import fr.dynamx.common.contentpack.type.objects.AbstractItemObject;
 import fr.dynamx.common.entities.BaseVehicleEntity;
 import fr.dynamx.common.entities.vehicles.CarEntity;
 import fr.dynamx.common.items.DynamXItem;

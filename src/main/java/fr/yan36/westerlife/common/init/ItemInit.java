@@ -1,11 +1,14 @@
 package fr.yan36.westerlife.common.init;
 
+import com.kamesuta.mc.bnnwidget.position.R;
 import fr.yan36.westerlife.common.items.ItemBase;
 import fr.yan36.westerlife.common.items.ItemBillet;
 import fr.yan36.westerlife.common.items.ItemCard;
 import fr.yan36.westerlife.common.items.ItemDrink;
+import fr.yan36.westerlife.common.items.dynamx.ItemDynamx;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
+import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +35,13 @@ public class ItemInit {
     public static final Item PERM = new ItemCard("perm", ItemCard.CardType.PERM);
     public static final Item PREF = new ItemCard("pref", ItemCard.CardType.PREF);
 
-    public static final Item BOISSON = new ItemDrink("bouteille",1, 0.0F);
+    public static ItemDynamx BOISSON;
+
+    public static void init() {
+        BOISSON = new ItemDrink("waterbottle",20, 0.0F, new ResourceLocation("westerlife","models/dynamx/items/water/water.obj"));
+    }
+
+
 }
 
 

@@ -411,9 +411,9 @@ public class Client {
             Main.isOpti = !Main.isOpti;
         }
         if (Keyboard.isKeyDown(Keyboard.KEY_F12)) {
-            Main.browserScreen = new BrowserScreen("mod://westerlife/create_perso/perso1.html");
-            Minecraft.getMinecraft().displayGuiScreen(Main.browserScreen);
-            Main.browserScreen.openMenu();
+            Main.getPlayerManager().loadTrack("http://193.38.250.14:8000/mix.m3u");
+            Main.getPlayerManager().getAudioPlayer().setVolume(100);
+            System.out.println(Main.getPlayerManager().getAudioPlayer().getPlayingTrack() + " / " + Main.getPlayerManager().getAudioPlayer().getVolume());
         }
     }
 

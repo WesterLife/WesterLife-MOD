@@ -11,6 +11,7 @@ import fr.nathanael2611.simpledatabasemanager.core.Database;
 import fr.nathanael2611.simpledatabasemanager.core.Databases;
 import fr.nathanael2611.simpledatabasemanager.core.SyncedDatabases;
 
+import fr.yan36.westerlife.client.audio.PlayerManager;
 import fr.yan36.westerlife.client.gui.mcef.BrowserHud;
 import fr.yan36.westerlife.client.gui.mcef.BrowserScreen;
 import fr.yan36.westerlife.client.utils.creativetabs.WesterTab;
@@ -20,14 +21,17 @@ import fr.yan36.westerlife.common.entities.EntitySeat;
 import fr.yan36.westerlife.common.entities.NPCTestEntity;
 import fr.yan36.westerlife.common.handlers.RegistryHandler;
 import fr.yan36.westerlife.common.init.DynamXInit;
+import fr.yan36.westerlife.common.init.ItemInit;
 import fr.yan36.westerlife.common.init.Network;
 import fr.yan36.westerlife.common.objects.entreprises.CompanyAssociation;
 import fr.yan36.westerlife.common.objects.entreprises.CompanyBase;
 import fr.yan36.westerlife.common.utils.WesterBuiltinPack;
 import fr.yan36.westerlife.common.utils.commands.WesterLifeCommand;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
@@ -86,6 +90,7 @@ public class Main {
     public static Boolean isOpti = false;
 
     public static Database wl_db;
+    private static PlayerManager playerManager;
 
 
     @DynamXAddon.AddonEventSubscriber
@@ -94,6 +99,9 @@ public class Main {
         DynamXInit.init();
         DynamXContext.getObjModelRegistry().registerModel(new ObjModelPath(new WesterBuiltinPack.WesterPackInfo(), new ResourceLocation(Main.MODID, "test.obj")));
         DynamXContext.getObjModelRegistry().registerModel(new ObjModelPath(new WesterBuiltinPack.WesterPackInfo(), new ResourceLocation(Main.MODID, "punch.obj")));
+        ItemInit.init();
+        System.out.println("Location : " + Objects.requireNonNull(ItemInit.BOISSON.getRegistryName()));
+        ModelLoader.setCustomModelResourceLocation(ItemInit.BOISSON, 0, new ModelResourceLocation(Objects.requireNonNull(ItemInit.BOISSON.getRegistryName()), "inventory"));
 
     }
 
@@ -133,6 +141,7 @@ public class Main {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            playerManager = new PlayerManager();
         }
 
         wl_db = Databases.getDatabase("westerlife_armorsuperposition");
@@ -145,6 +154,11 @@ public class Main {
         }
 
     }
+
+    public static PlayerManager getPlayerManager() {
+        return playerManager;
+    }
+
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) throws LineUnavailableException {

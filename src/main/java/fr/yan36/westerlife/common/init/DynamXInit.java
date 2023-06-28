@@ -23,7 +23,6 @@ public class DynamXInit {
     public static ItemDynamx Seringue;
     public static ItemPoteauRemote PoteauRemote;
     public static ItemDynamx MatraqueTelescopique;
-
     public static BlockSignVillage SignVillage;
     public static BlockDistributeur Distributeur;
     public static BlockDigicode digicode;
@@ -58,19 +57,14 @@ public class DynamXInit {
     public static BlockRoad balise_orange;
 
     public static BlockTombe tombe;
-
     public static BlockSpot spot;
     public static BlockLyre lyre;
     public static BlockScreen screen;
-
     public static BlockPoteauLevant poteauLevant;
-
     public static BlockChair chair;
     public static BlockColored table;
     public static BlockPorteNom porteNom;
     public static HashMap<String, DynamXItemArmor<?>> fastRegistryAccess = new HashMap<>();
-
-
     public static void init() {
 
         //Validated items

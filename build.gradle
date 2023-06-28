@@ -41,7 +41,9 @@ repositories {
         name = "DragonForge"
         url = "https://maven.zeith.org"
     }
-
+    maven {
+        url 'https://m2.dv8tion.net/releases'
+    }
 }
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: "java"
@@ -107,6 +109,8 @@ minecraft {
         implementation fg.deobf('fr.dynamx:DynamX:4.0.0-beta-18')
         implementation "fr.aym.acsguis:ACsGuis:1.2.5"
         compile fileTree(dir: 'libs', include: '*.jar')
+
+        implementation 'com.sedmelluq:lavaplayer:1.3.77'
         //implementation "curse.maven:lizardon-mcef-577541:3641377"
 //        compile 'club.minnced:java-discord-rpc:2.0.1'
         compile 'com.zaxxer:HikariCP:3.1.0'
