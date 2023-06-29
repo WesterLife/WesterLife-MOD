@@ -23,7 +23,6 @@ public class DynamXInit {
     public static ItemDynamx Seringue;
     public static ItemPoteauRemote PoteauRemote;
     public static ItemDynamx MatraqueTelescopique;
-    public static BlockSignVillage SignVillage;
     public static BlockDistributeur Distributeur;
     public static BlockDigicode digicode;
     public static BlockBisign doublefeurouge;
@@ -43,6 +42,7 @@ public class DynamXInit {
     public static BlockDynamx flageu;
     public static BlockDynamx officeflag;
     public static BlockDynamx officeflageu;
+    public static BlockPanneauAgglomeration panneauAgglomeration;
     public static BlockIRM irm;
     public static BlockRoad barrierePolice;
     public static BlockRoad clotureChantier;
@@ -102,6 +102,7 @@ public class DynamXInit {
         flageu = new BlockDynamx(Material.ANVIL, Main.MODID, "flageu", new ResourceLocation("westerlife","models/dynamx/blocks/flag/flageu.obj"));
         officeflag = new BlockDynamx(Material.ANVIL, Main.MODID, "officeflag", new ResourceLocation("westerlife","models/dynamx/blocks/officeflag/officeflag.obj"));
         officeflageu = new BlockDynamx(Material.ANVIL, Main.MODID, "officeflageu", new ResourceLocation("westerlife","models/dynamx/blocks/officeflag/officeflageu.obj"));
+        panneauAgglomeration = new BlockPanneauAgglomeration(Material.ANVIL, Main.MODID, "panneauagglomeration", new ResourceLocation("westerlife","models/dynamx/blocks/panneauagglomeration/panneauagglomeration.obj"));
 
         //Road blocks
         barrierePolice = new BlockRoad(Material.ANVIL, Main.MODID, "barrierepolice", new ResourceLocation("westerlife","models/dynamx/blocks/barriere_police/barriere.obj"));
@@ -121,7 +122,6 @@ public class DynamXInit {
         porteNom = new BlockPorteNom(Material.ANVIL, Main.MODID, "portenom", new ResourceLocation("westerlife","models/dynamx/blocks/portenom/portenom.obj"));
 
         //Old items
-        SignVillage = new BlockSignVillage(Material.ANVIL, Main.MODID, "panneauvillage", new ResourceLocation("westerlife","models/dynamx/signvillage/sign.obj"));
         doublefeurouge = new BlockBisign(Material.ANVIL, Main.MODID, "doublefeurouge", new ResourceLocation("westerlife","models/dynamx/bisign/bicolor.obj"));
         //feu_tricolore = new BlockDynamx(Material.ANVIL, Main.MODID, "feutricolore", "feut/feut.obj");
         //Keypad = new BlockKeypad(Material.ANVIL, Main.MODID, "keypad", "keypad/keypad.obj");

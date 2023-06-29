@@ -4,18 +4,17 @@ import fr.dynamx.common.contentpack.type.objects.BlockObject;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
 
-public class TESign extends TileEntitySyncClient implements ITickable {
+public class TilePanneauAgglomeration extends TileEntitySyncClient implements ITickable {
 
     private BlockObject b;
 
-    private String text="";
-    private String color="black";
+    private String name = "BALTIA";
 
-    public TESign(){
+    public TilePanneauAgglomeration(){
         super(null);
     }
 
-    public TESign(BlockObject<?> blockObjectInfo) {
+    public TilePanneauAgglomeration(BlockObject<?> blockObjectInfo) {
         super(blockObjectInfo);
         this.b = blockObjectInfo;
     }
@@ -23,39 +22,29 @@ public class TESign extends TileEntitySyncClient implements ITickable {
     @Override
     public void readFromNBT(NBTTagCompound tagCompound) {
         super.readFromNBT(tagCompound);
-        text = tagCompound.getString("text");
-        color = tagCompound.getString("color");
+        this.name = tagCompound.getString("name");
     }
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
         super.writeToNBT(tagCompound);
-        tagCompound.setString("text",text);
-        tagCompound.setString("color",color);
+        tagCompound.setString("name", this.name);
         return tagCompound;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setName(String name) {
+        this.name = name;
         sync();
         markDirty();
     }
 
-    public String getText() {
-        return this.text;
-    }
-
-    public String getColor() {
-        return this.color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-        sync();
-        markDirty();
+    public String getName() {
+        return name;
     }
 
     @Override
     public void update() {
+        if(!world.isRemote && world.getWorldTime() % 20 == 0)
+            sync();
     }
 }

@@ -378,6 +378,20 @@ public class ModuleWorld extends CommandModule {
 
                     }
                 }
+            } else if (Objects.equals(args[1], "pagglo")) {
+                if (sender instanceof EntityPlayer) {
+                    EntityPlayer player = (EntityPlayer) sender;
+                    RayTraceResult rayTraceResult = player.world.rayTraceBlocks(player.getPositionEyes(1), player.getPositionEyes(1).add(player.getLookVec().scale(10)));
+                    assert rayTraceResult != null;
+                    if (rayTraceResult != null) {
+                        TilePanneauAgglomeration tilePanneauAgglomeration = (TilePanneauAgglomeration) player.world.getTileEntity(rayTraceResult.getBlockPos());
+                        if (tilePanneauAgglomeration != null) {
+                            tilePanneauAgglomeration.setName(args[2].replaceAll("_", " "));
+                            tilePanneauAgglomeration.sync();
+                            tilePanneauAgglomeration.syncToClient();
+                        }
+                    }
+                }
             }
         } else {
             sender.sendMessage(new TextComponentString("§c/wlmod world <help/barrierelevante>"));

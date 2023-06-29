@@ -29,7 +29,6 @@ public class CommonProxy {
 
     public void preInit() throws IOException {
         System.out.println("pre init côté commun");
-        GameRegistry.registerTileEntity(TESign.class, new ResourceLocation("westerlife", "tesign"));
         GameRegistry.registerTileEntity(TileTombe.class, new ResourceLocation("westerlife", "tombe"));
         GameRegistry.registerTileEntity(TileMovingGate.class, new ResourceLocation("westerlife", "temovinggate"));
         GameRegistry.registerTileEntity(TEBisign.class, new ResourceLocation("westerlife", "tebisign"));
@@ -45,6 +44,7 @@ public class CommonProxy {
         GameRegistry.registerTileEntity(TileColoredBlock.class, new ResourceLocation("westerlife", "coloredblock"));
         GameRegistry.registerTileEntity(TileIrm.class, new ResourceLocation("westerlife", "irm"));
         GameRegistry.registerTileEntity(TilePorteNom.class, new ResourceLocation("westerlife", "portenom"));
+        GameRegistry.registerTileEntity(TilePanneauAgglomeration.class, new ResourceLocation("westerlife", "panneauagglomeration"));
         SoundsHandler.registerSounds();
         MinecraftForge.EVENT_BUS.register(this);
 

@@ -61,7 +61,6 @@ public class ClientProxy extends CommonProxy {
         super.preInit();
         System.out.println("ClientProxy preInit");
 
-        ClientRegistry.bindTileEntitySpecialRenderer(TESign.class, new TESignRender());
         ClientRegistry.bindTileEntitySpecialRenderer(TileMovingGate.class, new RenderTileMovingGate());
         ClientRegistry.bindTileEntitySpecialRenderer(TileTombe.class, new RenderTombe());
         ClientRegistry.bindTileEntitySpecialRenderer(TileRadarFixe.class, new RenderRadarFixe());
@@ -75,6 +74,7 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.bindTileEntitySpecialRenderer(TileColoredBlock.class, new RenderColoredBlock());
         ClientRegistry.bindTileEntitySpecialRenderer(TileIrm.class, new RenderIRM());
         ClientRegistry.bindTileEntitySpecialRenderer(TilePorteNom.class, new RenderPorteNom());
+        ClientRegistry.bindTileEntitySpecialRenderer(TilePanneauAgglomeration.class, new RenderPanneauAgglomeration());
 
         RenderingRegistry.registerEntityRenderingHandler(TestEntity2.class, TestEntity2Renderer::new);
         RenderingRegistry.registerEntityRenderingHandler(NPCTestEntity.class, new NpcRenderer(new ModelNPC(), 0.5F));
