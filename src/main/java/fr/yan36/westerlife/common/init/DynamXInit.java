@@ -56,7 +56,7 @@ public class DynamXInit {
     public static BlockRoad balise_green;
     public static BlockRoad balise_orange;
     public static BlockPanneauRue panneauRue;
-    public static BlockPanneauRueSP panneauRueSP;
+    public static BlockPanneauRue panneauRueSP;
 
     public static BlockTombe tombe;
     public static BlockSpot spot;
@@ -105,8 +105,8 @@ public class DynamXInit {
         officeflag = new BlockDynamx(Material.ANVIL, Main.MODID, "officeflag", new ResourceLocation("westerlife","models/dynamx/blocks/officeflag/officeflag.obj"));
         officeflageu = new BlockDynamx(Material.ANVIL, Main.MODID, "officeflageu", new ResourceLocation("westerlife","models/dynamx/blocks/officeflag/officeflageu.obj"));
         panneauAgglomeration = new BlockPanneauAgglomeration(Material.ANVIL, Main.MODID, "panneauagglomeration", new ResourceLocation("westerlife","models/dynamx/blocks/panneauagglomeration/panneauagglomeration.obj"));
-        panneauRue = new BlockPanneauRue(Material.ANVIL, Main.MODID, "panneaurue", new ResourceLocation("westerlife","models/dynamx/blocks/panneaurue/panneaurue.obj"));
-        panneauRueSP = new BlockPanneauRueSP(Material.ANVIL, Main.MODID, "panneauruesp", new ResourceLocation("westerlife","models/dynamx/blocks/panneauruesp/panneauruesp.obj"));
+        panneauRue = new BlockPanneauRue(Material.ANVIL, Main.MODID, "panneaurue", new ResourceLocation("westerlife","models/dynamx/blocks/panneaurue/panneaurue.obj"), BlockPanneauRue.Type.WALL);
+        panneauRueSP = new BlockPanneauRue(Material.ANVIL, Main.MODID, "panneauruesp", new ResourceLocation("westerlife","models/dynamx/blocks/panneauruesp/panneauruesp.obj"), BlockPanneauRue.Type.PILLAR);
 
         //Road blocks
         barrierePolice = new BlockRoad(Material.ANVIL, Main.MODID, "barrierepolice", new ResourceLocation("westerlife","models/dynamx/blocks/barriere_police/barriere.obj"));

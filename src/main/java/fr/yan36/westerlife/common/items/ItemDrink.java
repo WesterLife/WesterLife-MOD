@@ -53,6 +53,11 @@ public class ItemDrink extends ItemDynamx {
     }
 
     @Override
+    public AbstractItemObject getInfo() {
+        return super.getInfo();
+    }
+
+    @Override
     public int getMaxItemUseDuration(ItemStack stack)
     {
         return 32;

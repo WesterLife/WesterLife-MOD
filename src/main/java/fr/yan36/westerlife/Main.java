@@ -10,7 +10,6 @@ import fr.dynamx.utils.debug.DynamXDebugOptions;
 import fr.nathanael2611.simpledatabasemanager.core.Database;
 import fr.nathanael2611.simpledatabasemanager.core.Databases;
 import fr.nathanael2611.simpledatabasemanager.core.SyncedDatabases;
-
 import fr.yan36.westerlife.client.audio.PlayerManager;
 import fr.yan36.westerlife.client.gui.mcef.BrowserHud;
 import fr.yan36.westerlife.client.gui.mcef.BrowserScreen;
@@ -23,8 +22,6 @@ import fr.yan36.westerlife.common.handlers.RegistryHandler;
 import fr.yan36.westerlife.common.init.DynamXInit;
 import fr.yan36.westerlife.common.init.ItemInit;
 import fr.yan36.westerlife.common.init.Network;
-import fr.yan36.westerlife.common.objects.entreprises.CompanyAssociation;
-import fr.yan36.westerlife.common.objects.entreprises.CompanyBase;
 import fr.yan36.westerlife.common.utils.WesterBuiltinPack;
 import fr.yan36.westerlife.common.utils.commands.WesterLifeCommand;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -62,7 +59,7 @@ import java.util.stream.Collectors;
         modid = Main.MODID,
         name = Main.NAME,
         version = Main.VERSION,
-        dependencies = "before: dynamxmod"
+        dependencies = "before: dynamxmod; after: httpcore;after: httpclient;"
 )
 @DynamXAddon(modid = Main.MODID, name = Main.NAME, version = Main.VERSION)
 public class Main {
@@ -71,7 +68,7 @@ public class Main {
     public static final String MODID = "westerlife";
     public static final String NAME = "WesterLife Mod";
 
-    public static final String VERSION = "1.5.6-out1";
+    public static final String VERSION = "1.5.6-rev2";
 
 
     @Mod.Instance(Main.MODID)
@@ -119,14 +116,15 @@ public class Main {
     }
 
     @Mod.EventHandler
-    public void preInit(FMLPreInitializationEvent event) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, LineUnavailableException {
+    public void preInit(FMLPreInitializationEvent event) throws IOException, ClassNotFoundException, InstantiationException, LineUnavailableException {
         proxy.preInit();
         logger = event.getModLog();
         WesterLifeCommand.initModules();
         EntityRegistry.registerModEntity(new ResourceLocation(MODID, "testentity2"), TestEntity2.class, "testentity2", 2, this, 64, 1, true, Color.WHITE.getRGB(), Color.BLACK.getRGB());
         EntityRegistry.registerModEntity(new ResourceLocation(MODID, "npcai"), NPCTestEntity.class, "npcai", 3, this, 64, 1, true, Color.WHITE.getRGB(), Color.BLACK.getRGB());
         EntityRegistry.registerModEntity(new ResourceLocation(MODID, "entity_sit"), EntitySeat.class, "entity_sit", 4, this, 256, 20, false);
-
+        // force to load a external library
+        Class.forName("org.apache.http.impl.client.HttpClientBuilder");
 //        EntityRegistry.registerEgg(new ResourceLocation(MODID, "npcai"), Color.WHITE.getRGB(), Color.BLACK.getRGB());
         if(event.getSide().isClient() && event.getSourceFile().getName().endsWith(".jar") ||  (boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment") || Objects.requireNonNull(Loader.instance().activeModContainer()).getSource().isFile()) isEnvDev = true;
         System.out.println("WesterLife is in dev mode: " + isEnvDev);

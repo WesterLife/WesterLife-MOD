@@ -2,18 +2,13 @@ buildscript {
     repositories {
         maven { url = 'https://maven.minecraftforge.net' }
         mavenCentral()
-        maven {
-            url "https://plugins.gradle.org/m2/"
-        }
-        maven{
-            url "https://jitpack.io/"
-        }
-        maven {
-            url 'https://m2.dv8tion.net/releases'
-        }
+        maven { url "https://plugins.gradle.org/m2/" }
+        maven { url "https://jitpack.io/" }
+        maven { url 'https://m2.dv8tion.net/releases' }
         jcenter()
     }
     dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.4'
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
     }
 
@@ -48,6 +43,7 @@ repositories {
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: "java"
 apply plugin: 'idea'
+apply plugin: 'com.github.johnrengelman.shadow'
 
 tasks.withType(JavaCompile) {
     options.encoding = "UTF-8"
@@ -55,7 +51,7 @@ tasks.withType(JavaCompile) {
 
 sourceSets { main { output.resourcesDir = output.classesDir } }
 
-version = '1.5.6-beta2'
+version = '1.5.6-rev2'
 group = 'fr.yan36.westerlife' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'westerlife'
 
@@ -100,27 +96,29 @@ minecraft {
     sourceSets.main.resources { srcDir 'src/generated/resources' }
 
     dependencies {
-//        testCompile group: 'junit', name: 'junit', version: '4.12'
         minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2860'
-//        compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.21'
-//        compile group: 'com.zaxxer', name: 'HikariCP', version: '4.0.3'
-//        compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.3'
+
 
         implementation fg.deobf('fr.dynamx:DynamX:4.0.0-beta-18')
         implementation "fr.aym.acsguis:ACsGuis:1.2.5"
-        compile fileTree(dir: 'libs', include: '*.jar')
+        implementation fileTree(dir: 'libs', include: '*.jar')
 
-        implementation 'com.sedmelluq:lavaplayer:1.3.77'
-        //implementation "curse.maven:lizardon-mcef-577541:3641377"
-//        compile 'club.minnced:java-discord-rpc:2.0.1'
+        shadow fileTree(dir: 'libs', include: '*.jar')
+
+
+        implementation 'com.sedmelluq:lavaplayer:1.3.78'
+        implementation 'com.sedmelluq:lava-common:1.1.2'
+
+        shadow 'com.sedmelluq:lavaplayer:1.3.78'
+//        shadow 'com.sedmelluq:lava-common:1.1.2'
+//        shadow 'org.apache.httpcomponents:httpclient:4.5.13'
+//        shadow implementation('org.apache.httpcomponents:httpcore:4.4.14')
+
+
         compile 'com.zaxxer:HikariCP:3.1.0'
         compile 'org.slf4j:slf4j-api:1.7.25'
         compile 'mysql:mysql-connector-java:8.0.19'
-//        compile "org.zeith.HammerLib:HammerLib-1.12.2:2.0.6.32"
-//        compile "org.zeith.ScreenshotWatermark:ScreenshotWatermark-1.12.2:12.1.1"
 
-        //implementation 'com.sedmelluq:lavaplayer:1.3.78'
-        //compile fg.deobf('curse.maven:obfuscate-289380:2912288')
 
     }
 
@@ -151,7 +149,8 @@ minecraft {
                         it.name == 'HikariCP-3.1.0.jar' ||
                         it.name == 'slf4j-api-1.7.25.jar' ||
                         it.name == 'mysql-connector-java-8.0.19.jar' ||
-                        it.name == 'simpledatabasemanager-1.0.jar'
+                        it.name == 'simpledatabasemanager-1.0.jar' ||
+                        it.name == 'lavaplayer.jar'
                     }
                     .collect { it.isDirectory() ? it : zipTree(it) }
         }
@@ -179,6 +178,39 @@ jar {
 jar.finalizedBy('reobfJar')
 // However if you are in a multi-project build, dev time needs unobfed jar files, so you can delay the obfuscation until publishing by doing
 //publish.dependsOn('reobfJar')
+configurations {
+    shade
+    shadow
+    compile.extendsFrom shadow
+    shadowMe { transitive = false }
+}
+
+build.dependsOn(shadowJar)
+
+shadowJar {
+    classifier ''
+    project.configurations.shadow.setTransitive(true)
+    setDescription("Shadow Jar")
+    duplicatesStrategy 'exclude'
+    configurations = [project.configurations.shadow]
+
+    relocate 'org.apache.commons.collections4', 'fr.yan36.westerlife.repack.org.apache.commons.collections4'
+    relocate 'org.apache.http.conn', 'fr.yan36.westerlife.repack.org.apache.http.conn'
+    relocate 'org.apache.http.client', 'fr.yan36.westerlife.repack.org.apache.http.client'
+    relocate "com.fasterxml.jackson", "fr.yan36.westerlife.repack.com.fasterxml.jackson"
+    //relocate "org.json", "fr.yan36.westerliferepack.org.json"
+    relocate "okio", "fr.yan36.westerlife.repack.okio"
+    relocate "okhttp3", "fr.yan36.westerlife.repack.okhttp3"
+    relocate "org.slf4j", "fr.yan36.westerlife.repack.org.slf4j"
+    // repack lava-common
+    relocate "com.sedmelluq", "com.sedmelluq"
+}
+
+reobf {
+    shadowJar { }
+}
+
+jar.finalizedBy('reobfShadowJar')
 
 /** Shit that idea needs to process resources ? **/
 idea {
