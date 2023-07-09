@@ -10,7 +10,6 @@ import fr.dynamx.utils.debug.DynamXDebugOptions;
 import fr.nathanael2611.simpledatabasemanager.core.Database;
 import fr.nathanael2611.simpledatabasemanager.core.Databases;
 import fr.nathanael2611.simpledatabasemanager.core.SyncedDatabases;
-import fr.yan36.westerlife.client.audio.PlayerManager;
 import fr.yan36.westerlife.client.gui.mcef.BrowserHud;
 import fr.yan36.westerlife.client.gui.mcef.BrowserScreen;
 import fr.yan36.westerlife.client.utils.creativetabs.WesterTab;
@@ -26,11 +25,9 @@ import fr.yan36.westerlife.common.utils.WesterBuiltinPack;
 import fr.yan36.westerlife.common.utils.commands.WesterLifeCommand;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.launchwrapper.Launch;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -49,17 +46,16 @@ import org.apache.logging.log4j.Logger;
 import javax.sound.sampled.LineUnavailableException;
 import java.awt.*;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Mod(
         modid = Main.MODID,
         name = Main.NAME,
         version = Main.VERSION,
-        dependencies = "before: dynamxmod; after: httpcore;after: httpclient;"
+        dependencies = "before: dynamxmod; after: httpcore|httpclient|lavaplayer|music_westerlife;"
+
 )
 @DynamXAddon(modid = Main.MODID, name = Main.NAME, version = Main.VERSION)
 public class Main {
@@ -68,7 +64,7 @@ public class Main {
     public static final String MODID = "westerlife";
     public static final String NAME = "WesterLife Mod";
 
-    public static final String VERSION = "1.5.6-rev2";
+    public static final String VERSION = "1.5.6-rev4";
 
 
     @Mod.Instance(Main.MODID)
@@ -82,12 +78,9 @@ public class Main {
 
     @SideOnly(Side.CLIENT)
     public static BrowserHud browserHud;
-
-    public static Boolean isEnvDev = true;
     public static Boolean isOpti = false;
 
     public static Database wl_db;
-    private static PlayerManager playerManager;
 
 
     @DynamXAddon.AddonEventSubscriber
@@ -97,8 +90,8 @@ public class Main {
         DynamXContext.getObjModelRegistry().registerModel(new ObjModelPath(new WesterBuiltinPack.WesterPackInfo(), new ResourceLocation(Main.MODID, "test.obj")));
         DynamXContext.getObjModelRegistry().registerModel(new ObjModelPath(new WesterBuiltinPack.WesterPackInfo(), new ResourceLocation(Main.MODID, "punch.obj")));
         ItemInit.init();
-        System.out.println("Location : " + Objects.requireNonNull(ItemInit.BOISSON.getRegistryName()));
-        ModelLoader.setCustomModelResourceLocation(ItemInit.BOISSON, 0, new ModelResourceLocation(Objects.requireNonNull(ItemInit.BOISSON.getRegistryName()), "inventory"));
+        System.out.println("Location : " + Objects.requireNonNull(ItemInit.WATER.getRegistryName()));
+        ModelLoader.setCustomModelResourceLocation(ItemInit.WATER, 0, new ModelResourceLocation(Objects.requireNonNull(ItemInit.WATER.getRegistryName()), "inventory"));
 
     }
 
@@ -117,29 +110,30 @@ public class Main {
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) throws IOException, ClassNotFoundException, InstantiationException, LineUnavailableException {
+
         proxy.preInit();
         logger = event.getModLog();
         WesterLifeCommand.initModules();
         EntityRegistry.registerModEntity(new ResourceLocation(MODID, "testentity2"), TestEntity2.class, "testentity2", 2, this, 64, 1, true, Color.WHITE.getRGB(), Color.BLACK.getRGB());
         EntityRegistry.registerModEntity(new ResourceLocation(MODID, "npcai"), NPCTestEntity.class, "npcai", 3, this, 64, 1, true, Color.WHITE.getRGB(), Color.BLACK.getRGB());
         EntityRegistry.registerModEntity(new ResourceLocation(MODID, "entity_sit"), EntitySeat.class, "entity_sit", 4, this, 256, 20, false);
-        // force to load a external library
-        Class.forName("org.apache.http.impl.client.HttpClientBuilder");
-//        EntityRegistry.registerEgg(new ResourceLocation(MODID, "npcai"), Color.WHITE.getRGB(), Color.BLACK.getRGB());
-        if(event.getSide().isClient() && event.getSourceFile().getName().endsWith(".jar") ||  (boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment") || Objects.requireNonNull(Loader.instance().activeModContainer()).getSource().isFile()) isEnvDev = true;
-        System.out.println("WesterLife is in dev mode: " + isEnvDev);
+        // register world saved data
+
         Network.init();
         MinecraftForge.EVENT_BUS.register(new RegistryHandler());
         radar = DynamXDebugOption.newOptionWithMask(DynamXDebugOptions.DebugCategories.GENERAL, "render radar debug", 32);
         //warn: Discord RPC must be reimplemented
         if(event.getSide().isClient()) {
+
             // check if account is premium
             try {
 //                new Discord().start();
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            playerManager = new PlayerManager();
+
+
+
         }
 
         wl_db = Databases.getDatabase("westerlife_armorsuperposition");
@@ -151,11 +145,9 @@ public class Main {
             System.out.println("added " + item.getInfo().getFullName() + " to fast registry access");
         }
 
+
     }
 
-    public static PlayerManager getPlayerManager() {
-        return playerManager;
-    }
 
 
     @Mod.EventHandler
@@ -165,9 +157,16 @@ public class Main {
     }
 
     @Mod.EventHandler
-    public void postInit(FMLPostInitializationEvent event) {
+    public void postInit(FMLPostInitializationEvent event) throws LineUnavailableException {
         System.out.println("caca");
         System.out.println(DynamXObjectLoaders.ARMORS.getInfos());
+
+
+
+
+//        SoundHandler soundManager = Minecraft.getMinecraft().getSoundHandler();
+        // get livestream at
+
     }
 
     public static final CreativeTabs WESTER_MAIN = new WesterTab("westertab");

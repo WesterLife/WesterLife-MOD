@@ -1,6 +1,5 @@
 package fr.yan36.westerlife.common.init;
 
-import com.kamesuta.mc.bnnwidget.position.R;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.items.ItemBase;
 import fr.yan36.westerlife.common.items.ItemBillet;
@@ -37,11 +36,13 @@ public class ItemInit {
     public static final Item PREF = new ItemCard("pref", ItemCard.CardType.PREF);
     public static Item violon;
 
-    public static ItemDynamx BOISSON;
+    public static ItemDrink WATER;
 
+    public static ItemDrink WINE;
     public static void init() {
-        BOISSON = new ItemDrink("waterbottle",20, 0.0F, new ResourceLocation("westerlife","models/dynamx/items/water/water.obj"));
+        WATER = new ItemDrink("waterbottle",20, 0.0F, new ResourceLocation("westerlife","models/dynamx/items/water/water.obj"));
         violon = new ItemDynamx(Main.MODID, "violon", new ResourceLocation("westerlife","models/dynamx/items/violon/violon.obj"));
+        WINE = new ItemDrink("wineglass",20, 0.0F, new ResourceLocation("westerlife","models/dynamx/items/vin/vin.obj"));
     }
 
 

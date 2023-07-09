@@ -109,6 +109,7 @@ public class ClientProxy extends CommonProxy {
         ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(Main.MODID, "acsgui/clothes.css"));
         ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(Main.MODID, "acsgui/lights.css"));
         ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(Main.MODID, "acsgui/coloredblocks.css"));
+        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(Main.MODID, "acsgui/gendkit.css"));
         Apps.Init(); // Gabi <3
 
 

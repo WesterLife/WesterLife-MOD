@@ -296,7 +296,7 @@ public class BrowserScreen extends GuiScreen implements IJSQueryHandler {
                 } else if (query.substring(1).split(":")[0].equals("play")) {
                     if (!Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
                         Main.browserScreen = new BrowserScreen("mod://westerlife/main_menu/main.html");
-                        this.mc.displayGuiScreen(new GuiConnecting(Main.browserScreen, this.mc, "localhost", 25565));
+                        this.mc.displayGuiScreen(new GuiConnecting(Main.browserScreen, this.mc, "51.38.250.27", 25739));
                     } else if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)) {
                         mc.displayGuiScreen(new GuiScreenServerList(Main.browserScreen, new ServerData("WesterLife", "localhost", false)));
                     } else {

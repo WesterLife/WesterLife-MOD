@@ -31,7 +31,9 @@ public class WesterLifeCommand extends CommandBase {
         modules.add(new ModuleEconomy());
         modules.add(new ModuleManagePerso());
         modules.add(new ModulePermis());
+        modules.add(new ModuleMagic());
     }
+
 
     @Override
     public String getName() {

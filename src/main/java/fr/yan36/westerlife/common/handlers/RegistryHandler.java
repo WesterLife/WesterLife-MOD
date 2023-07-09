@@ -18,20 +18,20 @@ public class RegistryHandler {
     public static final ResourceLocation CAPABILITY_LOCATION = new ResourceLocation(Main.MODID, "armorsuperposition"); // On évite d'instancier à chaque fois le même objet
 
     @SubscribeEvent
-    public static void onItemRegister(RegistryEvent.Register<Item> event)
+    public void onItemRegister(RegistryEvent.Register<Item> event)
     {
         System.out.println("Enregistrement des items");
         event.getRegistry().registerAll(ItemInit.ITEMS.toArray(new Item[0]));
         event.getRegistry().registerAll(ItemInit.ITEMS_FOOD.toArray(new Item[0]));
     }
     @SubscribeEvent
-    public static void onBlockRegister(RegistryEvent.Register<Block> event)
+    public void onBlockRegister(RegistryEvent.Register<Block> event)
     {
         System.out.println("Enregistrement des blocks");
         event.getRegistry().registerAll(BlockInit.BLOCKS.toArray(new Block[0]));
     }
     @SubscribeEvent
-    public static void OnModelRegister(ModelRegistryEvent event) {
+    public void OnModelRegister(ModelRegistryEvent event) {
         for (Item item : ItemInit.ITEMS) {
             if(item instanceof IHasModel) {
                 ((IHasModel)item).registerModels();

@@ -2,26 +2,61 @@ package fr.yan36.westerlife.common;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
+import fr.yan36.westerlife.common.objects.KitWSD;
 import fr.yan36.westerlife.common.utils.AABB;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.JsonToNBT;
+import net.minecraft.nbt.NBTException;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EntitySelectors;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.*;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
+import net.minecraft.world.storage.MapStorage;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 import static net.minecraft.world.World.MAX_ENTITY_RADIUS;
 
 public class Util {
+    public static KitWSD getKitTest(World world) {
+        MapStorage storage = world.getMapStorage();
+        assert storage != null;
+        KitWSD instance = (KitWSD) storage.getOrLoadData(KitWSD.class, "test");
+
+        if (instance == null) {
+            instance = new KitWSD("caca ?");
+            storage.setData("test", instance);
+        }
+        return instance;
+    }
+
+    public static void setKitTest(World world, String arg) {
+        MapStorage storage = world.getMapStorage();
+        assert storage != null;
+        KitWSD instance = (KitWSD) storage.getOrLoadData(KitWSD.class, "test");
+
+        if (instance == null) {
+            instance = new KitWSD(arg);
+            storage.setData("test", instance);
+        }
+        instance.markDirty();
+
+    }
+
+
+
     public static BlockPos parseBlockPosFromString(String stringPos)
     {
         String[] xyz = stringPos.split(",");
@@ -186,5 +221,39 @@ public class Util {
         }
 
         throw new IllegalArgumentException("Invalid slot '" + slotID + "'");
+    }
+
+
+    public static String itemStackListToString(ArrayList<ItemStack> list) {
+        StringBuilder str = new StringBuilder();
+        for (ItemStack item : list) {
+            str.append(item.getItem().getRegistryName().toString()).append("*").append(item.getDisplayName()).append("*").append(item.getItemDamage()).append("*").append(item.getCount()).append(";");
+
+        }
+        return str.toString();
+    }
+
+    public static ArrayList<ItemStack> stringToItemStackList(String str) {
+        ArrayList<ItemStack> list = new ArrayList<>();
+        String[] items = str.split(";");
+        for (String item : items) {
+            String[] itemData = item.split("\\*");
+            if (itemData.length == 4) {
+                Item i = Item.REGISTRY.getObject(new ResourceLocation(itemData[0]));
+                if (i != null) {
+                    ItemStack stack = new ItemStack(i, Integer.parseInt(itemData[3]), Integer.parseInt(itemData[2]));
+                    stack.setStackDisplayName("§f" + itemData[1]);
+                    if(stack.getTagCompound() == null) {
+                        stack.setTagCompound(new NBTTagCompound());
+                    }
+                    stack.getTagCompound().setBoolean("isFromKit", true);
+                    list.add(stack);
+                }
+            }
+        }
+        return list;
+    }
+    public static boolean hasPermission(EntityPlayerMP player, String permissionName) {
+        return player.canUseCommand(4, permissionName);
     }
 }

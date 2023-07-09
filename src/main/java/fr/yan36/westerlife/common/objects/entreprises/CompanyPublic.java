@@ -3,6 +3,7 @@ package fr.yan36.westerlife.common.objects.entreprises;
 import fr.yan36.westerlife.common.objects.economy.BankAccount;
 import fr.yan36.westerlife.common.objects.entreprises.types.Employee;
 
+import java.util.Collections;
 import java.util.List;
 
 public class CompanyPublic implements ICorporation {
@@ -41,7 +42,7 @@ public class CompanyPublic implements ICorporation {
 
     @Override
     public List<String> impots() {
-        return null;
+        return Collections.singletonList("AUCUNE");
     }
 
 }

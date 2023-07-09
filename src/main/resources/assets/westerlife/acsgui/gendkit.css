@@ -1,0 +1,150 @@
+.coloredblock {
+    left: 25%;
+    right: 25%;
+    top: 25%;
+    bottom: 25%;
+    width: 50%;
+    height: 50%;
+    background: #3D475F;
+    border-radius: 10px;
+}
+.title {
+    left: 10px;
+    width: 90%;
+}
+.bg {
+    left: 25%;
+    right: 25%;
+    top: 25%;
+    bottom: 25%;
+    width: 75%;
+    height: 75%;
+    background: #3D475F;
+    border-radius: 10px;
+}
+
+.darkgray {
+    background: #1c1c1c;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    left: 0px;
+}
+.middlegray {
+    background: #1f1f1f;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    left: 25px;
+}
+.gray {
+    background: #474747;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    left: 50px;
+}
+.lightgray {
+    background: #ECECEC;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    left: 75px;
+}
+.lightblue {
+    background: #CBF2FF;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    left: 100px;
+}
+.yellow {
+    background: #FFD53F;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    left: 125px;
+}
+.salmon {
+    background: #FFAA85;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    top: 25px;
+    left: 0px;
+}
+
+.blue {
+    background: #6196D4;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    left: 25px;
+    top: 25px;
+}
+
+.marine {
+    background: #385867;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    left: 50px;
+    top: 25px;
+}
+.brown {
+    background: #725D2E;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    left: 75px;
+    top: 25px;
+}
+.darkred {
+    background: #A95A34;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    left: 100px;
+    top: 25px;
+}
+.darkblue {
+    background: #25456E;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    left: 125px;
+    top: 25px;
+}
+.green {
+    background: #5DA13E;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    left: 150px;
+    top: 0px;
+}
+
+.darkgreen {
+    background: #2C511A;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    left: 150px;
+    top: 25px;
+}
+.purple {
+    background: #9481E4;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    left: 175px;
+    top: 25px;
+}
+.darkpurple {
+    background: #52438c;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    left: 175px;
+    top: 0px;
+}

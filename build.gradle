@@ -51,7 +51,7 @@ tasks.withType(JavaCompile) {
 
 sourceSets { main { output.resourcesDir = output.classesDir } }
 
-version = '1.5.6-rev2'
+version = '1.5.6-rev4'
 group = 'fr.yan36.westerlife' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'westerlife'
 
@@ -99,6 +99,7 @@ minecraft {
         minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2860'
 
 
+
         implementation fg.deobf('fr.dynamx:DynamX:4.0.0-beta-18')
         implementation "fr.aym.acsguis:ACsGuis:1.2.5"
         implementation fileTree(dir: 'libs', include: '*.jar')
@@ -106,20 +107,24 @@ minecraft {
         shadow fileTree(dir: 'libs', include: '*.jar')
 
 
-        implementation 'com.sedmelluq:lavaplayer:1.3.78'
-        implementation 'com.sedmelluq:lava-common:1.1.2'
+
 
         shadow 'com.sedmelluq:lavaplayer:1.3.78'
 //        shadow 'com.sedmelluq:lava-common:1.1.2'
 //        shadow 'org.apache.httpcomponents:httpclient:4.5.13'
 //        shadow implementation('org.apache.httpcomponents:httpcore:4.4.14')
 
+        shadow 'org.apache.httpcomponents:httpclient:4.5.13'
+        shadow implementation('org.apache.httpcomponents:httpcore:4.4.14')
+
+        // before project httpclient
 
         compile 'com.zaxxer:HikariCP:3.1.0'
         compile 'org.slf4j:slf4j-api:1.7.25'
         compile 'mysql:mysql-connector-java:8.0.19'
 
-
+//        shadow  ('com.sedmelluq:lavaplayer:1.3.78')
+//        shadow  ('com.sedmelluq:lava-common:1.1.2')
     }
 
     repositories {
@@ -138,7 +143,11 @@ minecraft {
                     "Implementation-Version"  : project.version,
                     "Implementation-Vendor"   : "MK, Afhistos",
                     "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-
+                    "Built-By"                : System.getProperty("user.name"),
+                    "Build-Jdk"               : System.getProperty("java.version"),
+                    "FMLCorePluginContainsFMLMod": "true",
+                    "FMLCorePlugin": "fr.yan36.westerlife.coremod.WesterLifeCoreMod",
+                    "FMLAT": "fr.yan36.westerlife.coremod.WesterLifeCoreMod",
             ])
         }
         from {
@@ -153,6 +162,7 @@ minecraft {
                         it.name == 'lavaplayer.jar'
                     }
                     .collect { it.isDirectory() ? it : zipTree(it) }
+
         }
     }
 }
@@ -180,9 +190,13 @@ jar.finalizedBy('reobfJar')
 //publish.dependsOn('reobfJar')
 configurations {
     shade
-    shadow
+    shadow {
+        transitive(true)
+    }
     compile.extendsFrom shadow
-    shadowMe { transitive = false }
+
+    beforeProject
+
 }
 
 build.dependsOn(shadowJar)
@@ -194,16 +208,17 @@ shadowJar {
     duplicatesStrategy 'exclude'
     configurations = [project.configurations.shadow]
 
-    relocate 'org.apache.commons.collections4', 'fr.yan36.westerlife.repack.org.apache.commons.collections4'
-    relocate 'org.apache.http.conn', 'fr.yan36.westerlife.repack.org.apache.http.conn'
-    relocate 'org.apache.http.client', 'fr.yan36.westerlife.repack.org.apache.http.client'
-    relocate "com.fasterxml.jackson", "fr.yan36.westerlife.repack.com.fasterxml.jackson"
-    //relocate "org.json", "fr.yan36.westerliferepack.org.json"
-    relocate "okio", "fr.yan36.westerlife.repack.okio"
-    relocate "okhttp3", "fr.yan36.westerlife.repack.okhttp3"
-    relocate "org.slf4j", "fr.yan36.westerlife.repack.org.slf4j"
-    // repack lava-common
-    relocate "com.sedmelluq", "com.sedmelluq"
+
+//    relocate 'org.apache.http.conn', 'org.apache.http.conn'
+//    relocate 'org.apache.http.client', 'org.apache.http.client'
+//    relocate "com.fasterxml.jackson", "fr.yan36.westerlife.repack.com.fasterxml.jackson"
+
+//    relocate "okio", "fr.yan36.westerlife.repack.okio"
+//    relocate "okhttp3", "fr.yan36.westerlife.repack.okhttp3"
+//    relocate "org.slf4j", "fr.yan36.westerlife.repack.org.slf4j"
+
+//    relocate "com.sedmelluq", "fr.yan36.westerlife.repack.com.sedmelluq"
+
 }
 
 reobf {

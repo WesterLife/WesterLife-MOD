@@ -3,6 +3,7 @@ package fr.yan36.westerlife.common.items;
 import com.jme3.math.Vector3f;
 import fr.dynamx.api.contentpack.object.render.Enum3DRenderLocation;
 import fr.dynamx.common.contentpack.type.objects.AbstractItemObject;
+import fr.dynamx.common.items.DynamXItem;
 import fr.nathanael2611.simpledatabasemanager.core.Databases;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.init.ItemInit;
@@ -19,7 +20,7 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-public class ItemDrink extends ItemDynamx {
+public class ItemDrink extends DynamXItem {
     int amount;
     public ItemDrink(String name, int amount, float saturation, ResourceLocation model) {
         super(Main.MODID, name, model);

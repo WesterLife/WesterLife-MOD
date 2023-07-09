@@ -4,6 +4,7 @@ import fr.aym.acsguis.api.ACsGuiApi;
 import fr.aym.acsguis.component.panel.GuiFrame;
 import fr.yan36.westerlife.client.Client;
 import fr.yan36.westerlife.client.gui.acs.CSSGuiColoredBlock;
+import fr.yan36.westerlife.client.gui.acs.CSSGuiGendKit;
 import fr.yan36.westerlife.client.gui.acs.CSSGuiLights;
 import fr.yan36.westerlife.common.Util;
 import fr.yan36.westerlife.common.objects.LightSequence;
@@ -59,6 +60,9 @@ public class PacketOpenAcsGui implements IMessage{
             }
             if(m.screen == 2) {
                 ACsGuiApi.asyncLoadThenShowGui("blockColor", () -> new CSSGuiColoredBlock(Util.parseBlockPosFromString(m.args)));
+            }
+            if(m.screen == 3) {
+                ACsGuiApi.asyncLoadThenShowGui("blockColor", () -> new CSSGuiGendKit(m.args));
             }
             return null;
         }

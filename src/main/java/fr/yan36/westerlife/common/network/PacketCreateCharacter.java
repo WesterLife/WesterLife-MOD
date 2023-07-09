@@ -9,6 +9,7 @@ import fr.yan36.westerlife.server.bdd.DatabaseManager;
 import fr.yan36.westerlife.server.bdd.MethodesBDD;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -83,6 +84,11 @@ public class PacketCreateCharacter implements IMessage{
                     String a = ItemCard.CardType.CNI.name().substring(0, 3) + Math.round(Float.parseFloat(Math.random() * 10000000 + ""));
                     item.getTagCompound().setString("uniqueIdentifier", String.valueOf(a));
                     e.sendMessage(new TextComponentString("§aCarte synchronisée le profil de : " + DBUtils.getCharacter(e.getUniqueID()).getLastName() + " !"));
+
+                    ItemStack food = new ItemStack(Items.COOKED_BEEF, 10);
+                    food.setStackDisplayName("§cDe la nourriture propre arrivera bientôt !");
+                    e.inventory.addItemStackToInventory(food);
+
                     DiscordWebhook webhook = new DiscordWebhook(DatabaseManager.discordLogger);
 
                     webhook.addEmbed(
