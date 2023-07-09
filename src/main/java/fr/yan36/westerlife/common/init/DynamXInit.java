@@ -23,6 +23,7 @@ public class DynamXInit {
     public static ItemDynamx Seringue;
     public static ItemPoteauRemote PoteauRemote;
     public static ItemDynamx MatraqueTelescopique;
+
     public static BlockDistributeur Distributeur;
     public static BlockDigicode digicode;
     public static BlockBisign doublefeurouge;

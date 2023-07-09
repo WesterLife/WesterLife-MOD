@@ -39,10 +39,13 @@ public class ItemInit {
     public static ItemDrink WATER;
 
     public static ItemDrink WINE;
+    public static ItemDrink CHAMPAGNE;
+
     public static void init() {
         WATER = new ItemDrink("waterbottle",20, 0.0F, new ResourceLocation("westerlife","models/dynamx/items/water/water.obj"));
         violon = new ItemDynamx(Main.MODID, "violon", new ResourceLocation("westerlife","models/dynamx/items/violon/violon.obj"));
         WINE = new ItemDrink("wineglass",20, 0.0F, new ResourceLocation("westerlife","models/dynamx/items/vin/vin.obj"));
+        CHAMPAGNE = new ItemDrink("flutechampagne",15, 0.0F, new ResourceLocation("westerlife","models/dynamx/items/flutechampagne/champagne.obj"));
     }
 
 
