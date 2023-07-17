@@ -8,6 +8,7 @@ import fr.dynamx.client.handlers.hud.CarController;
 import fr.dynamx.common.items.DynamXItemArmor;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.client.gui.acs.*;
+import fr.yan36.westerlife.client.gui.mcef.AtmScreen;
 import fr.yan36.westerlife.client.gui.mcef.BrowserScreen;
 import fr.yan36.westerlife.client.gui.other.EngineFailureIcon;
 import fr.yan36.westerlife.common.init.DynamXInit;
@@ -435,8 +436,8 @@ public class Client {
     @SideOnly(Side.CLIENT)
     private void keyTestTyped() {
         //ACsGuiApi.asyncLoadThenShowGui("gendarmerie", CSSGuiGendarmerieLogin::new);
-        Main.browserScreen = new BrowserScreen();
-        Main.browserScreen.openMenu();
+        Main.atmScreen = new AtmScreen();
+        Main.atmScreen.openMenu();
         //Main.browserScreen.executeJS("window.vue.setWindowF4('test', 'test');");
         System.out.println("Ouverture du menu");
 

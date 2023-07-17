@@ -10,6 +10,7 @@ import fr.dynamx.utils.debug.DynamXDebugOptions;
 import fr.nathanael2611.simpledatabasemanager.core.Database;
 import fr.nathanael2611.simpledatabasemanager.core.Databases;
 import fr.nathanael2611.simpledatabasemanager.core.SyncedDatabases;
+import fr.yan36.westerlife.client.gui.mcef.AtmScreen;
 import fr.yan36.westerlife.client.gui.mcef.BrowserHud;
 import fr.yan36.westerlife.client.gui.mcef.BrowserScreen;
 import fr.yan36.westerlife.client.utils.creativetabs.WesterTab;
@@ -74,10 +75,13 @@ public class Main {
     @SideOnly(Side.CLIENT)
     public static BrowserScreen browserScreen;
 
-    HashMap<Integer, DynamXItemArmor<?>> tqt_frere = new HashMap<>();
-
     @SideOnly(Side.CLIENT)
     public static BrowserHud browserHud;
+
+    @SideOnly(Side.CLIENT)
+    public static AtmScreen atmScreen;
+
+    HashMap<Integer, DynamXItemArmor<?>> tqt_frere = new HashMap<>();
     public static Boolean isOpti = false;
 
     public static Database wl_db;
