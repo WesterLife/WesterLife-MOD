@@ -1,5 +1,8 @@
 
-/* Base CSS for all pages */
+/*
+WesterLife Devlopment Team
+Base CSS for all pages
+*/
 
 body {
     width: 100%;
@@ -41,6 +44,7 @@ body {
     border-radius: 25px;
     border: 10px solid #2A2D37;
     background: linear-gradient(135deg, #F8B05F 0%, #ED6E20 100%);
+    flex-grow: 1;
 }
 
 #top-container {
@@ -50,6 +54,7 @@ body {
     align-items: center;
     flex-direction: row;
     flex-grow: 20;
+    gap: 50px;
 }
 
 #bottom-container {
@@ -61,7 +66,49 @@ body {
     flex-direction: row;
     background-color: white;
     border-radius: 15px;
-    gap: 50%
+    gap: 50%;
+}
+
+#login-title {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 150px;
+}
+
+#login-title-text {
+    font-size: 35px;
+    text-align: center;
+    font-weight: 800;
+}
+
+#login-title-input {
+    border-radius: 100px;
+    border: 5px solid #FFF;
+    background: rgba(255, 255, 255, 0.20);
+    text-align: center;
+    color: #FFFFFF;
+    font-size: 25px;
+    padding-top: 10px;
+    padding-bottom: 5px;
+}
+
+#login-title-input::placeholder {
+    color: #FFFFFF;
+    opacity: 0.8;
+}
+
+#login-numpad {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 25px;
+    margin: 150px;
 }
 
 .eject-button {
@@ -72,6 +119,7 @@ body {
     font-weight: 800;
     font-size: 16px;
     color: #FFFFFF;
+    margin: 10px
 }
 
 .eject-button:hover {
@@ -84,11 +132,63 @@ body {
 }
 
 .logo {
-    height: 68px;
+    height: 50px;
 }
 
 .logo-img {
-    size: 200px 20px;
+    height: 50px;
 }
 
-/* CSS for Login page */
+.button {
+    transition: all 0.2s ease-out;
+    border-radius: 100px;
+    border: 5px solid #FFF;
+    background: rgba(255, 255, 255, 0.20);
+    display: flex;
+    padding: 20px;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    aspect-ratio: 1 / 1;
+    font-weight: 800;
+    font-size: 15px;
+}
+
+textarea:focus, input:focus{
+    outline: none;
+}
+
+.button:hover {
+    background: rgba(255, 255, 255, 0.40);
+}
+
+#button-clear {
+    flex-grow: 3;
+    aspect-ratio: 2 / 1;
+    border-radius: 100px;
+    border: 5px solid #FF5C5C;
+    background: rgba(255, 255, 255, 0.20);
+    color: #FF5C5C;
+    font-weight: 800;
+    font-size: 15px;
+}
+
+#button-clear:hover {
+    background: rgba(255, 255, 255, 0.40);
+}
+
+#button-valid {
+    flex-grow: 3;
+    aspect-ratio: 3 / 1;
+    border-radius: 100px;
+    border: 5px solid #789B74;
+    background: rgba(255, 255, 255, 0.20);
+    color: #789B74;
+    font-weight: 800;
+    font-size: 15px;
+}
+
+/*
+WesterLife Devlopment Team
+CSS for Login page
+*/
