@@ -30,7 +30,7 @@ import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
-@SynchronizedEntityVariable.SynchronizedPhysicsModule
+@SynchronizedEntityVariable.SynchronizedPhysicsModule(modid = Main.MODID)
 public class TestEntityModule2 implements IPhysicsModule<AbstractEntityPhysicsHandler<?, ?>>, AttachModule.AttachToSelfModule, AttachedBodySynchronizer   {
     public static final ResourceLocation JOINT_NAME = new ResourceLocation(Main.MODID, "test_joint");
 

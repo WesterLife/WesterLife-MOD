@@ -51,7 +51,6 @@ public class TileTombe extends TileEntitySyncClient implements ITickable {
 
 
 
-        super.update();
     }
 
     public String getText() {

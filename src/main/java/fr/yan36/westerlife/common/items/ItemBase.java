@@ -19,11 +19,6 @@ public class ItemBase extends Item implements IHasModel {
     }
 
 
-    @Nullable
-    @Override
-    public CreativeTabs getCreativeTab() {
-        return Main.WESTER_MAIN;
-    }
 
     @Override
     public void registerModels() {

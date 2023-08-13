@@ -1,5 +1,6 @@
 package fr.yan36.westerlife.common.network;
 
+import fr.yan36.westerlife.common.init.DynamXInit;
 import fr.yan36.westerlife.common.init.ItemInit;
 import fr.yan36.westerlife.common.items.ItemCard;
 import fr.yan36.westerlife.common.objects.character.Character;
@@ -85,9 +86,17 @@ public class PacketCreateCharacter implements IMessage{
                     item.getTagCompound().setString("uniqueIdentifier", String.valueOf(a));
                     e.sendMessage(new TextComponentString("§aCarte synchronisée le profil de : " + DBUtils.getCharacter(e.getUniqueID()).getLastName() + " !"));
 
-                    ItemStack food = new ItemStack(Items.COOKED_BEEF, 10);
-                    food.setStackDisplayName("§cDe la nourriture propre arrivera bientôt !");
+                    ItemStack water = new ItemStack(DynamXInit.WATER, 2);
+                    water.setStackDisplayName("§b§3Bouteille d'eau");
+                    e.inventory.addItemStackToInventory(water);
+
+                    ItemStack food = new ItemStack(DynamXInit.barreChoco, 5);
+                    food.setStackDisplayName("§b§6Barre de chocolat");
                     e.inventory.addItemStackToInventory(food);
+
+                    ItemStack food2 = new ItemStack(Items.BREAD, 2);
+                    food2.setStackDisplayName("§b§6Pain");
+                    e.inventory.addItemStackToInventory(food2);
 
                     DiscordWebhook webhook = new DiscordWebhook(DatabaseManager.discordLogger);
 

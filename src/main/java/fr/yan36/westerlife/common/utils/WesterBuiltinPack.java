@@ -4,8 +4,11 @@ import com.jme3.bullet.collision.shapes.CompoundCollisionShape;
 import com.jme3.math.Vector3f;
 import fr.dynamx.api.contentpack.ContentPackType;
 import fr.dynamx.api.contentpack.object.IPhysicsPackInfo;
+import fr.dynamx.api.contentpack.object.part.IDrawablePart;
 import fr.dynamx.api.contentpack.object.part.IShapeInfo;
+import fr.dynamx.api.contentpack.object.part.InteractivePart;
 import fr.dynamx.common.contentpack.PackInfo;
+import fr.dynamx.common.contentpack.type.ObjectCollisionsHelper;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 
@@ -24,33 +27,17 @@ public class WesterBuiltinPack implements IPhysicsPackInfo {
         return new Vector3f(0, 0, 0);
     }
 
-    @Override
-    public Collection<? extends IShapeInfo> getShapes() {
-        Collection<IShapeInfo> a = new ArrayList<>();
-        a.add(new IShapeInfo() {
-            @Override
-            public Vector3f getPosition() {
-                return new Vector3f(0, 0, 0);
-            }
 
-            @Override
-            public Vector3f getSize() {
-                return new Vector3f(1,1,1);
-            }
-        });
-        return a;
+    @Override
+    public <T extends InteractivePart<?, ?>> List<T> getInteractiveParts() {
+        return IPhysicsPackInfo.super.getInteractiveParts();
     }
 
-    @Override
-    public List<Vector3f> getCollisionShapeDebugBuffer() {
-        return Collections.emptyList();
-    }
+
 
     @Override
-    public CompoundCollisionShape getPhysicsCollisionShape() {
-        CompoundCollisionShape shape = new CompoundCollisionShape();
-        shape.setScale(new Vector3f(1,1,1));
-        return shape;
+    public List<IDrawablePart<?>> getDrawableParts() {
+        return new ArrayList<>();
     }
 
     @Override
@@ -62,6 +49,27 @@ public class WesterBuiltinPack implements IPhysicsPackInfo {
     public String getName() {
         return "westerlife:builtin";
     }
+
+    @Override
+    public String getPackName() {
+        return "westerlife";
+    }
+
+    @Override
+    public String getFullName() {
+        return "westerlife:builtin";
+    }
+
+    @Override
+    public Vector3f getScaleModifier() {
+        return null;
+    }
+
+    @Override
+    public ObjectCollisionsHelper getCollisionsHelper() {
+        return null;
+    }
+
 
     public static class WesterPackInfo extends PackInfo {
 

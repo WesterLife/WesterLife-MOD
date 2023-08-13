@@ -2,8 +2,12 @@ package fr.yan36.westerlife.common;
 
 import fr.yan36.westerlife.common.blocks.tileentity.*;
 import fr.yan36.westerlife.common.handlers.SoundsHandler;
+import net.minecraft.block.BlockDynamicLiquid;
+import net.minecraft.client.renderer.BlockFluidRenderer;
+import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.event.ScreenshotEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -47,12 +51,21 @@ public class CommonProxy {
         GameRegistry.registerTileEntity(TilePanneauAgglomeration.class, new ResourceLocation("westerlife", "panneauagglomeration"));
         GameRegistry.registerTileEntity(TilePanneauRue.class, new ResourceLocation("westerlife", "panneaurue"));
         GameRegistry.registerTileEntity(TilePanneauRueSP.class, new ResourceLocation("westerlife", "panneauruesp"));
+        GameRegistry.registerTileEntity(TileAIPoint.class, new ResourceLocation("westerlife", "aipoint"));
+        GameRegistry.registerTileEntity(TilePark.class, new ResourceLocation("westerlife", "park"));
+        GameRegistry.registerTileEntity(TileGarage.class, new ResourceLocation("westerlife", "garage"));
+        GameRegistry.registerTileEntity(TileMacdo.class, new ResourceLocation("westerlife", "macdo"));
         SoundsHandler.registerSounds();
         MinecraftForge.EVENT_BUS.register(this);
+
+//        ScreenshotEvent
+
 
 
 //        GameRegistry.registerTileEntity(TEDigicode.class, new ResourceLocation("westerlife", "tedigicode"));
     }
+
+
 
     public void init()
     {

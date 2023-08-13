@@ -1,6 +1,7 @@
 package fr.yan36.westerlife.common.blocks.tileentity;
 
 import com.jme3.bullet.collision.shapes.CompoundCollisionShape;
+import fr.dynamx.api.contentpack.object.part.IShapeInfo;
 import fr.dynamx.common.DynamXContext;
 import fr.dynamx.common.contentpack.type.objects.BlockObject;
 import fr.dynamx.utils.optimization.MutableBoundingBox;
@@ -12,6 +13,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -71,7 +73,7 @@ public class TilePoteauLevant extends TileEntitySyncClient implements ITickable 
             }
         }
         sync();
-        super.update();
+
     }
 
     public void setState(String s) {
@@ -87,10 +89,12 @@ public class TilePoteauLevant extends TileEntitySyncClient implements ITickable 
     }
 
 
+
+
     @Override
-    public List<MutableBoundingBox> getUnrotatedCollisionBoxes() {
+    public List<IShapeInfo> getUnrotatedCollisionBoxes() {
         if(this.getState().equals("open")) {
-            return Collections.singletonList(new MutableBoundingBox(0, 0, 0, 0, 0, 0));
+            return new ArrayList<>();
         }
         return super.getUnrotatedCollisionBoxes();
     }

@@ -1,9 +1,14 @@
 package fr.yan36.westerlife.CoreMod;
 
+import fr.aym.acslib.services.impl.stats.core.StatsBotCorePlugin;
+import fr.aym.loadingscreen.client.SplashScreenTransformer;
+import fr.yan36.westerlife.CoreMod.mixins.MixinsSplashScreen;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 import net.minecraftforge.fml.relauncher.Side;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.spongepowered.asm.launch.MixinBootstrap;
+import org.spongepowered.asm.mixin.Mixins;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -17,9 +22,12 @@ public class WesterLifeCoreMod implements IFMLLoadingPlugin {
 
 
 
+        MixinBootstrap.init();
+        Mixins.addConfiguration("mixins.westerlife.json");
 
-
-        return new String[] {  };
+        return new String[]{
+                WesterLifeSecurityManager.class.getName(),
+        };
     }
 
     public String getModContainerClass() {

@@ -13,13 +13,16 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Objects;
 
-public class PacketOpenMcefGui implements IMessage{
+import static fr.yan36.westerlife.client.Client.needToCreateCharacter;
+
+public class PacketOpenMcefGui implements IMessage {
 
 
     String screenName;
     BlockPos pos;
 
-    public PacketOpenMcefGui(){}
+    public PacketOpenMcefGui() {
+    }
 
     public PacketOpenMcefGui(String screenName) {
         this.screenName = screenName;
@@ -47,7 +50,11 @@ public class PacketOpenMcefGui implements IMessage{
         @Override
         @SideOnly(Side.CLIENT)
         public IMessage onMessage(PacketOpenMcefGui m, MessageContext ctx) {
-            Client.setScreenMcef(m.screenName, m.pos);
+            if (Objects.equals(m.screenName, "perso")) {
+                needToCreateCharacter = 1;
+            } else {
+                Client.setScreenMcef(m.screenName, m.pos);
+            }
             return null;
         }
     }

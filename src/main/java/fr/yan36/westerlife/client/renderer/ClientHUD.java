@@ -4,6 +4,7 @@ import fr.nathanael2611.simpledatabasemanager.client.ClientDatabases;
 import fr.nathanael2611.simpledatabasemanager.core.Databases;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.client.Client;
+import fr.yan36.westerlife.common.capabilities.playerstat.PlayerStatCapability;
 import fr.yan36.westerlife.common.items.ItemCard;
 import fr.yan36.westerlife.common.network.PacketRequestCharacter;
 import fr.yan36.westerlife.common.objects.character.Character;
@@ -33,6 +34,9 @@ public class ClientHUD {
     @SideOnly(Side.CLIENT)
     public void healthRender(RenderGameOverlayEvent.Pre event) {
         if(event.getType().equals(RenderGameOverlayEvent.ElementType.HEALTH) || event.getType().equals(RenderGameOverlayEvent.ElementType.FOOD) || event.getType().equals(RenderGameOverlayEvent.ElementType.EXPERIENCE)) {
+            if(Minecraft.getMinecraft().isReducedDebug()) {
+                return;
+            }
             event.setCanceled(true);
         }
     }
@@ -41,6 +45,11 @@ public class ClientHUD {
     public void healthRender(RenderGameOverlayEvent.Post event) {
         EntityPlayer player = Minecraft.getMinecraft().player;
         if(!(player == null)) {
+
+            if(Minecraft.getMinecraft().player.hasCapability(PlayerStatCapability.CAPABILITY, null)) {
+                Minecraft.getMinecraft().fontRenderer.drawString("§6" + Objects.requireNonNull(player.getCapability(PlayerStatCapability.CAPABILITY, null)).getAnimation() + " $", 5, 50, 0xFFFFFF);
+            }
+
             if (player.getHeldItem(EnumHand.MAIN_HAND).getItem() instanceof ItemCard) {
                 ItemCard card = (ItemCard) player.getHeldItem(EnumHand.MAIN_HAND).getItem();
                 GlStateManager.enableAlpha();

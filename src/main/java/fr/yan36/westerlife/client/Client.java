@@ -1,30 +1,49 @@
 package fr.yan36.westerlife.client;
 
+import com.google.common.collect.Lists;
 import com.mrcrayfish.obfuscate.client.event.ModelPlayerEvent;
 import fr.aym.acsguis.api.ACsGuiApi;
+import fr.dynamx.api.contentpack.object.render.IObjPackObject;
 import fr.dynamx.api.events.ArmorEvent;
+import fr.dynamx.api.events.DynamXItemEvent;
+import fr.dynamx.api.events.EventStage;
 import fr.dynamx.api.events.VehicleEntityEvent;
 import fr.dynamx.client.handlers.hud.CarController;
+import fr.dynamx.client.renders.model.ItemObjModel;
+import fr.dynamx.client.renders.model.renderer.ObjModelRenderer;
+import fr.dynamx.common.DynamXContext;
 import fr.dynamx.common.items.DynamXItemArmor;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.client.gui.acs.*;
 import fr.yan36.westerlife.client.gui.mcef.BrowserScreen;
 import fr.yan36.westerlife.client.gui.other.EngineFailureIcon;
+import fr.yan36.westerlife.client.gui.other.GuiWorldSelectPatcher;
+import fr.yan36.westerlife.common.Util;
+import fr.yan36.westerlife.common.blocks.tileentity.TileMacdo;
 import fr.yan36.westerlife.common.init.DynamXInit;
+import fr.yan36.westerlife.common.items.dynamx.ItemBurger;
 import fr.yan36.westerlife.common.objects.character.Character;
 import fr.yan36.westerlife.common.objects.character.Permis;
 import fr.yan36.westerlife.common.utils.Animation;
 import fr.yan36.westerlife.common.utils.list.Warp;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.GuiIngameMenu;
-import net.minecraft.client.gui.GuiMainMenu;
-import net.minecraft.client.gui.GuiScreenServerList;
+import net.minecraft.client.gui.*;
 import net.minecraft.client.model.ModelBiped;
+import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.client.event.GuiOpenEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -35,21 +54,21 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import net.minecraftforge.fml.common.network.FMLNetworkEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.opengl.Display;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.util.ResourceLoader;
 
 import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.util.*;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Mod.EventBusSubscriber
@@ -83,7 +102,12 @@ public class Client {
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
     public void setupPlayerRotations(ModelPlayerEvent.SetupAngles.Pre event) {
-        event.getModelPlayer().bipedRightArm.rotateAngleZ = 0;
+
+
+//        event.getModelPlayer().boxList.forEach(a -> a.rotationPointX = 1);
+        event.getModelPlayer().boxList.forEach(a -> a.rotateAngleX = 90);
+
+
         animationState.forEach((id, animation) -> {
 
             if (event.getEntityPlayer().getEntityId() == id) {
@@ -161,6 +185,7 @@ public class Client {
         }
     }
 
+
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
     public void GuieventHandler(GuiOpenEvent e) throws IOException, InterruptedException {
@@ -168,7 +193,7 @@ public class Client {
         if (e.getGui() instanceof GuiMainMenu) {
 //             prout c'est chiant pour dev donc
             e.setCanceled(true);
-            if(Main.isOpti) {
+            if (Main.isOpti) {
                 Minecraft.getMinecraft().displayGuiScreen(new CSSGuiMainMenu().getGuiScreen());
             } else {
                 Main.browserScreen = new BrowserScreen("mod://westerlife/main_menu/main.html");
@@ -180,7 +205,15 @@ public class Client {
 
         if (e.getGui() instanceof GuiScreenServerList) {
 
+
         }
+
+        if (e.getGui() instanceof GuiWorldSelection) {
+
+            e.setGui(new GuiWorldSelectPatcher(Minecraft.getMinecraft().currentScreen));
+
+        }
+
         if (e.getGui() instanceof GuiIngameMenu) {
 
             if (Main.isOpti) {
@@ -209,7 +242,7 @@ public class Client {
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
     public void onTickEvent(TickEvent.ClientTickEvent event) {
-        if (needToCreateCharacter == 1 && Minecraft.getMinecraft().world != null) {
+        if (needToCreateCharacter == 1 && Minecraft.getMinecraft().world != null && Minecraft.getMinecraft().isGamePaused()) {
             if (Main.isOpti) {
                 Minecraft.getMinecraft().displayGuiScreen(new CSSCreateCharacter().getGuiScreen());
                 needToCreateCharacter = 2;
@@ -251,54 +284,129 @@ public class Client {
         }
     }
 
-    //    @SideOnly(Side.CLIENT)
-//    @SubscribeEvent
-//    public void onRenderPre(RenderGameOverlayEvent.Pre event) {
-//        if (event.getType() == RenderGameOverlayEvent.ElementType.DEBUG) {
-//            Minecraft mc = Minecraft.getMinecraft();
-//            event.setCanceled(true);
-//            EnumFacing orientation = mc.player.getHorizontalFacing();
-//            int dir = Math.round(orientation.getHorizontalAngle());
-//            String dire;
-//            switch (dir) {
-//                case 0:
-//                    dire = "North";
-//                    break;
-//                case 90:
-//                    dire = "East";
-//                    break;
-//                case 180:
-//                    dire = "South";
-//                    break;
-//                case 270:
-//                    dire = "West";
-//                    break;
-//                default:
-//                    dire = "undifined";
-//                    break;
-//            }
-//
-//            DecimalFormat df = new DecimalFormat("#.##");
-//            df.setRoundingMode(RoundingMode.HALF_UP);
-////            this.drawString(Minecraft.getMinecraft().fontRenderer, "WesterLife - Menu de Débug", 5, 10, 0xFF5C5C);
-////            this.drawString(Minecraft.getMinecraft().fontRenderer, mc.debug.split(",", 2)[0].substring(0, 6), 5, 20, 0xFF5C5C);
-////            this.drawString(Minecraft.getMinecraft().fontRenderer, "Direction : " + dire, 5, 30, 0xFF5C5C);
-////            this.drawString(Minecraft.getMinecraft().fontRenderer, "GPS :", 5, 40, 0xFF5C5C);
-////            this.drawString(Minecraft.getMinecraft().fontRenderer, "X: " + df.format(Minecraft.getMinecraft().player.posX) + " Y: " + df.format(Minecraft.getMinecraft().player.posY) + " Z: " + df.format(Minecraft.getMinecraft().player.posZ), 5, 50, 0xFF5C5C);
+    private boolean drawHardwareProps = false;
+
+
+    @SubscribeEvent
+    public static void itemRenderer(DynamXItemEvent.Render e) throws Exception {
+        if (e.getStage().equals(EventStage.PRE)) {
+            if (e.getItem().getItem().equals(DynamXInit.burger)) {
+                e.setCanceled(true);
+                GlStateManager.pushMatrix();
+                GlStateManager.rotate(90, 1, 0, 0);
+                GlStateManager.translate(0.5f, 0.5f, -0.6f);
+                ObjModelRenderer objModelRenderer = DynamXContext.getObjModelRegistry().getModel(new ResourceLocation("westerlife", "models/dynamx/blocks/macdo/macdo.obj"));
+
+
+                if (e.getItem().getTagCompound() == null) {
+
+
+
+                } else {
+                    List<TileMacdo.burger> ingredients = new ArrayList<>();
+                    String s = e.getItem().getTagCompound().getString("burger");
+                    for (String s1 : s.split(", ")) {
+                        ingredients.add(TileMacdo.burger.valueOf(s1));
+                    }
+                    if (e.getTransformType().equals(ItemCameraTransforms.TransformType.GUI)) {
+                        GlStateManager.rotate(90, 1, 0, 0);
+                        GlStateManager.scale(2.2, 2.2, 2.2);
+                        DynamXContext.getObjModelRegistry().getModel(new ResourceLocation("westerlife", "models/dynamx/blocks/macdo/macdo.obj")).renderGroups("steak", (byte) 0);
+
+                    } else if (e.getTransformType().equals(ItemCameraTransforms.TransformType.FIRST_PERSON_LEFT_HAND) || e.getTransformType().equals(ItemCameraTransforms.TransformType.FIRST_PERSON_RIGHT_HAND)) {
+                        GlStateManager.rotate(90, 1, 0, 0);
+                        GlStateManager.translate(0, -0.1f, 0);
+                    } else {
+                        GlStateManager.rotate(180, 0, 0, 1);
+                    }
+
+                    for (TileMacdo.burger compo : ingredients) {
+                        objModelRenderer.renderGroups(compo.getRendervalue(), (byte) 0);
+                        GlStateManager.translate(0, 0.02f,0);
+                    }
+                }
+
+                GlStateManager.popMatrix();
+            }
+        }
+    }
+
+    @SideOnly(Side.CLIENT)
+    @SubscribeEvent
+    public void onRenderPre(RenderGameOverlayEvent.Pre event) {
+        if (event.getType() == RenderGameOverlayEvent.ElementType.DEBUG) {
+            Minecraft mc = Minecraft.getMinecraft();
+            event.setCanceled(true);
+            EnumFacing orientation = mc.player.getHorizontalFacing();
+            int dir = Math.round(orientation.getHorizontalAngle());
+            String dire;
+            switch (dir) {
+                case 0:
+                    dire = "North";
+                    break;
+                case 90:
+                    dire = "East";
+                    break;
+                case 180:
+                    dire = "South";
+                    break;
+                case 270:
+                    dire = "West";
+                    break;
+                default:
+                    dire = "undifined";
+                    break;
+            }
+            Chunk chunk = mc.world.getChunk(mc.player.getPosition());
+            DecimalFormat df = new DecimalFormat("#.##");
+            df.setRoundingMode(RoundingMode.HALF_UP);
+            this.drawString(Minecraft.getMinecraft().fontRenderer, "WesterLife - Menu de Debug", 5, 10, 0xFF5C5C);
+//            this.drawString(Minecraft.getMinecraft().fontRenderer, mc.debug.split(",", 2)[0].substring(0, 6), 5, 20, 0xFF5C5C);
+            this.drawString(Minecraft.getMinecraft().fontRenderer, "Direction : " + dire, 5, 30, 0xFF5C5C);
+            if (mc.player.isCreative())
+                this.drawString(Minecraft.getMinecraft().fontRenderer, "GPS :", 5, 40, 0xFF5C5C);
+            if (mc.player.isCreative())
+                this.drawString(Minecraft.getMinecraft().fontRenderer, "X: " + df.format(Minecraft.getMinecraft().player.posX) + " Y: " + df.format(Minecraft.getMinecraft().player.posY) + " Z: " + df.format(Minecraft.getMinecraft().player.posZ), 5, 50, 0xFF5C5C);
+            this.drawString(Minecraft.getMinecraft().fontRenderer, "FPS : " + Minecraft.getDebugFPS(), 5, 60, 0xFF5C5C);
+            this.drawString(Minecraft.getMinecraft().fontRenderer, "Private data : " + Minecraft.getMinecraft().player.chunkCoordX + " " + Minecraft.getMinecraft().player.chunkCoordZ + " " + Main.isOpti, 5, 70, 0xFF5C5C);
+            this.drawString(Minecraft.getMinecraft().fontRenderer, "    SPV : " + DynamXInit.fastRegistryAccess.keySet().size() + " " + Client.knowCharacters.keySet().size() + " " + Client.knowPermis.size(), 5, 80, 0xFF5C5C);
+            this.drawString(Minecraft.getMinecraft().fontRenderer, "    OPT : " + Main.isOpti + " " + Client.waitForSomething.keySet().size() + " " + Client.superpositionState.keySet().size(), 5, 90, 0xFF5C5C);
+            this.drawString(Minecraft.getMinecraft().fontRenderer, "    LGH : " + chunk.getLightSubtracted(mc.player.getPosition(), 0), 5, 100, 0xFF5C5C);
+
+
+            long i = Runtime.getRuntime().maxMemory();
+            long j = Runtime.getRuntime().totalMemory();
+            long k = Runtime.getRuntime().freeMemory();
+            long l = j - k;
+            List<String> list = Lists.newArrayList(String.format("Java: %s %dbit", System.getProperty("java.version"), mc.isJava64bit() ? 64 : 32), String.format("Mem: % 2d%% %03d/%03dMB", l * 100L / i, bytesToMb(l), bytesToMb(i)), String.format("Allocated: % 2d%% %03dMB", j * 100L / i, bytesToMb(j)), "", String.format("CPU: %s", OpenGlHelper.getCpu()), "", String.format("Display: %dx%d (%s)", Display.getWidth(), Display.getHeight(), GlStateManager.glGetString(7936)), GlStateManager.glGetString(7937), GlStateManager.glGetString(7938));
+
+            if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) || drawHardwareProps) {
+                for (int i1 = 0; i1 < list.size(); ++i1) {
+                    String s = list.get(i1);
+                    this.drawString(Minecraft.getMinecraft().fontRenderer, s, 5, 120 + i1 * 10, 0xFF5C5C);
+                }
+                drawHardwareProps = true;
+            }
+
 //            GlStateManager.pushMatrix();
-//            getFont().drawString(5, 10, "WesterLife - Menu de Débug", org.newdawn.slick.Color.white);
+//            Gui.drawString(5, 10, "WesterLife - Menu de Débug", org.newdawn.slick.Color.white);
 //            getFont().drawString(5, 20, mc.debug.split(",", 2)[0].substring(0, 6), org.newdawn.slick.Color.white);
 //            getFont().drawString(5, 30, "Direction : " + dire, org.newdawn.slick.Color.white);
 //            getFont().drawString(5, 40, "GPS :", org.newdawn.slick.Color.white);
 //            getFont().drawString(5, 50, "X: " + df.format(Minecraft.getMinecraft().player.posX) + " Y: " + df.format(Minecraft.getMinecraft().player.posY) + " Z: " + df.format(Minecraft.getMinecraft().player.posZ), org.newdawn.slick.Color.white);
 //            GlStateManager.popMatrix();
-//        }
-//
-//        if (event.getType() == RenderGameOverlayEvent.ElementType.EXPERIENCE || event.getType() == RenderGameOverlayEvent.ElementType.FOOD || event.getType() == RenderGameOverlayEvent.ElementType.HEALTH || event.getType() == RenderGameOverlayEvent.ElementType.HEALTH) {
-//            event.setCanceled(true);
-//
-//        }
-//    }
+        }
+
+        if (event.getType() == RenderGameOverlayEvent.ElementType.EXPERIENCE || event.getType() == RenderGameOverlayEvent.ElementType.FOOD || event.getType() == RenderGameOverlayEvent.ElementType.HEALTH || event.getType() == RenderGameOverlayEvent.ElementType.HEALTH) {
+            event.setCanceled(true);
+
+        }
+    }
+
+    private static long bytesToMb(long bytes) {
+        return bytes / 1024L / 1024L;
+    }
+
     @SideOnly(Side.CLIENT)
 
     public void drawString(FontRenderer fontRenderer, String str, int x, int y, int color) {
@@ -367,21 +475,6 @@ public class Client {
 
     }
 
-    @SubscribeEvent
-    @SideOnly(Side.CLIENT)
-    public void armorSuperpositor(TickEvent.RenderTickEvent event) {
-        // get all players arround the player
-        // check if player is ingame
-        boolean isPlayerInGame = Minecraft.getMinecraft().player != null && Minecraft.getMinecraft().world != null;
-        if (!isPlayerInGame) return;
-        List<EntityPlayer> players = Minecraft.getMinecraft().world.playerEntities;
-        players.forEach((entityPlayer -> {
-
-        }));
-
-
-    }
-
 
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
@@ -397,7 +490,7 @@ public class Client {
         if (keyOpenClothes.isPressed()) {
             ACsGuiApi.asyncLoadThenShowGui("clothes", CSSGuiClothes::new);
         }
-        if (Keyboard.isKeyDown(Keyboard.KEY_F3)) {
+        if (Keyboard.isKeyDown(Keyboard.KEY_F3) && Keyboard.isKeyDown(Keyboard.KEY_V)) {
             List<DynamXItemArmor<?>> globalitems = ForgeRegistries.ITEMS.getEntries().stream().filter(e -> e.getValue() instanceof DynamXItemArmor<?>).collect(Collectors.toCollection(ArrayList::new)).stream().map(e -> (DynamXItemArmor<?>) e.getValue()).collect(Collectors.toList());
             for (DynamXItemArmor<?> item : globalitems) {
                 DynamXInit.fastRegistryAccess.put(item.getInfo().getFullName(), item);
@@ -407,14 +500,20 @@ public class Client {
             Client.knowPermis.clear();
             Client.waitForSomething.clear();
         }
-        if (Keyboard.isKeyDown(Keyboard.KEY_F7)) {
+        if (Keyboard.isKeyDown(Keyboard.KEY_F3) && Keyboard.isKeyDown(Keyboard.KEY_K)) {
             Main.isOpti = !Main.isOpti;
+            // show toast message
+            if (Main.isOpti) {
+                Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(new TextComponentString("§l§cMode optimisation des activé"));
+            } else {
+                Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(new TextComponentString("§l§cMode optimisation des désactivé"));
+            }
         }
-        if (Keyboard.isKeyDown(Keyboard.KEY_F12)) {
-//            Main.getPlayerManager().loadTrack("http://193.38.250.14:8000/mix.m3u");
-//            Main.getPlayerManager().getAudioPlayer().setVolume(100);
-//            System.out.println(Main.getPlayerManager().getAudioPlayer().getPlayingTrack() + " / " + Main.getPlayerManager().getAudioPlayer().getVolume());
-        }
+//        if (Keyboard.isKeyDown(Keyboard.KEY_F12)) {
+////            Main.getPlayerManager().loadTrack("http://193.38.250.14:8000/mix.m3u");
+////            Main.getPlayerManager().getAudioPlayer().setVolume(100);
+////            System.out.println(Main.getPlayerManager().getAudioPlayer().getPlayingTrack() + " / " + Main.getPlayerManager().getAudioPlayer().getVolume());
+//        }
     }
 
     @SubscribeEvent

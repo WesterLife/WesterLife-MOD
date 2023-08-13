@@ -3,9 +3,7 @@ package fr.yan36.westerlife.common.network;
 import fr.aym.acsguis.api.ACsGuiApi;
 import fr.aym.acsguis.component.panel.GuiFrame;
 import fr.yan36.westerlife.client.Client;
-import fr.yan36.westerlife.client.gui.acs.CSSGuiColoredBlock;
-import fr.yan36.westerlife.client.gui.acs.CSSGuiGendKit;
-import fr.yan36.westerlife.client.gui.acs.CSSGuiLights;
+import fr.yan36.westerlife.client.gui.acs.*;
 import fr.yan36.westerlife.common.Util;
 import fr.yan36.westerlife.common.objects.LightSequence;
 import io.netty.buffer.ByteBuf;
@@ -33,7 +31,6 @@ public class PacketOpenAcsGui implements IMessage{
         this.screen = screen;
         this.args = args;
         this.args2 = args2;
-
     }
 
 
@@ -63,6 +60,18 @@ public class PacketOpenAcsGui implements IMessage{
             }
             if(m.screen == 3) {
                 ACsGuiApi.asyncLoadThenShowGui("blockColor", () -> new CSSGuiGendKit(m.args));
+            }
+            if(m.screen == 4) {
+                ACsGuiApi.asyncLoadThenShowGui("notifgui", CSSGuiNotif::new);
+            }
+            if(m.screen == 5) {
+                ACsGuiApi.asyncLoadThenShowGui("editObjectGui",() -> new CSSGuiEditObject(m.args, m.args2));
+            }
+            if(m.screen == 6) {
+                ACsGuiApi.asyncLoadThenShowGui("garage",() -> new CSSGuiGarage(m.args, m.args2));
+            }
+            if(m.screen == 7) {
+                ACsGuiApi.asyncLoadThenShowGui("macdo",() -> new CSSGuiMacdo(m.args, m.args2));
             }
             return null;
         }

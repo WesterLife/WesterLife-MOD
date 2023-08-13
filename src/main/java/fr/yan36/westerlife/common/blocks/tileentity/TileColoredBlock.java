@@ -38,8 +38,6 @@ public class TileColoredBlock extends TileEntitySyncClient implements ITickable 
         }
 
 
-
-        super.update();
     }
 
     public void setColor(int color) {

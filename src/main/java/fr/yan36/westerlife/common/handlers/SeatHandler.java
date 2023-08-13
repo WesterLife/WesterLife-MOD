@@ -1,9 +1,12 @@
 package fr.yan36.westerlife.common.handlers;
 
 
+import fr.dynamx.common.blocks.DynamXBlock;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.blocks.dynamx.BlockChair;
+import fr.yan36.westerlife.common.blocks.dynamx.BlockSittable;
 import fr.yan36.westerlife.common.entities.EntitySeat;
+import fr.yan36.westerlife.common.init.DynamXInit;
 import fr.yan36.westerlife.common.utils.Seatutils;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -29,6 +32,10 @@ public class SeatHandler {
             BlockPos pos = event.getPos();
             IBlockState state = world.getBlockState(pos);
             Block block = world.getBlockState(pos).getBlock();
+            if(block instanceof BlockSittable) {
+                BlockSittable b = (BlockSittable) block;
+                pos.add(b.getSeatModifier().x, b.getSeatModifier().y, b.getSeatModifier().z);
+            }
             EntityPlayer player = event.getEntityPlayer();
             if(isValidBlock(world, pos, state, block) && isPlayerInRange(player, pos) && player.getHeldItemMainhand().isEmpty())
             {
@@ -82,7 +89,7 @@ public class SeatHandler {
     private static boolean isValidBlock(World world, BlockPos pos, IBlockState state, Block block)
     {
 
-        return block instanceof BlockChair;
+        return ((block instanceof BlockChair) || (block instanceof BlockSittable));
     }
 
     /**

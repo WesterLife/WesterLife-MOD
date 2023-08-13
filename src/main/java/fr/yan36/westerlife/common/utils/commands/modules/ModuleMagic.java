@@ -36,6 +36,9 @@ public class ModuleMagic extends CommandModule {
                 System.out.println(item.getDisplayName());
             }
         }
+        if(args[1].equals("notif")) {
+            Main.network.sendTo(new PacketOpenAcsGui(4,",",""), (EntityPlayerMP) sender);
+        }
         if(args[1].equals("giveKit")) {
             List<ItemStack> items = Util.stringToItemStackList(Main.wl_db.getString("kits."+args[2]));
             EntityPlayerMP target = (EntityPlayerMP) sender;

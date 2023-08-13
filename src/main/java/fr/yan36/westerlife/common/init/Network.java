@@ -1,6 +1,7 @@
 package fr.yan36.westerlife.common.init;
 
 import fr.yan36.westerlife.Main;
+import fr.yan36.westerlife.common.capabilities.packets.PacketSyncAnimation;
 import fr.yan36.westerlife.common.network.*;
 import fr.yan36.westerlife.common.network.old.*;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
@@ -8,7 +9,7 @@ import net.minecraftforge.fml.relauncher.Side;
 
 public class Network {
 
-    public static void init() {
+    public static void init(Side side) {
         Main.network = NetworkRegistry.INSTANCE.newSimpleChannel("westerlife1");
         Main.network.registerMessage(PacketAskToCreateCharacter.handler.class, PacketAskToCreateCharacter.class, 1, Side.CLIENT);
         Main.network.registerMessage(PacketCreateCharacter.ServerHandler.class, PacketCreateCharacter.class, 2, Side.SERVER);
@@ -34,6 +35,16 @@ public class Network {
         Main.network.registerMessage(PacketSendCharacter.Handler.class, PacketSendCharacter.class, 30, Side.CLIENT);
         Main.network.registerMessage(PacketChangeBlockColor.Handler.class, PacketChangeBlockColor.class, 31, Side.SERVER);
         Main.network.registerMessage(PacketSetKit.Handler.class, PacketSetKit.class, 32, Side.SERVER);
+        Main.network.registerMessage(PacketNotif.Handler.class, PacketNotif.class, 33, Side.SERVER);
+        Main.network.registerMessage(PacketUpdateTileEntity.Handler.class, PacketUpdateTileEntity.class, 34, Side.SERVER);
+        Main.network.registerMessage(PacketPutCarInGarage.Handler.class, PacketPutCarInGarage.class, 35, Side.SERVER);
+        Main.network.registerMessage(PacketUpdateMacdo.Handler.class, PacketUpdateMacdo.class, 36, Side.SERVER);
+        if(side.isClient()) {
+            Main.network.registerMessage(PacketSyncAnimation.ClientHandler.class, PacketSyncAnimation.class, 37, Side.CLIENT);
+        } else  {
+            Main.network.registerMessage(PacketSyncAnimation.ServerHandler.class, PacketSyncAnimation.class, 37, Side.SERVER); //CEST NORMAL LE PACKET EST LE MEME
+        }
+
 
     }
 }

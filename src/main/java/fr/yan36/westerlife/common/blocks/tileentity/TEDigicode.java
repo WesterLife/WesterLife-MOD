@@ -43,7 +43,4 @@ public class TEDigicode extends TileEntitySyncClient {
     }
 
 
-    @Override
-    public void update() {
-    }
 }

@@ -2,6 +2,10 @@ package fr.yan36.westerlife.common;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
+import com.jme3.math.Vector3f;
+import fr.yan36.westerlife.common.blocks.dynamx.BlockAIPoint;
+import fr.yan36.westerlife.common.blocks.tileentity.TileEntitySyncClient;
+import fr.yan36.westerlife.common.init.DynamXInit;
 import fr.yan36.westerlife.common.objects.KitWSD;
 import fr.yan36.westerlife.common.utils.AABB;
 import net.minecraft.block.Block;
@@ -13,17 +17,16 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.JsonToNBT;
-import net.minecraft.nbt.NBTException;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EntitySelectors;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.*;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.storage.MapStorage;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.*;
 
@@ -42,6 +45,44 @@ public class Util {
         return instance;
     }
 
+    public static int getAngleBetweenTwoPoint(BlockPos p1, BlockPos p2) {
+        double angle = Math.toDegrees(Math.atan2(p2.getZ() - p1.getZ(), p2.getX() - p1.getX()));
+        if(angle < 0){
+            angle += 360;
+        }
+        return (int) angle;
+    }
+
+    public static BlockPos getNearestBlockAIPoint(World w,BlockPos from, int range) {
+        // get all blocks in a radius of range
+        List<BlockPos> blocks = new ArrayList<BlockPos>();
+        for (int x = from.getX() - range; x < from.getX() + range; x++) {
+            for (int y = from.getY() - range; y < from.getY() + range; y++) {
+                for (int z = from.getZ() - range; z < from.getZ() + range; z++) {
+                    BlockPos pos = new BlockPos(x - 1 , y , z - 1);
+                    if (w.getBlockState(pos).getBlock() instanceof BlockAIPoint) {
+                        blocks.add(pos);
+                    }
+                }
+            }
+        }
+
+        // sort by distance
+        Collections.sort(blocks, new Comparator<BlockPos>() {
+            @Override
+            public int compare(BlockPos o1, BlockPos o2) {
+                return (int) (o1.distanceSq(from) - o2.distanceSq(from));
+            }
+        });
+
+        if(blocks.size() == 1 || blocks.size() == 0)
+            return new BlockPos(-1,-1,-1);
+
+        if((blocks.get(1) != null)) return blocks.get(1);
+        else return new BlockPos(-1,-1,-1);
+
+    }
+
     public static void setKitTest(World world, String arg) {
         MapStorage storage = world.getMapStorage();
         assert storage != null;
@@ -55,6 +96,9 @@ public class Util {
 
     }
 
+    public static boolean isProximity(EntityPlayer player, BlockPos pos, int range) {
+        return player.getDistanceSq(pos) < range * range;
+    }
 
 
     public static BlockPos parseBlockPosFromString(String stringPos)
@@ -256,4 +300,6 @@ public class Util {
     public static boolean hasPermission(EntityPlayerMP player, String permissionName) {
         return player.canUseCommand(4, permissionName);
     }
+
+
 }

@@ -1,13 +1,25 @@
 package fr.yan36.westerlife.common.blocks.tileentity;
 
+import com.elytradev.mirage.event.GatherLightsEvent;
+import com.elytradev.mirage.lighting.ILightEventConsumer;
+import com.elytradev.mirage.lighting.Light;
 import fr.dynamx.common.contentpack.type.objects.BlockObject;
+import fr.yan36.westerlife.common.entities.EntitySeat;
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.EntityArmorStand;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Rotations;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.common.Optional;
 
 import javax.vecmath.Vector2f;
 
-public class TileLyre extends TileEntitySyncClient implements ITickable {
+@Optional.Interface(iface="com.elytradev.mirage.lighting.ILightEventConsumer", modid="mirage")
+public class TileLyre extends TileEntitySyncClient implements ITickable, ILightEventConsumer {
 
     private BlockObject b;
 
@@ -74,6 +86,12 @@ public class TileLyre extends TileEntitySyncClient implements ITickable {
         markDirty();
     }
 
+    public void setActualrotation(Vector2f actualrotation) {
+        this.actualrotation = actualrotation;
+        sync();
+        markDirty();
+    }
+
     public Vector2f getRotationto() {
         return rotationto;
     }
@@ -134,6 +152,36 @@ public class TileLyre extends TileEntitySyncClient implements ITickable {
                 this.timeMax = 0;
             }
         }
+    }
+
+    @Optional.Method(modid="mirage")
+    @Override
+    public void gatherLights(GatherLightsEvent evt) {
+        // if LIGHT.DOT_15 IS 15° AND getActualrotation().getX() IS MAX TO 360,
+        float yaw = (float) Math.toRadians(((int) getActualrotation().getX()));
+        Light l = Light.builder()
+                .pos(getPos().getX(), getPos().getY(), getPos().getZ())
+                .color(255, 0, 0)
+                .radius(10)
+                .cone(new Vec3d(yaw, 0.7f, 0.7f), 0.8f)
+                .intensity(3)
+                .build();
+
+
+        System.out.println(l.sx + " " + l.sy + " " + l.sz);
+
+
+        evt.add(l);
+//        System.out.println(yaw);
+    }
+
+    private Vec3d getVectorForRotation(float pitch, float yaw)
+    {
+        float f = MathHelper.cos(-yaw * 0.017453292F - (float)Math.PI);
+        float f1 = MathHelper.sin(-yaw * 0.017453292F - (float)Math.PI);
+        float f2 = -MathHelper.cos(-pitch * 0.017453292F);
+        float f3 = MathHelper.sin(-pitch * 0.017453292F);
+        return new Vec3d((double)(f1 * f2), (double)f3, (double)(f * f2));
     }
 
 }

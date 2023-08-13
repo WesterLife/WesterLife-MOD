@@ -32,6 +32,11 @@ public class RenderFeuRouge extends TESRDynamXBlock<TileFeuRouge> {
         if(te.getPosition() == 1) {
             DynamXContext.getObjModelRegistry().getModel(te.getBlockObjectInfo().getModel()).renderGroups("bas", (byte) te.getBlockMetadata());
             DynamXContext.getObjModelRegistry().getModel(te.getBlockObjectInfo().getModel()).renderGroups("poteau1", (byte) te.getBlockMetadata());
+        } else if(te.getPosition() == 3) {
+            GlStateManager.translate(0,-1,0);
+            Util.drawSplitString(Minecraft.getMinecraft().fontRenderer, "CPT", 0,0,0,0xFFFFFF);
+            DynamXContext.getObjModelRegistry().getModel(te.getBlockObjectInfo().getModel()).renderGroups("pieton", (byte) te.getBlockMetadata());
+            DynamXContext.getObjModelRegistry().getModel(te.getBlockObjectInfo().getModel()).renderGroups("poteau2", (byte) te.getBlockMetadata());
         } else {
             GlStateManager.translate(0,-1,0);
             DynamXContext.getObjModelRegistry().getModel(te.getBlockObjectInfo().getModel()).renderGroups("haut", (byte) te.getBlockMetadata());

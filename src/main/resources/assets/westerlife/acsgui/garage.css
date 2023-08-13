@@ -1,0 +1,22 @@
+/*
+
+Attention, propriété de WesterLife, toute utilisation, modification ou reproduction est interdite sans autorisation claire et explicite de la pars de l'administation de WesterLife est formellement interdite.
+Tout manquement à cette règle est passible de poursuite judiciaire.
+
+©️ WesterLife 2023 - Gabidut76, Yan36
+
+*/
+
+.background {
+    right: 25%;
+    height: 70%;
+    width: 50%;
+    vertical-position: center;
+    background-color: rgb(55, 60, 73);
+    border-radius: 10px;
+}
+
+.scrollPane {
+    width: 100%;
+    height: 50%;
+}

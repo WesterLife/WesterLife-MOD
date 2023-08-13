@@ -6,6 +6,7 @@ import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.Util;
 import fr.yan36.westerlife.common.blocks.tileentity.TileColoredBlock;
 import fr.yan36.westerlife.common.blocks.tileentity.TileTombe;
+import fr.yan36.westerlife.common.init.DynamXInit;
 import fr.yan36.westerlife.common.network.PacketOpenAcsGui;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -35,6 +36,9 @@ public class BlockColored extends DynamXBlock {
                 Main.network.sendTo(new PacketOpenAcsGui(2, Util.blockPosToString(pos), ""), (EntityPlayerMP) playerIn);
                 return true;
             }
+            if(playerIn.isCreative() && playerIn.getHeldItem(hand).getItem().equals(DynamXInit.magicWand))
+                Main.network.sendTo(new PacketOpenAcsGui(2, Util.blockPosToString(pos), ""), (EntityPlayerMP) playerIn);
+
         }
         return false;
     }
@@ -43,5 +47,7 @@ public class BlockColored extends DynamXBlock {
     public TileEntity createTileEntity(World world, IBlockState state) {
         return new TileColoredBlock(this.blockObjectInfo);
     }
+
+
 
 }

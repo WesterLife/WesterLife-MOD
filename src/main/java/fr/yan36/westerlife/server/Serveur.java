@@ -2,6 +2,7 @@ package fr.yan36.westerlife.server;
 
 import fr.dynamx.api.entities.VehicleEntityProperties;
 import fr.dynamx.api.events.PhysicsEvent;
+import fr.dynamx.api.events.VehicleEntityEvent;
 import fr.dynamx.api.physics.EnumBulletShapeType;
 import fr.dynamx.common.entities.BaseVehicleEntity;
 import fr.dynamx.common.entities.modules.BasicEngineModule;
@@ -85,6 +86,11 @@ public class Serveur {
             System.out.println(vehicle1.getName() + " à percuté " + vehicle2.getName() + " à " + getSpeed(vehicle1) +" km/h");
 
         }
+    }
+
+    @SubscribeEvent
+    public void onDynxCollide(VehicleEntityEvent.ControllerUpdate e) {
+        System.out.println("c");
     }
     @SubscribeEvent
     public void onPlayerFall(LivingFallEvent e) {

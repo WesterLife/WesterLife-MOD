@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "package": "fr.yan36.westerlife.CoreMod.mixins",
+  "minVersion": "0.8",
+  "client": [
+    "MixinsFluidRenderer",
+    "MixinsSplashScreen"
+  ],
+  "server": [],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "refmap": "mixins.westerlife.refmap.json",
+  "mixins": [
+    "MixinsSplashScreen"
+  ]
+}

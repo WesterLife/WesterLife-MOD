@@ -12,7 +12,7 @@ public class ItemBillet extends Item implements IHasModel {
     public ItemBillet(String name)
     {
         setRegistryName(name);
-        setCreativeTab(Main.WESTER_MAIN);
+        setCreativeTab(Main.WESTER_ECO);
         ItemInit.ITEMS.add(this);
         setMaxDamage(1);
         setTranslationKey(name);
@@ -22,7 +22,7 @@ public class ItemBillet extends Item implements IHasModel {
     @Nullable
     @Override
     public CreativeTabs getCreativeTab() {
-        return Main.WESTER_MAIN;
+        return Main.WESTER_ECO;
     }
 
     @Override

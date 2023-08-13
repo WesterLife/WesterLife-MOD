@@ -9,6 +9,7 @@ import fr.dynamx.utils.DynamXConfig;
 import fr.dynamx.utils.DynamXUtils;
 import fr.dynamx.utils.optimization.MutableBoundingBox;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -24,6 +25,11 @@ public class TestEntity2 extends ModularPhysicsEntity<Entity2PhysicsHandler> {
 
     public TestEntity2(World worldIn) {
         super(worldIn);
+    }
+
+    @Override
+    protected void entityInit() {
+
     }
 
     @Override
@@ -78,6 +84,16 @@ public class TestEntity2 extends ModularPhysicsEntity<Entity2PhysicsHandler> {
 
         }
         return false;
+    }
+
+    @Override
+    protected void readEntityFromNBT(NBTTagCompound compound) {
+
+    }
+
+    @Override
+    protected void writeEntityToNBT(NBTTagCompound compound) {
+
     }
 
 

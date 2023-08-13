@@ -1,19 +1,12 @@
 package fr.yan36.westerlife.common.items;
 
-import com.jme3.math.Vector3f;
-import fr.dynamx.api.contentpack.object.render.Enum3DRenderLocation;
 import fr.dynamx.common.contentpack.type.objects.AbstractItemObject;
 import fr.dynamx.common.items.DynamXItem;
-import fr.nathanael2611.simpledatabasemanager.core.Databases;
 import fr.yan36.westerlife.Main;
-import fr.yan36.westerlife.common.init.ItemInit;
-import fr.yan36.westerlife.common.items.dynamx.ItemDynamx;
-import fr.yan36.westerlife.common.utils.interfaces.IHasModel;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
-import net.minecraft.item.*;
+import net.minecraft.item.EnumAction;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -25,7 +18,7 @@ public class ItemDrink extends DynamXItem {
     public ItemDrink(String name, int amount, float saturation, ResourceLocation model) {
         super(Main.MODID, name, model);
         this.amount = amount;
-        setCreativeTab(Main.WESTER_MAIN);
+        setCreativeTab(Main.WESTER_FOOD);
         setMaxDamage(1);
         setTranslationKey(name);
         setMaxStackSize(2);
@@ -34,7 +27,7 @@ public class ItemDrink extends DynamXItem {
     @Nullable
     @Override
     public CreativeTabs getCreativeTab() {
-        return Main.WESTER_MAIN;
+        return Main.WESTER_FOOD;
     }
 
 
@@ -46,12 +39,6 @@ public class ItemDrink extends DynamXItem {
 
 
 
-
-    @Override
-    public String getJsonName(int meta) {
-        System.out.println("getJsonName");
-        return "drink";
-    }
 
     @Override
     public AbstractItemObject getInfo() {

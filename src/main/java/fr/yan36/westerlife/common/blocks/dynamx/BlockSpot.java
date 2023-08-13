@@ -22,7 +22,7 @@ public class BlockSpot extends DynamXBlock {
 
     public BlockSpot(Material material, String modid, String blockName, ResourceLocation model) {
         super(material, modid, blockName, model);
-        setCreativeTab(Main.WESTER_ROADS);
+        setCreativeTab(Main.WESTER_MAIN);
     }
 
     @Override

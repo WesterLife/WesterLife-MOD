@@ -1,7 +1,5 @@
 {
   "parent": "builtin/generated",
-  "textures": {
-  },
   "display": {
     "thirdperson_lefthand": {
       "rotation": [

@@ -89,7 +89,7 @@ public class TileHerse extends TileEntitySyncClient implements ITickable {
             }
         }
 
-        super.update();
+
     }
 
     @Override

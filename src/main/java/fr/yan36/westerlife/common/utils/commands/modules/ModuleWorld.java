@@ -1,15 +1,18 @@
 package fr.yan36.westerlife.common.utils.commands.modules;
 
 //import fr.yan36.westerlife.common.blocks.tileentity.TEDigicode;
+
 import com.jme3.math.Vector3f;
 import fr.nathanael2611.simpledatabasemanager.core.Databases;
 import fr.yan36.westerlife.Main;
+import fr.yan36.westerlife.common.blocks.dynamx.BlockPanneauRue;
 import fr.yan36.westerlife.common.blocks.tileentity.*;
 import fr.yan36.westerlife.common.network.PacketOpenAcsGui;
 import fr.yan36.westerlife.common.objects.LightSequence;
 import fr.yan36.westerlife.common.utils.commands.CommandModule;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -37,39 +40,40 @@ public class ModuleWorld extends CommandModule {
 
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) {
-        if(args.length > 1) {
-            if(Objects.equals(args[1], "help")) {
+        if (args.length > 1) {
+            if (Objects.equals(args[1], "help")) {
                 sender.sendMessage(new TextComponentString("§c/wlmod world <help/list>"));
-            } else if(Objects.equals(args[1], "barrierelevante")) {
-                if(Objects.equals(args[2], "adduser") || Objects.equals(args[2], "removeuser") || Objects.equals(args[2], "listusers")) {
-                    if(sender instanceof EntityPlayer) {
+            } else if (Objects.equals(args[1], "barrierelevante")) {
+                if (Objects.equals(args[2], "adduser") || Objects.equals(args[2], "removeuser") || Objects.equals(args[2], "listusers")) {
+                    if (sender instanceof EntityPlayer) {
                         EntityPlayer player = (EntityPlayer) sender;
                         RayTraceResult rayTraceResult = player.world.rayTraceBlocks(player.getPositionEyes(1), player.getPositionEyes(1).add(player.getLookVec().scale(10)));
                         assert rayTraceResult != null;
                         System.out.println(rayTraceResult.getBlockPos());
-                        if(rayTraceResult != null) {
+                        if (rayTraceResult != null) {
                             TileMovingGate tileMovingGate = (TileMovingGate) player.world.getTileEntity(rayTraceResult.getBlockPos());
-                            if(tileMovingGate != null) {
-                                if(Objects.equals(args[2], "adduser")) {
+                            if (tileMovingGate != null) {
+                                if (Objects.equals(args[2], "adduser")) {
                                     tileMovingGate.addPlayer(args[3]);
                                     tileMovingGate.sync();
                                     sender.sendMessage(new TextComponentString("§aUser added"));
-                                } else if(Objects.equals(args[2], "removeuser")) {
+                                } else if (Objects.equals(args[2], "removeuser")) {
                                     tileMovingGate.removePlayer(args[3]);
                                     tileMovingGate.sync();
                                     sender.sendMessage(new TextComponentString("§aUser removed"));
                                 }
-                                if(Objects.equals(args[2], "listusers")) {
+                                if (Objects.equals(args[2], "listusers")) {
                                     sender.sendMessage(new TextComponentString("§aUsers: " + tileMovingGate.getPlayer()));
                                 }
+
                             }
                         }
 
                     }
                 }
-            } else if(Objects.equals(args[1], "radar")) {
+            } else if (Objects.equals(args[1], "radar")) {
 
-                if(Objects.equals(args[2], "setspeed")) {
+                if (Objects.equals(args[2], "setspeed")) {
                     if (sender instanceof EntityPlayer) {
                         EntityPlayer player = (EntityPlayer) sender;
                         RayTraceResult rayTraceResult = player.world.rayTraceBlocks(player.getPositionEyes(1), player.getPositionEyes(1).add(player.getLookVec().scale(10)));
@@ -90,7 +94,14 @@ public class ModuleWorld extends CommandModule {
                     }
                 }
 
-            } else if(Objects.equals(args[1], "tombe")) {
+            } else if (Objects.equals(args[1], "itemnbt")) {
+
+                if (sender instanceof EntityPlayer) {
+                    EntityPlayer player = (EntityPlayer) sender;
+                    player.sendMessage(new TextComponentString("§a NBT IN HAND : " + player.getHeldItemMainhand().getTagCompound()));
+                }
+
+            } else if (Objects.equals(args[1], "tombe")) {
 
                 if (sender instanceof EntityPlayer) {
                     EntityPlayer player = (EntityPlayer) sender;
@@ -110,7 +121,7 @@ public class ModuleWorld extends CommandModule {
                 }
 
 
-            } else if(Objects.equals(args[1], "spot")) {
+            } else if (Objects.equals(args[1], "spot")) {
 
                 if (sender instanceof EntityPlayer) {
                     EntityPlayer player = (EntityPlayer) sender;
@@ -131,7 +142,7 @@ public class ModuleWorld extends CommandModule {
                 }
 
 
-            }  else if(Objects.equals(args[1], "portenom")) {
+            } else if (Objects.equals(args[1], "portenom")) {
 
                 if (sender instanceof EntityPlayer) {
                     EntityPlayer player = (EntityPlayer) sender;
@@ -153,12 +164,12 @@ public class ModuleWorld extends CommandModule {
                 }
 
 
-            } else if(Objects.equals(args[1], "sequence")) {
-                if(Objects.equals(args[2], "create")) {
+            } else if (Objects.equals(args[1], "sequence")) {
+                if (Objects.equals(args[2], "create")) {
                     LightSequence lightSequence = new LightSequence();
                     lightSequence.add(new BlockPos(0, -20, 0));
                     Main.wl_db.setString("seq_" + args[3], new LightSequence().toString());
-                    sender.sendMessage(new TextComponentString("§aSequence " + args[3] +" created"));
+                    sender.sendMessage(new TextComponentString("§aSequence " + args[3] + " created"));
                 } else if (Objects.equals(args[2], "addlyre")) {
                     EntityPlayer player = (EntityPlayer) sender;
                     RayTraceResult rayTraceResult = player.world.rayTraceBlocks(player.getPositionEyes(1), player.getPositionEyes(1).add(player.getLookVec().scale(10)));
@@ -176,13 +187,13 @@ public class ModuleWorld extends CommandModule {
                 } else if (Objects.equals(args[2], "addseq")) {
                     Vector3f vector3fTo = new Vector3f(Integer.parseInt(args[3]), Integer.parseInt(args[4]), Integer.parseInt(args[5]));
                     LightSequence lightSequence = LightSequence.fromString(Main.wl_db.getString("seq_" + args[6]));
-                    lightSequence.add(new LightSequence.DoubleVector(new Vector3f(0,0,0), vector3fTo));
+                    lightSequence.add(new LightSequence.DoubleVector(new Vector3f(0, 0, 0), vector3fTo));
                     Main.wl_db.setString("seq_" + args[6], lightSequence.toString());
                     sender.sendMessage(new TextComponentString("§aSequence added to sequence " + args[3] + " " + args[4] + " " + args[5] + " " + args[6]));
                 } else if (Objects.equals(args[2], "play")) {
                     LightSequence lightSequence = LightSequence.fromString(Main.wl_db.getString("seq_" + args[3]));
                     lightSequence.play(sender.getEntityWorld());
-                }  else if (Objects.equals(args[2], "dump")) {
+                } else if (Objects.equals(args[2], "dump")) {
                     LightSequence lightSequence = LightSequence.fromString(Main.wl_db.getString("seq_" + args[3]));
                     sender.sendMessage(new TextComponentString(lightSequence.toString()));
                 } else if (Objects.equals(args[2], "bl")) {
@@ -190,7 +201,7 @@ public class ModuleWorld extends CommandModule {
                     BlockPos blockPos = new BlockPos(Integer.parseInt(args[3]), Integer.parseInt(args[4]), Integer.parseInt(args[5]));
                     TileLyre tileEntity = (TileLyre) sender.getEntityWorld().getTileEntity(blockPos);
 
-                    if(tileEntity != null) {
+                    if (tileEntity != null) {
                         tileEntity.setBlink(!tileEntity.isBlink());
                         tileEntity.sync();
                         tileEntity.syncToClient();
@@ -205,7 +216,7 @@ public class ModuleWorld extends CommandModule {
                 }
 
 
-            } else if(Objects.equals(args[1], "blockcolor")) {
+            } else if (Objects.equals(args[1], "blockcolor")) {
 
                 if (sender instanceof EntityPlayer) {
                     EntityPlayer player = (EntityPlayer) sender;
@@ -216,7 +227,7 @@ public class ModuleWorld extends CommandModule {
                         TileColoredBlock tilechair = (TileColoredBlock) player.world.getTileEntity(rayTraceResult.getBlockPos());
                         if (tilechair != null) {
 
-                            if(args.length == 3) {
+                            if (args.length == 3) {
                                 tilechair.setColor(Integer.parseInt(args[2]));
                                 tilechair.sync();
                                 tilechair.syncToClient();
@@ -242,7 +253,7 @@ public class ModuleWorld extends CommandModule {
                 }
 
 
-            } else if(Objects.equals(args[1], "chair")) {
+            } else if (Objects.equals(args[1], "chair")) {
 
                 if (sender instanceof EntityPlayer) {
                     EntityPlayer player = (EntityPlayer) sender;
@@ -253,7 +264,7 @@ public class ModuleWorld extends CommandModule {
                         TileChair tilechair = (TileChair) player.world.getTileEntity(rayTraceResult.getBlockPos());
                         if (tilechair != null) {
 
-                            if(args.length == 3) {
+                            if (args.length == 3) {
                                 tilechair.setColor(Integer.parseInt(args[2]));
                                 tilechair.sync();
                                 tilechair.syncToClient();
@@ -279,7 +290,7 @@ public class ModuleWorld extends CommandModule {
                 }
 
 
-            } else if(Objects.equals(args[1], "lyre")) {
+            } else if (Objects.equals(args[1], "lyre")) {
 
                 if (sender instanceof EntityPlayer) {
                     EntityPlayer player = (EntityPlayer) sender;
@@ -289,25 +300,31 @@ public class ModuleWorld extends CommandModule {
                     if (rayTraceResult != null) {
                         TileLyre tilespot = (TileLyre) player.world.getTileEntity(rayTraceResult.getBlockPos());
                         if (tilespot != null) {
-                            if(Objects.equals(args[2], "setfrom")) {
+                            if (Objects.equals(args[2], "setfrom")) {
                                 tilespot.setRotationfrom(new Vector2f(Integer.parseInt(args[3]), Integer.parseInt(args[4])));
                                 tilespot.sync();
                                 tilespot.syncToClient();
                                 sender.sendMessage(new TextComponentString("§aSet from to '" + args[3] + " " + args[4] + "'°."));
                             }
-                            if(Objects.equals(args[2], "setto")) {
+                            if (Objects.equals(args[2], "setto")) {
                                 tilespot.setRotationto(new Vector2f(Integer.parseInt(args[3]), Integer.parseInt(args[4])));
                                 tilespot.sync();
                                 tilespot.syncToClient();
                                 sender.sendMessage(new TextComponentString("§aSet to '" + args[3] + " " + args[4] + "'°."));
                             }
-                            if(Objects.equals(args[2], "setmax")) {
+                            if (Objects.equals(args[2], "act")) {
+                                tilespot.setActualrotation(new Vector2f(Integer.parseInt(args[3]), Integer.parseInt(args[4])));
+                                tilespot.sync();
+                                tilespot.syncToClient();
+                                sender.sendMessage(new TextComponentString("§aSet act '" + args[3] + " " + args[4] + "'°."));
+                            }
+                            if (Objects.equals(args[2], "setmax")) {
                                 tilespot.setTimeMax(Integer.parseInt(args[3]));
                                 tilespot.sync();
                                 tilespot.syncToClient();
                                 sender.sendMessage(new TextComponentString("§aSet max '" + args[3] + "' ticks."));
                             }
-                            if(Objects.equals(args[2], "flip")) {
+                            if (Objects.equals(args[2], "flip")) {
                                 tilespot.setFlip(Boolean.parseBoolean(args[3]));
                                 tilespot.sync();
                                 tilespot.syncToClient();
@@ -320,9 +337,9 @@ public class ModuleWorld extends CommandModule {
                 }
 
 
-            } else if(Objects.equals(args[1], "feurouge")) {
+            } else if (Objects.equals(args[1], "feurouge")) {
 
-                if(Objects.equals(args[2], "setpos") || Objects.equals(args[2], "setsync") ) {
+                if (Objects.equals(args[2], "setpos") || Objects.equals(args[2], "setsync")) {
                     if (sender instanceof EntityPlayer) {
                         EntityPlayer player = (EntityPlayer) sender;
                         RayTraceResult rayTraceResult = player.world.rayTraceBlocks(player.getPositionEyes(1), player.getPositionEyes(1).add(player.getLookVec().scale(10)));
@@ -331,11 +348,11 @@ public class ModuleWorld extends CommandModule {
                         if (rayTraceResult != null) {
                             TileFeuRouge tilefeurouge = (TileFeuRouge) player.world.getTileEntity(rayTraceResult.getBlockPos());
                             if (tilefeurouge != null) {
-                                if(Objects.equals(args[2], "setpos")) {
+                                if (Objects.equals(args[2], "setpos")) {
                                     tilefeurouge.setPosition(Integer.parseInt(args[3]));
                                     tilefeurouge.sync();
                                     sender.sendMessage(new TextComponentString("§aSet position to '" + args[3] + "'."));
-                                } else if(Objects.equals(args[2], "setsync")) {
+                                } else if (Objects.equals(args[2], "setsync")) {
                                     tilefeurouge.setSyncvalue(Integer.parseInt(args[3]));
                                     tilefeurouge.sync();
                                     sender.sendMessage(new TextComponentString("§aSet sync to '" + args[3] + "'."));
@@ -348,17 +365,15 @@ public class ModuleWorld extends CommandModule {
                 }
 
 
-
-
-            } else if(Objects.equals(args[1], "resetwater")) {
+            } else if (Objects.equals(args[1], "resetwater")) {
                 Databases.getPlayerData((EntityPlayer) sender).setFloat("watervalue", 100f);
-            } else if(Objects.equals(args[1], "notif")) {
+            } else if (Objects.equals(args[1], "notif")) {
                 Databases.getPlayerData((EntityPlayer) sender).setString("notification", "Bonjour, ceci est un test de §lnotification !");
                 sender.sendMessage(new TextComponentString("§aNotification set !"));
             } else if (Objects.equals(args[1], "digicode")) {
                 //Change the code of a digicode
-                if(Objects.equals(args[2], "setcode") || Objects.equals(args[2], "getcode")) {
-                    if(sender instanceof EntityPlayer) {
+                if (Objects.equals(args[2], "setcode") || Objects.equals(args[2], "getcode")) {
+                    if (sender instanceof EntityPlayer) {
                         EntityPlayer player = (EntityPlayer) sender;
                         RayTraceResult rayTraceResult = player.world.rayTraceBlocks(player.getPositionEyes(1), player.getPositionEyes(1).add(player.getLookVec().scale(10)));
                         assert rayTraceResult != null;
@@ -400,9 +415,15 @@ public class ModuleWorld extends CommandModule {
                     if (rayTraceResult != null) {
                         TilePanneauRue tilePanneauRue = (TilePanneauRue) player.world.getTileEntity(rayTraceResult.getBlockPos());
                         if (tilePanneauRue != null) {
-                            tilePanneauRue.setName(args[2].replaceAll("_", " "));
-                            tilePanneauRue.sync();
-                            tilePanneauRue.syncToClient();
+                            if (args[2].equals("type")) {
+                                tilePanneauRue.setType(BlockPanneauRue.Type.valueOf(args[3]));
+                                tilePanneauRue.sync();
+                                tilePanneauRue.syncToClient();
+                            } else {
+                                tilePanneauRue.setName(args[2].replaceAll("_", " "));
+                                tilePanneauRue.sync();
+                                tilePanneauRue.syncToClient();
+                            }
                         }
                     }
                 }
@@ -411,18 +432,82 @@ public class ModuleWorld extends CommandModule {
             sender.sendMessage(new TextComponentString("§c/wlmod world <help/barrierelevante>"));
         }
     }
+
     @Override
-    public List<String> getTabCompletion(MinecraftServer server, ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
+    public List<String> getTabCompletion(MinecraftServer server, ICommandSender sender, String[]
+            args, @Nullable BlockPos targetPos) {
         ArrayList<String> list = new ArrayList<>();
-        // if world lyre <setfrom/setto>
-        if(args.length == 3) {
-            if(Objects.equals(args[1], "lyre")) {
-                list.add("setfrom");
-                list.add("setto");
-                list.add("setmax");
-                list.add("flip");
+        if (args.length == 2) {
+            list.add("help");
+            list.add("barrierelevante");
+            list.add("radar");
+            list.add("tombe");
+            list.add("spot");
+            list.add("portenom");
+            list.add("sequence");
+            list.add("blockcolor");
+            list.add("chair");
+            list.add("lyre");
+            list.add("feurouge");
+            list.add("resetwater");
+            list.add("notif");
+            list.add("digicode");
+            list.add("pagglo");
+            list.add("prue");
+        } else if (args.length == 3) {
+            switch (args[1]) {
+                case "barrierelevante":
+                    list.add("adduser");
+                    list.add("removeuser");
+                    list.add("listusers");
+                    break;
+                case "radar":
+                    list.add("setspeed");
+                    break;
+                case "sequence":
+                    list.add("create");
+                    list.add("addlyre");
+                    list.add("addseq");
+                    list.add("play");
+                    list.add("dump");
+                    list.add("bl");
+                    list.add("gui");
+                    list.add("manuset");
+                    list.add("reset");
+                    break;
+                case "blockcolor":
+                case "chair":
+                case "feurouge":
+                    list.add("setpos");
+                    list.add("setsync");
+                    break;
+                case "lyre":
+                    list.add("setfrom");
+                    list.add("setto");
+                    list.add("act");
+                    list.add("setmax");
+                    list.add("flip");
+                    break;
+            }
+        } else if (args.length == 4 && args[1].equals("sequence")) {
+            if (args[2].equals("addlyre")) {
+                list.add("<sequence_name>");
+            } else if (args[2].equals("addseq")) {
+                list.add("<x>");
+            }
+        } else if (args.length == 5 && args[1].equals("sequence")) {
+            if (args[2].equals("addseq")) {
+                list.add("<y>");
+            }
+        } else if (args.length == 6 && args[1].equals("sequence")) {
+            if (args[2].equals("addseq")) {
+                list.add("<z>");
+            }
+        } else if (args.length == 7 && args[1].equals("sequence")) {
+            if (args[2].equals("addseq")) {
+                list.add("<sequence_name>");
             }
         }
-        return list;
+        return CommandBase.getListOfStringsMatchingLastWord(args, list);
     }
 }

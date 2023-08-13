@@ -2,23 +2,18 @@ package fr.yan36.westerlife.client.gui.acs;
 
 import fr.aym.acsguis.component.button.GuiButton;
 import fr.aym.acsguis.component.layout.GuiScaler;
-import fr.aym.acsguis.component.list.GuiList;
 import fr.aym.acsguis.component.panel.GuiFrame;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.aym.acsguis.component.textarea.GuiTextField;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.client.Client;
-import fr.yan36.westerlife.client.gui.mcef.BrowserScreen;
-import fr.yan36.westerlife.common.network.PacketAnimation;
 import fr.yan36.westerlife.common.network.PacketCreateCharacter;
-import fr.yan36.westerlife.common.utils.Animation;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;

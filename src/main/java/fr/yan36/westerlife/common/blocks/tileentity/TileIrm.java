@@ -95,7 +95,7 @@ public class TileIrm extends TileEntitySyncClient implements ITickable {
 
 
 
-        super.update();
+
     }
 
     public void setStep(int step) {

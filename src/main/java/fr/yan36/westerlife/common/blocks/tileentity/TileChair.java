@@ -39,7 +39,7 @@ public class TileChair extends TileEntitySyncClient implements ITickable {
 
 
 
-        super.update();
+
     }
 
     public void setColor(int color) {

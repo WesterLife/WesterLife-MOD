@@ -15,7 +15,7 @@ public class ItemPoteauRemote extends DynamXItem {
 
     public ItemPoteauRemote(String modid, String itemName, ResourceLocation model) {
         super(modid, itemName, model);
-        setCreativeTab(Main.WESTER_MAIN);
+        setCreativeTab(Main.WESTER_ROADS);
     }
 
     @Override

@@ -2,6 +2,7 @@ package fr.yan36.westerlife.common.blocks.tileentity;
 
 import com.jme3.bullet.collision.shapes.CompoundCollisionShape;
 import com.jme3.math.Vector3f;
+import fr.dynamx.api.contentpack.object.part.IShapeInfo;
 import fr.dynamx.client.DynamXModelRegistry;
 import fr.dynamx.common.DynamXContext;
 import fr.dynamx.common.contentpack.type.objects.BlockObject;
@@ -18,6 +19,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -28,6 +30,7 @@ public class TileMovingGate extends TileEntitySyncClient implements ITickable {
     private int a = 0;
     private String player = "yan36;gabidut76;_INeox";
     private int timeleft = 0;
+    private boolean isOpenForever = false;
     public TileMovingGate(BlockObject blockObjectInfo) {
         super(blockObjectInfo);
     }
@@ -42,6 +45,7 @@ public class TileMovingGate extends TileEntitySyncClient implements ITickable {
         this.a = tagCompound.getInteger("a");
         this.player = tagCompound.getString("player");
         this.timeleft = tagCompound.getInteger("timeleft");
+        this.isOpenForever = tagCompound.getBoolean("isOpenForever");
         super.readFromNBT(tagCompound);
     }
 
@@ -52,6 +56,7 @@ public class TileMovingGate extends TileEntitySyncClient implements ITickable {
         tagCompound.setInteger("a", this.a);
         tagCompound.setString("player", this.player);
         tagCompound.setInteger("timeleft", this.timeleft);
+        tagCompound.setBoolean("isOpenForever", this.isOpenForever);
         return tagCompound;
     }
 
@@ -60,6 +65,10 @@ public class TileMovingGate extends TileEntitySyncClient implements ITickable {
         if(!this.world.isRemote) {
             AxisAlignedBB aabb = new AxisAlignedBB(this.pos).grow(5);
             List<EntityPlayer> players = this.world.getEntitiesWithinAABB(EntityPlayer.class, aabb);
+
+            if(this.isOpenForever) {
+                this.setState("open");
+            }
 
             for(EntityPlayer p : players) {
                 if(this.getState().equals("closed")) {
@@ -86,6 +95,8 @@ public class TileMovingGate extends TileEntitySyncClient implements ITickable {
                     this.timeleft = 0;
                 }
             } else {
+                if(isOpenForever) this.setState("open");
+
                 this.timeleft = 0;
                 if(this.a < 0) {
                     this.a += 5;
@@ -96,7 +107,7 @@ public class TileMovingGate extends TileEntitySyncClient implements ITickable {
 //        this.computeBoundingBox();
 //        DynamXContext.getPhysicsWorld(world).schedule(this::markCollisionsDirty);
 //        this.world.markBlockRangeForRenderUpdate(pos, pos);
-        super.update();
+
     }
 
     public void setState(String s) {
@@ -122,9 +133,9 @@ public class TileMovingGate extends TileEntitySyncClient implements ITickable {
 
 
     @Override
-    public List<MutableBoundingBox> getUnrotatedCollisionBoxes() {
+    public List<IShapeInfo> getUnrotatedCollisionBoxes() {
         if(this.getState().equals("open")) {
-            return Collections.singletonList(new MutableBoundingBox(0, 0, 0, 0, 0, 0));
+            return new ArrayList<>();
         }
         return super.getUnrotatedCollisionBoxes();
     }
@@ -140,5 +151,21 @@ public class TileMovingGate extends TileEntitySyncClient implements ITickable {
     @Override
     public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate) {
         return oldState.getBlock() != newSate.getBlock();
+    }
+
+    public boolean isOpenForever() {
+        return isOpenForever;
+    }
+
+    public void setOpenForever(boolean openForever) {
+        isOpenForever = openForever;
+        sync();
+        syncToClient();
+    }
+
+    public void setPlayer(String player) {
+        this.player = player;
+        sync();
+        syncToClient();
     }
 }

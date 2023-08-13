@@ -1,9 +1,14 @@
 package fr.yan36.westerlife;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import fr.dynamx.api.contentpack.DynamXAddon;
+import fr.dynamx.api.contentpack.object.render.Enum3DRenderLocation;
+import fr.dynamx.api.events.PhysicsEntityEvent;
 import fr.dynamx.api.obj.ObjModelPath;
 import fr.dynamx.common.DynamXContext;
 import fr.dynamx.common.contentpack.DynamXObjectLoaders;
+import fr.dynamx.common.entities.BaseVehicleEntity;
 import fr.dynamx.common.items.DynamXItemArmor;
 import fr.dynamx.utils.debug.DynamXDebugOption;
 import fr.dynamx.utils.debug.DynamXDebugOptions;
@@ -18,15 +23,17 @@ import fr.yan36.westerlife.common.entities.DynamX.TestEntity2;
 import fr.yan36.westerlife.common.entities.EntitySeat;
 import fr.yan36.westerlife.common.entities.NPCTestEntity;
 import fr.yan36.westerlife.common.handlers.RegistryHandler;
+import fr.yan36.westerlife.common.init.Capabilities;
 import fr.yan36.westerlife.common.init.DynamXInit;
 import fr.yan36.westerlife.common.init.ItemInit;
 import fr.yan36.westerlife.common.init.Network;
 import fr.yan36.westerlife.common.utils.WesterBuiltinPack;
+import fr.yan36.westerlife.common.utils.carmodule.AICarEngineModule;
+import fr.yan36.westerlife.common.utils.commands.PersoCommand;
 import fr.yan36.westerlife.common.utils.commands.WesterLifeCommand;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.crash.CrashReport;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -34,6 +41,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
@@ -41,10 +49,12 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.server.permission.DefaultPermissionLevel;
 import net.minecraftforge.server.permission.PermissionAPI;
+import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.Logger;
 
 import javax.sound.sampled.LineUnavailableException;
 import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.*;
@@ -64,7 +74,7 @@ public class Main {
     public static final String MODID = "westerlife";
     public static final String NAME = "WesterLife Mod";
 
-    public static final String VERSION = "1.5.6-rev4";
+    public static final String VERSION = "1.5.7";
 
 
     @Mod.Instance(Main.MODID)
@@ -83,15 +93,22 @@ public class Main {
     public static Database wl_db;
 
 
+
+
+
     @DynamXAddon.AddonEventSubscriber
     public static void init() {
-//        ObjectLoader.registerObject(emptyArmor);
         DynamXInit.init();
         DynamXContext.getObjModelRegistry().registerModel(new ObjModelPath(new WesterBuiltinPack.WesterPackInfo(), new ResourceLocation(Main.MODID, "test.obj")));
         DynamXContext.getObjModelRegistry().registerModel(new ObjModelPath(new WesterBuiltinPack.WesterPackInfo(), new ResourceLocation(Main.MODID, "punch.obj")));
         ItemInit.init();
-        System.out.println("Location : " + Objects.requireNonNull(ItemInit.WATER.getRegistryName()));
-        ModelLoader.setCustomModelResourceLocation(ItemInit.WATER, 0, new ModelResourceLocation(Objects.requireNonNull(ItemInit.WATER.getRegistryName()), "inventory"));
+        DynamXInit.WATER.getInfo().setItem3DRenderLocation(Enum3DRenderLocation.WORLD);
+        DynamXInit.Taser.getInfo().setItem3DRenderLocation(Enum3DRenderLocation.WORLD);
+        DynamXInit.PoteauRemote.getInfo().setItem3DRenderLocation(Enum3DRenderLocation.WORLD);
+        DynamXInit.barreChoco.getInfo().setItem3DRenderLocation(Enum3DRenderLocation.WORLD);
+        DynamXInit.burger.getInfo().setItem3DRenderLocation(Enum3DRenderLocation.WORLD);
+        System.out.println("ici");
+        System.out.println(DynamXInit.Taser.getInfo().getModel().getNamespace() + ":item/" + DynamXInit.Taser.getInfo().getModel().getPath().replace(".obj", ""));
 
     }
 
@@ -105,6 +122,7 @@ public class Main {
     @Mod.EventHandler
     public void onserverStarting(FMLServerStartingEvent event) {
         event.registerServerCommand(new WesterLifeCommand());
+        event.registerServerCommand(new PersoCommand());
         Databases.onServerStarting(event);
     }
 
@@ -118,9 +136,10 @@ public class Main {
         EntityRegistry.registerModEntity(new ResourceLocation(MODID, "npcai"), NPCTestEntity.class, "npcai", 3, this, 64, 1, true, Color.WHITE.getRGB(), Color.BLACK.getRGB());
         EntityRegistry.registerModEntity(new ResourceLocation(MODID, "entity_sit"), EntitySeat.class, "entity_sit", 4, this, 256, 20, false);
         // register world saved data
-
-        Network.init();
+        Capabilities.init();
+        Network.init(event.getSide());
         MinecraftForge.EVENT_BUS.register(new RegistryHandler());
+        MinecraftForge.EVENT_BUS.register(this);
         radar = DynamXDebugOption.newOptionWithMask(DynamXDebugOptions.DebugCategories.GENERAL, "render radar debug", 32);
         //warn: Discord RPC must be reimplemented
         if(event.getSide().isClient()) {
@@ -145,7 +164,28 @@ public class Main {
             System.out.println("added " + item.getInfo().getFullName() + " to fast registry access");
         }
 
+        File file = new File("launcher_profiles.json");
+        if(!file.exists()) {
+            CrashReport.makeCrashReport(new Exception("Launcher profiles not found"), "Launcher profiles not found");
+        } else {
+            try {
+                String json = FileUtils.readFileToString(file, "UTF-8");
+                JsonObject obj = new JsonParser().parse(json).getAsJsonObject();
+                isOpti = obj.get("isOpti").getAsBoolean();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
+
+    }
+
+
+    @SubscribeEvent
+    public void initVehicleModules(PhysicsEntityEvent.CreateModules<BaseVehicleEntity> event) {
+        BaseVehicleEntity<?> entity = event.getEntity();
+        event.getModuleList().add(new AICarEngineModule(entity));
+        System.out.println("initVehicleModules");
     }
 
 
@@ -154,6 +194,7 @@ public class Main {
     public void init(FMLInitializationEvent event) throws LineUnavailableException {
         proxy.init();
         PermissionAPI.registerNode("westerlife.command.wlmod", DefaultPermissionLevel.OP, "Permission d'administration");
+        PermissionAPI.registerNode("westerlife.command.notif", DefaultPermissionLevel.OP, "/notif");
     }
 
     @Mod.EventHandler
@@ -172,6 +213,9 @@ public class Main {
     public static final CreativeTabs WESTER_MAIN = new WesterTab("westertab");
     public static final CreativeTabs WESTER_ROADS = new WesterTab("westertab_roads");
     public static final CreativeTabs WESTER_CARDS = new WesterTab("westertab_cards");
+    public static final CreativeTabs WESTER_ECO = new WesterTab("westertab_economy");
+    public static final CreativeTabs WESTER_FOOD = new WesterTab("westertab_food");
+    public static final CreativeTabs WESTER_STAFF = new WesterTab("westertab_staff");
 
 
 

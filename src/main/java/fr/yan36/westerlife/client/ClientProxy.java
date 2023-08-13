@@ -13,12 +13,16 @@ import fr.yan36.westerlife.common.entities.DynamX.TestEntity2;
 import fr.yan36.westerlife.common.entities.ModelNPC;
 import fr.yan36.westerlife.common.entities.NPCTestEntity;
 import fr.yan36.westerlife.common.entities.NpcRenderer;
+import fr.yan36.westerlife.common.init.DynamXInit;
+import fr.yan36.westerlife.common.init.ItemInit;
+import fr.yan36.westerlife.common.items.renderer.ItemBurgerRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Util;
+import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -77,7 +81,13 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.bindTileEntitySpecialRenderer(TilePanneauAgglomeration.class, new RenderPanneauAgglomeration());
         ClientRegistry.bindTileEntitySpecialRenderer(TilePanneauRue.class, new RenderPanneauRue());
         ClientRegistry.bindTileEntitySpecialRenderer(TilePanneauRueSP.class, new RenderPanneauRueSP());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileAIPoint.class, new RenderAIPoint());
+        ClientRegistry.bindTileEntitySpecialRenderer(TilePark.class, new RenderPark());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileGarage.class, new RenderGarage());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileMacdo.class, new RenderMacdo());
 
+//        Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(DynamXInit.burger, 0, new ModelResourceLocation(DynamXInit.burger.getRegistryName(), "inventory"));
+        DynamXInit.burger.setTileEntityItemStackRenderer(new ItemBurgerRenderer());
         RenderingRegistry.registerEntityRenderingHandler(TestEntity2.class, TestEntity2Renderer::new);
         RenderingRegistry.registerEntityRenderingHandler(NPCTestEntity.class, new NpcRenderer(new ModelNPC(), 0.5F));
 
@@ -110,6 +120,10 @@ public class ClientProxy extends CommonProxy {
         ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(Main.MODID, "acsgui/lights.css"));
         ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(Main.MODID, "acsgui/coloredblocks.css"));
         ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(Main.MODID, "acsgui/gendkit.css"));
+        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(Main.MODID, "acsgui/notif.css"));
+        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(Main.MODID, "acsgui/editobj.css"));
+        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(Main.MODID, "acsgui/garage.css"));
+        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(Main.MODID, "acsgui/macdo.css"));
         Apps.Init(); // Gabi <3
 
 

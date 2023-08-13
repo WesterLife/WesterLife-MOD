@@ -5,13 +5,17 @@ import fr.dynamx.common.blocks.DynamXBlock;
 import fr.dynamx.common.contentpack.type.ObjectInfo;
 import fr.dynamx.common.contentpack.type.objects.BlockObject;
 import fr.yan36.westerlife.Main;
+import fr.yan36.westerlife.common.Util;
 import fr.yan36.westerlife.common.blocks.tileentity.TileMovingGate;
+import fr.yan36.westerlife.common.init.DynamXInit;
+import fr.yan36.westerlife.common.network.PacketOpenAcsGui;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -34,13 +38,19 @@ public class BlockBarriereLevante extends DynamXBlock {
     }
 
     @Override
-    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         TileMovingGate tile = (TileMovingGate) worldIn.getTileEntity(pos);
-        if(tile != null) {
+        if(tile != null && player.isCreative()) {
             tile.setState(Objects.equals(tile.getState(), "closed") ? "open" : "closed");
+        }
+
+        if(!worldIn.isRemote) {
+            if(player.isCreative() && player.getHeldItem(hand).getItem().equals(DynamXInit.magicWand))
+                Main.network.sendTo(new PacketOpenAcsGui(5, Util.blockPosToString(pos), "movinggate"), (EntityPlayerMP) player);
         }
         return true;
     }
+
 
     @Nullable
     public TileEntity createTileEntity(World world, IBlockState state) {

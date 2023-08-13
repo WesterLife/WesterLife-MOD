@@ -1,0 +1,72 @@
+/*
+
+Attention, propriété de WesterLife, toute utilisation, modification ou reproduction est interdite sans autorisation claire et explicite de la pars de l'administation de WesterLife est formellement interdite.
+Tout manquement à cette règle est passible de poursuite judiciaire.
+
+©️ WesterLife 2023 - Gabidut76, Yan36
+
+*/
+
+.background {
+    right: 25%;
+    height: 70%;
+    width: 50%;
+    vertical-position: center;
+    background-color: rgba(55, 60, 73, 240);
+    border-radius: 10px;
+}
+
+.scrollpane {
+    left: 5%;
+    top: 5%;
+    width: 40%;
+    height: 80%;
+    background-color: rgba(55, 60, 73, 240);
+    border-radius: 10px;
+}
+
+.button {
+    width: 30%;
+    height: 10%;
+    border-radius: 10px;
+    background-image: none;
+    background-color: #ffffff;
+    color: #1c1c1c;
+    border: 0px;
+    font-size: 5px;
+    border: none;
+    top: 90%;
+    left: 50%;
+    right: 50%;
+}
+.button2 {
+    width: 40%;
+    height: 10%;
+    border-radius: 10px;
+    background-image: none;
+    background-color: #ffffff;
+    color: #1c1c1c;
+    border: 0px;
+    font-size: 5px;
+    border: none;
+    top: 70%;
+    left: 70%;
+    right: 30%;
+}
+.textaera {
+    width: 50%;
+    height: 50%;
+    background-color: rgba(55, 60, 73, 240);
+    color: white;
+    font-size: 5px;
+    border: none;
+    top: 5%;
+    left: 72%;
+    right: 28%;
+}
+
+.checkbox {
+
+    background-color: rgba(55, 60, 73, 240);
+
+}
