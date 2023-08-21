@@ -4,7 +4,9 @@ package fr.yan36.westerlife.common.handlers;
 import fr.dynamx.common.blocks.DynamXBlock;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.blocks.dynamx.BlockChair;
+import fr.yan36.westerlife.common.blocks.dynamx.BlockIRM;
 import fr.yan36.westerlife.common.blocks.dynamx.BlockSittable;
+import fr.yan36.westerlife.common.blocks.tileentity.TileIrm;
 import fr.yan36.westerlife.common.entities.EntitySeat;
 import fr.yan36.westerlife.common.init.DynamXInit;
 import fr.yan36.westerlife.common.utils.Seatutils;
@@ -46,6 +48,25 @@ public class SeatHandler {
 
                 if(Seatutils.addSitEntity(world, pos, sit))
                 {
+
+                    if(block instanceof BlockIRM) {
+
+
+                        sit.setPositionAndUpdate(pos.getX() + 0.5, pos.getY() + 1.9f, pos.getZ() + 3);
+
+                        Thread t = new Thread(() -> {
+                            while (true) {
+                                TileIrm tile = (TileIrm) world.getTileEntity(pos);
+
+                                if(world.getWorldTime() % 10 == 0) {
+                                    sit.setPositionAndUpdate(sit.getPosition().getX(), sit.getPosition().getY(), sit.getPosition().getZ() - (tile.getStep() / 1000));
+                                }
+
+                            }
+                        });
+
+                        t.start();
+                    }
                     world.spawnEntity(sit);
                     player.startRiding(sit);
                 }
@@ -89,7 +110,7 @@ public class SeatHandler {
     private static boolean isValidBlock(World world, BlockPos pos, IBlockState state, Block block)
     {
 
-        return ((block instanceof BlockChair) || (block instanceof BlockSittable));
+        return ((block instanceof BlockChair) || (block instanceof BlockSittable) || (block instanceof BlockIRM));
     }
 
     /**

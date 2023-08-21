@@ -1,11 +1,13 @@
 package fr.yan36.westerlife.server;
 
+import fr.dynamx.addons.basics.common.modules.LicensePlateModule;
 import fr.dynamx.api.entities.VehicleEntityProperties;
 import fr.dynamx.api.events.PhysicsEvent;
 import fr.dynamx.api.events.VehicleEntityEvent;
 import fr.dynamx.api.physics.EnumBulletShapeType;
 import fr.dynamx.common.entities.BaseVehicleEntity;
 import fr.dynamx.common.entities.modules.BasicEngineModule;
+import fr.dynamx.common.entities.vehicles.CarEntity;
 import fr.dynamx.common.physics.entities.BaseVehiclePhysicsHandler;
 import fr.nathanael2611.simpledatabasemanager.core.Databases;
 import fr.yan36.westerlife.Main;
@@ -21,6 +23,7 @@ import fr.yan36.westerlife.common.network.old.PacketOpenGUIAtm;
 import fr.yan36.westerlife.common.network.old.PacketSyncPlayer;
 import fr.yan36.westerlife.common.objects.PlayerHealth;
 import fr.yan36.westerlife.common.utils.Animation;
+import fr.yan36.westerlife.common.utils.carmodule.GarageModule;
 import fr.yan36.westerlife.server.bdd.DBUtils;
 import fr.yan36.westerlife.server.bdd.MethodesBDD;
 import net.minecraft.block.Block;
@@ -36,6 +39,7 @@ import net.minecraft.server.management.PlayerInteractionManager;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.event.entity.item.ItemEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.player.PlayerContainerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -126,6 +130,25 @@ public class Serveur {
             }
         }
     }
+
+    @SubscribeEvent
+    public void onCarDestroyed(LivingDeathEvent e) {
+        if(e.getEntity() instanceof CarEntity) {
+            CarEntity<?> car = (CarEntity<?>) e.getEntity();
+
+            if(car.hasModuleOfType(LicensePlateModule.class)) {
+                GarageModule module = car.getModuleByType(GarageModule.class);
+                if(!Objects.equals(module.getOwner(), "0")) {
+                    EntityPlayer player = e.getEntity().world.getPlayerEntityByUUID(UUID.fromString(module.getOwner()));
+                    if(player != null) {
+                        player.sendMessage(new TextComponentString("§cVotre voiture a été détruite."));
+                    }
+                }
+
+            }
+        }
+    }
+
 
 //    @SubscribeEvent
 //    public void radarHandler(PhysicsEvent.StepSimulation e) {

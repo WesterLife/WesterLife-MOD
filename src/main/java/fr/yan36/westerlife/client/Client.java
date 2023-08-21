@@ -2,14 +2,13 @@ package fr.yan36.westerlife.client;
 
 import com.google.common.collect.Lists;
 import com.mrcrayfish.obfuscate.client.event.ModelPlayerEvent;
+import com.mrcrayfish.obfuscate.common.data.SyncedPlayerData;
 import fr.aym.acsguis.api.ACsGuiApi;
-import fr.dynamx.api.contentpack.object.render.IObjPackObject;
 import fr.dynamx.api.events.ArmorEvent;
 import fr.dynamx.api.events.DynamXItemEvent;
 import fr.dynamx.api.events.EventStage;
 import fr.dynamx.api.events.VehicleEntityEvent;
 import fr.dynamx.client.handlers.hud.CarController;
-import fr.dynamx.client.renders.model.ItemObjModel;
 import fr.dynamx.client.renders.model.renderer.ObjModelRenderer;
 import fr.dynamx.common.DynamXContext;
 import fr.dynamx.common.items.DynamXItemArmor;
@@ -17,29 +16,30 @@ import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.client.gui.acs.*;
 import fr.yan36.westerlife.client.gui.mcef.BrowserScreen;
 import fr.yan36.westerlife.client.gui.other.EngineFailureIcon;
+import fr.yan36.westerlife.client.gui.other.GuiCustomInventory;
 import fr.yan36.westerlife.client.gui.other.GuiWorldSelectPatcher;
-import fr.yan36.westerlife.common.Util;
 import fr.yan36.westerlife.common.blocks.tileentity.TileMacdo;
 import fr.yan36.westerlife.common.init.DynamXInit;
-import fr.yan36.westerlife.common.items.dynamx.ItemBurger;
 import fr.yan36.westerlife.common.objects.character.Character;
 import fr.yan36.westerlife.common.objects.character.Permis;
 import fr.yan36.westerlife.common.utils.Animation;
 import fr.yan36.westerlife.common.utils.list.Warp;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
+import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.model.ModelBiped;
+import net.minecraft.client.model.ModelPlayer;
+import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.client.multiplayer.GuiConnecting;
+import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.client.event.GuiOpenEvent;
@@ -65,6 +65,7 @@ import org.newdawn.slick.util.ResourceLoader;
 import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Field;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.*;
@@ -101,11 +102,23 @@ public class Client {
 
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
+    public void onSetupAngles(ModelPlayerEvent.SetupAngles.Post event) {
+        ModelPlayer model = event.getModelPlayer();
+
+
+        animationState.forEach((id, animation) -> {
+
+            if (event.getEntityPlayer().getEntityId() == id) {
+                animatePlayer(event.getEntityPlayer(), event.getModelPlayer());
+
+            }
+        });
+    }
+
+    @SubscribeEvent
+    @SideOnly(Side.CLIENT)
     public void setupPlayerRotations(ModelPlayerEvent.SetupAngles.Pre event) {
-
-
-//        event.getModelPlayer().boxList.forEach(a -> a.rotationPointX = 1);
-        event.getModelPlayer().boxList.forEach(a -> a.rotateAngleX = 90);
+//        event.getModelPlayer().bipedHead.rotateAngleZ = 90;
 
 
         animationState.forEach((id, animation) -> {
@@ -170,28 +183,31 @@ public class Client {
         }
 
         if (animationState.get(ep.getEntityId()).equals(Animation.SLEEP)) {
-            modelBiped.bipedLeftLeg.rotateAngleX = (float) Math.toRadians(-90);
-            modelBiped.bipedRightLeg.rotateAngleX = (float) Math.toRadians(-90);
-            modelBiped.bipedRightLeg.offsetY = 0.58f;
-            modelBiped.bipedLeftLeg.offsetY = 0.58f;
-            modelBiped.bipedRightLeg.offsetZ = 0.04f;
-            modelBiped.bipedLeftLeg.offsetZ = 0.04f;
+            for (ModelRenderer modelRenderer : modelBiped.boxList) {
+                modelRenderer.rotateAngleX = (float) Math.toRadians(-90);
+            }
+
             ep.eyeHeight = 0.5f;
-            modelBiped.bipedHead.offsetY = 0.5f;
-            modelBiped.bipedHeadwear.offsetY = 0.5f;
-            modelBiped.bipedBody.offsetY = 0.5f;
-            modelBiped.bipedRightArm.offsetY = 0.5f;
-            modelBiped.bipedLeftArm.offsetY = 0.5f;
+
+            modelBiped.bipedHead.offsetY = 1.5f;
+            modelBiped.bipedBody.offsetY = 1.5f;
+            modelBiped.bipedLeftArm.offsetY = 1.3f;
+            modelBiped.bipedRightArm.offsetY = 1.3f;
+
+            modelBiped.bipedLeftLeg.offsetY = 0.7f;
+            modelBiped.bipedRightLeg.offsetY = 0.7f;
+            modelBiped.bipedLeftLeg.offsetZ = -0.7f;
+            modelBiped.bipedRightLeg.offsetZ = -0.7f;
         }
     }
 
 
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
-    public void GuieventHandler(GuiOpenEvent e) throws IOException, InterruptedException {
+    public void GuieventHandler(GuiOpenEvent e) throws IOException, InterruptedException, NoSuchFieldException, IllegalAccessException {
 
+        System.out.println("GUI: " + e.getGui());
         if (e.getGui() instanceof GuiMainMenu) {
-//             prout c'est chiant pour dev donc
             e.setCanceled(true);
             if (Main.isOpti) {
                 Minecraft.getMinecraft().displayGuiScreen(new CSSGuiMainMenu().getGuiScreen());
@@ -203,8 +219,14 @@ public class Client {
         }
 
 
-        if (e.getGui() instanceof GuiScreenServerList) {
+        if (e.getGui() instanceof GuiConnecting) {
+            e.setGui(new GuiServerLogin(Minecraft.getMinecraft().currentScreen).getGuiScreen());
+            e.setCanceled(true);
+        }
 
+
+        if (e.getGui() instanceof GuiDownloadTerrain) {
+            e.setGui(new GuiLoadingTerrain().getGuiScreen());
 
         }
 
@@ -213,6 +235,22 @@ public class Client {
             e.setGui(new GuiWorldSelectPatcher(Minecraft.getMinecraft().currentScreen));
 
         }
+
+        if(e.getGui() instanceof GuiInventory) {
+            e.setGui(new GuiCustomInventory(Minecraft.getMinecraft().player));
+        }
+
+        if(e.getGui() instanceof GuiDisconnected) {
+            // get the reason with reflection
+            Field f = e.getGui().getClass().getDeclaredField("message");
+            f.setAccessible(true);
+            Object o = f.get(e.getGui());
+            ITextComponent reason = (ITextComponent) o;
+
+
+            e.setGui(new GuiServerError(Minecraft.getMinecraft().currentScreen, reason.getFormattedText()).getGuiScreen());
+        }
+
 
         if (e.getGui() instanceof GuiIngameMenu) {
 
@@ -288,6 +326,7 @@ public class Client {
 
 
     @SubscribeEvent
+    @SideOnly(Side.CLIENT)
     public static void itemRenderer(DynamXItemEvent.Render e) throws Exception {
         if (e.getStage().equals(EventStage.PRE)) {
             if (e.getItem().getItem().equals(DynamXInit.burger)) {
@@ -500,6 +539,11 @@ public class Client {
             Client.knowPermis.clear();
             Client.waitForSomething.clear();
         }
+
+        if(Keyboard.isKeyDown(Keyboard.KEY_F3) && Keyboard.isKeyDown(Keyboard.KEY_D)) {
+            Minecraft.getMinecraft().displayGuiScreen(new GuiLoadingTerrain().getGuiScreen());
+        }
+
         if (Keyboard.isKeyDown(Keyboard.KEY_F3) && Keyboard.isKeyDown(Keyboard.KEY_K)) {
             Main.isOpti = !Main.isOpti;
             // show toast message

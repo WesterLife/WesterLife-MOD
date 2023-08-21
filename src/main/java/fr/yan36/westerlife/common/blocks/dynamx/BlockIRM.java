@@ -30,16 +30,15 @@ public class BlockIRM extends DynamXBlock {
 
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        if(playerIn.isSneaking()) {
+        if (playerIn.isSneaking()) {
             TileIrm tile = (TileIrm) worldIn.getTileEntity(pos);
             assert tile != null;
             tile.setRunning(!tile.isRunning());
         } else {
-            if(!worldIn.isRemote) {
-                if(playerIn.isSneaking() && playerIn.isCreative()) {
-                    Main.network.sendToAll(new PacketAnimationToAll(Animation.SLEEP.getId(), playerIn.getEntityId()));
-                    return true;
-                }
+            if (!worldIn.isRemote) {
+                playerIn.setPositionAndUpdate(pos.getX(), pos.getY(), pos.getZ() + 3f);
+                Main.network.sendToAll(new PacketAnimationToAll(Animation.SLEEP.getId(), playerIn.getEntityId()));
+                return true;
             }
         }
 

@@ -1,8 +1,10 @@
 package fr.yan36.westerlife.client.gui.acs;
 
+import fr.aym.acsguis.component.layout.GridLayout;
 import fr.aym.acsguis.component.layout.GuiScaler;
 import fr.aym.acsguis.component.panel.GuiFrame;
 import fr.aym.acsguis.component.panel.GuiPanel;
+import fr.aym.acsguis.component.panel.GuiScrollPane;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.nathanael2611.modularvoicechat.client.gui.GuiConfig;
 import fr.nathanael2611.modularvoicechat.client.voice.audio.MicroManager;
@@ -22,6 +24,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class CSSGuiAnimations extends GuiFrame {
+    private static int currentId = 0;
     public CSSGuiAnimations() {
         super(new GuiScaler.Identity());
 
@@ -32,20 +35,27 @@ public class CSSGuiAnimations extends GuiFrame {
 
         for (Animation animation : Animation.values()) {
             if(animation == Animation.SLEEP) continue;
-            GuiPanel animationPanel = new GuiPanel();
+
+            System.out.println("Adding animation " + animation.getId() + " to gui");
+
+            currentId = animation.getId();
+            GuiScrollPane animationPanel = new GuiScrollPane();
+            animationPanel.setLayout(new GridLayout(-1,-1,1, GridLayout.GridDirection.HORIZONTAL, 1));
             animationPanel.setCssClass("animation");
-            animationPanel.addClickListener((mouseX, mouseY, mouseButton) -> {
-                Main.network.sendToServer(new PacketAnimation(animation.getId()));
-                System.out.println("Sending animation " + animation.getId() + " to server");
-            });
+
             GuiLabel animationLabel = new GuiLabel(Objects.equals(animation.getName(), "") ? "Aucune" : animation.getName());
             animationLabel.setCssClass("animationLabel");
             animationPanel.add(animationLabel);
 
+            animationPanel.addClickListener((mouseX, mouseY, mouseButton) -> {
+                Main.network.sendToServer(new PacketAnimation(animation));
+                System.out.println("Sending animation " + animation + " to server");
+            });
             if(animation == Animation.NONE) animationLabel.getStyle().setFontColor(TextFormatting.RED);
 
-            animationLabel.getStyle().setOffsetY(20 * i);
-            animationLabel.getStyle().setZLevel(1000);
+
+            animationPanel.getStyle().setOffsetY(25 * i);
+            animationPanel.getStyle().setZLevel(1000);
             i++;
             background.add(animationPanel);
         }

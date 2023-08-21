@@ -2,7 +2,11 @@ package fr.yan36.westerlife.common.init;
 
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.capabilities.packets.PacketSyncAnimation;
+import fr.yan36.westerlife.common.capabilities.packets.PacketSyncExtraItem;
+import fr.yan36.westerlife.common.capabilities.packets.PacketSyncGarage;
 import fr.yan36.westerlife.common.network.*;
+import fr.yan36.westerlife.common.network.garage.PacketExtractFromGarage;
+import fr.yan36.westerlife.common.network.garage.PacketPutCarInGarage;
 import fr.yan36.westerlife.common.network.old.*;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -39,10 +43,17 @@ public class Network {
         Main.network.registerMessage(PacketUpdateTileEntity.Handler.class, PacketUpdateTileEntity.class, 34, Side.SERVER);
         Main.network.registerMessage(PacketPutCarInGarage.Handler.class, PacketPutCarInGarage.class, 35, Side.SERVER);
         Main.network.registerMessage(PacketUpdateMacdo.Handler.class, PacketUpdateMacdo.class, 36, Side.SERVER);
+        Main.network.registerMessage(PacketExtractFromGarage.Handler.class, PacketExtractFromGarage.class, 37, Side.SERVER);
+
+
         if(side.isClient()) {
-            Main.network.registerMessage(PacketSyncAnimation.ClientHandler.class, PacketSyncAnimation.class, 37, Side.CLIENT);
+            Main.network.registerMessage(PacketSyncAnimation.ClientHandler.class, PacketSyncAnimation.class, 38, Side.CLIENT);
+            Main.network.registerMessage(PacketSyncGarage.ClientHandler.class, PacketSyncGarage.class, 39, Side.CLIENT);
+            Main.network.registerMessage(PacketSyncExtraItem.ClientHandler.class, PacketSyncExtraItem.class, 40, Side.CLIENT);
         } else  {
-            Main.network.registerMessage(PacketSyncAnimation.ServerHandler.class, PacketSyncAnimation.class, 37, Side.SERVER); //CEST NORMAL LE PACKET EST LE MEME
+            Main.network.registerMessage(PacketSyncAnimation.ServerHandler.class, PacketSyncAnimation.class, 38, Side.SERVER); //CEST NORMAL LE PACKET EST LE MEME
+            Main.network.registerMessage(PacketSyncGarage.ServerHandler.class, PacketSyncGarage.class, 39, Side.SERVER);
+            Main.network.registerMessage(PacketSyncExtraItem.ServerHandler.class, PacketSyncExtraItem.class, 40, Side.SERVER);
         }
 
 

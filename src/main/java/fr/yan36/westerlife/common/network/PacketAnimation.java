@@ -2,6 +2,7 @@ package fr.yan36.westerlife.common.network;
 
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.client.Client;
+import fr.yan36.westerlife.common.blocks.tileentity.render.RenderIRM;
 import fr.yan36.westerlife.common.utils.Animation;
 import fr.yan36.westerlife.server.Serveur;
 import io.netty.buffer.ByteBuf;
@@ -24,6 +25,11 @@ public class PacketAnimation implements IMessage{
         this.id = id;
 
     }
+    public PacketAnimation(Animation animation) {
+
+        this.id = animation.getId();
+
+    }
     @Override
     public void fromBytes(ByteBuf buf) {
         this.id = ByteBufUtils.readVarInt(buf, 5);
@@ -39,6 +45,7 @@ public class PacketAnimation implements IMessage{
         public IMessage onMessage(PacketAnimation m, MessageContext ctx) {
             System.out.println("Animation " + m.id + " received from " + ctx.getServerHandler().player.getName());
             if(!Serveur.menottes.containsKey(ctx.getServerHandler().player)) Main.network.sendToAll(new PacketAnimationToAll(m.id, ctx.getServerHandler().player.getEntityId()));
+
             return null;
         }
     }

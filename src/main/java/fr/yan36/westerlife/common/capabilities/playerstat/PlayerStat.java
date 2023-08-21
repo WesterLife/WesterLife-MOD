@@ -24,7 +24,7 @@ public class PlayerStat implements IPlayerStat, INBTSerializable<NBTTagCompound>
 
     @Override
     public void deserializeNBT(NBTTagCompound nbt) {
-        this.animation = Animation.getAnimationById(nbt.getInteger("animationa"));
+        this.animation = Animation.getAnimationById(nbt.getInteger("animation"));
     }
 
     @Override

@@ -21,6 +21,7 @@ public class WesterLifeCoreMod implements IFMLLoadingPlugin {
     public String[] getASMTransformerClass() {
 
 
+        log.info("WesterLifeCoreMod Loading");
 
         MixinBootstrap.init();
         Mixins.addConfiguration("mixins.westerlife.json");

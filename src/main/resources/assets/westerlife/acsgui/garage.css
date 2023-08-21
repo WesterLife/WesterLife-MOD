@@ -7,16 +7,105 @@ Tout manquement à cette règle est passible de poursuite judiciaire.
 
 */
 
+@font-face {
+    font-family: "westerlife:montserrat_small";
+    src: url("westerlife:fonts/font.ttf");
+    font-size: 50px;
+}
+
 .background {
     right: 25%;
     height: 70%;
     width: 50%;
     vertical-position: center;
     background-color: rgb(55, 60, 73);
-    border-radius: 10px;
+    border-radius: 5px;
 }
 
 .scrollPane {
     width: 100%;
-    height: 50%;
+    height: 80%;
+    top: 5%;
+    background-color: transparent;
+}
+
+.carPanel2 {
+    width: 30%;
+    /*height: 20%;*/
+    background-color: transparent;
+    top: 50%;
+    bottom: 50%;
+    /*height: 90%;*/
+    left: 5%;
+}
+
+.carPanel {
+    width: 90%;
+    left: 50%;
+    right: 50%;
+    height: auto;
+    top: auto;
+    background-color: white;
+    border-radius: 5px;
+}
+
+.carPanel3 {
+    width: 90%;
+    left: 50%;
+    right: 50%;
+    height: auto;
+    top: auto;
+    background-color: #ca7272;
+    border-radius: 5px;
+}
+.carPanel:hover {
+    background-color: rgb(235, 235, 235);
+}
+
+.carName {
+    font-family: "westerlife:montserrat";
+    color: #2E364A;
+    font-size: 1px;
+    text-align: center;
+    left: 25%;
+    top: 5%;
+    height: 100%;
+    width: 45%;
+    background-color: translucent;
+}
+.carPlate {
+    font-family: "westerlife:montserrat_small";
+    color: #2E364A;
+    font-size: 1px;
+    text-align: center;
+    left: 35%;
+    height: 100%;
+    top: 5%;
+    background-color: translucent;
+}
+.button {
+    font-family: "westerlife:montserrat_small";
+    font-size: 1px;
+    background-image: none;
+    background-color: white;
+    border-radius: 5px;
+    width: 50%;
+    height: 9%;
+    color: #2E364A;
+    top: 90%;
+    left: 50%;
+    right: 50%;
+    z-index: 900;
+    text-align: center;
+}
+
+.nocars {
+    font-family: "westerlife:montserrat_small";
+    font-size: 1px;
+    width: 100%;
+    height: auto;
+    top: 50%;
+    color: white;
+    text-align: center;
+    bottom: 50%;
 }

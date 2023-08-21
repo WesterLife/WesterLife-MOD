@@ -86,8 +86,6 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.bindTileEntitySpecialRenderer(TileGarage.class, new RenderGarage());
         ClientRegistry.bindTileEntitySpecialRenderer(TileMacdo.class, new RenderMacdo());
 
-//        Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(DynamXInit.burger, 0, new ModelResourceLocation(DynamXInit.burger.getRegistryName(), "inventory"));
-        DynamXInit.burger.setTileEntityItemStackRenderer(new ItemBurgerRenderer());
         RenderingRegistry.registerEntityRenderingHandler(TestEntity2.class, TestEntity2Renderer::new);
         RenderingRegistry.registerEntityRenderingHandler(NPCTestEntity.class, new NpcRenderer(new ModelNPC(), 0.5F));
 
@@ -124,6 +122,7 @@ public class ClientProxy extends CommonProxy {
         ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(Main.MODID, "acsgui/editobj.css"));
         ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(Main.MODID, "acsgui/garage.css"));
         ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(Main.MODID, "acsgui/macdo.css"));
+        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(Main.MODID, "acsgui/loading.css"));
         Apps.Init(); // Gabi <3
 
 

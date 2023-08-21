@@ -1,14 +1,24 @@
 package fr.yan36.westerlife.common.init;
 
 import fr.yan36.westerlife.Main;
+import fr.yan36.westerlife.common.capabilities.playergarage.IPlayerGarage;
+import fr.yan36.westerlife.common.capabilities.playergarage.PlayerGarage;
+import fr.yan36.westerlife.common.capabilities.playergarage.PlayerGarageCapability;
+import fr.yan36.westerlife.common.capabilities.playergarage.PlayerGarageProvider;
+import fr.yan36.westerlife.common.capabilities.playerinventory.ExtraItemCapability;
+import fr.yan36.westerlife.common.capabilities.playerinventory.ExtraItemContainer;
+import fr.yan36.westerlife.common.capabilities.playerinventory.ExtraItemProvider;
+import fr.yan36.westerlife.common.capabilities.playerinventory.IExtraItemHandler;
 import fr.yan36.westerlife.common.capabilities.playerstat.IPlayerStat;
 import fr.yan36.westerlife.common.capabilities.playerstat.PlayerStatCapability;
 import fr.yan36.westerlife.common.capabilities.playerstat.PlayerStatProvider;
 import fr.yan36.westerlife.common.capabilities.playerstat.PlayerStat;
 import fr.yan36.westerlife.common.utils.Animation;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -20,6 +30,9 @@ public class Capabilities {
     public static void registerCapabilities(final AttachCapabilitiesEvent<Entity> e) {
         if(e.getObject() instanceof EntityPlayer) {
             e.addCapability(new ResourceLocation(Main.MODID, "moneycapa"), new PlayerStatProvider(new PlayerStat(Animation.NONE)));
+            e.addCapability(new ResourceLocation(Main.MODID, "extraslots"), new ExtraItemProvider(new ExtraItemContainer((EntityPlayer) e.getObject())));
+            e.addCapability(new ResourceLocation(Main.MODID, "garage"), new PlayerGarageProvider(new PlayerGarage()));
+
             Main.logger.info("Capability added to player.");
         }
     }
@@ -27,5 +40,11 @@ public class Capabilities {
     public static void init() {
         Main.logger.info("Capabilities initialized");
         CapabilityManager.INSTANCE.register(IPlayerStat.class, new PlayerStatCapability.Storage(), () -> new PlayerStat(Animation.NONE));
+        CapabilityManager.INSTANCE.register(IPlayerGarage.class, new PlayerGarageCapability.Storage(), PlayerGarage::new);
+        CapabilityManager.INSTANCE.register(IExtraItemHandler.class, new ExtraItemCapability.Storage(), ExtraItemContainer::new);
+
+        MinecraftForge.EVENT_BUS.register(new PlayerStatCapability());
+        MinecraftForge.EVENT_BUS.register(new PlayerGarageCapability());
+        MinecraftForge.EVENT_BUS.register(new ExtraItemCapability());
     }
 }

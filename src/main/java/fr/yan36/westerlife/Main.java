@@ -29,6 +29,7 @@ import fr.yan36.westerlife.common.init.ItemInit;
 import fr.yan36.westerlife.common.init.Network;
 import fr.yan36.westerlife.common.utils.WesterBuiltinPack;
 import fr.yan36.westerlife.common.utils.carmodule.AICarEngineModule;
+import fr.yan36.westerlife.common.utils.carmodule.GarageModule;
 import fr.yan36.westerlife.common.utils.commands.PersoCommand;
 import fr.yan36.westerlife.common.utils.commands.WesterLifeCommand;
 import net.minecraft.crash.CrashReport;
@@ -185,6 +186,7 @@ public class Main {
     public void initVehicleModules(PhysicsEntityEvent.CreateModules<BaseVehicleEntity> event) {
         BaseVehicleEntity<?> entity = event.getEntity();
         event.getModuleList().add(new AICarEngineModule(entity));
+        event.getModuleList().add(new GarageModule(entity));
         System.out.println("initVehicleModules");
     }
 

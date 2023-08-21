@@ -17,7 +17,7 @@ Tout manquement à cette règle est passible de poursuite judiciaire.
     right: 50%;
     top: 50%;
     bottom: 50%;
-    border-radius: 25px;
+    border-radius: 5px;
 }
 
 .perf {
@@ -25,3 +25,9 @@ Tout manquement à cette règle est passible de poursuite judiciaire.
     bottom: 1%;
     text-align: right;
 }
+.animation {
+    background-color: #3D475F;
+    height: 10%;
+
+}
+

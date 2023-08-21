@@ -30,15 +30,15 @@ public class PlayerStatCapability {
 
     @SubscribeEvent
     public void onPlayerJoin(final EntityJoinWorldEvent e) {
-        if (!(e.getEntity() instanceof EntityPlayer)) {
-            System.out.println("Non-player entity joined world");
-            return;
+        if (!(e.getWorld().isRemote)) {
+            if (!(e.getEntity() instanceof EntityPlayer)) {
+                return;
+            }
+            final EntityPlayer target = (EntityPlayer) e.getEntity();
+
+            System.out.println("Player joined world");
+            sync(target, Collections.singletonList(target));
         }
-        final EntityPlayer target = (EntityPlayer) e.getEntity();
-
-        System.out.println("Player joined world");
-        sync(target, Collections.singletonList(target)); // set player animation
-
     }
 
     public static void sync(final EntityPlayer entity, final Iterable<EntityPlayer> receivers) {

@@ -1,34 +1,31 @@
 package fr.yan36.westerlife.client.gui.acs;
 
-import com.jme3.math.Vector3f;
 import fr.aym.acsguis.component.button.GuiButton;
-import fr.aym.acsguis.component.entity.GuiEntityRender;
 import fr.aym.acsguis.component.layout.GridLayout;
 import fr.aym.acsguis.component.layout.GuiScaler;
 import fr.aym.acsguis.component.panel.GuiFrame;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.panel.GuiScrollPane;
-import fr.aym.acsguis.component.panel.GuiTabbedPane;
 import fr.aym.acsguis.component.textarea.GuiLabel;
+import fr.aym.acsguis.cssengine.positionning.Size;
+import fr.aym.acsguis.utils.GuiConstants;
 import fr.dynamx.common.contentpack.DynamXObjectLoaders;
-import fr.dynamx.common.contentpack.type.vehicle.ModularVehicleInfo;
-import fr.dynamx.common.entities.BaseVehicleEntity;
-import fr.dynamx.common.entities.vehicles.CarEntity;
-import fr.dynamx.common.items.DynamXItemRegistry;
 import fr.dynamx.utils.client.DynamXRenderUtils;
 import fr.nathanael2611.simpledatabasemanager.client.ClientDatabases;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.Util;
-import fr.yan36.westerlife.common.network.PacketPutCarInGarage;
+import fr.yan36.westerlife.common.capabilities.playergarage.PlayerGarage;
+import fr.yan36.westerlife.common.capabilities.playergarage.PlayerGarageCapability;
+import fr.yan36.westerlife.common.network.garage.PacketExtractFromGarage;
+import fr.yan36.westerlife.common.network.garage.PacketPutCarInGarage;
 import fr.yan36.westerlife.common.objects.GarageCar;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.item.ItemStack;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
+import org.lwjgl.opengl.GL11;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -46,19 +43,48 @@ public class CSSGuiGarage extends GuiFrame {
 
         GuiScrollPane scrollPane = new GuiScrollPane();
         scrollPane.setCssClass("scrollPane");
+        scrollPane.setLayout(
+                new GridLayout(
+                        new Size.SizeValue(-1, GuiConstants.ENUM_SIZE.ABSOLUTE),
+                        new Size.SizeValue(50, GuiConstants.ENUM_SIZE.ABSOLUTE),
+                        new Size.SizeValue(10, GuiConstants.ENUM_SIZE.ABSOLUTE),
+                        GridLayout.GridDirection.HORIZONTAL,
+                        1
+                )
+        );
 
-        int garageSize = ClientDatabases.getPersonalPlayerData().getInteger("garageSize");
+
         List<GarageCar> cars = new ArrayList<>();
 
-        for (int i = 1; i < garageSize + 1; i++) {
-            cars.add(GarageCar.fromString(ClientDatabases.getPersonalPlayerData().getString("garage_" + i)));
+        EntityPlayer p = Minecraft.getMinecraft().player;
+
+        if (p.hasCapability(PlayerGarageCapability.CAPABILITY, null)) {
+            PlayerGarage cap = (PlayerGarage) p.getCapability(PlayerGarageCapability.CAPABILITY, null);
+            cars = cap.getCars();
+            System.out.println("capa cars : " + cars);
+        }
+
+        enableDebugPanel = true;
+        int i1 = 0;
+
+        if(cars.isEmpty()) {
+            GuiLabel label = new GuiLabel("Aucun véhicule dans le garage");
+            label.setCssClass("nocars");
+            scrollPane.add(label);
         }
 
         for (GarageCar car : cars) {
+            System.out.println("car : " + car.getCarName());
             GuiPanel carPanel = new GuiPanel();
-            carPanel.setCssClass("carPanel");
+            System.out.println("car : " + car.isInGarage());
+            if(car.isInGarage()) {
+                carPanel.setCssClass("carPanel");
+            } else {
+                carPanel.setCssClass("carPanel3");
+            }
 
-            GuiLabel carName = new GuiLabel(car.getCarName());
+
+            GuiLabel carName = new GuiLabel(TextFormatting.BOLD + DynamXObjectLoaders.WHEELED_VEHICLES.findInfo(car.getCarName()).getDefaultName());
             carName.setCssClass("carName");
             carPanel.add(carName);
 
@@ -67,33 +93,49 @@ public class CSSGuiGarage extends GuiFrame {
             carPanel.add(carPlate);
 
             carPanel.add(carName);
-            scrollPane.add(carPanel);
-
-            scrollPane.add(carPanel);
 
 
+            final int[] tick = {0};
+            int finalI = i1;
             GuiPanel panel = new GuiPanel() {
+
+
+                @Override
                 public void drawBackground(int mouseX, int mouseY, float partialTicks) {
                     super.drawBackground(mouseX, mouseY, partialTicks);
-                    RenderHelper.enableStandardItemLighting();
-                    DynamXRenderUtils.renderCar(DynamXObjectLoaders.WHEELED_VEHICLES.findInfo(car.getCarName()), (byte) 0);
+                    GlStateManager.pushMatrix();
+                    GlStateManager.disableCull();
+                    GlStateManager.translate((this.getScreenX() - this.getScaledBorderSize()) + 30, (this.getScreenY() - this.getScaledBorderSize()) + 35, 20);
+                    GlStateManager.scale(10, 10, 10);
+                    GL11.glRotatef(180, 1, 0, 0);
+                    float rot = tick[0] % 1440 / 4f;
+                    GlStateManager.rotate(rot, 0, 1, 0);
+                    DynamXRenderUtils.renderCar(DynamXObjectLoaders.WHEELED_VEHICLES.findInfo(car.getCarName()), (byte) car.getMeta());
+                    GlStateManager.enableCull();
+                    GlStateManager.popMatrix();
+                    tick[0]++;
 
-                    RenderHelper.disableStandardItemLighting();
                 }
             };
+            panel.setCssClass("carPanel2");
+
+            carPanel.add(panel);
+
+            carPanel.addClickListener((mouseX, mouseY, mouseButton) -> {
+
+                Main.network.sendToServer(new PacketExtractFromGarage(Util.parseBlockPosFromString(parkloc), car));
+                Minecraft.getMinecraft().displayGuiScreen(null);
+            });
 
 
-
-            scrollPane.add(panel);
-
-
+            scrollPane.add(carPanel);
+            i1++;
         }
 
 
-        GuiButton button = new GuiButton("Rentrer un véhicule");
+        GuiLabel button = new GuiLabel("§lRentrer un véhicule");
         button.setCssClass("button");
-        background.add(button);
-        button.getStyle().setOffsetY(100);
+
 
         button.addClickListener((mouseX, mouseY, mouseButton) -> {
             Main.network.sendToServer(new PacketPutCarInGarage(Util.parseBlockPosFromString(parkloc)));
@@ -101,6 +143,7 @@ public class CSSGuiGarage extends GuiFrame {
         });
 
         background.add(scrollPane);
+        background.add(button);
         add(background);
     }
 

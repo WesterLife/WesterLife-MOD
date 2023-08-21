@@ -19,8 +19,8 @@ public class RenderIRM extends TESRDynamXBlock<TileIrm> {
 
             GlStateManager.pushMatrix();
 
-            GlStateManager.translate(x + 0.5D + (te.getBlockObjectInfo().getTranslation()).x, y + 1.51D + (te.getBlockObjectInfo().getTranslation()).y, z + 0.5D + (te.getBlockObjectInfo().getTranslation()).z);
-            GlStateManager.scale((te.getBlockObjectInfo().getScaleModifier()).x, (te.getBlockObjectInfo().getScaleModifier()).y, (te.getBlockObjectInfo().getScaleModifier()).z);
+            GlStateManager.translate(x + 0.5D + (te.getBlockObjectInfo().getTranslation()).x, y + 1.7D + (te.getBlockObjectInfo().getTranslation()).y, z + 0.5D + (te.getBlockObjectInfo().getTranslation()).z);
+            GlStateManager.scale((te.getBlockObjectInfo().getScaleModifier()).x + 0.2f, (te.getBlockObjectInfo().getScaleModifier()).y + 0.2f, (te.getBlockObjectInfo().getScaleModifier()).z + 0.2f);
             GlStateManager.rotate(te.getRotation() * 22.5F, 0.0F, -1.0F, 0.0F);
             DynamXContext.getObjModelRegistry().getModel(te.getBlockObjectInfo().getModel()).renderGroups("base", (byte) te.getBlockMetadata());
             GL11.glPushMatrix();
