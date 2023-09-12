@@ -12,6 +12,7 @@ import fr.yan36.westerlife.common.init.DynamXInit;
 import fr.yan36.westerlife.common.network.old.BelierMessage;
 import fr.yan36.westerlife.common.handlers.SoundsHandler;
 import net.minecraft.client.Minecraft;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -24,9 +25,13 @@ public class ItemDynamx extends DynamXItem {
 
     public ItemDynamx(String modid, String itemName, ResourceLocation model) {
         super(modid, itemName, model);
-        setCreativeTab(Main.WESTER_MAIN);
     }
 
+
+    @Override
+    public CreativeTabs[] getCreativeTabs() {
+        return new CreativeTabs[]{Main.WESTER_MAIN};
+    }
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer player, EnumHand handIn) {
         if(!worldIn.isRemote) {

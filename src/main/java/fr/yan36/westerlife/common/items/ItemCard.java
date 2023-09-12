@@ -53,10 +53,8 @@ public class ItemCard extends Item implements IHasModel {
     public ItemCard(String name, CardType type)
     {
         setRegistryName(name);
-        setCreativeTab(Main.WESTER_CARDS);
         ItemInit.ITEMS.add(this);
         this.type = type;
-        setMaxDamage(1);
         setTranslationKey(name);
     }
 

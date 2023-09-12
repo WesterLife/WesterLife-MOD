@@ -18,8 +18,7 @@ public class ItemDrink extends DynamXItem {
     public ItemDrink(String name, int amount, float saturation, ResourceLocation model) {
         super(Main.MODID, name, model);
         this.amount = amount;
-        setCreativeTab(Main.WESTER_FOOD);
-        setMaxDamage(1);
+
         setTranslationKey(name);
         setMaxStackSize(2);
     }
@@ -38,6 +37,10 @@ public class ItemDrink extends DynamXItem {
 //    }
 
 
+    @Override
+    public CreativeTabs[] getCreativeTabs() {
+        return new CreativeTabs[]{Main.WESTER_FOOD};
+    }
 
 
     @Override

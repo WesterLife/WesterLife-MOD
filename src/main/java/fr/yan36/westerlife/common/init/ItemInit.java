@@ -4,6 +4,7 @@ import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.items.ItemBase;
 import fr.yan36.westerlife.common.items.ItemBillet;
 import fr.yan36.westerlife.common.items.ItemCard;
+import fr.yan36.westerlife.common.items.ItemPlaceCirculationSign;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 
@@ -23,7 +24,7 @@ public class ItemInit {
     public static final Item DEUX_CENTS_EUROS = new ItemBillet("deuxcenteuros");
     public static final Item CINQ_CENTS_EUROS = new ItemBillet("cinqcenteuros");
 
-    public static final Item CARTE_BANCAIRE = new ItemBase("carte_bancaire").setCreativeTab(Main.WESTER_ECO);
+    public static final Item CARTE_BANCAIRE = new ItemBase("carte_bancaire");
 
     public static final Item CNI = new ItemCard("cni", ItemCard.CardType.CNI);
     public static final Item DIPLO = new ItemCard("diplo", ItemCard.CardType.DIPLO);
@@ -45,6 +46,7 @@ public class ItemInit {
     public static final Item ketchup = new fr.yan36.westerlife.common.items.ItemFood("ketchup", 1, 0.5f);
     public static final Item deluxe = new fr.yan36.westerlife.common.items.ItemFood("deluxe", 1, 0.5f);
     public static final Item mayo = new fr.yan36.westerlife.common.items.ItemFood("mayo", 1, 0.5f);
+    public static final Item panneaucirculation = new ItemPlaceCirculationSign("panneaucirculation");
 
 
 

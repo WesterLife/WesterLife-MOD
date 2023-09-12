@@ -19,7 +19,10 @@ import fr.yan36.westerlife.client.gui.mcef.BrowserHud;
 import fr.yan36.westerlife.client.gui.mcef.BrowserScreen;
 import fr.yan36.westerlife.client.utils.creativetabs.WesterTab;
 import fr.yan36.westerlife.common.CommonProxy;
-import fr.yan36.westerlife.common.entities.DynamX.TestEntity2;
+import fr.yan36.westerlife.common.capabilities.playerchunckrel.CO2ManagementThread;
+import fr.yan36.westerlife.common.entities.DynamX.clotheentity.ClothEntity;
+import fr.yan36.westerlife.common.entities.DynamX.punchingball.TestEntity2;
+import fr.yan36.westerlife.common.entities.DynamX.warningsign.WarningSignEntity;
 import fr.yan36.westerlife.common.entities.EntitySeat;
 import fr.yan36.westerlife.common.entities.NPCTestEntity;
 import fr.yan36.westerlife.common.handlers.RegistryHandler;
@@ -36,6 +39,7 @@ import net.minecraft.crash.CrashReport;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -65,7 +69,7 @@ import java.util.stream.Collectors;
         modid = Main.MODID,
         name = Main.NAME,
         version = Main.VERSION,
-        dependencies = "before: dynamxmod; after: httpcore|httpclient|lavaplayer|music_westerlife;"
+        dependencies = "before: dynamxmod; after: httpcore|httpclient|lavaplayer|music_westerlife|sdm|mcef;"
 
 )
 @DynamXAddon(modid = Main.MODID, name = Main.NAME, version = Main.VERSION)
@@ -75,7 +79,7 @@ public class Main {
     public static final String MODID = "westerlife";
     public static final String NAME = "WesterLife Mod";
 
-    public static final String VERSION = "1.5.8";
+    public static final String VERSION = "1.5.8-2";
 
 
     @Mod.Instance(Main.MODID)
@@ -93,23 +97,24 @@ public class Main {
 
     public static Database wl_db;
 
-
-
+    public static CO2ManagementThread co2ManagementThread;
 
 
     @DynamXAddon.AddonEventSubscriber
     public static void init() {
         DynamXInit.init();
-        DynamXContext.getObjModelRegistry().registerModel(new ObjModelPath(new WesterBuiltinPack.WesterPackInfo(), new ResourceLocation(Main.MODID, "test.obj")));
-        DynamXContext.getObjModelRegistry().registerModel(new ObjModelPath(new WesterBuiltinPack.WesterPackInfo(), new ResourceLocation(Main.MODID, "punch.obj")));
-        ItemInit.init();
-        DynamXInit.WATER.getInfo().setItem3DRenderLocation(Enum3DRenderLocation.WORLD);
-        DynamXInit.Taser.getInfo().setItem3DRenderLocation(Enum3DRenderLocation.WORLD);
-        DynamXInit.PoteauRemote.getInfo().setItem3DRenderLocation(Enum3DRenderLocation.WORLD);
-        DynamXInit.barreChoco.getInfo().setItem3DRenderLocation(Enum3DRenderLocation.WORLD);
-        DynamXInit.burger.getInfo().setItem3DRenderLocation(Enum3DRenderLocation.WORLD);
-        System.out.println("ici");
-        System.out.println(DynamXInit.Taser.getInfo().getModel().getNamespace() + ":item/" + DynamXInit.Taser.getInfo().getModel().getPath().replace(".obj", ""));
+
+        if (FMLCommonHandler.instance().getSide().isClient()) {
+            DynamXContext.getObjModelRegistry().registerModel(new ObjModelPath(new WesterBuiltinPack.WesterPackInfo(), new ResourceLocation(Main.MODID, "test.obj")));
+            DynamXContext.getObjModelRegistry().registerModel(new ObjModelPath(new WesterBuiltinPack.WesterPackInfo(), new ResourceLocation(Main.MODID, "punch.obj")));
+            DynamXContext.getObjModelRegistry().registerModel(new ObjModelPath(new WesterBuiltinPack.WesterPackInfo(), new ResourceLocation(Main.MODID, "models/dynamx/blocks/highroad/warningsign/warningsign.obj")));
+            ItemInit.init();
+            DynamXInit.WATER.getInfo().setItem3DRenderLocation(Enum3DRenderLocation.WORLD);
+            DynamXInit.Taser.getInfo().setItem3DRenderLocation(Enum3DRenderLocation.WORLD);
+            DynamXInit.PoteauRemote.getInfo().setItem3DRenderLocation(Enum3DRenderLocation.WORLD);
+            DynamXInit.barreChoco.getInfo().setItem3DRenderLocation(Enum3DRenderLocation.WORLD);
+            DynamXInit.burger.getInfo().setItem3DRenderLocation(Enum3DRenderLocation.WORLD);
+        }
 
     }
 
@@ -119,11 +124,19 @@ public class Main {
     public static Logger logger;
     public static DynamXDebugOption radar;
 
-//    @SideOnly(Side.SERVER)
+    //    @SideOnly(Side.SERVER)
     @Mod.EventHandler
     public void onserverStarting(FMLServerStartingEvent event) {
         event.registerServerCommand(new WesterLifeCommand());
         event.registerServerCommand(new PersoCommand());
+
+        co2ManagementThread = new CO2ManagementThread(Arrays.asList(event.getServer().worlds));
+
+        System.out.println("Starting CO2 management thread");
+
+
+        co2ManagementThread.start();
+
         Databases.onServerStarting(event);
     }
 
@@ -136,6 +149,9 @@ public class Main {
         EntityRegistry.registerModEntity(new ResourceLocation(MODID, "testentity2"), TestEntity2.class, "testentity2", 2, this, 64, 1, true, Color.WHITE.getRGB(), Color.BLACK.getRGB());
         EntityRegistry.registerModEntity(new ResourceLocation(MODID, "npcai"), NPCTestEntity.class, "npcai", 3, this, 64, 1, true, Color.WHITE.getRGB(), Color.BLACK.getRGB());
         EntityRegistry.registerModEntity(new ResourceLocation(MODID, "entity_sit"), EntitySeat.class, "entity_sit", 4, this, 256, 20, false);
+        EntityRegistry.registerModEntity(new ResourceLocation(MODID, "warningsign"), WarningSignEntity.class, "warningsign", 5, this, 64, 1, true, Color.WHITE.getRGB(), Color.BLACK.getRGB());
+        EntityRegistry.registerModEntity(new ResourceLocation(MODID, "clothentity"), ClothEntity.class, "clothentity", 6, this, 64, 1, true, Color.WHITE.getRGB(), Color.BLACK.getRGB());
+
         // register world saved data
         Capabilities.init();
         Network.init(event.getSide());
@@ -143,7 +159,7 @@ public class Main {
         MinecraftForge.EVENT_BUS.register(this);
         radar = DynamXDebugOption.newOptionWithMask(DynamXDebugOptions.DebugCategories.GENERAL, "render radar debug", 32);
         //warn: Discord RPC must be reimplemented
-        if(event.getSide().isClient()) {
+        if (event.getSide().isClient()) {
 
             // check if account is premium
             try {
@@ -151,7 +167,6 @@ public class Main {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
 
 
         }
@@ -166,7 +181,7 @@ public class Main {
         }
 
         File file = new File("launcher_profiles.json");
-        if(!file.exists()) {
+        if (!file.exists()) {
             CrashReport.makeCrashReport(new Exception("Launcher profiles not found"), "Launcher profiles not found");
         } else {
             try {
@@ -178,6 +193,7 @@ public class Main {
             }
         }
 
+//        JsonToNBT
 
     }
 
@@ -189,7 +205,6 @@ public class Main {
         event.getModuleList().add(new GarageModule(entity));
         System.out.println("initVehicleModules");
     }
-
 
 
     @Mod.EventHandler
@@ -205,8 +220,6 @@ public class Main {
         System.out.println(DynamXObjectLoaders.ARMORS.getInfos());
 
 
-
-
 //        SoundHandler soundManager = Minecraft.getMinecraft().getSoundHandler();
         // get livestream at
 
@@ -218,7 +231,6 @@ public class Main {
     public static final CreativeTabs WESTER_ECO = new WesterTab("westertab_economy");
     public static final CreativeTabs WESTER_FOOD = new WesterTab("westertab_food");
     public static final CreativeTabs WESTER_STAFF = new WesterTab("westertab_staff");
-
 
 
 }

@@ -12,10 +12,12 @@ public class ItemBase extends Item implements IHasModel {
     public ItemBase(String name)
     {
         setRegistryName(name);
-        setCreativeTab(Main.WESTER_MAIN);
         ItemInit.ITEMS.add(this);
-        setMaxDamage(1);
-        setTranslationKey(name);
+    }
+
+    @Override
+    public CreativeTabs[] getCreativeTabs() {
+        return new CreativeTabs[]{Main.WESTER_MAIN};
     }
 
 

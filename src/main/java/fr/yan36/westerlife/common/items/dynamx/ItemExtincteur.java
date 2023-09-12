@@ -5,6 +5,7 @@ import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.Util;
 import fr.yan36.westerlife.common.init.DynamXInit;
 import net.minecraft.block.Block;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -20,11 +21,13 @@ public class ItemExtincteur extends DynamXItem {
 
     public ItemExtincteur(String modid, String itemName, ResourceLocation model) {
         super(modid, itemName, model);
-        setMaxDamage(100);
         setMaxStackSize(1);
-        setCreativeTab(Main.WESTER_MAIN);
     }
 
+    @Override
+    public CreativeTabs[] getCreativeTabs() {
+        return new CreativeTabs[]{Main.WESTER_MAIN};
+    }
     @Override
     public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos blockPos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if (!worldIn.isRemote) {

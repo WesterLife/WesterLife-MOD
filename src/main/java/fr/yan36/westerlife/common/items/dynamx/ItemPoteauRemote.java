@@ -4,6 +4,7 @@ import fr.dynamx.common.items.DynamXItem;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.blocks.tileentity.TilePoteauLevant;
 import fr.yan36.westerlife.common.init.DynamXInit;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
@@ -15,9 +16,12 @@ public class ItemPoteauRemote extends DynamXItem {
 
     public ItemPoteauRemote(String modid, String itemName, ResourceLocation model) {
         super(modid, itemName, model);
-        setCreativeTab(Main.WESTER_ROADS);
     }
 
+    @Override
+    public CreativeTabs[] getCreativeTabs() {
+        return new CreativeTabs[]{Main.WESTER_ROADS};
+    }
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer player, EnumHand handIn) {
         if(!worldIn.isRemote) {

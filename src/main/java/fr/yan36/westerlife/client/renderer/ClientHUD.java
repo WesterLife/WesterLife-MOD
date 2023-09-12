@@ -4,6 +4,7 @@ import fr.nathanael2611.simpledatabasemanager.client.ClientDatabases;
 import fr.nathanael2611.simpledatabasemanager.core.Databases;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.client.Client;
+import fr.yan36.westerlife.common.capabilities.playerchunckrel.PlayerChunkRelCapability;
 import fr.yan36.westerlife.common.capabilities.playerstat.PlayerStatCapability;
 import fr.yan36.westerlife.common.items.ItemCard;
 import fr.yan36.westerlife.common.network.PacketRequestCharacter;
@@ -26,28 +27,54 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class ClientHUD {
+import static fr.dynamx.client.handlers.ClientEventHandler.MC;
 
+public class ClientHUD {
 
 
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
     public void healthRender(RenderGameOverlayEvent.Pre event) {
-        if(event.getType().equals(RenderGameOverlayEvent.ElementType.HEALTH) || event.getType().equals(RenderGameOverlayEvent.ElementType.FOOD) || event.getType().equals(RenderGameOverlayEvent.ElementType.EXPERIENCE)) {
-            if(Minecraft.getMinecraft().isReducedDebug()) {
+        if (event.getType().equals(RenderGameOverlayEvent.ElementType.HEALTH) || event.getType().equals(RenderGameOverlayEvent.ElementType.FOOD) || event.getType().equals(RenderGameOverlayEvent.ElementType.EXPERIENCE)) {
+            if (Minecraft.getMinecraft().isReducedDebug()) {
                 return;
             }
             event.setCanceled(true);
         }
     }
+
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
     public void healthRender(RenderGameOverlayEvent.Post event) {
         EntityPlayer player = Minecraft.getMinecraft().player;
-        if(!(player == null)) {
+        if (!(player == null)) {
 
-            if(Minecraft.getMinecraft().player.hasCapability(PlayerStatCapability.CAPABILITY, null)) {
+            if (Minecraft.getMinecraft().player.hasCapability(PlayerStatCapability.CAPABILITY, null)) {
                 Minecraft.getMinecraft().fontRenderer.drawString("§6" + Objects.requireNonNull(player.getCapability(PlayerStatCapability.CAPABILITY, null)).getAnimation() + " $", 5, 50, 0xFFFFFF);
+            }
+
+            if (Minecraft.getMinecraft().player.getEntityWorld().getChunk(Minecraft.getMinecraft().player.getPosition()).hasCapability(PlayerChunkRelCapability.CAPABILITY, null)) {
+                GlStateManager.enableAlpha();
+
+                ResourceLocation pollenLocation = new ResourceLocation(Main.MODID, "textures/hud/gauge/pollenempty.png");
+                ResourceLocation pollenFullLocation = new ResourceLocation(Main.MODID, "textures/hud/gauge/pollenfull.png");
+                Minecraft.getMinecraft().getTextureManager().bindTexture(pollenLocation);
+                Gui.drawScaledCustomSizeModalRect(5, 10, 0, 0, 256, 256, 30, 10, 256, 256);
+
+                int percent = (int) (Objects.requireNonNull(Minecraft.getMinecraft().player.getEntityWorld().getChunk(Minecraft.getMinecraft().player.getPosition()).getCapability(PlayerChunkRelCapability.CAPABILITY, null)).getCO2() * 30 / 100);
+
+                MC.getTextureManager().bindTexture(pollenFullLocation);
+                Gui.drawScaledCustomSizeModalRect(5, 10, 0, 0, 256, 256, percent, 10, 256, 256);
+
+                GlStateManager.disableAlpha();
+
+
+            } else {
+                GlStateManager.enableAlpha();
+                ResourceLocation pollenLocation = new ResourceLocation(Main.MODID, "textures/hud/gauge/pollenerror.png");
+                Minecraft.getMinecraft().getTextureManager().bindTexture(pollenLocation);
+                Gui.drawScaledCustomSizeModalRect(5, 10, 0, 0, 256, 256, 30, 10, 256, 256);
+                GlStateManager.disableAlpha();
             }
 
             if (player.getHeldItem(EnumHand.MAIN_HAND).getItem() instanceof ItemCard) {
@@ -70,7 +97,7 @@ public class ClientHUD {
                                 Minecraft.getMinecraft().fontRenderer.drawString(target.getBirthPlace(), 235, 110, 0x050505);
                                 Minecraft.getMinecraft().fontRenderer.drawString(target.getBirthDate(), 135, 125, 0x050505);
 
-                                if(player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().hasKey("uniqueIdentifier")) {
+                                if (player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().hasKey("uniqueIdentifier")) {
                                     Minecraft.getMinecraft().fontRenderer.drawString(player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().getString("uniqueIdentifier"), 135, 140, 0x050505);
                                 } else {
                                     Minecraft.getMinecraft().fontRenderer.drawString("WESTX48ADEZ", 135, 140, 0x050505);
@@ -99,7 +126,7 @@ public class ClientHUD {
                                 Minecraft.getMinecraft().fontRenderer.drawString(target2.getBirthPlace(), 135, 105, 0x050505);
                                 Minecraft.getMinecraft().fontRenderer.drawString(target.getType().stream().map(Permis.PermisType::getLetterName).collect(Collectors.joining(", ")), 135, 125, 0x050505);
 
-                                if(player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().hasKey("uniqueIdentifier")) {
+                                if (player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().hasKey("uniqueIdentifier")) {
                                     Minecraft.getMinecraft().fontRenderer.drawString(player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().getString("uniqueIdentifier"), 135, 155, 0x050505);
                                 } else {
                                     Minecraft.getMinecraft().fontRenderer.drawString("WESTX48ADEZ", 130, 150, 0x050505);
@@ -127,7 +154,7 @@ public class ClientHUD {
                                 Minecraft.getMinecraft().fontRenderer.drawString(target.getLastName(), 130, 65, 0x050505);
                                 Minecraft.getMinecraft().fontRenderer.drawString(target.getFirstNames(), 130, 100, 0x050505);
                                 Minecraft.getMinecraft().fontRenderer.drawString(target.getBirthPlace(), 130, 130, 0x050505);
-                                if(player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().hasKey("uniqueIdentifier")) {
+                                if (player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().hasKey("uniqueIdentifier")) {
                                     Minecraft.getMinecraft().fontRenderer.drawString(player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().getString("uniqueIdentifier"), 130, 150, 0x050505);
                                 } else {
                                     Minecraft.getMinecraft().fontRenderer.drawString("WESTX48ADEZ", 130, 150, 0x050505);
@@ -154,7 +181,7 @@ public class ClientHUD {
                                 Minecraft.getMinecraft().fontRenderer.drawString(target.getLastName(), 135, 65, 0x050505);
                                 Minecraft.getMinecraft().fontRenderer.drawString(target.getFirstNames(), 135, 85, 0x050505);
                                 Minecraft.getMinecraft().fontRenderer.drawString(target.getBirthPlace(), 135, 105, 0x050505);
-                                if(player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().hasKey("uniqueIdentifier")) {
+                                if (player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().hasKey("uniqueIdentifier")) {
                                     Minecraft.getMinecraft().fontRenderer.drawString(player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().getString("uniqueIdentifier"), 135, 125, 0x050505);
                                 } else {
                                     Minecraft.getMinecraft().fontRenderer.drawString("WESTX48ADEZ", 130, 150, 0x050505);
@@ -180,9 +207,8 @@ public class ClientHUD {
         }
 
 
-
         ScaledResolution scaledresolution = event.getResolution();
-        if(Databases.getPlayerData(Minecraft.getMinecraft().player).contains("notification")) {
+        if (Databases.getPlayerData(Minecraft.getMinecraft().player).contains("notification")) {
             String notification = Databases.getPlayerData(Minecraft.getMinecraft().player).getString("notification");
 
             Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(Main.MODID, "textures/hud/notification.png"));
@@ -202,14 +228,14 @@ public class ClientHUD {
                 int percent = (int) (Minecraft.getMinecraft().player.getHealth() * 70 / Minecraft.getMinecraft().player.getMaxHealth());
                 if (percent > 0) {
                     Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(Main.MODID, "textures/hud/health_full.png"));
-                    Gui.drawScaledCustomSizeModalRect( 40, scaledresolution.getScaledHeight() - 76 + (70 - percent), 0, 70 - percent, 15, percent, 13, percent, 15, 70);
+                    Gui.drawScaledCustomSizeModalRect(40, scaledresolution.getScaledHeight() - 76 + (70 - percent), 0, 70 - percent, 15, percent, 13, percent, 15, 70);
                 }
                 Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(Main.MODID, "textures/hud/food_empty.png"));
                 Gui.drawScaledCustomSizeModalRect(10, scaledresolution.getScaledHeight() - 76, 0, 0, 15, 70, 13, 70, 15, 70);
                 int percentFood = (int) (Minecraft.getMinecraft().player.getFoodStats().getFoodLevel() * 70 / 20);
                 if (percentFood > 0) {
                     Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(Main.MODID, "textures/hud/food_full.png"));
-                    Gui.drawScaledCustomSizeModalRect( 10, scaledresolution.getScaledHeight() - 76 + (70 - percentFood), 0, 70 - percentFood, 15, percentFood, 13, percentFood, 15, 70);
+                    Gui.drawScaledCustomSizeModalRect(10, scaledresolution.getScaledHeight() - 76 + (70 - percentFood), 0, 70 - percentFood, 15, percentFood, 13, percentFood, 15, 70);
                 }
                 Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(Main.MODID, "textures/hud/water_empty.png"));
                 Gui.drawScaledCustomSizeModalRect(25, scaledresolution.getScaledHeight() - 76, 0, 0, 15, 70, 13, 70, 15, 70);

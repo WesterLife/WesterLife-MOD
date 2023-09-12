@@ -12,10 +12,9 @@ public class ItemBillet extends Item implements IHasModel {
     public ItemBillet(String name)
     {
         setRegistryName(name);
-        setCreativeTab(Main.WESTER_ECO);
         ItemInit.ITEMS.add(this);
-        setMaxDamage(1);
-        setTranslationKey(name);
+//        setMaxDamage(1);
+//        setTranslationKey(name);
     }
 
 

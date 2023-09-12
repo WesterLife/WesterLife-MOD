@@ -13,12 +13,14 @@ public class ItemFood extends net.minecraft.item.ItemFood implements IHasModel {
     {
         super(amount, saturation, false);
         setRegistryName(name);
-        setCreativeTab(Main.WESTER_FOOD);
         ItemInit.ITEMS.add(this);
-        setMaxDamage(1);
         setTranslationKey(name);
     }
 
+    @Override
+    public CreativeTabs[] getCreativeTabs() {
+        return new CreativeTabs[]{Main.WESTER_FOOD};
+    }
 
     @Nullable
     @Override

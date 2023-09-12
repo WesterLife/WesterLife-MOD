@@ -5,7 +5,7 @@ import fr.dynamx.common.entities.PhysicsEntity;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.capabilities.playerstat.IPlayerStat;
 import fr.yan36.westerlife.common.capabilities.playerstat.PlayerStatCapability;
-import fr.yan36.westerlife.common.entities.DynamX.TestEntity2;
+import fr.yan36.westerlife.common.entities.DynamX.punchingball.TestEntity2;
 import fr.yan36.westerlife.common.utils.Animation;
 import fr.yan36.westerlife.common.utils.carmodule.AICarEngineModule;
 import fr.yan36.westerlife.common.utils.commands.modules.*;

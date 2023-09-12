@@ -1,6 +1,5 @@
 package fr.yan36.westerlife.common.entities;
 
-import fr.yan36.westerlife.common.entities.DynamX.TestEntity2;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.RenderLiving;

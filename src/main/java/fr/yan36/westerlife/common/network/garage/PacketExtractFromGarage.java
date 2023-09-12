@@ -6,11 +6,14 @@ import fr.dynamx.addons.basics.BasicsAddon;
 import fr.dynamx.addons.basics.common.modules.LicensePlateModule;
 import fr.dynamx.api.network.EnumNetworkType;
 import fr.dynamx.api.network.IDnxPacket;
+import fr.dynamx.api.physics.player.DynamXPhysicsWorldBlacklistApi;
+import fr.dynamx.common.DynamXContext;
 import fr.dynamx.common.contentpack.DynamXObjectLoaders;
 import fr.dynamx.common.entities.BaseVehicleEntity;
 import fr.dynamx.common.entities.vehicles.CarEntity;
 import fr.dynamx.utils.DynamXUtils;
 import fr.nathanael2611.simpledatabasemanager.core.Databases;
+import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.Util;
 import fr.yan36.westerlife.common.blocks.tileentity.TilePark;
 import fr.yan36.westerlife.common.capabilities.packets.PacketSyncExtraItem;
@@ -101,6 +104,7 @@ public class PacketExtractFromGarage extends SerializablePacket implements IDnxP
 
                             ItemStack stack = new ItemStack(BasicsAddon.keysItem);
                             stack.setStackDisplayName("§e" + garageCar.getCarName() + " §7(" + garageCar.getCarPlate() + ")");
+
                             stack.setTagCompound(new NBTTagCompound());
                             stack.getTagCompound().setString("VehicleId", garageCar.getUniqueID());
                             stack.getTagCompound().setString("VehicleName", garageCar.getCarName());
@@ -112,8 +116,12 @@ public class PacketExtractFromGarage extends SerializablePacket implements IDnxP
 
 
                             car2.setPhysicsInitCallback(((modularPhysicsEntity, abstractEntityPhysicsHandler) -> {
-                                car2.getPhysicsHandler().setPhysicsPosition(DynamXUtils.toVector3f(this.pos));
-                                car2.getModuleByType(LicensePlateModule.class).setPlate(garageCar.getCarPlate());
+                                if(DynamXContext.usesPhysicsWorld(car2.world)) {
+                                    car2.getPhysicsHandler().setPhysicsPosition(DynamXUtils.toVector3f(this.pos));
+                                    car2.getModuleByType(LicensePlateModule.class).setPlate(garageCar.getCarPlate());
+                                } else {
+                                    Main.logger.warn("Physics world not found for car " + car2.getUniqueID() + " (" + car2.getName() + ")");
+                                }
                             }));
                             PlayerGarageCapability.sync(context, Collections.singletonList(context));
                         } else {

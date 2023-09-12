@@ -241,14 +241,22 @@ public class Client {
         }
 
         if(e.getGui() instanceof GuiDisconnected) {
-            // get the reason with reflection
-            Field f = e.getGui().getClass().getDeclaredField("message");
-            f.setAccessible(true);
-            Object o = f.get(e.getGui());
-            ITextComponent reason = (ITextComponent) o;
+
+            try {
+                Field f = e.getGui().getClass().getDeclaredField("message");
+
+                f.setAccessible(true);
+                Object o = f.get(e.getGui());
+                ITextComponent reason = (ITextComponent) o;
 
 
-            e.setGui(new GuiServerError(Minecraft.getMinecraft().currentScreen, reason.getFormattedText()).getGuiScreen());
+                e.setGui(new GuiServerError(Minecraft.getMinecraft().currentScreen, reason.getFormattedText()).getGuiScreen());
+            } catch (NoSuchFieldException e1) {
+                Main.logger.warn("Error while trying to get the message field of GuiDisconnected");
+                e1.printStackTrace();
+            }
+
+
         }
 
 
@@ -329,7 +337,7 @@ public class Client {
     @SideOnly(Side.CLIENT)
     public static void itemRenderer(DynamXItemEvent.Render e) throws Exception {
         if (e.getStage().equals(EventStage.PRE)) {
-            if (e.getItem().getItem().equals(DynamXInit.burger)) {
+            if (e.getStack().getItem().equals(DynamXInit.burger)) {
                 e.setCanceled(true);
                 GlStateManager.pushMatrix();
                 GlStateManager.rotate(90, 1, 0, 0);
@@ -337,13 +345,13 @@ public class Client {
                 ObjModelRenderer objModelRenderer = DynamXContext.getObjModelRegistry().getModel(new ResourceLocation("westerlife", "models/dynamx/blocks/macdo/macdo.obj"));
 
 
-                if (e.getItem().getTagCompound() == null) {
+                if (e.getStack().getTagCompound() == null) {
 
 
 
                 } else {
                     List<TileMacdo.burger> ingredients = new ArrayList<>();
-                    String s = e.getItem().getTagCompound().getString("burger");
+                    String s = e.getStack().getTagCompound().getString("burger");
                     for (String s1 : s.split(", ")) {
                         ingredients.add(TileMacdo.burger.valueOf(s1));
                     }

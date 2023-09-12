@@ -2,6 +2,7 @@ package fr.yan36.westerlife.common.init;
 
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.capabilities.packets.PacketSyncAnimation;
+import fr.yan36.westerlife.common.capabilities.packets.PacketSyncChunk;
 import fr.yan36.westerlife.common.capabilities.packets.PacketSyncExtraItem;
 import fr.yan36.westerlife.common.capabilities.packets.PacketSyncGarage;
 import fr.yan36.westerlife.common.network.*;
@@ -50,10 +51,12 @@ public class Network {
             Main.network.registerMessage(PacketSyncAnimation.ClientHandler.class, PacketSyncAnimation.class, 38, Side.CLIENT);
             Main.network.registerMessage(PacketSyncGarage.ClientHandler.class, PacketSyncGarage.class, 39, Side.CLIENT);
             Main.network.registerMessage(PacketSyncExtraItem.ClientHandler.class, PacketSyncExtraItem.class, 40, Side.CLIENT);
+            Main.network.registerMessage(PacketSyncChunk.ClientHandler.class, PacketSyncChunk.class, 41, Side.CLIENT);
         } else  {
             Main.network.registerMessage(PacketSyncAnimation.ServerHandler.class, PacketSyncAnimation.class, 38, Side.SERVER); //CEST NORMAL LE PACKET EST LE MEME
             Main.network.registerMessage(PacketSyncGarage.ServerHandler.class, PacketSyncGarage.class, 39, Side.SERVER);
             Main.network.registerMessage(PacketSyncExtraItem.ServerHandler.class, PacketSyncExtraItem.class, 40, Side.SERVER);
+            Main.network.registerMessage(PacketSyncChunk.ServerHandler.class, PacketSyncChunk.class, 41, Side.SERVER);
         }
 
 

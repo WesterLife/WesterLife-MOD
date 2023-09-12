@@ -13,6 +13,7 @@ import fr.yan36.westerlife.common.network.PacketOpenAcsGui;
 import fr.yan36.westerlife.common.network.old.BelierMessage;
 import fr.yan36.westerlife.common.objects.IObjectEditable;
 import net.minecraft.client.Minecraft;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -27,7 +28,11 @@ public class ItemMagicWand extends DynamXItem {
 
     public ItemMagicWand(String modid, String itemName, ResourceLocation model) {
         super(modid, itemName, model);
-        setCreativeTab(Main.WESTER_STAFF);
+    }
+
+    @Override
+    public CreativeTabs[] getCreativeTabs() {
+        return new CreativeTabs[]{Main.WESTER_STAFF};
     }
 
 }

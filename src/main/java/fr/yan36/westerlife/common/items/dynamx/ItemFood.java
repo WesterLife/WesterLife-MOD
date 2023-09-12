@@ -3,6 +3,7 @@ package fr.yan36.westerlife.common.items.dynamx;
 import fr.dynamx.common.items.DynamXItem;
 import fr.yan36.westerlife.Main;
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -20,8 +21,12 @@ public class ItemFood extends DynamXItem {
     public ItemFood(String modid, String itemName, ResourceLocation model, float saturationModifier) {
         super(modid, itemName, model);
         this.saturationModifier = saturationModifier;
-        setCreativeTab(Main.WESTER_FOOD);
     }
+    @Override
+    public CreativeTabs[] getCreativeTabs() {
+        return new CreativeTabs[]{Main.WESTER_FOOD};
+    }
+
 
     @Override
     public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityLivingBase entityLiving) {

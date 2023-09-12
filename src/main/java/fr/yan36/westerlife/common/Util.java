@@ -4,11 +4,13 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
 import com.jme3.math.Vector3f;
 import fr.aym.acsguis.cssengine.font.CssFontHelper;
+import fr.dynamx.client.renders.mesh.VertexBuffer;
 import fr.yan36.westerlife.common.blocks.dynamx.BlockAIPoint;
 import fr.yan36.westerlife.common.blocks.tileentity.TileEntitySyncClient;
 import fr.yan36.westerlife.common.init.DynamXInit;
 import fr.yan36.westerlife.common.objects.KitWSD;
 import fr.yan36.westerlife.common.utils.AABB;
+import jme3utilities.Validate;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -22,6 +24,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EntitySelectors;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.*;
 import net.minecraft.world.World;
@@ -341,6 +344,16 @@ public class Util {
             GlStateManager.resetColor();
             GlStateManager.popMatrix();
         }
+    }
+
+    public static boolean isBlockBurning(World w, Block b, BlockPos p) {
+
+        for (EnumFacing face : EnumFacing.values()) {
+            if (b.isFireSource(w, p, face)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 

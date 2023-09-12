@@ -71,5 +71,8 @@ public class TileGarage extends TileEntitySyncClient implements ITickable {
         return oldState.getBlock() != newSate.getBlock();
     }
 
-
+    @Override
+    public CompoundCollisionShape getPhysicsCollision() {
+        return super.getPhysicsCollision();
+    }
 }

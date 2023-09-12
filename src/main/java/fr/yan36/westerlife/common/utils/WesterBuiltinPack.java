@@ -46,6 +46,16 @@ public class WesterBuiltinPack implements IPhysicsPackInfo {
     }
 
     @Override
+    public float getAngularDamping() {
+        return 0;
+    }
+
+    @Override
+    public float getLinearDamping() {
+        return 0;
+    }
+
+    @Override
     public String getName() {
         return "westerlife:builtin";
     }
