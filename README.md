@@ -15,6 +15,6 @@ L'accès au contenu de ce mod est réservé **aux membres agréés par l'adminis
 - DynamX (:white_check_mark:)
 - Discord RPC (:white_check_mark:)
 - MySQL Connector and Others (:white_check_mark:)
-- MCEF (:white_check_mark:)
+- MCEF (🖕)
 - Obfuscate (:white_check_mark:)
 - ACsGui (:white_check_mark:)
