@@ -49,12 +49,9 @@ public class BlockFeuRouge extends DynamXBlock {
 
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-
-
         if(!worldIn.isRemote) {
             if(player.isCreative() && player.getHeldItem(hand).getItem().equals(DynamXInit.magicWand))
                 Main.network.sendTo(new PacketOpenAcsGui(5, Util.blockPosToString(pos), "feurouge"), (EntityPlayerMP) player);
-
         }
         return true;
     }

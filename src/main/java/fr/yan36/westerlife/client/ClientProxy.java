@@ -1,7 +1,12 @@
 package fr.yan36.westerlife.client;
 
+import com.labymedia.ultralight.UltralightRenderer;
+import com.mojang.authlib.GameProfile;
 import fr.aym.acsguis.api.ACsGuiApi;
+import fr.aym.acslib.api.services.error.ErrorLevel;
+import fr.dynamx.utils.errors.DynamXErrorManager;
 import fr.yan36.westerlife.Main;
+import fr.yan36.westerlife.client.gui.ultralight.UltraLight;
 import fr.yan36.westerlife.client.phone.Apps;
 import fr.yan36.westerlife.client.renderer.ClientHUD;
 import fr.yan36.westerlife.client.renderer.LayerArmorSuperposition;
@@ -17,16 +22,28 @@ import fr.yan36.westerlife.common.entities.DynamX.warningsign.WarningSignEntity;
 import fr.yan36.westerlife.common.entities.ModelNPC;
 import fr.yan36.westerlife.common.entities.NPCTestEntity;
 import fr.yan36.westerlife.common.entities.NpcRenderer;
+import fr.yan36.westerlife.common.entities.npc.NPCConcessEntity;
+import fr.yan36.westerlife.common.entities.npc.NPCConcessEntityRenderer;
+import fr.yan36.westerlife.common.entities.npcdomac.NPCDomacEntity;
+import fr.yan36.westerlife.common.entities.npcdomac.NPCDomacEntityRenderer;
+import fr.yan36.westerlife.common.objects.StyleToLoad;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.entity.RenderPlayer;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntitySkull;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Util;
+import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.fml.common.discovery.ASMDataTable;
+import net.minecraftforge.fml.common.event.FMLConstructionEvent;
 import org.apache.commons.io.IOUtils;
 import org.lwjgl.opengl.Display;
 
@@ -34,15 +51,17 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Method;
 import java.nio.ByteBuffer;
-import java.util.Map;
+import java.util.*;
 
 
 public class ClientProxy extends CommonProxy {
 
+    public static UltralightRenderer renderer;
+
     @Override
-    public void registerItemRenderer(Item item, int meta)
-    {
+    public void registerItemRenderer(Item item, int meta) {
         super.registerItemRenderer(item, meta);
         ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(item.getRegistryName(), "inventory"));
     }
@@ -53,17 +72,33 @@ public class ClientProxy extends CommonProxy {
     }
 
     @Override
-    public void registerEntityRenderers()
-    {
+    public void registerEntityRenderers() {
         super.registerEntityRenderers();
     }
 
+    @Override
+    public EntityPlayer loadPlayer(NBTTagCompound playerNBT, String key, World world) {
+        EntityPlayer member;
+        if (world.isRemote) {
+            GameProfile profile = new GameProfile(UUID.fromString(playerNBT.getString("uuid")), playerNBT.getString("name"));
+            TileEntitySkull.updateGameProfile(profile);
+            member = new EntityOtherPlayerMP(world, profile);
+            member.deserializeNBT(playerNBT.getCompoundTag("data"));
+            member.setEntityId(playerNBT.getInteger("id"));
+        } else {
+            member = super.loadPlayer(playerNBT, key, world);
+        }
 
+        return member;
+    }
 
     @Override
     public void preInit() throws IOException {
         super.preInit();
         System.out.println("ClientProxy preInit");
+
+        UltraLight.init();
+        renderer = UltraLight.getRenderer();
 
         ClientRegistry.bindTileEntitySpecialRenderer(TileMovingGate.class, new RenderTileMovingGate());
         ClientRegistry.bindTileEntitySpecialRenderer(TileTombe.class, new RenderTombe());
@@ -85,6 +120,8 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.bindTileEntitySpecialRenderer(TilePark.class, new RenderPark());
         ClientRegistry.bindTileEntitySpecialRenderer(TileGarage.class, new RenderGarage());
         ClientRegistry.bindTileEntitySpecialRenderer(TileMacdo.class, new RenderMacdo());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileCarPresentation.class, new RenderTileCarPresentation());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileTestSphere.class, new RenderTestSphere());
 
         RenderingRegistry.registerEntityRenderingHandler(TestEntity2.class, TestEntity2Renderer::new);
         RenderingRegistry.registerEntityRenderingHandler(WarningSignEntity.class, WarningSignRenderer::new);
@@ -97,8 +134,6 @@ public class ClientProxy extends CommonProxy {
         Display.setTitle("WesterLife - " + Minecraft.getMinecraft().getSession().getUsername());
 
         setWindowIcon();
-
-
 
 
         ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(Main.MODID, "acsgui/mainmenu.css"));
@@ -125,56 +160,95 @@ public class ClientProxy extends CommonProxy {
         ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(Main.MODID, "acsgui/garage.css"));
         ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(Main.MODID, "acsgui/macdo.css"));
         ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(Main.MODID, "acsgui/loading.css"));
+        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(Main.MODID, "acsgui/notregistred.css"));
+        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(Main.MODID, "acsgui/debug.css"));
+        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(Main.MODID, "acsgui/staff.css"));
+
+        ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation(Main.MODID, "acsgui/carhud.css"));
+
+
+
+
         Apps.Init(); // Gabi <3
 
 
     }
 
+    public static List<ResourceLocation> LOADED_STYLESHEETS = new ArrayList<>();
+
+    public static void discoverGuis(FMLConstructionEvent event) {
+        Set<ASMDataTable.ASMData> modData = event.getASMHarvestedData().getAll(StyleToLoad.class.getName());
+        Iterator<ASMDataTable.ASMData> var2 = modData.iterator();
+
+        while (true) {
+            ASMDataTable.ASMData data;
+            if (!var2.hasNext()) {
+                return;
+            }
+
+            data = var2.next();
+            String name = data.getClassName();
+
+            try {
+                Class<?> styleGui = Class.forName(data.getClassName());
+
+                if(styleGui.getSuperclass().equals(fr.aym.acsguis.component.panel.GuiFrame.class)) {
+                    Method m = styleGui.getMethod("getCssStyles");
 
 
-    private void setWindowIcon()
-    {
+                    List<ResourceLocation> css = (List<ResourceLocation>) m.invoke(styleGui.newInstance());
+
+                    System.out.println("Found css styles for gui " + name + " : " + css);
+                    for (ResourceLocation resourceLocation : css) {
+                        if(!LOADED_STYLESHEETS.contains(resourceLocation)) {
+                            ACsGuiApi.registerStyleSheetToPreload(resourceLocation);
+                        }
+                        LOADED_STYLESHEETS.add(resourceLocation);
+                    }
+                }
+
+
+
+            } catch (Exception var12) {
+                throw new RuntimeException("Failed to load style gui class " + name, var12);
+            }
+        }
+    }
+
+
+    private void setWindowIcon() {
         Util.EnumOS util$enumos = Util.getOSType();
 
-        if (util$enumos != Util.EnumOS.OSX)
-        {
+        if (util$enumos != Util.EnumOS.OSX) {
             InputStream inputstream = null;
             InputStream inputstream1 = null;
 
-            try
-            {
+            try {
 
                 inputstream = Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation(Main.MODID, "icons/logo.png")).getInputStream();
-                inputstream1 = Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation(Main.MODID,"icons/logodark.png")).getInputStream();
+                inputstream1 = Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation(Main.MODID, "icons/logodark.png")).getInputStream();
 
-                if (inputstream != null && inputstream1 != null)
-                {
-                    Display.setIcon(new ByteBuffer[] {
+                if (inputstream != null && inputstream1 != null) {
+                    Display.setIcon(new ByteBuffer[]{
                             this.readImageToBuffer(inputstream), this.readImageToBuffer(inputstream1)
                     });
                 }
-            }
-            catch (IOException ioexception)
-            {
+            } catch (IOException ioexception) {
                 ioexception.printStackTrace();
                 System.out.println("Erreur, impossible de charger l'icone.");
-            }
-            finally
-            {
+            } finally {
                 IOUtils.closeQuietly(inputstream);
                 IOUtils.closeQuietly(inputstream1);
             }
         }
     }
 
-    private ByteBuffer readImageToBuffer(InputStream imageStream) throws IOException
-    {
+    private ByteBuffer readImageToBuffer(InputStream imageStream) throws IOException {
         BufferedImage bufferedimage = ImageIO.read(imageStream);
-        int[] aint = bufferedimage.getRGB(0, 0, bufferedimage.getWidth(), bufferedimage.getHeight(), (int[])null, 0, bufferedimage.getWidth());
+        int[] aint = bufferedimage.getRGB(0, 0, bufferedimage.getWidth(), bufferedimage.getHeight(), (int[]) null, 0, bufferedimage.getWidth());
         ByteBuffer bytebuffer = ByteBuffer.allocate(4 * aint.length);
 
-        for (int i : aint)
-        {
+        for (int i : aint) {
             bytebuffer.putInt(i << 8 | i >> 24 & 255);
         }
 
@@ -186,6 +260,8 @@ public class ClientProxy extends CommonProxy {
     public void init() {
         final Map<String, RenderPlayer> skinMap = Minecraft.getMinecraft().getRenderManager().getSkinMap();
         skinMap.forEach((key, value) -> value.addLayer(new LayerArmorSuperposition(value)));
+        RenderingRegistry.registerEntityRenderingHandler(NPCConcessEntity.class, new NPCConcessEntityRenderer(Minecraft.getMinecraft().getRenderManager()));
+        RenderingRegistry.registerEntityRenderingHandler(NPCDomacEntity.class, new NPCDomacEntityRenderer(Minecraft.getMinecraft().getRenderManager()));
         super.init();
     }
 

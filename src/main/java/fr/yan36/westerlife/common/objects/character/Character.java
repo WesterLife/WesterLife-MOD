@@ -2,12 +2,10 @@ package fr.yan36.westerlife.common.objects.character;
 
 import fr.yan36.westerlife.common.objects.IDatabaseResponse;
 import fr.yan36.westerlife.common.objects.IDatabaseVariable;
+import fr.yan36.westerlife.common.objects.economy.BankAccount;
 import fr.yan36.westerlife.common.objects.justice.Conviction;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 public class Character implements IDatabaseVariable, IDatabaseResponse {
     @Override
@@ -59,7 +57,7 @@ public class Character implements IDatabaseVariable, IDatabaseResponse {
         }
         public static Gender getBySex(String s) {
             for (Gender value : Gender.values()) {
-                if(Objects.equals(value.getSex(), s)) {
+                if(Objects.equals(value.getSex(), s.toUpperCase(Locale.ROOT))) {
                     return value;
                 }
             }
@@ -73,8 +71,24 @@ public class Character implements IDatabaseVariable, IDatabaseResponse {
     private Gender gender;
     private String birthPlace;
     private String birthDate;
+    private Permis permis;
+    private BankAccount relatedBankAccount;
 
-    public Character(UUID uuid, String firstNames, String lastName, String nationality, Gender gender, String birthPlace, String birthDate) {
+    public Character(UUID uuid, String firstNames, String lastName, String nationality, Gender gender, String birthPlace, String birthDate, Permis permis) {
+        this(
+                uuid,
+                firstNames,
+                lastName,
+                nationality,
+                gender,
+                birthPlace,
+                birthDate,
+                permis,
+                null
+        );
+    }
+
+    public Character(UUID uuid, String firstNames, String lastName, String nationality, Gender gender, String birthPlace, String birthDate, Permis permis, BankAccount relatedBankAccount) {
         this.uuid = uuid;
         this.firstNames = firstNames;
         this.lastName = lastName;
@@ -82,6 +96,8 @@ public class Character implements IDatabaseVariable, IDatabaseResponse {
         this.gender = gender;
         this.birthPlace = birthPlace;
         this.birthDate = birthDate;
+        this.permis = permis;
+        this.relatedBankAccount = relatedBankAccount;
     }
 
     public Character() {
@@ -92,6 +108,8 @@ public class Character implements IDatabaseVariable, IDatabaseResponse {
         this.gender = Gender.MALE;
         this.birthPlace = "null";
         this.birthDate = "null";
+        this.permis = new Permis();
+        this.relatedBankAccount = null;
     }
 
     public UUID getUuid() {
@@ -150,13 +168,51 @@ public class Character implements IDatabaseVariable, IDatabaseResponse {
         this.birthDate = birthDate;
     }
 
+    public Permis getPermis() {
+        return permis;
+    }
+
+    public void setPermis(Permis permis) {
+        this.permis = permis;
+    }
+
+    public BankAccount getRelatedBankAccount() {
+        return relatedBankAccount;
+    }
+
+    public void setRelatedBankAccount(BankAccount relatedBankAccount) {
+        this.relatedBankAccount = relatedBankAccount;
+    }
+
     public String toString() {
-        return uuid.toString() + ";" + firstNames + ";" + lastName + ";" + nationality + ";" + gender.getSex() + ";" + birthPlace + ";" + birthDate;
+        return uuid.toString() + ";" + firstNames + ";" + lastName + ";" + nationality + ";" + gender.getSex() + ";" + birthPlace + ";" + birthDate + ";" + permis.toString() + ";" + relatedBankAccount.toString();
     }
 
     public static Character fromString(String s) {
         String[] split = s.split(";");
 
-        return new Character(UUID.fromString(split[0]), split[1], split[2], split[3], Gender.getBySex(split[4]), split[5], split[6]);
+        return new Character(UUID.fromString(split[0]), split[1], split[2], split[3], Gender.getBySex(split[4]), split[5], split[6], Permis.fromString(split[7]), BankAccount.fromString(split[8]));
     }
+
+    public List<String> getAsReadableList() {
+        List<String> list = new ArrayList<>();
+        list.add("§cUUID: §4" + uuid.toString());
+        list.add("§cFirst names: §4" + firstNames);
+        list.add("§cLast name: §4" + lastName);
+        list.add("§cNationality §4" + nationality);
+        list.add("§cGender §4" + gender);
+        list.add("§cBirthPlace §4" + birthPlace);
+        list.add("§cBirthDate §4" + birthDate);
+        list.add("§cPermis §4" + permis.toString());
+        if(Objects.isNull(relatedBankAccount)) {
+            list.add("§cRelatedBankAccount §4null");
+        } else {
+            list.add("§cRelatedBankAccount §4" + relatedBankAccount.toString());
+        }
+
+
+
+        return list;
+    }
+
 }

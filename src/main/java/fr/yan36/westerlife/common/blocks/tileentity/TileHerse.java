@@ -1,19 +1,9 @@
 package fr.yan36.westerlife.common.blocks.tileentity;
 
-import com.jme3.bullet.collision.shapes.CompoundCollisionShape;
 import com.jme3.math.Vector3f;
-import fr.dynamx.api.physics.entities.EntityPhysicsState;
-import fr.dynamx.common.DynamXContext;
 import fr.dynamx.common.contentpack.type.objects.BlockObject;
-import fr.dynamx.common.entities.BaseVehicleEntity;
-import fr.dynamx.common.entities.modules.CarEngineModule;
-import fr.dynamx.common.entities.modules.WheelsModule;
 import fr.dynamx.common.entities.vehicles.CarEntity;
-import fr.dynamx.common.physics.entities.BaseVehiclePhysicsHandler;
-import fr.dynamx.common.physics.entities.parts.engine.Engine;
 import fr.dynamx.utils.DynamXUtils;
-import fr.dynamx.utils.optimization.MutableBoundingBox;
-import fr.dynamx.utils.physics.DynamXPhysicsHelper;
 import fr.yan36.westerlife.common.Util;
 import fr.yan36.westerlife.common.utils.AABB;
 import net.minecraft.block.state.IBlockState;
@@ -21,12 +11,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 

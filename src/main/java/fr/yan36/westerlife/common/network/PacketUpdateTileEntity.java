@@ -55,6 +55,7 @@ public class PacketUpdateTileEntity implements IMessage{
         public IMessage onMessage(PacketUpdateTileEntity m, MessageContext ctx) {
             EntityPlayer player = ctx.getServerHandler().player;
             if(!player.canUseCommand(4, "op")) return null;
+            if(!player.isCreative()) return null;
             if(Objects.equals(m.forWhat, "prue") && player.isCreative() && Util.isProximity(player, m.pos, 5)) {
                 TilePanneauRue te = (TilePanneauRue) player.world.getTileEntity(m.pos);
                 assert te != null;
@@ -99,6 +100,18 @@ public class PacketUpdateTileEntity implements IMessage{
                 te.setFunction(m.args[1]);
                 te.sync();
                 te.syncToClient();
+            }
+            if(Objects.equals(m.forWhat, "sensor") && player.isCreative() && Util.isProximity(player, m.pos, 5)) {
+
+                TilePlayerSensor te = (TilePlayerSensor) player.world.getTileEntity(m.pos);
+                assert te != null;
+                te.setRadius(Integer.parseInt(m.args[0]));
+                te.setTimepowered(Integer.parseInt(m.args[1]));
+                te.setPlayerexcluded(m.args[2]);
+
+
+
+
             }
             return null;
         }

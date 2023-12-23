@@ -26,7 +26,8 @@ Tout manquement à cette règle est passible de poursuite judiciaire.
 .text {
     left: 50%;
     right: 50%;
-    top: 50%;
+    top: 20%;
+    width: 80%;
 }
 
 .save {
@@ -37,5 +38,13 @@ Tout manquement à cette règle est passible de poursuite judiciaire.
 .text2 {
     left: 50%;
     right: 50%;
-    top: 30%;
+    top: 40%;
+    width: 80%;
+}
+
+.text3 {
+    left: 50%;
+    right: 50%;
+    top: 60%;
+    width: 80%;
 }

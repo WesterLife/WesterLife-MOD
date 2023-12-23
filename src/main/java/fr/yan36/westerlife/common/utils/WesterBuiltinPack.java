@@ -7,8 +7,11 @@ import fr.dynamx.api.contentpack.object.IPhysicsPackInfo;
 import fr.dynamx.api.contentpack.object.part.IDrawablePart;
 import fr.dynamx.api.contentpack.object.part.IShapeInfo;
 import fr.dynamx.api.contentpack.object.part.InteractivePart;
+import fr.dynamx.api.entities.modules.ModuleListBuilder;
+import fr.dynamx.client.renders.scene.SceneGraph;
 import fr.dynamx.common.contentpack.PackInfo;
 import fr.dynamx.common.contentpack.type.ObjectCollisionsHelper;
+import fr.dynamx.common.entities.PackPhysicsEntity;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 
@@ -27,18 +30,12 @@ public class WesterBuiltinPack implements IPhysicsPackInfo {
         return new Vector3f(0, 0, 0);
     }
 
-
     @Override
-    public <T extends InteractivePart<?, ?>> List<T> getInteractiveParts() {
-        return IPhysicsPackInfo.super.getInteractiveParts();
+    public void addModules(PackPhysicsEntity<?, ?> entity, ModuleListBuilder modules) {
+
     }
 
 
-
-    @Override
-    public List<IDrawablePart<?>> getDrawableParts() {
-        return new ArrayList<>();
-    }
 
     @Override
     public ItemStack getPickedResult(int i) {
@@ -48,6 +45,16 @@ public class WesterBuiltinPack implements IPhysicsPackInfo {
     @Override
     public float getAngularDamping() {
         return 0;
+    }
+
+    @Override
+    public float getRenderDistance() {
+        return 0;
+    }
+
+    @Override
+    public SceneGraph<?, ?> getSceneGraph() {
+        return null;
     }
 
     @Override

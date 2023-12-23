@@ -25,7 +25,7 @@ public class GuiWorldSelectPatcher extends GuiWorldSelection {
         if(button.id == 1337) {
 
             assert Minecraft.getMinecraft().currentScreen != null;
-            mc.displayGuiScreen(new GuiMultiplayer(Main.browserScreen));
+//            mc.displayGuiScreen(new GuiMultiplayer(Main.browserScreen));
 
         }
         super.actionPerformed(button);

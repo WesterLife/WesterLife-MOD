@@ -66,9 +66,6 @@ public class PacketSyncChunk implements IDnxPacket {
 
                 chunk.getCapability(PlayerChunkRelCapability.CAPABILITY, null).setCO2(this.co2);
                 chunk.getCapability(PlayerChunkRelCapability.CAPABILITY, null).setPollen(this.pollen);
-                System.out.println("CO2: " + chunk.getCapability(PlayerChunkRelCapability.CAPABILITY, null).getCO2());
-                System.out.println("Pollen: " + chunk.getCapability(PlayerChunkRelCapability.CAPABILITY, null).getPollen());
-                System.out.println("Chunk: " +  chunk.getPos());
             });
         }
     }

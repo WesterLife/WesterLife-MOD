@@ -22,5 +22,9 @@
   "alarmbip": {
     "subtitle": "westerlife.subtitle.alarmbip",
     "sounds": [ "westerlife:alarmbip" ]
+  },
+  "caralarm": {
+    "subtitle": "westerlife.subtitle.caralarm",
+    "sounds": [ "westerlife:caralarm" ]
   }
 }

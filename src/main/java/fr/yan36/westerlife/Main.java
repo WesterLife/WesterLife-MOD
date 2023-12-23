@@ -4,8 +4,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import fr.dynamx.api.contentpack.DynamXAddon;
 import fr.dynamx.api.contentpack.object.render.Enum3DRenderLocation;
+import fr.dynamx.api.dxmodel.DxModelPath;
 import fr.dynamx.api.events.PhysicsEntityEvent;
-import fr.dynamx.api.obj.ObjModelPath;
 import fr.dynamx.common.DynamXContext;
 import fr.dynamx.common.contentpack.DynamXObjectLoaders;
 import fr.dynamx.common.entities.BaseVehicleEntity;
@@ -15,8 +15,7 @@ import fr.dynamx.utils.debug.DynamXDebugOptions;
 import fr.nathanael2611.simpledatabasemanager.core.Database;
 import fr.nathanael2611.simpledatabasemanager.core.Databases;
 import fr.nathanael2611.simpledatabasemanager.core.SyncedDatabases;
-import fr.yan36.westerlife.client.gui.mcef.BrowserHud;
-import fr.yan36.westerlife.client.gui.mcef.BrowserScreen;
+import fr.yan36.westerlife.client.gui.GuiHandler;
 import fr.yan36.westerlife.client.utils.creativetabs.WesterTab;
 import fr.yan36.westerlife.common.CommonProxy;
 import fr.yan36.westerlife.common.capabilities.playerchunckrel.CO2ManagementThread;
@@ -25,16 +24,21 @@ import fr.yan36.westerlife.common.entities.DynamX.punchingball.TestEntity2;
 import fr.yan36.westerlife.common.entities.DynamX.warningsign.WarningSignEntity;
 import fr.yan36.westerlife.common.entities.EntitySeat;
 import fr.yan36.westerlife.common.entities.NPCTestEntity;
+import fr.yan36.westerlife.common.entities.npc.NPCConcessEntity;
+import fr.yan36.westerlife.common.entities.npcdomac.NPCDomacEntity;
 import fr.yan36.westerlife.common.handlers.RegistryHandler;
 import fr.yan36.westerlife.common.init.Capabilities;
 import fr.yan36.westerlife.common.init.DynamXInit;
 import fr.yan36.westerlife.common.init.ItemInit;
 import fr.yan36.westerlife.common.init.Network;
+import fr.yan36.westerlife.common.objects.gameplay.MacdoCommand;
 import fr.yan36.westerlife.common.utils.WesterBuiltinPack;
 import fr.yan36.westerlife.common.utils.carmodule.AICarEngineModule;
+import fr.yan36.westerlife.common.utils.carmodule.DamageCarModule;
 import fr.yan36.westerlife.common.utils.carmodule.GarageModule;
 import fr.yan36.westerlife.common.utils.commands.PersoCommand;
 import fr.yan36.westerlife.common.utils.commands.WesterLifeCommand;
+import fr.yan36.westerlife.server.api.NemesisLink;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.util.ResourceLocation;
@@ -42,16 +46,12 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.server.permission.DefaultPermissionLevel;
 import net.minecraftforge.server.permission.PermissionAPI;
 import org.apache.commons.io.FileUtils;
@@ -61,9 +61,13 @@ import javax.sound.sampled.LineUnavailableException;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
-import java.util.*;
 import java.util.stream.Collectors;
+
+import static fr.yan36.westerlife.client.ClientProxy.discoverGuis;
 
 @Mod(
         modid = Main.MODID,
@@ -86,13 +90,12 @@ public class Main {
     public static Main instance;
     public static SimpleNetworkWrapper network;
 
-    @SideOnly(Side.CLIENT)
-    public static BrowserScreen browserScreen;
+//    @SideOnly(Side.CLIENT)
+//    public static BrowserScreen browserScreen;
+
 
     HashMap<Integer, DynamXItemArmor<?>> tqt_frere = new HashMap<>();
 
-    @SideOnly(Side.CLIENT)
-    public static BrowserHud browserHud;
     public static Boolean isOpti = false;
 
     public static Database wl_db;
@@ -105,9 +108,9 @@ public class Main {
         DynamXInit.init();
 
         if (FMLCommonHandler.instance().getSide().isClient()) {
-            DynamXContext.getObjModelRegistry().registerModel(new ObjModelPath(new WesterBuiltinPack.WesterPackInfo(), new ResourceLocation(Main.MODID, "test.obj")));
-            DynamXContext.getObjModelRegistry().registerModel(new ObjModelPath(new WesterBuiltinPack.WesterPackInfo(), new ResourceLocation(Main.MODID, "punch.obj")));
-            DynamXContext.getObjModelRegistry().registerModel(new ObjModelPath(new WesterBuiltinPack.WesterPackInfo(), new ResourceLocation(Main.MODID, "models/dynamx/blocks/highroad/warningsign/warningsign.obj")));
+            DynamXContext.getDxModelRegistry().registerModel(new DxModelPath(new WesterBuiltinPack.WesterPackInfo(), new ResourceLocation(Main.MODID, "test.obj")));
+            DynamXContext.getDxModelRegistry().registerModel(new DxModelPath(new WesterBuiltinPack.WesterPackInfo(), new ResourceLocation(Main.MODID, "punch.obj")));
+            DynamXContext.getDxModelRegistry().registerModel(new DxModelPath(new WesterBuiltinPack.WesterPackInfo(), new ResourceLocation(Main.MODID, "models/dynamx/blocks/highroad/warningsign/warningsign.obj")));
             ItemInit.init();
             DynamXInit.WATER.getInfo().setItem3DRenderLocation(Enum3DRenderLocation.WORLD);
             DynamXInit.Taser.getInfo().setItem3DRenderLocation(Enum3DRenderLocation.WORLD);
@@ -123,20 +126,17 @@ public class Main {
 
     public static Logger logger;
     public static DynamXDebugOption radar;
+    public static DynamXDebugOption renderDebug;
 
     //    @SideOnly(Side.SERVER)
     @Mod.EventHandler
-    public void onserverStarting(FMLServerStartingEvent event) {
+    public void onserverStarting(FMLServerStartingEvent event) throws IOException {
         event.registerServerCommand(new WesterLifeCommand());
         event.registerServerCommand(new PersoCommand());
-
         co2ManagementThread = new CO2ManagementThread(Arrays.asList(event.getServer().worlds));
-
         System.out.println("Starting CO2 management thread");
-
-
+        NemesisLink.init();
         co2ManagementThread.start();
-
         Databases.onServerStarting(event);
     }
 
@@ -151,6 +151,11 @@ public class Main {
         EntityRegistry.registerModEntity(new ResourceLocation(MODID, "entity_sit"), EntitySeat.class, "entity_sit", 4, this, 256, 20, false);
         EntityRegistry.registerModEntity(new ResourceLocation(MODID, "warningsign"), WarningSignEntity.class, "warningsign", 5, this, 64, 1, true, Color.WHITE.getRGB(), Color.BLACK.getRGB());
         EntityRegistry.registerModEntity(new ResourceLocation(MODID, "clothentity"), ClothEntity.class, "clothentity", 6, this, 64, 1, true, Color.WHITE.getRGB(), Color.BLACK.getRGB());
+        EntityRegistry.registerModEntity(new ResourceLocation(MODID, "npcconcess"), NPCConcessEntity.class, "npcconcess", 7, this, 64, 1, true, Color.WHITE.getRGB(), Color.BLACK.getRGB());
+        EntityRegistry.registerModEntity(new ResourceLocation(MODID, "npcdomac"), NPCDomacEntity.class, "npcdomac", 8, this, 64, 1, true, Color.WHITE.getRGB(), Color.BLACK.getRGB());
+
+        MacdoCommand.init();
+        NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
 
         // register world saved data
         Capabilities.init();
@@ -158,6 +163,7 @@ public class Main {
         MinecraftForge.EVENT_BUS.register(new RegistryHandler());
         MinecraftForge.EVENT_BUS.register(this);
         radar = DynamXDebugOption.newOptionWithMask(DynamXDebugOptions.DebugCategories.GENERAL, "render radar debug", 32);
+        renderDebug = DynamXDebugOption.newOptionWithMask(DynamXDebugOptions.DebugCategories.GENERAL, "render debug", 64);
         //warn: Discord RPC must be reimplemented
         if (event.getSide().isClient()) {
 
@@ -193,7 +199,6 @@ public class Main {
             }
         }
 
-//        JsonToNBT
 
     }
 
@@ -203,6 +208,7 @@ public class Main {
         BaseVehicleEntity<?> entity = event.getEntity();
         event.getModuleList().add(new AICarEngineModule(entity));
         event.getModuleList().add(new GarageModule(entity));
+        event.getModuleList().add(new DamageCarModule(entity));
         System.out.println("initVehicleModules");
     }
 
@@ -216,13 +222,21 @@ public class Main {
 
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) throws LineUnavailableException {
-        System.out.println("caca");
+
         System.out.println(DynamXObjectLoaders.ARMORS.getInfos());
 
 
 //        SoundHandler soundManager = Minecraft.getMinecraft().getSoundHandler();
         // get livestream at
 
+    }
+
+    @Mod.EventHandler
+    public void construct(FMLConstructionEvent event) {
+        if(event.getSide().isClient()) {
+            discoverGuis(event);
+        }
+        CommonProxy.discoverTiles(event);
     }
 
     public static final CreativeTabs WESTER_MAIN = new WesterTab("westertab");

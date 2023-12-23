@@ -15,7 +15,7 @@ public class ItemBurgerRenderer extends TileEntityItemStackRenderer {
     public void renderByItem(ItemStack itemStackIn) {
         System.out.println("renderByItem " + itemStackIn);
         GlStateManager.pushMatrix();
-        DynamXContext.getObjModelRegistry().getModel(new ResourceLocation("westerlife","models/dynamx/blocks/macdo/macdo.obj")).renderGroups("Steaks", (byte) 0);
+        DynamXContext.getDxModelRegistry().getModel(new ResourceLocation("westerlife","models/dynamx/blocks/macdo/macdo.obj")).renderGroups("Steaks", (byte) 0, false);
         GlStateManager.popMatrix();
     }
 
@@ -23,7 +23,7 @@ public class ItemBurgerRenderer extends TileEntityItemStackRenderer {
     public void renderByItem(ItemStack itemStackIn, float partialTicks) {
         System.out.println("renderByItem " + itemStackIn);
         GlStateManager.pushMatrix();
-        DynamXContext.getObjModelRegistry().getModel(new ResourceLocation("westerlife","models/dynamx/blocks/macdo/macdo.obj")).renderGroups("Steaks", (byte) 0);
+        DynamXContext.getDxModelRegistry().getModel(new ResourceLocation("westerlife","models/dynamx/blocks/macdo/macdo.obj")).renderGroups("Steaks", (byte) 0, false);
         GlStateManager.popMatrix();
     }
 

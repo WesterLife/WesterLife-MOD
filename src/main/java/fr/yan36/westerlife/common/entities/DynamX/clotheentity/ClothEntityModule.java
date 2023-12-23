@@ -4,6 +4,7 @@ import com.jme3.bullet.PhysicsSoftSpace;
 import com.jme3.bullet.collision.shapes.BoxCollisionShape;
 import com.jme3.bullet.collision.shapes.CollisionShape;
 import com.jme3.bullet.collision.shapes.infos.IndexedMesh;
+import com.jme3.bullet.objects.PhysicsBody;
 import com.jme3.bullet.objects.PhysicsRigidBody;
 import com.jme3.bullet.objects.PhysicsSoftBody;
 import com.jme3.bullet.objects.infos.Aero;
@@ -42,7 +43,7 @@ import java.util.Map;
 public class ClothEntityModule implements IPhysicsModule<AbstractEntityPhysicsHandler<?, ?>>, AttachedBodySynchronizer {
 
     public final PhysicsEntity<?> entity;
-    private final Map<Byte, PhysicsRigidBody> attachedParts = new HashMap();
+    private final Map<Byte, PhysicsSoftBody> attachedParts = new HashMap();
     private final HashMap<Byte, SynchronizedRigidBodyTransform> attachedBodiesTransform = new HashMap();
     @SynchronizedEntityVariable(
             name = "part_states"
@@ -53,7 +54,8 @@ public class ClothEntityModule implements IPhysicsModule<AbstractEntityPhysicsHa
     public ClothEntityModule(PhysicsEntity<?> entity) {
         this.entity = entity;
         this.synchronizedTransforms = new EntityTransformsVariable(entity, this);
-        System.out.println("WarningSignEntityModule created");
+        System.out.println("ClothModule created");
+
     }
 
 
@@ -68,43 +70,7 @@ public class ClothEntityModule implements IPhysicsModule<AbstractEntityPhysicsHa
     @Override
     public void initPhysicsEntity(@Nullable AbstractEntityPhysicsHandler<?, ?> handler) {
         if(!entity.world.isRemote) return;
-        System.out.println("initPhysicsEntity called");
 
-
-        PhysicsSoftSpace dynamicsWorld = DynamXContext.getPhysicsWorld(entity.world).getDynamicsWorld();
-
-        IndexedMesh clothGrid = PhysicsShapes.createClothGrid(9, 9, 0.5f);
-        cloth = new PhysicsSoftBody();
-
-        NativeSoftBodyUtil.appendFromNativeMesh(clothGrid, cloth);
-        cloth.setMargin(0.10f);
-        cloth.setMass(50);
-
-        SoftBodyConfig config = cloth.getSoftConfig();
-        config.set(Sbcp.Damping, 0.01f);
-        config.set(Sbcp.Drag, 0.5f);
-        config.set(Sbcp.Lift, 10f);
-        config.setAerodynamics(Aero.F_TwoSidedLiftDrag);
-        config.setPositionIterations(10);
-
-        SoftBodyMaterial softMaterial = cloth.getSoftMaterial();
-        softMaterial.setAngularStiffness(0f);
-
-        Quaternion rotation = new Quaternion();
-        rotation.fromAngles(FastMath.HALF_PI, 0f, 0f);
-        cloth.generateClusters();
-
-        cloth.setPhysicsLocation(DynamXUtils.toVector3f(entity.getPosition()));
-
-
-        dynamicsWorld.addCollisionObject(cloth);
-
-
-
-
-
-
-        cloth.applyTranslation(new Vector3f((float) entity.posX, (float) entity.posY, (float) entity.posZ));
     }
 
     @Override
@@ -118,7 +84,6 @@ public class ClothEntityModule implements IPhysicsModule<AbstractEntityPhysicsHa
         if (this.attachedParts.containsKey(b)) {
             this.attachedBodiesTransform.get(b).getPhysicTransform().set(rigidBodyTransform);
             this.attachedParts.get(b).setPhysicsLocation(rigidBodyTransform.getPosition());
-            this.attachedParts.get(b).setPhysicsRotation(rigidBodyTransform.getRotation());
         }
     }
 }

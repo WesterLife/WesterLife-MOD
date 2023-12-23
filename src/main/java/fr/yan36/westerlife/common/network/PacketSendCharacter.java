@@ -1,70 +1,82 @@
 package fr.yan36.westerlife.common.network;
 
-import fr.yan36.westerlife.Main;
-import fr.yan36.westerlife.client.Client;
-import fr.yan36.westerlife.common.items.ItemCard;
+import fr.aym.acslib.utils.packetserializer.SerializablePacket;
+import fr.dynamx.api.network.EnumNetworkType;
+import fr.dynamx.api.network.IDnxPacket;
+import fr.yan36.westerlife.common.capabilities.playergarage.PlayerGarage;
+import fr.yan36.westerlife.common.capabilities.playergarage.PlayerGarageCapability;
+import fr.yan36.westerlife.common.capabilities.playerstat.IPlayerStat;
+import fr.yan36.westerlife.common.capabilities.playerstat.PlayerStatCapability;
+import fr.yan36.westerlife.common.objects.GarageCar;
 import fr.yan36.westerlife.common.objects.character.Character;
-import fr.yan36.westerlife.common.objects.character.Permis;
-import fr.yan36.westerlife.server.Serveur;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.EnumHand;
-import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.relauncher.Side;
 
-import java.util.Objects;
-import java.util.UUID;
+import java.util.List;
 
-public class PacketSendCharacter implements IMessage{
+public class PacketSendCharacter extends SerializablePacket implements IDnxPacket {
+
+    int player;
 
 
-    Character id;
-    Permis permis;
-
-    public PacketSendCharacter(){}
-
-    public PacketSendCharacter(Character id) {
-        System.out.println(id.toString());
-        this.id = id;
-        this.permis = new Permis();
+    public PacketSendCharacter() {
     }
 
-    public PacketSendCharacter(Permis permis) {
-        this.permis = permis;
-        this.id = new Character();
+    public PacketSendCharacter(EntityPlayer player, Character character) {
+        super(character);
+        this.player = player.getEntityId();
+
     }
+
     @Override
     public void fromBytes(ByteBuf buf) {
-        this.id = Character.fromString(ByteBufUtils.readUTF8String(buf));
-        this.permis = Permis.fromString(ByteBufUtils.readUTF8String(buf));
+        super.fromBytes(buf);
+        this.player = buf.readInt();
     }
 
     @Override
     public void toBytes(ByteBuf buf) {
-        ByteBufUtils.writeUTF8String(buf, this.id.toString());
-        ByteBufUtils.writeUTF8String(buf, this.permis.toString());
+        super.toBytes(buf);
+        buf.writeInt(this.player);
     }
 
-    public static class Handler implements IMessageHandler<PacketSendCharacter, IMessage> {
+    @Override
+    public EnumNetworkType getPreferredNetwork() {
+        return EnumNetworkType.DYNAMX_UDP;
+    }
+
+    @Override
+    public void handleUDPReceive(EntityPlayer context, Side side) {
+        if(side.isClient()) {
+
+        } else {
+
+        }
+    }
+
+    public static class ServerHandler implements IMessageHandler<PacketSendCharacter, IMessage> {
         @Override
-        public IMessage onMessage(PacketSendCharacter m, MessageContext ctx) {
+        public IMessage onMessage(PacketSendCharacter message, MessageContext ctx) {
+            ctx.getServerHandler().player.getServer().addScheduledTask(() -> {
+                message.handleUDPReceive(ctx.getServerHandler().player, Side.SERVER);
+            });
+            return null;
+        }
+    }
 
-            System.out.println(m.id.toString());
-            System.out.println(m.permis.toString());
-
-            if(!Objects.equals(m.id.getUuid(), UUID.fromString("00000000-0000-0000-0000-000000000000"))) {
-                Client.knowCharacters.put(m.id.getUuid(), m.id);
-                System.out.println("Character received");
-                Client.waitForSomething.remove("cni");
-            }
-            System.out.println(m.permis.getObtentionDate());
-            if(!Objects.equals(m.permis.getUuid(), UUID.fromString("00000000-0000-0000-0000-000000000000"))) {
-                Client.knowPermis.put(m.permis.getUuid(), m.permis);
-                System.out.println("Permis received");
-                Client.waitForSomething.remove("permis");
-            }
+    public static class ClientHandler implements IMessageHandler<PacketSendCharacter, IMessage> {
+        @Override
+        public IMessage onMessage(PacketSendCharacter message, MessageContext ctx) {
+            System.out.println("Recived packet");
+            Minecraft.getMinecraft().addScheduledTask(() -> {
+                message.handleUDPReceive(Minecraft.getMinecraft().player, Side.CLIENT);
+            });
             return null;
         }
     }

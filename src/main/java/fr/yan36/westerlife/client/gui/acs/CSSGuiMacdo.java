@@ -40,7 +40,7 @@ public class CSSGuiMacdo extends GuiFrame {
         background.setCssClass("background");
 
         GuiLabel title = new GuiLabel("Macdo");
-        title.setCssClass("title");
+        title.setCssClass("title_2");
         background.add(title);
 
         GuiScrollPane scrollPane = new GuiScrollPane();

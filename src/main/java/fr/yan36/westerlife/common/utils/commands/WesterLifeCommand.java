@@ -16,6 +16,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.server.permission.PermissionAPI;
 
 import javax.annotation.Nullable;
@@ -39,6 +40,7 @@ public class WesterLifeCommand extends CommandBase {
         modules.add(new ModulePermis());
         modules.add(new ModuleMagic());
         modules.add(new ModuleGarage());
+        modules.add(new ModuleNemesis());
     }
 
 
@@ -117,6 +119,13 @@ public class WesterLifeCommand extends CommandBase {
 
 
         }
+
+        if (Objects.equals(args[0], "reloadModules")) {
+            modules.clear();
+            initModules();
+            sender.sendMessage(new TextComponentString("§cModules reloaded"));
+        }
+
     }
 
 
@@ -124,6 +133,7 @@ public class WesterLifeCommand extends CommandBase {
     public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
         List<String> list = new ArrayList<>();
         modules.forEach(module -> list.add(module.subCommand));
+        list.add("reloadModules");
         if (args.length == 1) {
             return getListOfStringsMatchingLastWord(args, list);
         } else {

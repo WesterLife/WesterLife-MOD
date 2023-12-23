@@ -2,11 +2,14 @@ package fr.yan36.westerlife.client.gui.acs;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import fr.aym.acsguis.component.GuiComponent;
 import fr.aym.acsguis.component.layout.GuiScaler;
 import fr.aym.acsguis.component.panel.GuiFrame;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.yan36.westerlife.Main;
+import fr.yan36.westerlife.client.Client;
+import fr.yan36.westerlife.client.gui.other.GuiConnecting;
 import fr.yan36.westerlife.client.utils.News;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiMultiplayer;
@@ -31,6 +34,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class CSSGuiMainMenu extends GuiFrame {
+
     public CSSGuiMainMenu() throws IOException {
         super(new GuiScaler.Identity());
 
@@ -54,11 +58,13 @@ public class CSSGuiMainMenu extends GuiFrame {
 
         connect.addClickListener((mouseX, mouseY, mouseButton) -> {
             if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
+                Client.isLogginIn = true;
                 try {
-                    Minecraft.getMinecraft().displayGuiScreen(new GuiMultiplayer(new CSSGuiMainMenu().getGuiScreen()));
+                    mc.displayGuiScreen(new GuiConnecting(mc));
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
+
             } else {
                 try {
                     Minecraft.getMinecraft().displayGuiScreen(new GuiWorldSelection(new CSSGuiMainMenu().getGuiScreen()));
@@ -87,66 +93,8 @@ public class CSSGuiMainMenu extends GuiFrame {
 
         add(background);
 
-        if (this.networkManager != null)
-        {
-            if (this.networkManager.isChannelOpen())
-            {
-                this.networkManager.processReceivedPackets();
-            }
-            else
-            {
-                this.networkManager.handleDisconnection();
-            }
-        }
     }
 
-    private static final AtomicInteger CONNECTION_ID = new AtomicInteger(0);
-    private NetworkManager networkManager;
-    private void connect(final String ip, final int port)
-    {
-        (new Thread("Server Connector #" + CONNECTION_ID.incrementAndGet())
-        {
-            public void run()
-            {
-                InetAddress inetaddress = null;
-
-                try
-                {
-
-                    inetaddress = InetAddress.getByName(ip);
-                    networkManager = NetworkManager.createNetworkManagerAndConnect(inetaddress, port, mc.gameSettings.isUsingNativeTransport());
-                    networkManager.setNetHandler(new NetHandlerLoginClient(networkManager, mc,new CSSGuiMainMenu().getGuiScreen()));
-                    networkManager.sendPacket(new C00Handshake(ip, port, EnumConnectionState.LOGIN, true));
-                    networkManager.sendPacket(new CPacketLoginStart(mc.getSession().getProfile()));
-                }
-                catch (UnknownHostException unknownhostexception)
-                {
-                    try {
-                        mc.displayGuiScreen(new CSSGuiMainMenu().getGuiScreen());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-                catch (Exception exception)
-                {
-
-                    String s = exception.toString();
-
-                    if (inetaddress != null)
-                    {
-                        String s1 = inetaddress + ":" + port;
-                        s = s.replaceAll(s1, "");
-                    }
-                    try {
-                        mc.displayGuiScreen(new CSSGuiMainMenu().getGuiScreen());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-            }
-        }).start();
-    }
     public List<ResourceLocation> getCssStyles() {
         return Collections.singletonList(new ResourceLocation(Main.MODID, "acsgui/mainmenu.css"));
     }

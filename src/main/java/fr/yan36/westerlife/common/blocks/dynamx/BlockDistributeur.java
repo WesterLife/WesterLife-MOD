@@ -2,9 +2,11 @@ package fr.yan36.westerlife.common.blocks.dynamx;
 
 import fr.dynamx.common.blocks.DynamXBlock;
 import fr.yan36.westerlife.Main;
+import fr.yan36.westerlife.common.network.PacketOpenAcsGui;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
@@ -19,7 +21,15 @@ public class BlockDistributeur extends DynamXBlock {
 
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        if(!(worldIn.isRemote)) {
+            if(playerIn.getHeldItem(hand).hasTagCompound()) {
+                Main.network.sendTo(new PacketOpenAcsGui(10, playerIn.getHeldItem(hand).getTagCompound().getString("relatedBankAccount"), "no"), (EntityPlayerMP) playerIn);
+            } else {
+                Main.network.sendTo(new PacketOpenAcsGui(10, "null", "yes"), (EntityPlayerMP) playerIn);
 
+            }
+
+        }
         return true;
     }
 }

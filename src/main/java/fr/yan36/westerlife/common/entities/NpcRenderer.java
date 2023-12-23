@@ -19,7 +19,7 @@ public class NpcRenderer extends RenderLiving<NPCTestEntity> {
     @Nullable
     @Override
     protected ResourceLocation getEntityTexture(NPCTestEntity entity) {
-        return new ResourceLocation("westerlife:textures/entities/test.png");
+        return new ResourceLocation("westerlife:textures/entities/default.png");
     }
 
     @Override

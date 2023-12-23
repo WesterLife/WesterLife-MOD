@@ -1,14 +1,10 @@
 package fr.yan36.westerlife.common.capabilities.playerinventory;
 
 import fr.yan36.westerlife.Main;
-import fr.yan36.westerlife.common.capabilities.packets.PacketSyncAnimation;
 import fr.yan36.westerlife.common.capabilities.packets.PacketSyncExtraItem;
-import fr.yan36.westerlife.common.utils.Animation;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
@@ -18,7 +14,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import javax.annotation.Nullable;
 import java.util.Collections;
-import java.util.Objects;
 
 @Mod.EventBusSubscriber
 public class ExtraItemCapability {

@@ -5,6 +5,7 @@ import fr.yan36.westerlife.common.items.ItemBase;
 import fr.yan36.westerlife.common.items.ItemBillet;
 import fr.yan36.westerlife.common.items.ItemCard;
 import fr.yan36.westerlife.common.items.ItemPlaceCirculationSign;
+import fr.yan36.westerlife.common.items.dynamx.ItemGarageTablet;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 
@@ -47,8 +48,6 @@ public class ItemInit {
     public static final Item deluxe = new fr.yan36.westerlife.common.items.ItemFood("deluxe", 1, 0.5f);
     public static final Item mayo = new fr.yan36.westerlife.common.items.ItemFood("mayo", 1, 0.5f);
     public static final Item panneaucirculation = new ItemPlaceCirculationSign("panneaucirculation");
-
-
 
 
     public static void init() {

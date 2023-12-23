@@ -208,6 +208,50 @@ public class CSSGuiEditObject extends GuiFrame {
             background.add(save);
         }
 
+        if (Objects.equals(isFor, "sensor")) {
+            TilePlayerSensor tile = (TilePlayerSensor) Objects.requireNonNull(mc.world).getTileEntity(Objects.requireNonNull(Util.parseBlockPosFromString(pos)));
+
+            System.out.println(tile.getRadius());
+            System.out.println(tile.getTimepowered());
+            System.out.println(tile.getPlayerexcluded());
+
+
+
+            GuiTextField text = new GuiTextField();
+            text.setCssClass("text");
+            text.setHintText("radius");
+            assert tile != null;
+            text.setText(String.valueOf(tile.getRadius()));
+
+            GuiTextField name = new GuiTextField();
+            name.setCssClass("text2");
+            name.setHintText("timepowered (tmps en tick qui reste allumé 20tick ~= 1sec)");
+            name.setText(String.valueOf(tile.getTimepowered()));
+
+            GuiTextField name2 = new GuiTextField();
+            name2.setCssClass("text3");
+            name2.setHintText("playerexcluded (joueur exclus du sensor ex: player1;player2;player3)");
+            name2.setText(String.valueOf(tile.getPlayerexcluded()));
+
+
+            GuiButton save = new GuiButton();
+
+            save.setCssClass("save");
+            save.setText("Sauvegarder");
+            save.addClickListener((a, b, c) -> {
+                Main.network.sendToServer(new PacketUpdateTileEntity(tile.getPos(), "sensor", new String[]{
+                        text.getText(),
+                        name.getText(),
+                        Objects.equals(name2.getText(), "") ? " " : name2.getText()
+                }));
+            });
+
+            background.add(text);
+            background.add(name);
+            background.add(name2);
+            background.add(save);
+        }
+
 
 
 

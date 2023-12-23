@@ -56,8 +56,8 @@ public class ModulePermis extends CommandModule {
                     sender.sendMessage(new TextComponentString("§c/wlmod permis add <player> <permis>"));
                     return;
                 }
-                Permis permis = new Permis(finalUuid, Collections.singletonList(Permis.PermisType.valueOf(args[3])), "12", DateFormat.getDateInstance().format(new Date()));
-                DBUtils.saveToDB(permis);
+//                Permis permis = new Permis(finalUuid, Collections.singletonList(Permis.PermisType.valueOf(args[3])), "12", DateFormat.getDateInstance().format(new Date()));
+//                DBUtils.saveToDB(permis);
                 return;
             } else {
                 Permis actualPermis = DBUtils.getPermis(finalUuid);

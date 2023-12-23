@@ -31,7 +31,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class CSSGuiGarage extends GuiFrame {
-    public CSSGuiGarage(String pos, String parkloc) {
+    public CSSGuiGarage(String parkloc, List<GarageCar> cars) {
         super(new GuiScaler.Identity());
 
         GuiPanel background = new GuiPanel();
@@ -54,17 +54,6 @@ public class CSSGuiGarage extends GuiFrame {
         );
 
 
-        List<GarageCar> cars = new ArrayList<>();
-
-        EntityPlayer p = Minecraft.getMinecraft().player;
-
-        if (p.hasCapability(PlayerGarageCapability.CAPABILITY, null)) {
-            PlayerGarage cap = (PlayerGarage) p.getCapability(PlayerGarageCapability.CAPABILITY, null);
-            cars = cap.getCars();
-            System.out.println("capa cars : " + cars);
-        }
-
-        enableDebugPanel = true;
         int i1 = 0;
 
         if(cars.isEmpty()) {
@@ -123,6 +112,7 @@ public class CSSGuiGarage extends GuiFrame {
 
             carPanel.addClickListener((mouseX, mouseY, mouseButton) -> {
 
+                System.out.println("aa: " +car);
                 Main.network.sendToServer(new PacketExtractFromGarage(Util.parseBlockPosFromString(parkloc), car));
                 Minecraft.getMinecraft().displayGuiScreen(null);
             });
@@ -144,6 +134,19 @@ public class CSSGuiGarage extends GuiFrame {
 
         background.add(scrollPane);
         background.add(button);
+        add(background);
+    }
+
+    public CSSGuiGarage(String pos, String parkloc) {
+        super(new GuiScaler.Identity());
+
+        GuiPanel background = new GuiPanel();
+        background.setCssClass("background");
+
+        GuiLabel title = new GuiLabel("Wrong GUI.");
+        title.setCssClass("title");
+        background.setCssClass("background");
+
         add(background);
     }
 

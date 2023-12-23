@@ -1,15 +1,18 @@
 package fr.yan36.westerlife.common.objects;
 
+import com.google.gson.JsonObject;
 import fr.aym.acslib.utils.nbtserializer.ISerializable;
 import fr.aym.acslib.utils.packetserializer.ISerializablePacket;
+import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.nbt.NBTBase;
+import net.minecraft.nbt.NBTException;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.INBTSerializable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class GarageCar implements ISerializable, INBTSerializable, ISerializablePacket {
+public class GarageCar implements ISerializablePacket {
 
     private String owner;
     private String carName;
@@ -23,9 +26,6 @@ public class GarageCar implements ISerializable, INBTSerializable, ISerializable
     public GarageCar() {
     }
 
-    public GarageCar(NBTTagCompound nbt) {
-        read(nbt);
-    }
 
     public GarageCar(String owner, String carName, String carPlate, int meta, boolean isInGarage, NBTTagCompound carNBT, String UniqueID) {
         this.owner = owner;
@@ -66,22 +66,8 @@ public class GarageCar implements ISerializable, INBTSerializable, ISerializable
     }
 
     @Override
-    public void write(NBTTagCompound to) {
-        ISerializable.super.write(to);
-    }
-
-    @Override
-    public void read(NBTTagCompound from) {
-        ISerializable.super.read(from);
-    }
-
-    @Override
-    public int getVersion() {
-        return 1;
-    }
-
-    @Override
     public Object[] getObjectsToSave() {
+        System.out.println(owner + " " + carName + " " + carPlate + " " + meta + " " + isInGarage + " " + carNBT + " " + UniqueID);
         return new Object[]{owner, carName, carPlate, meta, isInGarage, carNBT, UniqueID};
     }
 
@@ -100,34 +86,35 @@ public class GarageCar implements ISerializable, INBTSerializable, ISerializable
         carPlate = (String) objects[2];
         meta = (int) objects[3];
         isInGarage = Boolean.parseBoolean(String.valueOf(objects[4]));
-        System.out.println("isInGarage = " + isInGarage);
         carNBT = (NBTTagCompound) objects[5];
         UniqueID = (String) objects[6];
     }
 
-    @Override
-    public NBTBase serializeNBT() {
-        NBTTagCompound nbt = new NBTTagCompound();
-        nbt.setString("owner", owner);
-        nbt.setString("carName", carName);
-        nbt.setString("carPlate", carPlate);
-        nbt.setInteger("meta", meta);
-        nbt.setBoolean("isInGarage", isInGarage);
-        nbt.setTag("carNBT", carNBT);
-        nbt.setString("UniqueID", UniqueID);
-        return null;
+
+    public JsonObject toJson() {
+        JsonObject json = new JsonObject();
+        json.addProperty("name", carName);
+        json.addProperty("nbt", carNBT.toString());
+        json.addProperty("meta", meta);
+        json.addProperty("carplate", carPlate);
+        json.addProperty("uid", UniqueID);
+        json.addProperty("isInGarage", isInGarage);
+        json.addProperty("carname", carName);
+        json.addProperty("owner", owner);
+        return json;
     }
 
-    @Override
-    public void deserializeNBT(NBTBase nbt) {
-        NBTTagCompound tag = (NBTTagCompound) nbt;
-        owner = tag.getString("owner");
-        carName = tag.getString("carName");
-        carPlate = tag.getString("carPlate");
-        meta = tag.getInteger("meta");
-        isInGarage = tag.getBoolean("isInGarage");
-        carNBT = tag.getCompoundTag("carNBT");
-        UniqueID = tag.getString("UniqueID");
+    public static GarageCar fromJson(JsonObject json) throws NBTException {
+        GarageCar car = new GarageCar();
+        car.carName = json.get("name").getAsString();
+        car.carNBT = JsonToNBT.getTagFromJson(json.get("nbt").getAsString());
+        car.meta = json.get("meta").getAsInt();
+        car.carPlate = json.get("carplate").getAsString();
+        car.UniqueID = json.get("uid").getAsString();
+        car.isInGarage = json.get("isInGarage").getAsBoolean();
+        car.carName = json.get("carname").getAsString();
+        car.owner = json.get("owner").getAsString();
+        return car;
     }
 
 }

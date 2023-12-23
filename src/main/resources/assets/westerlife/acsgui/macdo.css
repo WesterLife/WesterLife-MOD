@@ -8,20 +8,101 @@ Tout manquement à cette règle est passible de poursuite judiciaire.
 */
 
 .background {
-    right: 50%;
-    left: 50%;
-    height: 70%;
-    width: 50%;
-    vertical-position: center;
-    background-color: rgb(55, 60, 73);
-    border-radius: 10px;
+    width: 80%;
+    left: 10%;
+    height: 80%;
+    top: 10%;
+    border-radius: 5px;
+
+    background-color: #31384A;
 }
+
 .title {
+    color: #FFFFFF;
+
+    font-family: "westerlife:montserrat";
+    width: 100%;
+    text-align: center;
+    top: 5%;
+    left: 2%;
+    font-size: 1px;
+    height: 20%;
+}
+
+.title_2 {
     top: 1%;
     text-align: center;
     left: 50%;
     right: 50%;
 }
+
+
+
+.drinkLabel {
+    color: #FFFFFF;
+
+    font-family: "westerlife:montserrat";
+    width: 80%;
+    text-align: left;
+    top: 40%;
+    left: 15%;
+    font-size: 1px;
+    height: 10%;
+}
+
+.recipeLabel {
+    color: #FFFFFF;
+
+    font-family: "westerlife:montserrat";
+    width: 80%;
+    text-align: left;
+    top: 40%;
+    left: 15%;
+    font-size: 1px;
+    height: 10%;
+}
+
+.commandLabel {
+    color: #FFFFFF;
+
+    font-family: "westerlife:montserrat";
+    width: 80%;
+    text-align: left;
+    top: 20%;
+    left: 10%;
+    font-size: 1px;
+    height: 10%;
+}
+
+.takecommand {
+    color: #3D475F;
+
+    font-family: "westerlife:montserrat";
+    width: 60%;
+    text-align: left;
+    top: 80%;
+    left: 20%;
+    font-size: 1px;
+    height: 10%;
+    background-color: white;
+    border: none;
+    background-image: none;
+    border-radius: 5px;
+}
+.takecommandText {
+    width: 100%;
+    height: 100%;
+
+    background-color: transparent;
+    border: none;
+    background-image: none;
+
+    color: #3D475F;
+    font-family: "westerlife:montserrat";
+    font-size: 1px;
+    text-align: center;
+}
+
 .scrollpane {
     width: 90%;
     height: 75%;

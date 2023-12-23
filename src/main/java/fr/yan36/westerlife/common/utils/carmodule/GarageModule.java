@@ -1,19 +1,13 @@
 package fr.yan36.westerlife.common.utils.carmodule;
 
-import com.jme3.math.Quaternion;
-import com.jme3.math.Vector3f;
 import fr.dynamx.api.entities.modules.IPhysicsModule;
 import fr.dynamx.api.network.sync.EntityVariable;
 import fr.dynamx.api.network.sync.SynchronizationRules;
 import fr.dynamx.api.network.sync.SynchronizedEntityVariable;
 import fr.dynamx.common.entities.PackPhysicsEntity;
-import fr.dynamx.common.entities.modules.CarEngineModule;
-import fr.dynamx.common.entities.vehicles.CarEntity;
 import fr.dynamx.common.physics.entities.AbstractEntityPhysicsHandler;
 import fr.yan36.westerlife.Main;
-import fr.yan36.westerlife.common.Util;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.math.BlockPos;
 
 @SynchronizedEntityVariable.SynchronizedPhysicsModule(modid = Main.MODID)
 public class GarageModule implements IPhysicsModule<AbstractEntityPhysicsHandler<?, ?>>, IPhysicsModule.IEntityUpdateListener {

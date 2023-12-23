@@ -23,11 +23,14 @@ import fr.yan36.westerlife.common.capabilities.playerinventory.ExtraItemCapabili
 import fr.yan36.westerlife.common.capabilities.playerinventory.IExtraItemHandler;
 import fr.yan36.westerlife.common.objects.GarageCar;
 import fr.yan36.westerlife.common.utils.carmodule.GarageModule;
+import fr.yan36.westerlife.server.api.NemesisAPI;
+import fr.yan36.westerlife.server.api.NemesisLink;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTException;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -41,6 +44,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 
+import java.io.IOException;
 import java.util.*;
 
 public class PacketExtractFromGarage extends SerializablePacket implements IDnxPacket {
@@ -82,18 +86,23 @@ public class PacketExtractFromGarage extends SerializablePacket implements IDnxP
     public void handleUDPReceive(EntityPlayer context, Side side) {
         if (side.isServer()) {
             World world = context.world;
-            GarageCar car = (GarageCar) this.getObjectsIn()[0];
+            try {
+                String uid = NemesisLink.NEMESIS_API.getUserIdFromUUID(String.valueOf(context.getUniqueID()));
+                List<GarageCar> cars = NemesisLink.NEMESIS_API.getGarageCars(uid);
 
-            if (context.hasCapability(PlayerGarageCapability.CAPABILITY, null)) {
-                PlayerGarage garage = (PlayerGarage) context.getCapability(PlayerGarageCapability.CAPABILITY, null);
-                for (GarageCar garageCar : garage.getCars()) {
-                    if (garageCar.getCarPlate().equals(car.getCarPlate())) {
+                GarageCar car11 = (GarageCar) getObjectsIn()[0];
+
+                for (GarageCar garageCar : cars) {
+                    System.out.println(car11);
+                    if (garageCar.getUniqueID().equals(car11.getUniqueID())) {
                         if (garageCar.isInGarage()) {
-                            CarEntity<?> car2 = new CarEntity<>(car.getCarName(), world, new Vector3f(this.pos.getX(), this.pos.getY(), this.pos.getZ()), 0, car.getMeta());
+                            CarEntity<?> car2 = new CarEntity<>(car11.getCarName(), world, new Vector3f(this.pos.getX(), this.pos.getY(), this.pos.getZ()), 0, car11.getMeta());
 
-                            NBTTagCompound nbt = car.getCarNBT();
+                            NemesisLink.NEMESIS_API.setCarState(uid, garageCar.getUniqueID(), "0");
+
+                            System.out.println("CarEntity created");
+                            NBTTagCompound nbt = car11.getCarNBT();
                             nbt.setString("bas_immat_plate", garageCar.getCarPlate());
-//                            nbt.setIntArray("Pos", new int[]{this.pos.getX(), this.pos.getY(), this.pos.getZ()});
                             car2.setPosition(this.pos.getX(), this.pos.getY(), this.pos.getZ());
                             car2.setPositionNonDirty();
                             car2.readFromNBT(nbt);
@@ -103,12 +112,12 @@ public class PacketExtractFromGarage extends SerializablePacket implements IDnxP
 
 
                             ItemStack stack = new ItemStack(BasicsAddon.keysItem);
-                            stack.setStackDisplayName("§e" + garageCar.getCarName() + " §7(" + garageCar.getCarPlate() + ")");
+
 
                             stack.setTagCompound(new NBTTagCompound());
                             stack.getTagCompound().setString("VehicleId", garageCar.getUniqueID());
                             stack.getTagCompound().setString("VehicleName", garageCar.getCarName());
-
+                            stack.setStackDisplayName("§e" + garageCar.getCarName() + " §7(" + garageCar.getCarPlate() + ")");
                             context.inventory.addItemStackToInventory(stack);
 
 
@@ -116,19 +125,20 @@ public class PacketExtractFromGarage extends SerializablePacket implements IDnxP
 
 
                             car2.setPhysicsInitCallback(((modularPhysicsEntity, abstractEntityPhysicsHandler) -> {
-                                if(DynamXContext.usesPhysicsWorld(car2.world)) {
+                                if (DynamXContext.usesPhysicsWorld(car2.world)) {
                                     car2.getPhysicsHandler().setPhysicsPosition(DynamXUtils.toVector3f(this.pos));
                                     car2.getModuleByType(LicensePlateModule.class).setPlate(garageCar.getCarPlate());
+                                    car2.getModuleByType(GarageModule.class).setOwner(context.getUniqueID().toString());
                                 } else {
                                     Main.logger.warn("Physics world not found for car " + car2.getUniqueID() + " (" + car2.getName() + ")");
                                 }
                             }));
-                            PlayerGarageCapability.sync(context, Collections.singletonList(context));
-                        } else {
-                            context.sendMessage(new TextComponentString("§cThis car is already out of the garage"));
+
                         }
                     }
                 }
+            } catch (IOException | NBTException e) {
+                throw new RuntimeException(e);
             }
 
 

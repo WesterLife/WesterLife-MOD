@@ -2,62 +2,102 @@ package fr.yan36.westerlife.common.blocks.tileentity.render;
 
 import fr.dynamx.client.renders.TESRDynamXBlock;
 import fr.dynamx.common.DynamXContext;
+import fr.dynamx.utils.debug.DynamXDebugOptions;
 import fr.yan36.westerlife.common.Util;
 import fr.yan36.westerlife.common.blocks.dynamx.BlockAIPoint;
 import fr.yan36.westerlife.common.blocks.tileentity.TileAIPoint;
+import fr.yan36.westerlife.common.init.DynamXInit;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import org.lwjgl.opengl.GL11;
 
 import java.util.List;
+import java.util.Objects;
 
 
 public class RenderAIPoint extends TESRDynamXBlock<TileAIPoint> {
 
     @Override
     public void render(TileAIPoint te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
-        GlStateManager.pushMatrix();
-        GlStateManager.translate(x + 0.5D + (te.getBlockObjectInfo().getTranslation()).x, y + 0.5D + (te.getBlockObjectInfo().getTranslation()).y, z + 0.5D + (te.getBlockObjectInfo().getTranslation()).z);
-        GlStateManager.scale((te.getBlockObjectInfo().getScaleModifier()).x, (te.getBlockObjectInfo().getScaleModifier()).y, (te.getBlockObjectInfo().getScaleModifier()).z);
-        GlStateManager.rotate(te.getRotation() * 22.5F, 0.0F, -1.0F, 0.0F);
-        GlStateManager.scale(0.5f, 0.5f, 0.5f);
-        if (te.getType().equals(BlockAIPoint.Type.GO)) {
-            int k = te.getPos().getX() % 255;
-            GL11.glColor4f(0.0F, k, 0.0F, 0.5F);
-        } else if (te.getType().equals(BlockAIPoint.Type.STOP)) {
-            GL11.glColor4f(1.0F, 0.0F, 0.0F, 0.5F);
+        if (Minecraft.getMinecraft().player.getHeldItem(EnumHand.MAIN_HAND).getItem() == DynamXInit.magicWand) {
+            GlStateManager.pushMatrix();
+            GlStateManager.translate(x + 0.5D + (te.getPackInfo().getTranslation()).x, y + 0.5D + (te.getPackInfo().getTranslation()).y, z + 0.5D + (te.getPackInfo().getTranslation()).z);
+            GlStateManager.scale((te.getPackInfo().getScaleModifier()).x, (te.getPackInfo().getScaleModifier()).y, (te.getPackInfo().getScaleModifier()).z);
+            GlStateManager.rotate(te.getRotation() * 22.5F, 0.0F, -1.0F, 0.0F);
+            GlStateManager.scale(0.5f, 0.5f, 0.5f);
+            if (te.getType().equals(BlockAIPoint.Type.GO)) {
+                int k = te.getPos().getX() % 255;
+                GL11.glColor4f(0.0F, k, 0.0F, 1f);
+            } else if (te.getType().equals(BlockAIPoint.Type.STOP)) {
+                GL11.glColor4f(1.0F, 0.0F, 0.0F, 1f);
+            } else if (te.getType().equals(BlockAIPoint.Type.DOMAC_SPAWN)) {
+                GL11.glColor4f(0.0F, 0.0F, 1.0F, 1f);
+//            EntityRenderer.drawNameplate(Minecraft.getMinecraft().fontRenderer, "Spawn", 0, 0, 0, 0, 0, 0, false, false);
+            } else if (te.getType().equals(BlockAIPoint.Type.DOMAC_TARGET)) {
+                GL11.glColor4f(1.0F, 1.0F, 0.0F, 1f);
+//            EntityRenderer.drawNameplate(Minecraft.getMinecraft().fontRenderer, "Target", 0, 0, 0, 0, 0, 0, false, false);
+            }
 
+            GlStateManager.translate(0, Math.cos(Minecraft.getMinecraft().world.getTotalWorldTime() / 10.0) / 2, 0);
+
+            DynamXContext.getDxModelRegistry().getModel(te.getPackInfo().getModel()).renderGroups("Cylinder", (byte) te.getBlockMetadata(), false);
+            GlStateManager.popMatrix();
+        }
+        GlStateManager.pushMatrix();
+        GlStateManager.translate(x + 0.5D + (te.getPackInfo().getTranslation()).x, y + 0.5D + (te.getPackInfo().getTranslation()).y, z + 0.5D + (te.getPackInfo().getTranslation()).z);
+
+        GL11.glLineWidth(5);
+        GlStateManager.glBegin(GL11.GL_LINES);
+
+        GlStateManager.glVertex3f(0, 0, 0);
+
+        if (Minecraft.getMinecraft().player.getHeldItem(EnumHand.MAIN_HAND).getItem() == DynamXInit.magicWand) {
+            if (te.getType().equals(BlockAIPoint.Type.DOMAC_TARGET)) {
+                ItemStack stack = Minecraft.getMinecraft().player.getHeldItem(EnumHand.MAIN_HAND);
+                if (stack.hasTagCompound()) {
+                    if (stack.getTagCompound().hasKey("domacSpawnX") && Objects.equals(te.getTarget(), "")) {
+                        BlockPos pos2 = Minecraft.getMinecraft().player.getPosition();
+                        GlStateManager.glVertex3f((float) pos2.getX() - te.getPos().getX(), (float) pos2.getY() - te.getPos().getY(), (float) pos2.getZ() - te.getPos().getZ());
+                    }
+                    if (!Objects.equals(te.getTarget(), "")) {
+                        BlockPos pos2 = Util.parseBlockPosFromString(te.getTarget());
+                        GlStateManager.glVertex3f((float) pos2.getX() - te.getPos().getX(), (float) pos2.getY() - te.getPos().getY(), (float) pos2.getZ() - te.getPos().getZ());
+                    }
+                }
+            } else if (te.getType().equals(BlockAIPoint.Type.DOMAC_SPAWN)) {
+                ItemStack stack = Minecraft.getMinecraft().player.getHeldItem(EnumHand.MAIN_HAND);
+                if (stack.hasTagCompound()) {
+                    if (stack.getTagCompound().hasKey("domacSpawnX") && Objects.equals(te.getTarget(), "")) {
+                        BlockPos pos2 = Minecraft.getMinecraft().player.getPosition();
+                        GlStateManager.glVertex3f((float) pos2.getX() - te.getPos().getX(), (float) pos2.getY() - te.getPos().getY() + 0.5f, (float) pos2.getZ() - te.getPos().getZ());
+                    }
+                    if (!Objects.equals(te.getTarget(), "")) {
+                        BlockPos pos2 = Util.parseBlockPosFromString(te.getTarget());
+                        GlStateManager.glVertex3f((float) pos2.getX() - te.getPos().getX(), (float) pos2.getY() - te.getPos().getY() + 0.5f, (float) pos2.getZ() - te.getPos().getZ());
+                    }
+                }
+            }
         }
 
-        GlStateManager.translate(0, Math.cos(Minecraft.getMinecraft().world.getTotalWorldTime() / 10.0) / 2, 0);
 
-        DynamXContext.getObjModelRegistry().getModel(te.getBlockObjectInfo().getModel()).renderGroups("Cylinder", (byte) te.getBlockMetadata());
-        GlStateManager.popMatrix();
+        GlStateManager.glEnd();
 
-        GlStateManager.pushMatrix();
-        GlStateManager.translate(x + 0.5D + (te.getBlockObjectInfo().getTranslation()).x, y + 0.5D + (te.getBlockObjectInfo().getTranslation()).y, z + 0.5D + (te.getBlockObjectInfo().getTranslation()).z);
-
-        BlockPos nearest = Util.getNearestBlockAIPoint(te.getWorld(), te.getPos(), 10);
-
-        if (!nearest.equals(new BlockPos(-1, -1, -1))) {
-
-            GL11.glLineWidth(2);
-            GL11.glBegin(GL11.GL_LINES);
-            GL11.glVertex3d(0, 0, 0);
-
-
-
-            GL11.glVertex3d((nearest.getX() - te.getPos().getX()), (nearest.getY() - te.getPos().getY()), (nearest.getZ() - te.getPos().getZ()));
-
-
-
-
-            GL11.glEnd();
-
+        if(DynamXDebugOptions.DEBUG_RENDER.isActive()) {
+            if (te.getType().equals(BlockAIPoint.Type.DOMAC_SPAWN)) {
+                EntityRenderer.drawNameplate(Minecraft.getMinecraft().fontRenderer, "Spawn", 0, 1f, 0, 0, 0, 0, false, false);
+            } else if (te.getType().equals(BlockAIPoint.Type.DOMAC_TARGET)) {
+                EntityRenderer.drawNameplate(Minecraft.getMinecraft().fontRenderer, "Target", 0, 1f, 0, 0, 0, 0, false, false);
+            }
         }
 
+
+
         GlStateManager.popMatrix();
+
 
     }
 }

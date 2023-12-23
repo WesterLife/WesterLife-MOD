@@ -31,13 +31,13 @@ Tout manquement à cette règle est passible de poursuite judiciaire.
 }
 
 .action {
-    color: #ffffff;
+    color: #F6E7D8;
 
     font-family: "westerlife:montserrat";
     width: 100%;
     top: 50%;
     bottom: 50%;
-    height: 10%;
+    height: 15%;
     text-align: center;
     font-size: 2px;
 }

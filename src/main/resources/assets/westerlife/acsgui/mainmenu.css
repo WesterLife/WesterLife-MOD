@@ -19,28 +19,28 @@ Tout manquement à cette règle est passible de poursuite judiciaire.
     text-align: center;
     background-image: url("westerlife:textures/main/settings.png");
     width: 25%;
-    height: 70%;
+    height: 75%;
     left: 5%;
-    top: 20%;
+    top: 12%;
 }
 
 .connect {
     text-align: center;
     background-image: url("westerlife:textures/main/connect.png");
     width: 25%;
-    height: 70%;
+    height: 75%;
     left: 50%;
     right: 50%;
-    top: 20%;
+    top: 12%;
 }
 
 .exit {
     text-align: center;
     background-image: url("westerlife:textures/main/exit.png");
     width: 25%;
-    height: 70%;
+    height: 75%;
     right: 5%;
-    top: 20%;
+    top: 12%;
 }
 .perf {
     color: #F14902;

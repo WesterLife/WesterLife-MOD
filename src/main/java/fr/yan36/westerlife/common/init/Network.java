@@ -1,7 +1,7 @@
 package fr.yan36.westerlife.common.init;
 
 import fr.yan36.westerlife.Main;
-import fr.yan36.westerlife.common.capabilities.packets.PacketSyncAnimation;
+import fr.yan36.westerlife.common.capabilities.packets.PacketSyncPlayerStats;
 import fr.yan36.westerlife.common.capabilities.packets.PacketSyncChunk;
 import fr.yan36.westerlife.common.capabilities.packets.PacketSyncExtraItem;
 import fr.yan36.westerlife.common.capabilities.packets.PacketSyncGarage;
@@ -9,6 +9,10 @@ import fr.yan36.westerlife.common.network.*;
 import fr.yan36.westerlife.common.network.garage.PacketExtractFromGarage;
 import fr.yan36.westerlife.common.network.garage.PacketPutCarInGarage;
 import fr.yan36.westerlife.common.network.old.*;
+import fr.yan36.westerlife.common.network.sync.PacketAnimationToAll;
+import fr.yan36.westerlife.common.network.sync.PacketClothToAll;
+import fr.yan36.westerlife.common.network.sync.PacketSetEntityData;
+import fr.yan36.westerlife.common.network.sync.PacketSyncClothes;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 
@@ -37,7 +41,6 @@ public class Network {
         Main.network.registerMessage(PacketClothToAll.Handler.class, PacketClothToAll.class, 27, Side.CLIENT);
         Main.network.registerMessage(PacketOpenAcsGui.Handler.class, PacketOpenAcsGui.class, 28, Side.CLIENT);
         Main.network.registerMessage(PacketRequestCharacter.Handler.class, PacketRequestCharacter.class, 29, Side.SERVER);
-        Main.network.registerMessage(PacketSendCharacter.Handler.class, PacketSendCharacter.class, 30, Side.CLIENT);
         Main.network.registerMessage(PacketChangeBlockColor.Handler.class, PacketChangeBlockColor.class, 31, Side.SERVER);
         Main.network.registerMessage(PacketSetKit.Handler.class, PacketSetKit.class, 32, Side.SERVER);
         Main.network.registerMessage(PacketNotif.Handler.class, PacketNotif.class, 33, Side.SERVER);
@@ -45,18 +48,31 @@ public class Network {
         Main.network.registerMessage(PacketPutCarInGarage.Handler.class, PacketPutCarInGarage.class, 35, Side.SERVER);
         Main.network.registerMessage(PacketUpdateMacdo.Handler.class, PacketUpdateMacdo.class, 36, Side.SERVER);
         Main.network.registerMessage(PacketExtractFromGarage.Handler.class, PacketExtractFromGarage.class, 37, Side.SERVER);
-
-
+        Main.network.registerMessage(PacketSetEntityData.Handler.class, PacketSetEntityData.class, 47, Side.SERVER);
         if(side.isClient()) {
-            Main.network.registerMessage(PacketSyncAnimation.ClientHandler.class, PacketSyncAnimation.class, 38, Side.CLIENT);
+            Main.network.registerMessage(PacketSyncPlayerStats.ClientHandler.class, PacketSyncPlayerStats.class, 38, Side.CLIENT);
             Main.network.registerMessage(PacketSyncGarage.ClientHandler.class, PacketSyncGarage.class, 39, Side.CLIENT);
             Main.network.registerMessage(PacketSyncExtraItem.ClientHandler.class, PacketSyncExtraItem.class, 40, Side.CLIENT);
             Main.network.registerMessage(PacketSyncChunk.ClientHandler.class, PacketSyncChunk.class, 41, Side.CLIENT);
+            Main.network.registerMessage(fr.yan36.westerlife.common.network.PacketSendCharacter.ClientHandler.class, fr.yan36.westerlife.common.network.PacketSendCharacter.class, 42, Side.SERVER);
+            Main.network.registerMessage(PacketATMInteraction.ClientHandler.class, PacketATMInteraction.class, 43, Side.CLIENT);
+            Main.network.registerMessage(PacketOpenConcessionaire.ClientHandler.class, PacketOpenConcessionaire.class, 44, Side.CLIENT);
+            Main.network.registerMessage(PacketOpenGuiWithObject.ClientHandler.class, PacketOpenGuiWithObject.class, 45, Side.CLIENT);
+            Main.network.registerMessage(PacketTakeMacdoCommand.ClientHandler.class, PacketTakeMacdoCommand.class, 46, Side.CLIENT);
+            Main.network.registerMessage(PacketReqOpenInv.ClientHandler.class, PacketReqOpenInv.class, 47, Side.CLIENT);
+
         } else  {
-            Main.network.registerMessage(PacketSyncAnimation.ServerHandler.class, PacketSyncAnimation.class, 38, Side.SERVER); //CEST NORMAL LE PACKET EST LE MEME
+            Main.network.registerMessage(PacketSyncPlayerStats.ServerHandler.class, PacketSyncPlayerStats.class, 38, Side.SERVER);
             Main.network.registerMessage(PacketSyncGarage.ServerHandler.class, PacketSyncGarage.class, 39, Side.SERVER);
             Main.network.registerMessage(PacketSyncExtraItem.ServerHandler.class, PacketSyncExtraItem.class, 40, Side.SERVER);
             Main.network.registerMessage(PacketSyncChunk.ServerHandler.class, PacketSyncChunk.class, 41, Side.SERVER);
+            Main.network.registerMessage(fr.yan36.westerlife.common.network.PacketSendCharacter.ServerHandler.class, fr.yan36.westerlife.common.network.PacketSendCharacter.class, 42, Side.SERVER);
+            Main.network.registerMessage(PacketATMInteraction.ServerHandler.class, PacketATMInteraction.class, 43, Side.SERVER);
+            Main.network.registerMessage(PacketOpenConcessionaire.ServerHandler.class, PacketOpenConcessionaire.class, 44, Side.SERVER);
+            Main.network.registerMessage(PacketOpenGuiWithObject.ServerHandler.class, PacketOpenGuiWithObject.class, 45, Side.SERVER);
+            Main.network.registerMessage(PacketTakeMacdoCommand.ServerHandler.class, PacketTakeMacdoCommand.class, 46, Side.SERVER);
+            Main.network.registerMessage(PacketReqOpenInv.ServerHandler.class, PacketReqOpenInv.class, 47, Side.SERVER);
+
         }
 
 

@@ -77,19 +77,21 @@ public class Permis implements IDatabaseVariable {
     private List<PermisType> type;
     private String points;
     private String obtentionDate;
+    private String delivranceAutorite;
 
-    public Permis(UUID uuid, List<PermisType> type, String points, String obtentionDate) {
+    public Permis(UUID uuid, List<PermisType> type, String points, String obtentionDate, String delivranceAutorite) {
         this.uuid = uuid;
         this.type = type;
         this.points = points;
         this.obtentionDate = obtentionDate;
+        this.delivranceAutorite = delivranceAutorite;
     }
     public Permis() {
         this.uuid = UUID.fromString("00000000-0000-0000-0000-000000000000");
         this.type = Collections.singletonList(PermisType.PERMIS_E);
         this.points = "0";
         this.obtentionDate = "null";
-
+        this.delivranceAutorite = "null";
     }
 
     public UUID getUuid() {
@@ -129,16 +131,24 @@ public class Permis implements IDatabaseVariable {
         this.type = type;
     }
 
+    public String getDelivranceAutorite() {
+        return delivranceAutorite;
+    }
+
+    public void setDelivranceAutorite(String delivranceAutorite) {
+        this.delivranceAutorite = delivranceAutorite;
+    }
+
     @Override
     public String toString() {
 
-        return uuid.toString() + ";" + serializePermisList(type) + ";" + points + ";" + obtentionDate;
+        return uuid.toString() + "!" + serializePermisList(type) + "!" + points + "!" + obtentionDate + "!" + delivranceAutorite;
     }
 
     public static Permis fromString(String s) {
-        String[] split = s.split(";");
+        String[] split = s.split("!");
 
-        return new Permis(UUID.fromString(split[0]), deserializePermisList(split[1]), split[2], split[3]);
+        return new Permis(UUID.fromString(split[0]), deserializePermisList(split[1]), split[2], split[3], split[4]);
 
 
     }

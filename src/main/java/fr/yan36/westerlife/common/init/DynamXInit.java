@@ -3,6 +3,7 @@ package fr.yan36.westerlife.common.init;
 import com.jme3.math.Vector3f;
 import fr.dynamx.common.items.DynamXItemArmor;
 import fr.yan36.westerlife.Main;
+import fr.yan36.westerlife.common.blocks.BlockPlayerSensor;
 import fr.yan36.westerlife.common.blocks.dynamx.*;
 import fr.yan36.westerlife.common.items.ItemDrink;
 import fr.yan36.westerlife.common.items.dynamx.*;
@@ -25,6 +26,7 @@ public class DynamXInit {
     public static ItemDynamx MatraqueTelescopique;
 
     public static Item violon;
+    public static ItemGarageTablet garagetablet;
 
     public static ItemDrink WATER;
 
@@ -33,6 +35,7 @@ public class DynamXInit {
     public static ItemFood barreChoco;
 
     public static BlockDistributeur Distributeur;
+    public static BlockPlayerSensor playerSensor;
     public static BlockDigicode digicode;
     public static BlockBisign doublefeurouge;
     public static BlockTerminalDePaiement TerminalDePaiement;
@@ -83,10 +86,16 @@ public class DynamXInit {
     // AI ANCHOR POINTS
     public static BlockAIPoint goAIPoint;
     public static BlockAIPoint stopAIPoint;
+    public static BlockAIPoint domacSpawnAIPoint;
+    public static BlockAIPoint domacTargetAIPoint;
     public static BlockParking park;
     public static BlockGarage parcmetre;
     public static BlockMacdo macdo;
     public static ItemBurger burger;
+    public static BlockCarPresentation carPresentation;
+    public static BlockTestSphere testSphere;
+
+
 
     public static HashMap<String, DynamXItemArmor<?>> fastRegistryAccess = new HashMap<>();
     public static void init() {
@@ -106,7 +115,7 @@ public class DynamXInit {
         CHAMPAGNE = new ItemDrink("flutechampagne",15, 0.0F, new ResourceLocation("westerlife","models/dynamx/items/flutechampagne/champagne.obj"));
         barreChoco = new ItemFood(Main.MODID, "barrechoco", new ResourceLocation("westerlife","models/dynamx/items/barrechoco/barrechoco.obj"), 5f);
         magicWand = new ItemMagicWand(Main.MODID, "magicwand", new ResourceLocation("westerlife","models/dynamx/items/baguette/baguette.obj"));
-
+        garagetablet = new ItemGarageTablet(Main.MODID, "garagetablet", new ResourceLocation("westerlife","models/dynamx/items/tablet/tablet.obj"));
         //Old items
         Belier = (ItemDynamx) new ItemDynamx(Main.MODID, "belier", new ResourceLocation("westerlife","models/dynamx/belier/belier.obj")).setMaxStackSize(1);
 
@@ -140,6 +149,8 @@ public class DynamXInit {
         churchconfessional = new BlockDynamx(Material.ANVIL, Main.MODID, "churchconfessional", new ResourceLocation("westerlife","models/dynamx/blocks/churchconfessional/churchconfessional.obj"));
         macdo = new BlockMacdo(Material.ANVIL, Main.MODID, "macdo", new ResourceLocation("westerlife","models/dynamx/blocks/macdo/macdo.obj"));
         burger = new ItemBurger(Main.MODID, "burger", new ResourceLocation("westerlife","models/dynamx/blocks/burger/burger.obj"), 10f);
+        playerSensor = new BlockPlayerSensor("playersensor", Material.ANVIL);
+        carPresentation = new BlockCarPresentation(Material.ANVIL, Main.MODID, "carpresentation", new ResourceLocation("westerlife","models/dynamx/blocks/carpresentation/carpresentation.obj"));
 
         //Road blocks
         barrierePolice = new BlockRoad(Material.ANVIL, Main.MODID, "barrierepolice", new ResourceLocation("westerlife","models/dynamx/blocks/barriere_police/barriere.obj"));
@@ -172,8 +183,13 @@ public class DynamXInit {
 
         goAIPoint = new BlockAIPoint(Material.ANVIL, Main.MODID, "goaipoint", new ResourceLocation("westerlife","models/dynamx/blocks/pointai/pointai.obj"), BlockAIPoint.Type.GO);
         stopAIPoint = new BlockAIPoint(Material.ANVIL, Main.MODID, "stopaipoint", new ResourceLocation("westerlife","models/dynamx/blocks/pointai/pointai.obj"), BlockAIPoint.Type.STOP);
+        domacSpawnAIPoint = new BlockAIPoint(Material.ANVIL, Main.MODID, "domacspawnaipoint", new ResourceLocation("westerlife","models/dynamx/blocks/pointai/pointai.obj"), BlockAIPoint.Type.DOMAC_SPAWN);
+        domacTargetAIPoint = new BlockAIPoint(Material.ANVIL, Main.MODID, "domactargetaipoint", new ResourceLocation("westerlife","models/dynamx/blocks/pointai/pointai.obj"), BlockAIPoint.Type.DOMAC_TARGET);
+
         park = new BlockParking(Material.ANVIL, Main.MODID, "park", new ResourceLocation("westerlife","models/dynamx/blocks/park/park.obj"));
         parcmetre = new BlockGarage(Material.ANVIL, Main.MODID, "parcmetre", new ResourceLocation("westerlife","models/dynamx/blocks/garage/garage.obj"));
+
+        testSphere = new BlockTestSphere(Material.ANVIL, Main.MODID, "testsphere", new ResourceLocation("westerlife","models/dynamx/testsphere/test.obj"));
 
 
 

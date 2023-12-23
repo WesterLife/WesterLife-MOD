@@ -1,0 +1,82 @@
+
+/*
+
+Attention, propriété de WesterLife, toute utilisation, modification ou reproduction est interdite sans autorisation claire et explicite de la pars de l'administation de WesterLife est formellement interdite.
+Tout manquement à cette règle est passible de poursuite judiciaire.
+
+©️ WesterLife 2023 - Gabidut76, Yan36
+
+*/
+
+.balance {
+    background-image: url("westerlife:textures/gui/atm/account/balance.png");
+    width: 35%;
+    height: 20%;
+    left: 13%;
+    top: 20%;
+}
+
+.balance_text {
+    color: #EE7224;
+    font-size: 1px;
+    font-family: "westerlife:montserrat";
+    background-color: transparent;
+    width: 100%;
+    text-align: center;
+    text-align-vertical: center;
+    height: 100%;
+}
+
+.accountinfo {
+    background-image: url("westerlife:textures/gui/atm/account/accountinfo.png");
+    width: 35%;
+    height: 20%;
+    left: 52%;
+    top: 20%;
+}
+
+.accountinfo_text {
+    color: #EE7224;
+    font-size: 1px;
+    font-family: "westerlife:montserrat";
+    background-color: transparent;
+    width: 100%;
+    text-align: center;
+    text-align-vertical: center;
+    height: 100%;
+}
+
+.identity {
+    background-image: url("westerlife:textures/gui/atm/account/identity.png");
+    width: 35%;
+    height: 20%;
+    left: 13%;
+    top: 45%;
+}
+
+.identity_text {
+    color: #EE7224;
+    font-size: 1px;
+    font-family: "westerlife:montserrat";
+    background-color: transparent;
+    width: 100%;
+    text-align: center;
+    text-align-vertical: center;
+    height: 100%;
+    left: 5%;
+}
+.changepassword {
+    background-image: url("westerlife:textures/gui/atm/account/changepassword.png");
+    width: 15%;
+    height: 20%;
+    left: 52%;
+    top: 45%;
+}
+
+.close {
+    background-image: url("westerlife:textures/gui/atm/account/close.png");
+    width: 15%;
+    height: 20%;
+    left: 71%;
+    top: 45%;
+}

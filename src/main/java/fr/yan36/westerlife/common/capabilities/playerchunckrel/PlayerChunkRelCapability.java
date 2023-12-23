@@ -1,16 +1,12 @@
 package fr.yan36.westerlife.common.capabilities.playerchunckrel;
 
 import fr.yan36.westerlife.Main;
-import fr.yan36.westerlife.common.Util;
-import fr.yan36.westerlife.common.capabilities.packets.PacketSyncAnimation;
+import fr.yan36.westerlife.common.blocks.BlockPlayerSensor;
 import fr.yan36.westerlife.common.capabilities.packets.PacketSyncChunk;
-import fr.yan36.westerlife.common.utils.Animation;
 import net.minecraft.block.BlockAir;
 import net.minecraft.block.BlockFire;
-import net.minecraft.block.BlockOldLog;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -49,7 +45,6 @@ public class PlayerChunkRelCapability {
 
     @SubscribeEvent
     public void onPlayerTrack(PlayerEvent.StartTracking e) {
-        System.out.println("start tracking");
         if (e.getTarget() != null && e.getTarget() != null && e.getTarget() instanceof EntityPlayer) {
             PlayerChunkRelCapability.sync(e.getEntity().world.getChunk(e.getTarget().getPosition()), Collections.singletonList((EntityPlayer) e.getEntity()));
         }
@@ -69,12 +64,12 @@ public class PlayerChunkRelCapability {
     @SubscribeEvent
     public static void updateBlock(BlockEvent.NeighborNotifyEvent event) {
         if (!event.getWorld().isRemote) {
+            if(event.getState().getBlock() instanceof BlockPlayerSensor) return;
             if (event.getState().getBlock() instanceof BlockFire || event.getState().getBlock() instanceof BlockAir) {
                 Chunk chunk = event.getWorld().getChunk(event.getPos());
                 if (chunk.getCapability(PlayerChunkRelCapability.CAPABILITY, null).getCO2() < 100 && chunk.getCapability(PlayerChunkRelCapability.CAPABILITY, null).getPollen() > 0) {
                     System.out.println(event.getState().getBlock());
                     if(event.getState().getBlock() instanceof BlockFire){
-                        System.out.println("OK ?");
                         chunk.getCapability(PlayerChunkRelCapability.CAPABILITY, null).setCO2(chunk.getCapability(PlayerChunkRelCapability.CAPABILITY, null).getCO2() + 10);
                         Main.co2ManagementThread.addFireToReplace(System.currentTimeMillis() + 10000, event.getPos());
                     }

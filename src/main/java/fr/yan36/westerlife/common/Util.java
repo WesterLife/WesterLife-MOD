@@ -6,7 +6,9 @@ import com.jme3.math.Vector3f;
 import fr.aym.acsguis.cssengine.font.CssFontHelper;
 import fr.dynamx.client.renders.mesh.VertexBuffer;
 import fr.yan36.westerlife.common.blocks.dynamx.BlockAIPoint;
+import fr.yan36.westerlife.common.blocks.dynamx.BlockMacdo;
 import fr.yan36.westerlife.common.blocks.tileentity.TileEntitySyncClient;
+import fr.yan36.westerlife.common.blocks.tileentity.TileMacdo;
 import fr.yan36.westerlife.common.init.DynamXInit;
 import fr.yan36.westerlife.common.objects.KitWSD;
 import fr.yan36.westerlife.common.utils.AABB;
@@ -52,19 +54,19 @@ public class Util {
 
     public static int getAngleBetweenTwoPoint(BlockPos p1, BlockPos p2) {
         double angle = Math.toDegrees(Math.atan2(p2.getZ() - p1.getZ(), p2.getX() - p1.getX()));
-        if(angle < 0){
+        if (angle < 0) {
             angle += 360;
         }
         return (int) angle;
     }
 
-    public static BlockPos getNearestBlockAIPoint(World w,BlockPos from, int range) {
+    public static BlockPos getNearestBlockAIPoint(World w, BlockPos from, int range) {
         // get all blocks in a radius of range
         List<BlockPos> blocks = new ArrayList<BlockPos>();
         for (int x = from.getX() - range; x < from.getX() + range; x++) {
             for (int y = from.getY() - range; y < from.getY() + range; y++) {
                 for (int z = from.getZ() - range; z < from.getZ() + range; z++) {
-                    BlockPos pos = new BlockPos(x - 1 , y , z - 1);
+                    BlockPos pos = new BlockPos(x - 1, y, z - 1);
                     if (w.getBlockState(pos).getBlock() instanceof BlockAIPoint) {
                         blocks.add(pos);
                     }
@@ -80,11 +82,11 @@ public class Util {
             }
         });
 
-        if(blocks.size() == 1 || blocks.size() == 0)
-            return new BlockPos(-1,-1,-1);
+        if (blocks.size() == 1 || blocks.size() == 0)
+            return new BlockPos(-1, -1, -1);
 
-        if((blocks.get(1) != null)) return blocks.get(1);
-        else return new BlockPos(-1,-1,-1);
+        if ((blocks.get(1) != null)) return blocks.get(1);
+        else return new BlockPos(-1, -1, -1);
 
     }
 
@@ -106,24 +108,20 @@ public class Util {
     }
 
 
-    public static BlockPos parseBlockPosFromString(String stringPos)
-    {
+    public static BlockPos parseBlockPosFromString(String stringPos) {
         String[] xyz = stringPos.split(",");
-        if (xyz.length == 3)
-        {
+        if (xyz.length == 3) {
             int x = Integer.parseInt(xyz[0]);
             int y = Integer.parseInt(xyz[1]);
             int z = Integer.parseInt(xyz[2]);
             return new BlockPos(x, y, z);
-        } else
-        {
+        } else {
             System.err.println("The parsed BlockPos value has to be like that: \"x, y, z\"");
         }
         return BlockPos.ORIGIN;
     }
 
-    public static String blockPosToString(BlockPos pos)
-    {
+    public static String blockPosToString(BlockPos pos) {
         return pos.getX() + "," + pos.getY() + "," + pos.getZ();
     }
 
@@ -183,21 +181,17 @@ public class Util {
         return blocks;
     }
 
-    public static <T extends Entity> List<T> getEntitiesWithinAABB(World w, Class<? extends T> clazz, AABB aabb)
-    {
+    public static <T extends Entity> List<T> getEntitiesWithinAABB(World w, Class<? extends T> clazz, AABB aabb) {
         int j2 = MathHelper.floor((aabb.minX - MAX_ENTITY_RADIUS) / 16.0D);
         int k2 = MathHelper.ceil((aabb.maxX + MAX_ENTITY_RADIUS) / 16.0D);
         int l2 = MathHelper.floor((aabb.minZ - MAX_ENTITY_RADIUS) / 16.0D);
         int i3 = MathHelper.ceil((aabb.maxZ + MAX_ENTITY_RADIUS) / 16.0D);
         List<T> list = Lists.newArrayList();
 
-        for (int j3 = j2; j3 < k2; ++j3)
-        {
-            for (int k3 = l2; k3 < i3; ++k3)
-            {
-                if (w.isChunkGeneratedAt(j3, k3))
-                {
-                    getEntitiesOfTypeWithinAABB(w.getChunk(j3, k3), clazz, aabb, list,  EntitySelectors.NOT_SPECTATING);
+        for (int j3 = j2; j3 < k2; ++j3) {
+            for (int k3 = l2; k3 < i3; ++k3) {
+                if (w.isChunkGeneratedAt(j3, k3)) {
+                    getEntitiesOfTypeWithinAABB(w.getChunk(j3, k3), clazz, aabb, list, EntitySelectors.NOT_SPECTATING);
                 }
             }
         }
@@ -206,19 +200,15 @@ public class Util {
     }
 
 
-    public static  <T extends Entity> void getEntitiesOfTypeWithinAABB(Chunk w, Class <? extends T > entityClass, AABB aabb, List<T> listToFill, Predicate <? super T > filter)
-    {
+    public static <T extends Entity> void getEntitiesOfTypeWithinAABB(Chunk w, Class<? extends T> entityClass, AABB aabb, List<T> listToFill, Predicate<? super T> filter) {
         int i = MathHelper.floor((aabb.minY - World.MAX_ENTITY_RADIUS) / 16.0D);
         int j = MathHelper.floor((aabb.maxY + World.MAX_ENTITY_RADIUS) / 16.0D);
         i = MathHelper.clamp(i, 0, w.getEntityLists().length - 1);
         j = MathHelper.clamp(j, 0, w.getEntityLists().length - 1);
 
-        for (int k = i; k <= j; ++k)
-        {
-            for (T t : w.getEntityLists()[k].getByClass(entityClass))
-            {
-                if (t.getEntityBoundingBox().intersects(aabb.minX, aabb.minY, aabb.minZ, aabb.maxX, aabb.maxY, aabb.maxZ) && (filter == null || filter.apply(t)))
-                {
+        for (int k = i; k <= j; ++k) {
+            for (T t : w.getEntityLists()[k].getByClass(entityClass)) {
+                if (t.getEntityBoundingBox().intersects(aabb.minX, aabb.minY, aabb.minZ, aabb.maxX, aabb.maxY, aabb.maxZ) && (filter == null || filter.apply(t))) {
                     listToFill.add(t);
                 }
             }
@@ -229,14 +219,16 @@ public class Util {
         str = trimStringNewline(str);
         renderSplitStringCentered(renderer, str, x, y, wrapWidth, textColor);
     }
+
     public static void drawSplitString2(FontRenderer renderer, String str, int x, int y, int wrapWidth, int textColor) {
         str = trimStringNewline(str);
         renderSplitStringCentered2(renderer, str, x, y, wrapWidth, textColor);
     }
+
     private static void renderSplitStringCentered(FontRenderer renderer, String str, int x, int y, int wrapWidth, int textColor) {
         List<String> lines = renderer.listFormattedStringToWidth(str, 55);
         for (int i = 0; i < lines.size() && i < 4; i++) {
-            String line = (String)lines.get(i);
+            String line = (String) lines.get(i);
             x = (wrapWidth + -renderer.getStringWidth(line)) / 2;
             renderer.drawString(line, x, y, textColor);
             y += renderer.FONT_HEIGHT;
@@ -246,7 +238,7 @@ public class Util {
     private static void renderSplitStringCentered2(FontRenderer renderer, String str, int x, int y, int wrapWidth, int textColor) {
         List<String> lines = renderer.listFormattedStringToWidth(str, wrapWidth);
         for (int i = 0; i < lines.size() && i < 4; i++) {
-            String line = (String)lines.get(i);
+            String line = (String) lines.get(i);
             x = -renderer.getStringWidth(line) / 2;
             renderer.drawString(line, x, y, textColor);
             y += renderer.FONT_HEIGHT;
@@ -259,12 +251,9 @@ public class Util {
         return text;
     }
 
-    public static EntityEquipmentSlot equipementFromSlotID(int slotID)
-    {
-        for (EntityEquipmentSlot entityequipmentslot : EntityEquipmentSlot.values())
-        {
-            if (entityequipmentslot.getSlotIndex() == slotID)
-            {
+    public static EntityEquipmentSlot equipementFromSlotID(int slotID) {
+        for (EntityEquipmentSlot entityequipmentslot : EntityEquipmentSlot.values()) {
+            if (entityequipmentslot.getSlotIndex() == slotID) {
                 return entityequipmentslot;
             }
         }
@@ -292,7 +281,7 @@ public class Util {
                 if (i != null) {
                     ItemStack stack = new ItemStack(i, Integer.parseInt(itemData[3]), Integer.parseInt(itemData[2]));
                     stack.setStackDisplayName("§f" + itemData[1]);
-                    if(stack.getTagCompound() == null) {
+                    if (stack.getTagCompound() == null) {
                         stack.setTagCompound(new NBTTagCompound());
                     }
                     stack.getTagCompound().setBoolean("isFromKit", true);
@@ -302,18 +291,19 @@ public class Util {
         }
         return list;
     }
+
     public static boolean hasPermission(EntityPlayerMP player, String permissionName) {
         return player.canUseCommand(4, permissionName);
     }
 
     // AcsGui lib draw text
 
-    public static void drawTextWithFont(Vector3f pos, Vector3f scale, Vector3f rotation, String text, int[] color, String font){
+    public static void drawTextWithFont(Vector3f pos, Vector3f scale, Vector3f rotation, String text, int[] color, String font) {
         drawTextWithFont(pos, scale, rotation, text, color, font, 0.0F);
     }
 
     public static void drawTextWithFont(Vector3f pos, Vector3f scale, Vector3f rotation, String text, int[] color, String font, float spacing) {
-        if(pos != null) {
+        if (pos != null) {
             GlStateManager.pushMatrix();
             GlStateManager.color(1, 1, 1, 1);
             GlStateManager.translate(pos.x, pos.y, pos.z);
@@ -357,4 +347,19 @@ public class Util {
     }
 
 
+
+    public NBTTagCompound serializeEntityPlayer(EntityPlayer p) {
+        NBTTagCompound nbt = new NBTTagCompound();
+        nbt.setString("name", p.getName());
+        nbt.setInteger("id", p.getEntityId());
+        nbt.setTag("data", p.serializeNBT());
+        nbt.setUniqueId("uuid", p.getUniqueID());
+        System.out.println(nbt);
+        return nbt;
+    }
+
+
+    public static <T> boolean listEqualsIgnoreOrder(List<T> list1, List<T> list2) {
+        return new HashSet<>(list1).equals(new HashSet<>(list2));
+    }
 }

@@ -40,7 +40,8 @@ public class ClothEntityRenderer extends RenderPhysicsEntity<ClothEntity> {
         MinecraftForge.EVENT_BUS.post(new PhysicsEntityEvent.InitRenderer<>(PropsEntity.class, this));
     }
 
-    public void renderMain(ClothEntity entity, float partialsTicks) {
+    @Override
+    public void renderEntity(ClothEntity entity, double v, double v1, double v2, float v3, boolean b) {
         ClothEntityModule module = entity.getModuleByType(ClothEntityModule.class);
 
         if(entity.getModuleByType(ClothEntityModule.class) != null) {
@@ -106,7 +107,7 @@ public class ClothEntityRenderer extends RenderPhysicsEntity<ClothEntity> {
 
 
 
-        this.renderParts(entity, partialsTicks);
+        this.renderParts(entity, v3);
     }
 
 

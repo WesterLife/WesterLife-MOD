@@ -20,14 +20,14 @@ public class RenderPark extends TESRDynamXBlock<TilePark> {
     public void render(TilePark te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
 
         GL11.glPushMatrix();
-        GL11.glTranslatef((float) (x + 0.5D + (te.getBlockObjectInfo().getTranslation()).x), (float) (y + 1.3D + (te.getBlockObjectInfo().getTranslation()).y), (float) (z + 0.5D + (te.getBlockObjectInfo().getTranslation()).z));
-        GL11.glScalef((te.getBlockObjectInfo().getScaleModifier()).x, (te.getBlockObjectInfo().getScaleModifier()).y, (te.getBlockObjectInfo().getScaleModifier()).z);
+        GL11.glTranslatef((float) (x + 0.5D + (te.getPackInfo().getTranslation()).x), (float) (y + 1.3D + (te.getPackInfo().getTranslation()).y), (float) (z + 0.5D + (te.getPackInfo().getTranslation()).z));
+        GL11.glScalef((te.getPackInfo().getScaleModifier()).x, (te.getPackInfo().getScaleModifier()).y, (te.getPackInfo().getScaleModifier()).z);
         GL11.glRotatef(te.getRotation() * 22.5F, 0.0F, -1.0F, 0.0F);
 
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         GL11.glColor4f(0, 1f, 0, (float) (Math.cos(Minecraft.getMinecraft().world.getWorldTime() / 5.0) / 2.0) + 0.7f);
-        DynamXContext.getObjModelRegistry().getModel(te.getBlockObjectInfo().getModel()).renderGroups("park", (byte) te.getBlockMetadata());
+        DynamXContext.getDxModelRegistry().getModel(te.getPackInfo().getModel()).renderGroups("park", (byte) te.getBlockMetadata(), false);
         GL11.glColor4f(1f, 1f, 1f, 1f);
         GL11.glDisable(GL11.GL_BLEND);
         GL11.glPopMatrix();
@@ -35,7 +35,7 @@ public class RenderPark extends TESRDynamXBlock<TilePark> {
 
         GL11.glPushMatrix();
 
-        GlStateManager.translate(x + 0.5D + (te.getBlockObjectInfo().getTranslation()).x, y + 1.3D + (te.getBlockObjectInfo().getTranslation()).y, z + 0.5D + (te.getBlockObjectInfo().getTranslation()).z);
+        GlStateManager.translate(x + 0.5D + (te.getPackInfo().getTranslation()).x, y + 1.3D + (te.getPackInfo().getTranslation()).y, z + 0.5D + (te.getPackInfo().getTranslation()).z);
         GL11.glLineWidth(20);
         GlStateManager.glBegin(GL11.GL_LINES);
         GL11.glVertex3d(0, 0, 0);

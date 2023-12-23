@@ -16,8 +16,8 @@ public class RenderPanneauAgglomeration extends TESRDynamXBlock<TilePanneauAgglo
     @Override
     public void render(TilePanneauAgglomeration te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
         GlStateManager.pushMatrix();
-        GlStateManager.translate(x + 0.5D + (te.getBlockObjectInfo().getTranslation()).x, y + 1.2D + (te.getBlockObjectInfo().getTranslation()).y, z + 0.5D + (te.getBlockObjectInfo().getTranslation()).z);
-        GlStateManager.scale((te.getBlockObjectInfo().getScaleModifier()).x, (te.getBlockObjectInfo().getScaleModifier()).y, (te.getBlockObjectInfo().getScaleModifier()).z);
+        GlStateManager.translate(x + 0.5D + (te.getPackInfo().getTranslation()).x, y + 1.2D + (te.getPackInfo().getTranslation()).y, z + 0.5D + (te.getPackInfo().getTranslation()).z);
+        GlStateManager.scale((te.getPackInfo().getScaleModifier()).x, (te.getPackInfo().getScaleModifier()).y, (te.getPackInfo().getScaleModifier()).z);
         GlStateManager.rotate(te.getRotation() * 22.5F, 0.0F, -1.0F, 0.0F);
         GlStateManager.rotate(200f, 0.0F, 0.0F, 0.0F);
         GL11.glTranslatef(0, 0.90f, 0.080f);

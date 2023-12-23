@@ -1,0 +1,129 @@
+
+/*
+
+Attention, propriété de WesterLife, toute utilisation, modification ou reproduction est interdite sans autorisation claire et explicite de la pars de l'administation de WesterLife est formellement interdite.
+Tout manquement à cette règle est passible de poursuite judiciaire.
+
+©️ WesterLife 2023 - Gabidut76, Yan36
+
+*/
+
+
+.remove {
+    width: 20%;
+    height: 14%;
+    background-image: url("westerlife:textures/gui/atm/home/remove.png");
+    left: 15%;
+    top: 20%;
+}
+
+.add {
+    width: 20%;
+    height: 14%;
+    background-image: url("westerlife:textures/gui/atm/home/add.png");
+    left: 40%;
+    top: 20%;
+}
+
+.transfer {
+    width: 20%;
+    height: 14%;
+    background-image: url("westerlife:textures/gui/atm/home/transfer.png");
+    left: 65%;
+    top: 20%;
+}
+
+.account {
+    width: 20%;
+    height: 14%;
+    background-image: url("westerlife:textures/gui/atm/home/account.png");
+    left: 15%;
+    top: 40%;
+}
+
+.password {
+    width: 20%;
+    height: 14%;
+    background-image: url("westerlife:textures/gui/atm/home/password.png");
+    left: 40%;
+    top: 40%;
+}
+
+.history {
+    width: 20%;
+    height: 14%;
+    background-image: url("westerlife:textures/gui/atm/home/history.png");
+    left: 65%;
+    top: 40%;
+}
+
+.accountnb {
+    width: 20%;
+    height: 14%;
+    background-image: url("westerlife:textures/gui/atm/home/frame.png");
+    left: 15%;
+    top: 60%;
+}
+
+.money {
+    width: 20%;
+    height: 14%;
+    background-image: url("westerlife:textures/gui/atm/home/frame.png");
+    left: 40%;
+    top: 60%;
+}
+
+.eject {
+    width: 20%;
+    height: 14%;
+    background-image: url("westerlife:textures/gui/atm/home/eject.png");
+    left: 65%;
+    top: 60%;
+}
+
+.accountnb_text {
+    color: #FFFFFF;
+    font-size: 1px;
+    font-family: "westerlife:montserrat_small";
+    background-color: transparent;
+    width: 100%;
+    text-align: left;
+    text-align-vertical: top;
+    height: 100%;
+}
+.accountnb_number {
+    color: #FFFFFF;
+    font-size: 1px;
+    font-family: "westerlife:montserrat_small";
+    background-color: transparent;
+    width: 100%;
+    text-align: left;
+    text-align-vertical: top;
+    height: 100%;
+    top: 40%;
+    left: 5%;
+}
+
+.money_text {
+    color: #FFFFFF;
+    font-size: 1px;
+    font-family: "westerlife:montserrat_small";
+    background-color: transparent;
+    width: 100%;
+    text-align: left;
+    text-align-vertical: top;
+    height: 100%;
+}
+
+.money_number {
+    color: #FFFFFF;
+    font-size: 1px;
+    font-family: "westerlife:montserrat_small";
+    background-color: transparent;
+    width: 100%;
+    text-align: left;
+    text-align-vertical: top;
+    height: 100%;
+    top: 40%;
+    left: 5%;
+}

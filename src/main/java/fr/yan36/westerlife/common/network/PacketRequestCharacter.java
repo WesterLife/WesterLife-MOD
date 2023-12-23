@@ -1,17 +1,20 @@
 package fr.yan36.westerlife.common.network;
 
 import fr.yan36.westerlife.Main;
+import fr.yan36.westerlife.common.capabilities.playerstat.PlayerStatCapability;
 import fr.yan36.westerlife.common.items.ItemCard;
-import fr.yan36.westerlife.server.Serveur;
 import fr.yan36.westerlife.server.bdd.DBUtils;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
+import java.util.Collections;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -45,9 +48,23 @@ public class PacketRequestCharacter implements IMessage{
             if(e.getHeldItem(EnumHand.MAIN_HAND).getItem() instanceof ItemCard) {
                 if(e.getHeldItem(EnumHand.MAIN_HAND).getTagCompound() != null) {
                     if(e.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().hasKey("link")) {
-                        System.out.println("send");
-                        Main.network.sendTo(new PacketSendCharacter(Objects.requireNonNull(DBUtils.getCharacter(UUID.fromString(e.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().getString("link"))))), ctx.getServerHandler().player);
-                        Main.network.sendTo(new PacketSendCharacter(Objects.requireNonNull(DBUtils.getPermis(UUID.fromString(e.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().getString("link"))))), ctx.getServerHandler().player);
+
+                        EntityPlayer player = ctx.getServerHandler().player;
+
+                        MinecraftServer server = player.getServer();
+
+                        if(server == null) {
+                            System.out.println("Server is null");
+                            player.sendMessage(new TextComponentString("§cTf server is null ?"));
+                        }
+
+                        assert server != null;
+                        if(server.getPlayerList().getPlayerByUUID(UUID.fromString(player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().getString("link"))).hasCapability(PlayerStatCapability.CAPABILITY, null)) {
+                            PlayerStatCapability.sync(server.getPlayerList().getPlayerByUUID(UUID.fromString(player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().getString("link"))), Collections.singletonList(player));
+                        } else {
+                            System.out.println("No capability found for " + server.getPlayerList().getPlayerByUUID(UUID.fromString(player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().getString("link"))));
+                            player.sendMessage(new TextComponentString("§cErreur: Contacter le staff (" + player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().getString("link") + " doesn't exists)."));
+                        }
                     }
                 }
             }

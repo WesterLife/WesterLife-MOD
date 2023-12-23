@@ -2,20 +2,28 @@ package fr.yan36.westerlife.client.renderer;
 
 import fr.dynamx.client.renders.model.ModelObjArmor;
 import fr.dynamx.common.contentpack.DynamXObjectLoaders;
+import fr.dynamx.common.items.DynamXItemArmor;
 import fr.nathanael2611.simpledatabasemanager.client.ClientDatabases;
 import fr.nathanael2611.simpledatabasemanager.core.DatabaseReadOnly;
 import fr.yan36.westerlife.common.Util;
+import fr.yan36.westerlife.common.capabilities.playerinventory.ExtraItemCapability;
+import fr.yan36.westerlife.common.capabilities.playerinventory.ExtraItemContainer;
 import fr.yan36.westerlife.common.init.DynamXInit;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.ItemStack;
+import scala.Int;
 
+import java.util.HashMap;
 import java.util.Objects;
 
 import static org.lwjgl.opengl.GL11.*;
 
 public class LayerArmorSuperposition implements LayerRenderer<EntityPlayer> {
     private final RenderPlayer renderer;
+
     public LayerArmorSuperposition(RenderPlayer renderer) {
         System.out.println("Called here");
         this.renderer = renderer;
@@ -23,30 +31,45 @@ public class LayerArmorSuperposition implements LayerRenderer<EntityPlayer> {
 
     @Override
     public void doRenderLayer(EntityPlayer entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
-        DatabaseReadOnly db = ClientDatabases.getDatabase("westerlife_armorsuperposition");
-        if(db.getString(entitylivingbaseIn.getUniqueID().toString()) == null) return;
-        for (String s : db.getString(entitylivingbaseIn.getUniqueID().toString()).split(",")) {
-            if(s == null || s.equals("")) continue;
-            else {
-                if(DynamXInit.fastRegistryAccess.get(s.split("!")[0]) == null) {
-                    System.out.println("Armor " + s + " is currently null (unable to find it in the fast registry access)");
-                    continue;
+        if (entitylivingbaseIn.hasCapability(ExtraItemCapability.CAPABILITY, null)) {
+            ExtraItemContainer container = (ExtraItemContainer) entitylivingbaseIn.getCapability(ExtraItemCapability.CAPABILITY, null);
+
+            HashMap<Integer, EntityEquipmentSlot> slots = new HashMap<>(
+                    new HashMap<Integer, EntityEquipmentSlot>() {{
+                        put(0, EntityEquipmentSlot.HEAD);
+                        put(1, EntityEquipmentSlot.CHEST);
+                        put(2, EntityEquipmentSlot.LEGS);
+                        put(3, EntityEquipmentSlot.FEET);
+
+                        put(4, EntityEquipmentSlot.CHEST);
+                        put(5, EntityEquipmentSlot.LEGS);
+
+                        put(6, EntityEquipmentSlot.CHEST);
+                        put(7, EntityEquipmentSlot.LEGS);
+
+                        put(8, EntityEquipmentSlot.CHEST);
+                    }}
+            );
+
+            slots.forEach((slot, slotType) -> {
+                assert container != null;
+                ItemStack stack = container.getStackInSlot(slot);
+
+                if (stack.getItem() instanceof DynamXItemArmor<?>) {
+                    DynamXItemArmor<?> armor = (DynamXItemArmor<?>) stack.getItem();
+                    glPushMatrix();
+                    glMatrixMode(GL_MODELVIEW);
+
+                    ModelObjArmor r = Objects.requireNonNull(DynamXObjectLoaders.ARMORS.findInfo(armor.getInfo().getFullName())).getObjArmor();
+                    r.setModelAttributes(renderer.getMainModel());
+                    byte state = armor.getInfo().getObjArmor().getActiveTextureId();
+                    r.setActivePart(slotType, state);
+                    r.render(entitylivingbaseIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
+                    glPopMatrix();
                 }
-                glPushMatrix();
-                glMatrixMode(GL_MODELVIEW);
-                String[] split = s.split("!");
-                ModelObjArmor r = Objects.requireNonNull(DynamXObjectLoaders.ARMORS.findInfo(split[0])).getObjArmor();
-//                System.out.println("Rendering " + s + " on " + entitylivingbaseIn.getUniqueID().toString());
-                r.setModelAttributes(renderer.getMainModel());
-                byte state = Byte.parseByte(split[1]);
-                System.out.println(state);
-                r.setActivePart(Util.equipementFromSlotID(Integer.parseInt(split[2])), state);
-                r.render(entitylivingbaseIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
-                glPopMatrix();
-            }
+            });
 
         }
-
 
 
     }

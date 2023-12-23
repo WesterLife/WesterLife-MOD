@@ -1,13 +1,10 @@
 package fr.yan36.westerlife.common.capabilities.playergarage;
 
 import fr.yan36.westerlife.Main;
-import fr.yan36.westerlife.common.capabilities.packets.PacketSyncAnimation;
 import fr.yan36.westerlife.common.capabilities.packets.PacketSyncGarage;
-import fr.yan36.westerlife.common.utils.Animation;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTBase;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;

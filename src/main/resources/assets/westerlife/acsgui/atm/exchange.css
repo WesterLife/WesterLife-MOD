@@ -1,0 +1,108 @@
+
+/*
+
+Attention, propriété de WesterLife, toute utilisation, modification ou reproduction est interdite sans autorisation claire et explicite de la pars de l'administation de WesterLife est formellement interdite.
+Tout manquement à cette règle est passible de poursuite judiciaire.
+
+©️ WesterLife 2023 - Gabidut76, Yan36
+
+*/
+
+
+.title_text {
+    color: #FFFFFF;
+    font-size: 1px;
+    font-family: "westerlife:montserrat";
+    background-color: transparent;
+    width: 140%;
+    text-align: left;
+    text-align-vertical: top;
+    height: 20%;
+    background-color: transparent;
+    left: 10%;
+    top: 10%;
+}
+
+.button5 {
+    background-image: url("westerlife:textures/gui/atm/exchange/frame.png");
+    width: 55px;
+    height: 45px;
+    left: 12%;
+    top: 25%;
+    z-index: 999;
+}
+
+.button10 {
+    background-image: url("westerlife:textures/gui/atm/exchange/frame.png");
+    width: 55px;
+    height: 45px;
+    left: 30%;
+    top: 25%;
+    z-index: 999;
+}
+
+.button20 {
+    background-image: url("westerlife:textures/gui/atm/exchange/frame.png");
+    width: 55px;
+    height: 45px;
+    left: 48%;
+    top: 25%;
+    z-index: 999;
+}
+
+.button50 {
+    background-image: url("westerlife:textures/gui/atm/exchange/frame.png");
+    width: 55px;
+    height: 45px;
+    left: 67%;
+    top: 25%;
+    z-index: 999;
+}
+
+.button100 {
+    background-image: url("westerlife:textures/gui/atm/exchange/frame.png");
+    width: 55px;
+    height: 45px;
+    left: 12%;
+    top: 50%;
+    z-index: 999;
+}
+
+.button200 {
+    background-image: url("westerlife:textures/gui/atm/exchange/frame.png");
+    width: 55px;
+    height: 45px;
+    left: 30%;
+    top: 50%;
+    z-index: 999;
+}
+
+.button500 {
+    background-image: url("westerlife:textures/gui/atm/exchange/frame.png");
+    width: 55px;
+    height: 45px;
+    left: 48%;
+    top: 50%;
+    z-index: 999;
+}
+
+.cancel {
+    background-image: url("westerlife:textures/gui/atm/exchange/cancel.png");
+    width: 55px;
+    height: 45px;
+    left: 67%;
+    top: 50%;
+}
+
+.button_text {
+    color: #EE7224;
+    font-size: 1px;
+    font-family: "westerlife:montserrat_fat";
+    background-color: transparent;
+    width: 100%;
+    text-align: left;
+    text-align-vertical: top;
+    height: 100%;
+    top: 40%;
+    left: 7%;
+}

@@ -1,0 +1,102 @@
+/*
+
+Attention, propriété de WesterLife, toute utilisation, modification ou reproduction est interdite sans autorisation claire et explicite de la pars de l'administation de WesterLife est formellement interdite.
+Tout manquement à cette règle est passible de poursuite judiciaire.
+
+©️ WesterLife 2023 - Gabidut76, Yan36
+
+*/
+
+
+.title_text {
+    color: #FFFFFF;
+    font-size: 1px;
+    font-family: "westerlife:montserrat";
+    background-color: transparent;
+    width: 140%;
+    text-align: left;
+    text-align-vertical: top;
+    height: 20%;
+    background-color: transparent;
+    left: 10%;
+    top: 10%;
+}
+
+.target {
+    background-image: url("westerlife:textures/gui/atm/transfer/target.png");
+    width: 75%;
+    height: 25%;
+    left: 13%;
+    top: 15%;
+    z-index: 999;
+}
+
+.amount {
+    background-image: url("westerlife:textures/gui/atm/transfer/amount.png");
+    width: 35%;
+    height: 25%;
+    left: 13%;
+    top: 45%;
+    z-index: 999;
+}
+
+.ok {
+    background-image: url("westerlife:textures/gui/atm/transfer/ok.png");
+    width: 16%;
+    height: 25%;
+    left: 52%;
+    top: 45%;
+}
+
+.cancel {
+    background-image: url("westerlife:textures/gui/atm/transfer/cancel.png");
+    width: 16%;
+    height: 25%;
+    left: 71%;
+    top: 45%;
+}
+
+.target_input {
+    color: #373C49;
+    background-color: #F6F6F6;
+    border: none;
+    border-radius: 5px;
+    left: 2%;
+    top: 60%;
+    height: 35%;
+    width: 95%;
+}
+
+.amount_input {
+    color: #373C49;
+    background-color: #F6F6F6;
+    border: none;
+    border-radius: 5px;
+    left: 2%;
+    top: 60%;
+    height: 35%;
+    width: 95%;
+}
+
+.confirm_text {
+    color: #FFFFFF;
+    font-size: 1px;
+    font-family: "westerlife:montserrat";
+    background-color: transparent;
+    width: 100%;
+    text-align: left;
+    text-align-vertical: top;
+    height: 18%;
+    background-color: transparent;
+    left: 15%;
+    top: 20%;
+}
+
+.close {
+    background-image: url("westerlife:textures/gui/atm/transfer/close.png");
+    width: 70%;
+    height: 20%;
+    left: 15%;
+    top: 45%;
+}
+

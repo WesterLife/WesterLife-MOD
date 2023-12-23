@@ -1,10 +1,13 @@
 package fr.yan36.westerlife.common.blocks.tileentity;
 
+import fr.aym.acslib.utils.packetserializer.ISerializablePacket;
 import fr.dynamx.common.contentpack.type.objects.BlockObject;
 import fr.yan36.westerlife.common.init.ItemInit;
 import net.minecraft.item.Item;
+import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
+import net.minecraftforge.common.util.INBTSerializable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,7 +16,7 @@ import java.util.stream.Collectors;
 
 public class TileMacdo extends TileEntitySyncClient implements ITickable {
 
-    public enum burger {
+    public enum burger implements INBTSerializable<NBTBase> {
         BREAD(1, "Pain de base", ItemInit.burger_bread, "bread"),
         STEAK(2, "Steak", ItemInit.cooked_steak, "steak"),
         SALAD(4, "Salade", ItemInit.salad, "salad"),
@@ -58,6 +61,22 @@ public class TileMacdo extends TileEntitySyncClient implements ITickable {
         @Override
         public String toString() {
             return this.name();
+        }
+
+        @Override
+        public NBTBase serializeNBT() {
+            NBTTagCompound nbt = new NBTTagCompound();
+            nbt.setString("name", this.name());
+
+            return nbt;
+
+        }
+
+        @Override
+        public void deserializeNBT(NBTBase nbt) {
+            NBTTagCompound nbtTagCompound = (NBTTagCompound) nbt;
+            final burger burger= TileMacdo.burger.valueOf(nbtTagCompound.getString("name"));
+
         }
 
     }

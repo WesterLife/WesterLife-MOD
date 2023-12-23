@@ -1,5 +1,6 @@
 package fr.yan36.westerlife.common.items;
 
+import fr.aym.acslib.utils.packetserializer.ISerializablePacket;
 import fr.dynamx.common.contentpack.type.objects.AbstractItemObject;
 import fr.dynamx.common.items.DynamXItem;
 import fr.yan36.westerlife.Main;
@@ -15,6 +16,8 @@ import javax.annotation.Nullable;
 
 public class ItemDrink extends DynamXItem {
     int amount;
+
+
     public ItemDrink(String name, int amount, float saturation, ResourceLocation model) {
         super(Main.MODID, name, model);
         this.amount = amount;
@@ -71,6 +74,5 @@ public class ItemDrink extends DynamXItem {
     public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         return EnumActionResult.SUCCESS;
     }
-
 
 }

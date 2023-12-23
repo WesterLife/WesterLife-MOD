@@ -9,7 +9,6 @@ import fr.aym.acsguis.component.panel.GuiScrollPane;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.aym.acsguis.component.textarea.GuiTextField;
 import fr.yan36.westerlife.Main;
-import fr.yan36.westerlife.common.network.PacketSyncClothes;
 import fr.yan36.westerlife.common.objects.LightSequence;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;

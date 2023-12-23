@@ -1,21 +1,29 @@
 package fr.yan36.westerlife.common.network;
 
 import fr.aym.acsguis.api.ACsGuiApi;
-import fr.aym.acsguis.component.panel.GuiFrame;
-import fr.yan36.westerlife.client.Client;
 import fr.yan36.westerlife.client.gui.acs.*;
+import fr.yan36.westerlife.client.gui.acs.atm.CSSGuiATMHome;
+import fr.yan36.westerlife.client.gui.acs.atm.CSSGuiATMLogin;
+import fr.yan36.westerlife.client.gui.acs.atm.CSSGuiATMTransfer;
+import fr.yan36.westerlife.client.gui.other.GuiCreativeInventoryCustom;
 import fr.yan36.westerlife.common.Util;
 import fr.yan36.westerlife.common.objects.LightSequence;
+import fr.yan36.westerlife.common.objects.character.Character;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.inventory.GuiContainerCreative;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.lwjgl.BufferUtils;
+import org.lwjgl.LWJGLException;
+import org.lwjgl.input.Cursor;
+import org.lwjgl.input.Mouse;
 
-import java.util.Objects;
+import java.util.Arrays;
 import java.util.concurrent.Callable;
 
 public class PacketOpenAcsGui implements IMessage{
@@ -52,6 +60,9 @@ public class PacketOpenAcsGui implements IMessage{
         @Override
         @SideOnly(Side.CLIENT)
         public IMessage onMessage(PacketOpenAcsGui m, MessageContext ctx) {
+            if(m.screen == 0) {
+                Minecraft.getMinecraft().displayGuiScreen(null);
+            }
             if(m.screen == 1) {
                 ACsGuiApi.asyncLoadThenShowGui("lights", () -> new CSSGuiLights(LightSequence.fromString(m.args), m.args2));
             }
@@ -72,6 +83,41 @@ public class PacketOpenAcsGui implements IMessage{
             }
             if(m.screen == 7) {
                 ACsGuiApi.asyncLoadThenShowGui("macdo",() -> new CSSGuiMacdo(m.args, m.args2));
+            }
+            if(m.screen == 8) {
+                ACsGuiApi.asyncLoadThenShowGui("debug",() -> new GuiDebugShowValues(Arrays.asList(m.args.split(";"))));
+            }
+            if(m.screen == 9) {
+                ACsGuiApi.asyncLoadThenShowGui("admin", CSSGuiStaff::new);
+            }
+            if(m.screen == 10) {
+                ACsGuiApi.asyncLoadThenShowGui("atm",() -> new CSSGuiATMLogin(m.args,m.args2));
+            }
+            if(m.screen == 11) {
+                if(m.args2.split("\\$")[1].equals("corp")) {
+                    ACsGuiApi.asyncLoadThenShowGui("atm_home",() -> new CSSGuiATMHome(m.args,m.args2.split("\\$")[0], null));
+                    return null;
+                }
+                ACsGuiApi.asyncLoadThenShowGui("atm_home",() -> new CSSGuiATMHome(m.args,m.args2.split("\\$")[0], Character.fromString(m.args2.split("\\$")[1])));
+            }
+            if(m.screen == 12) {
+                if(m.args2.split("\\$")[1].equals("corp")) {
+                    ACsGuiApi.asyncLoadThenShowGui("transacok",() -> new CSSGuiATMTransfer(m.args,m.args2.split("\\$")[0], null, true));
+                    return null;
+                }
+                ACsGuiApi.asyncLoadThenShowGui("transacoktransacok",() -> new CSSGuiATMTransfer(m.args,m.args2.split("\\$")[0], Character.fromString(m.args2.split("\\$")[1]), true));
+            }
+            if(m.screen == 13) {
+
+                Mouse.destroy();
+
+                try {
+                    Mouse.create();
+                } catch (LWJGLException e) {
+                    throw new RuntimeException(e);
+                }
+                Minecraft.getMinecraft().displayGuiScreen(new GuiCreativeInventoryCustom(Minecraft.getMinecraft().player));
+
             }
             return null;
         }

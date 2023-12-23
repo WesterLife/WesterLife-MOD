@@ -53,7 +53,7 @@ public class TileRadarFixe extends TileEntitySyncClient implements ITickable {
         // float[] with 9 values: minX, minY, minZ, maxX, maxY, maxZ, centerX, centerY, centerZ
 //        float[] aabb2 = new float[] { (float) aabb.minX, (float) aabb.minY, (float) aabb.minZ, (float) aabb.maxX, (float) aabb.maxY, (float) aabb.maxZ, (float) aabb.getCenter().x, (float) aabb.getCenter().y, (float) aabb.getCenter().z };
 
-        // grow in direction of getBlockObjectInfo().getRotation()
+        // grow in direction of getPackInfo().getRotation()
 
 
         switch ((int) (getRotation() * 22.5F)) {

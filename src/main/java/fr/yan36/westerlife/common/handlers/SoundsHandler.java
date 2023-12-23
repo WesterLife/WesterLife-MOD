@@ -14,6 +14,7 @@ public class SoundsHandler {
     public static SoundEvent ATMSOUNDBIP;
     public static SoundEvent IRM_RUNNING;
     public static SoundEvent IRM_ALARM;
+    public static SoundEvent CARALARM;
 
     public static void registerSounds() {
         BIP = registerSound("bip");
@@ -22,6 +23,7 @@ public class SoundsHandler {
         ATMSOUNDBIP = registerSound("atmsoundbip");
         IRM_RUNNING = registerSound("irm");
         IRM_ALARM = registerSound("alarmbip");
+        CARALARM = registerSound("caralarm");
     }
 
     private static SoundEvent registerSound(String name) {

@@ -14,15 +14,15 @@ public class RenderIRM extends TESRDynamXBlock<TileIrm> {
 
     @Override
     public void render(TileIrm te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
-        if(te.getBlockObjectInfo() != null) {
+        if(te.getPackInfo() != null) {
 
 
             GlStateManager.pushMatrix();
 
-            GlStateManager.translate(x + 0.5D + (te.getBlockObjectInfo().getTranslation()).x, y + 1.7D + (te.getBlockObjectInfo().getTranslation()).y, z + 0.5D + (te.getBlockObjectInfo().getTranslation()).z);
-            GlStateManager.scale((te.getBlockObjectInfo().getScaleModifier()).x + 0.2f, (te.getBlockObjectInfo().getScaleModifier()).y + 0.2f, (te.getBlockObjectInfo().getScaleModifier()).z + 0.2f);
+            GlStateManager.translate(x + 0.5D + (te.getPackInfo().getTranslation()).x, y + 1.7D + (te.getPackInfo().getTranslation()).y, z + 0.5D + (te.getPackInfo().getTranslation()).z);
+            GlStateManager.scale((te.getPackInfo().getScaleModifier()).x + 0.2f, (te.getPackInfo().getScaleModifier()).y + 0.2f, (te.getPackInfo().getScaleModifier()).z + 0.2f);
             GlStateManager.rotate(te.getRotation() * 22.5F, 0.0F, -1.0F, 0.0F);
-            DynamXContext.getObjModelRegistry().getModel(te.getBlockObjectInfo().getModel()).renderGroups("base", (byte) te.getBlockMetadata());
+            DynamXContext.getDxModelRegistry().getModel(te.getPackInfo().getModel()).renderGroups("base", (byte) te.getBlockMetadata(), false);
             GL11.glPushMatrix();
             GL11.glTranslatef(0.909f, 0.45F, 1.19f);
             GL11.glScalef(0.003f, 0.003f, 0.003f);
@@ -38,7 +38,7 @@ public class RenderIRM extends TESRDynamXBlock<TileIrm> {
             GL11.glPopMatrix();
             GL11.glTranslatef(-(te.getStep() / 1000f), 0F, 0f);
 
-            DynamXContext.getObjModelRegistry().getModel(te.getBlockObjectInfo().getModel()).renderGroups("bed", (byte) te.getBlockMetadata());
+            DynamXContext.getDxModelRegistry().getModel(te.getPackInfo().getModel()).renderGroups("bed", (byte) te.getBlockMetadata(), false);
             GL11.glColor3f(1, 1, 1);
             GlStateManager.popMatrix();
 

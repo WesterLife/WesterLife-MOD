@@ -31,7 +31,7 @@ public class TEBisignRender extends TESRDynamXBlock<TEBisign> {
             GL11.glRotatef(180, 0F, 0F, 1F);
             GL11.glRotatef( te.getRotation() * 22.5F, 1.0F, 0.0F, 0.0F);
             GL11.glPushMatrix();
-            DynamXContext.getObjModelRegistry().getModel(te.getBlockObjectInfo().getModel()).renderGroups("greenpane", (byte) te.getBlockMetadata());
+            DynamXContext.getDxModelRegistry().getModel(te.getPackInfo().getModel()).renderGroups("greenpane", (byte) te.getBlockMetadata(), false);
             GL11.glPopMatrix();
             GL11.glPopMatrix();
             GlStateManager.disableRescaleNormal();
@@ -45,7 +45,7 @@ public class TEBisignRender extends TESRDynamXBlock<TEBisign> {
             GL11.glRotatef(180, 0F, 0F, 1F);
             GL11.glRotatef( te.getRotation() * 22.5F, 1.0F, 0.0F, 0.0F);
             GL11.glPushMatrix();
-            DynamXContext.getObjModelRegistry().getModel(te.getBlockObjectInfo().getModel()).renderGroups("redpane", (byte) te.getBlockMetadata());
+            DynamXContext.getDxModelRegistry().getModel(te.getPackInfo().getModel()).renderGroups("redpane", (byte) te.getBlockMetadata(), false);
             GL11.glPopMatrix();
             GL11.glPopMatrix();
             GlStateManager.disableRescaleNormal();
@@ -62,7 +62,7 @@ public class TEBisignRender extends TESRDynamXBlock<TEBisign> {
         GL11.glRotatef(180, 0F, 0F, 1F);
         GL11.glRotatef( te.getRotation() * 22.5F, 0.0F, 0.0F, 1.0F);
         GL11.glPushMatrix();
-        DynamXContext.getObjModelRegistry().getModel(te.getBlockObjectInfo().getModel()).renderGroups("base", (byte) te.getBlockMetadata());
+        DynamXContext.getDxModelRegistry().getModel(te.getPackInfo().getModel()).renderGroups("base", (byte) te.getBlockMetadata(), false);
         GL11.glPopMatrix();
         GL11.glPopMatrix();
         GlStateManager.disableRescaleNormal();

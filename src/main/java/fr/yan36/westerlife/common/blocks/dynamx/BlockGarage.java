@@ -7,11 +7,15 @@ import fr.yan36.westerlife.common.blocks.tileentity.TileGarage;
 import fr.yan36.westerlife.common.blocks.tileentity.TilePark;
 import fr.yan36.westerlife.common.init.DynamXInit;
 import fr.yan36.westerlife.common.network.PacketOpenAcsGui;
+import fr.yan36.westerlife.common.network.PacketOpenGuiWithObject;
+import fr.yan36.westerlife.common.objects.GarageCar;
+import fr.yan36.westerlife.server.api.NemesisLink;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTException;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -23,6 +27,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 
 import javax.annotation.Nullable;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BlockGarage extends DynamXBlock {
     public BlockGarage(Material material, String modid, String blockName, ResourceLocation model) {
@@ -56,8 +63,17 @@ public class BlockGarage extends DynamXBlock {
                 TileGarage te = (TileGarage) worldIn.getTileEntity(pos);
                 assert te != null;
                 TilePark te2 = (TilePark) worldIn.getTileEntity(te.getLinkedTo());
-                System.out.println(te.getLinkedTo());
-                Main.network.sendTo(new PacketOpenAcsGui(6, Util.blockPosToString(pos), Util.blockPosToString(te2.getPos())), (EntityPlayerMP) playerIn);
+
+
+                try {
+                    String uid = NemesisLink.NEMESIS_API.getUserIdFromUUID(String.valueOf(playerIn.getUniqueID()));
+                    List<GarageCar> cars = NemesisLink.NEMESIS_API.getGarageCars(uid);
+
+                    Main.network.sendTo(new PacketOpenGuiWithObject(1, cars, Util.blockPosToString(te2.getPos()) ), (EntityPlayerMP) playerIn);
+                } catch (IOException | NBTException e) {
+                    throw new RuntimeException(e);
+                }
+
             }
         }
         return true;

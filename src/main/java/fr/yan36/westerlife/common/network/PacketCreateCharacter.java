@@ -74,7 +74,7 @@ public class PacketCreateCharacter implements IMessage{
                 assert e != null;
                 if (!DBUtils.isRowExistInDatabase("players", "uuid", e.getUniqueID().toString())) {
                     System.out.println("Received packet from " + e.getUniqueID().toString() + " to create a character. (s=" + m.sex + ")");
-                    DBUtils.saveToDB(new Character(e.getUniqueID(), m.firstnames, m.familyname, m.nationality, Character.Gender.getBySex(m.sex), m.birthdate, m.birthplace));
+//                    DBUtils.saveToDB(new Character(e.getUniqueID(), m.firstnames, m.familyname, m.nationality, Character.Gender.getBySex(m.sex), m.birthdate, m.birthplace));
                     e.sendMessage(new TextComponentString("§cWesterLife §8» §aVotre personnage a bien été créé ! Bon jeu !"));
                     ItemStack item = new ItemStack(ItemInit.CNI);
                     item.setTagCompound(new NBTTagCompound());

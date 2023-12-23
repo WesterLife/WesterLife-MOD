@@ -6,54 +6,39 @@ import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.yan36.westerlife.Main;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.network.NetHandlerLoginClient;
+import net.minecraft.network.EnumConnectionState;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.handshake.client.C00Handshake;
+import net.minecraft.network.login.client.CPacketLoginStart;
 import net.minecraft.util.ResourceLocation;
 
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class GuiLoadingTerrain extends GuiFrame {
 
-    public GuiLoadingTerrain() {
-        super(new GuiScaler.Identity());
 
+
+    public GuiLoadingTerrain(Boolean isServer) {
+        super(new GuiScaler.Identity());
         GuiPanel background = new GuiPanel();
         background.setCssClass("background");
+//        background.getStyle().setBackgroundColor(0x000000);
 
-        GuiLabel title = new GuiLabel("WesterLife");
-        title.setCssClass("title");
+        GuiLabel label = new GuiLabel("Chargement...");
+        label.setCssClass("action");
+//        label.getStyle().setBackgroundColor(0x000000);
 
-        AtomicInteger p = new AtomicInteger();
-        GuiLabel action = new GuiLabel("Connection au serveur");
-        action.setCssClass("action");
-        action.addTickListener(() -> {
-           if(Minecraft.getMinecraft().world.getWorldTime() % 10 == 0) {
-                action.setText(action.getText() + ".");
-                if(p.get() >= 3) {
-                    action.setText("Connection au serveur");
-                    p.set(0);
-                } else {
-                    p.getAndIncrement();
-                }
-           }
-        });
-
-
-        GuiLabel mention = new GuiLabel("WesterLife n'est pas affilié à Mojang AB.");
-        mention.setCssClass("mention");
-
-
-        background.add(title);
-        background.add(action);
-        background.add(mention);
+        background.add(label);
 
         add(background);
     }
 
-    @Override
-    public boolean doesPauseGame() {
-        return false;
-    }
 
     @Override
     public List<ResourceLocation> getCssStyles() {

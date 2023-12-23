@@ -344,14 +344,14 @@ public class DBUtils {
             preparedStatement.execute();
             ResultSet rs = preparedStatement.getResultSet();
             if (rs.next()){
-                Permis character = new Permis(UUID.fromString(rs.getString("uuid")), Permis.deserializePermisList(rs.getString("type")), rs.getString("points"), rs.getString("date"));
+//                Permis character = new Permis(UUID.fromString(rs.getString("uuid")), Permis.deserializePermisList(rs.getString("type")), rs.getString("points"), rs.getString("date"));
                 connection.close();
-                return character;
+                return null;
             } else {
 
-                Permis character = new Permis(uuid, Collections.singletonList(Permis.PermisType.PERMIS_E), "error", "error");
+//                Permis character = new Permis(uuid, Collections.singletonList(Permis.PermisType.PERMIS_E), "error", "error");
                 connection.close();
-                return character;
+                return null;
 
             }
 

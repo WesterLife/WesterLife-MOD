@@ -3,20 +3,29 @@ package fr.yan36.westerlife.common.utils.commands.modules;
 //import fr.yan36.westerlife.common.blocks.tileentity.TEDigicode;
 
 import com.jme3.math.Vector3f;
+import fr.dynamx.common.DynamXContext;
+import fr.dynamx.common.contentpack.DynamXObjectLoaders;
 import fr.nathanael2611.simpledatabasemanager.core.Databases;
 import fr.yan36.westerlife.Main;
+import fr.yan36.westerlife.common.Util;
 import fr.yan36.westerlife.common.blocks.dynamx.BlockPanneauRue;
 import fr.yan36.westerlife.common.blocks.tileentity.*;
+import fr.yan36.westerlife.common.entities.npc.NPCConcessEntity;
+import fr.yan36.westerlife.common.init.DynamXInit;
 import fr.yan36.westerlife.common.network.PacketOpenAcsGui;
 import fr.yan36.westerlife.common.objects.LightSequence;
+import fr.yan36.westerlife.common.objects.gameplay.MacdoCommand;
 import fr.yan36.westerlife.common.utils.commands.CommandModule;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -101,6 +110,61 @@ public class ModuleWorld extends CommandModule {
                     player.sendMessage(new TextComponentString("§a NBT IN HAND : " + player.getHeldItemMainhand().getTagCompound()));
                 }
 
+            } else if (Objects.equals(args[1], "setconcesspnj")) {
+
+                if (sender instanceof EntityPlayer) {
+                    EntityPlayer player = (EntityPlayer) sender;
+
+                    Entity target = Util.getEntityLookAt(player, 10);
+
+                    if(target instanceof NPCConcessEntity) {
+                        NPCConcessEntity npcConcessEntity = (NPCConcessEntity) target;
+                        npcConcessEntity.setConcessID(args[2]);
+                        sender.sendMessage(new TextComponentString("§aSet Concess ID to " + args[2]));
+                    } else {
+                        sender.sendMessage(new TextComponentString("§cNo NPC found"));
+                    }
+                }
+
+            } else if (Objects.equals(args[1], "entitynbt")) {
+
+                if (sender instanceof EntityPlayer) {
+                    EntityPlayer player = (EntityPlayer) sender;
+
+                    Entity target = Util.getEntityLookAt(player, 10);
+
+                    player.sendMessage(new TextComponentString("§a TARGET NBT : " + target + " " + target.serializeNBT()));
+                }
+
+            } else if (Objects.equals(args[1], "macdorecipe")) {
+
+                if (sender instanceof EntityPlayer) {
+                    EntityPlayer player = (EntityPlayer) sender;
+
+                    List<TileMacdo.burger> ingredients = MacdoCommand.RECIPES.get(Integer.parseInt(args[2])).ingredients;
+                    String burgerComposition = ingredients.stream().map(Enum::name).reduce((s, s2) -> s + ", " + s2).orElse("Empty");
+                    player.sendMessage(new TextComponentString("Your burger is composed of: " + burgerComposition + " : " + MacdoCommand.RECIPES.get(Integer.parseInt(args[2])).name)) ;
+
+                    ItemStack burger = new ItemStack(DynamXInit.burger);
+                    burger.setTagCompound(new net.minecraft.nbt.NBTTagCompound());
+                    burger.getTagCompound().setString("burger", burgerComposition);
+                    player.inventory.addItemStackToInventory(burger);
+                }
+
+            } else if (Objects.equals(args[1], "bnbt")) {
+
+                if (sender instanceof EntityPlayer) {
+                    EntityPlayer player = (EntityPlayer) sender;
+                    RayTraceResult rayTraceResult = player.world.rayTraceBlocks(player.getPositionEyes(1), player.getPositionEyes(1).add(player.getLookVec().scale(10)));
+                    assert rayTraceResult != null;
+                    System.out.println(rayTraceResult.getBlockPos());
+                    if (rayTraceResult != null) {
+                        NBTTagCompound nbtTagCompound = new NBTTagCompound();
+                        player.world.getTileEntity(rayTraceResult.getBlockPos()).writeToNBT(nbtTagCompound);
+                        player.sendMessage(new TextComponentString("§a TARGET NBT : " + nbtTagCompound));
+                    }
+                }
+
             } else if (Objects.equals(args[1], "tombe")) {
 
                 if (sender instanceof EntityPlayer) {
@@ -157,6 +221,31 @@ public class ModuleWorld extends CommandModule {
                             tilePorteNom.sync();
                             tilePorteNom.syncToClient();
                             sender.sendMessage(new TextComponentString("§aSet angle to '" + args[2] + "'°."));
+                        }
+                    }
+                } else {
+                    sender.sendMessage(new TextComponentString("§c/wlmod world spot <angle>"));
+                }
+
+
+            } else if (Objects.equals(args[1], "registry")) {
+                sender.sendMessage(new TextComponentString("§aRegistry : " + DynamXObjectLoaders.WHEELED_VEHICLES.getInfos()));
+            } else if (Objects.equals(args[1], "carpresentation")) {
+
+                if (sender instanceof EntityPlayer) {
+                    EntityPlayer player = (EntityPlayer) sender;
+                    RayTraceResult rayTraceResult = player.world.rayTraceBlocks(player.getPositionEyes(1), player.getPositionEyes(1).add(player.getLookVec().scale(10)));
+                    assert rayTraceResult != null;
+                    System.out.println(rayTraceResult.getBlockPos());
+                    if (rayTraceResult != null) {
+                        TileCarPresentation tilePorteNom = (TileCarPresentation) player.world.getTileEntity(rayTraceResult.getBlockPos());
+                        if (tilePorteNom != null) {
+                            System.out.println(DynamXObjectLoaders.WHEELED_VEHICLES.getInfos());
+                            tilePorteNom.setCar(args[2]);
+
+                            tilePorteNom.sync();
+                            tilePorteNom.syncToClient();
+                            sender.sendMessage(new TextComponentString("§aSet car to '" + args[2] + "'."));
                         }
                     }
                 } else {
@@ -367,6 +456,16 @@ public class ModuleWorld extends CommandModule {
 
             } else if (Objects.equals(args[1], "resetwater")) {
                 Databases.getPlayerData((EntityPlayer) sender).setFloat("watervalue", 100f);
+            } else if (Objects.equals(args[1], "setbank")) {
+                if (sender instanceof EntityPlayer) {
+                    EntityPlayer player = (EntityPlayer) sender;
+                    if (!player.getHeldItemMainhand().hasTagCompound()) {
+                        player.getHeldItemMainhand().setTagCompound(new NBTTagCompound());
+                        System.out.println("§c No NBT found, creating one");
+                    }
+                    player.getHeldItemMainhand().getTagCompound().setString("relatedBankAccount", args[2]);
+                    sender.sendMessage(new TextComponentString("§aBank set to " + args[2]));
+                }
             } else if (Objects.equals(args[1], "notif")) {
                 Databases.getPlayerData((EntityPlayer) sender).setString("notification", "Bonjour, ceci est un test de §lnotification !");
                 sender.sendMessage(new TextComponentString("§aNotification set !"));

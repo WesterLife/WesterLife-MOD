@@ -7,7 +7,7 @@ import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.dynamx.common.items.DynamXItemArmor;
 import fr.yan36.westerlife.Main;
-import fr.yan36.westerlife.common.network.PacketSyncClothes;
+import fr.yan36.westerlife.common.network.sync.PacketSyncClothes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;

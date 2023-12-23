@@ -23,8 +23,9 @@ public class TestEntity2Renderer extends RenderPhysicsEntity<TestEntity2> {
         MinecraftForge.EVENT_BUS.post(new PhysicsEntityEvent.InitRenderer<>(PropsEntity.class, this));
     }
 
-    public void renderMain(TestEntity2 entity, float partialsTicks) {
-        DynamXContext.getObjModelRegistry().getModel(new ResourceLocation(Main.MODID, "punch.obj")).renderGroups("base", (byte) 0);
+    @Override
+    public void renderEntity(TestEntity2 entity, double v, double v1, double v2, float v3, boolean b) {
+        DynamXContext.getDxModelRegistry().getModel(new ResourceLocation(Main.MODID, "punch.obj")).renderGroups("base", (byte) 0, false);
 
 
         if(entity.getModuleByType(TestEntityModule2.class) != null) {
@@ -38,7 +39,7 @@ public class TestEntity2Renderer extends RenderPhysicsEntity<TestEntity2> {
             // set pivot point to top of punching bag
 
             GlStateManager.rotate(q);
-            DynamXContext.getObjModelRegistry().getModel(new ResourceLocation(Main.MODID, "punch.obj")).renderGroups("part", (byte) 0);
+            DynamXContext.getDxModelRegistry().getModel(new ResourceLocation(Main.MODID, "punch.obj")).renderGroups("part", (byte) 0, false);
             glPopMatrix();
 
         }
@@ -46,9 +47,9 @@ public class TestEntity2Renderer extends RenderPhysicsEntity<TestEntity2> {
 
 
 
-        this.renderParts(entity, partialsTicks);
-    }
+        this.renderParts(entity, v3);
 
+    }
 
 
 

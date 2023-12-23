@@ -2,16 +2,12 @@ package fr.yan36.westerlife.common.blocks.dynamx;
 
 import fr.dynamx.common.blocks.DynamXBlock;
 import fr.yan36.westerlife.Main;
-import fr.yan36.westerlife.common.Util;
-import fr.yan36.westerlife.common.blocks.tileentity.TileColoredBlock;
 import fr.yan36.westerlife.common.blocks.tileentity.TileIrm;
-import fr.yan36.westerlife.common.network.PacketAnimationToAll;
-import fr.yan36.westerlife.common.network.PacketOpenAcsGui;
+import fr.yan36.westerlife.common.network.sync.PacketAnimationToAll;
 import fr.yan36.westerlife.common.utils.Animation;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;

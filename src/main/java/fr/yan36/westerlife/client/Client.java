@@ -1,37 +1,45 @@
 package fr.yan36.westerlife.client;
 
 import com.google.common.collect.Lists;
+import com.labymedia.ultralight.UltralightRenderer;
 import com.mrcrayfish.obfuscate.client.event.ModelPlayerEvent;
-import com.mrcrayfish.obfuscate.common.data.SyncedPlayerData;
 import fr.aym.acsguis.api.ACsGuiApi;
 import fr.dynamx.api.events.ArmorEvent;
 import fr.dynamx.api.events.DynamXItemEvent;
 import fr.dynamx.api.events.EventStage;
 import fr.dynamx.api.events.VehicleEntityEvent;
 import fr.dynamx.client.handlers.hud.CarController;
+import fr.dynamx.client.renders.model.renderer.DxModelRenderer;
 import fr.dynamx.client.renders.model.renderer.ObjModelRenderer;
 import fr.dynamx.common.DynamXContext;
 import fr.dynamx.common.items.DynamXItemArmor;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.client.gui.acs.*;
-import fr.yan36.westerlife.client.gui.mcef.BrowserScreen;
+import fr.yan36.westerlife.client.gui.acs.atm.CSSGuiATMLogin;
 import fr.yan36.westerlife.client.gui.other.EngineFailureIcon;
 import fr.yan36.westerlife.client.gui.other.GuiCustomInventory;
 import fr.yan36.westerlife.client.gui.other.GuiWorldSelectPatcher;
+import fr.yan36.westerlife.client.gui.ultralight.UltraLight;
+import fr.yan36.westerlife.client.renderer.ClientNotifications;
 import fr.yan36.westerlife.common.blocks.tileentity.TileMacdo;
+import fr.yan36.westerlife.common.capabilities.playerstat.PlayerStatCapability;
+import fr.yan36.westerlife.common.containers.inventory.ContainerInventory;
 import fr.yan36.westerlife.common.init.DynamXInit;
+import fr.yan36.westerlife.common.network.PacketReqOpenInv;
+import fr.yan36.westerlife.common.objects.Notification;
 import fr.yan36.westerlife.common.objects.character.Character;
 import fr.yan36.westerlife.common.objects.character.Permis;
 import fr.yan36.westerlife.common.utils.Animation;
 import fr.yan36.westerlife.common.utils.list.Warp;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
+import net.minecraft.client.gui.inventory.GuiContainerCreative;
 import net.minecraft.client.gui.inventory.GuiInventory;
+import net.minecraft.client.gui.toasts.SystemToast;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.multiplayer.GuiConnecting;
-import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.settings.KeyBinding;
@@ -90,6 +98,11 @@ public class Client {
 
     public static String openScreenMcef = "none";
     public static BlockPos openScreenMcefPos = null;
+
+    public static boolean isLogginIn = false;
+
+
+
 
     public static void setScreenMcef(String screenName) {
         openScreenMcef = screenName;
@@ -207,28 +220,32 @@ public class Client {
     public void GuieventHandler(GuiOpenEvent e) throws IOException, InterruptedException, NoSuchFieldException, IllegalAccessException {
 
         System.out.println("GUI: " + e.getGui());
+
+//        if(isLogginIn) {
+//            e.setGui(new fr.yan36.westerlife.client.gui.other.GuiConnecting(Minecraft.getMinecraft()));
+//            return;
+//        }
+
         if (e.getGui() instanceof GuiMainMenu) {
             e.setCanceled(true);
             if (Main.isOpti) {
                 Minecraft.getMinecraft().displayGuiScreen(new CSSGuiMainMenu().getGuiScreen());
             } else {
-                Main.browserScreen = new BrowserScreen("mod://westerlife/main_menu/main.html");
-                Minecraft.getMinecraft().displayGuiScreen(Main.browserScreen);
-//                Main.browserScreen.openMenu();
+//                Main.browserScreen = new BrowserScreen("mod://westerlife/main_menu/main.html");
+//                Minecraft.getMinecraft().displayGuiScreen(Main.browserScreen);
             }
         }
 
 
-        if (e.getGui() instanceof GuiConnecting) {
-            e.setGui(new GuiServerLogin(Minecraft.getMinecraft().currentScreen).getGuiScreen());
-            e.setCanceled(true);
+
+        if (e.getGui() == null && Minecraft.getMinecraft().player == null) {
+            System.out.println("CASE OK");
+        }
+        if (e.getGui() instanceof GuiDownloadTerrain || e.getGui() instanceof GuiScreenWorking || e.getGui() instanceof GuiConnecting) {
+
+            e.setGui(new GuiLoadingTerrain(false).getGuiScreen());
         }
 
-
-        if (e.getGui() instanceof GuiDownloadTerrain) {
-            e.setGui(new GuiLoadingTerrain().getGuiScreen());
-
-        }
 
         if (e.getGui() instanceof GuiWorldSelection) {
 
@@ -237,7 +254,12 @@ public class Client {
         }
 
         if(e.getGui() instanceof GuiInventory) {
-            e.setGui(new GuiCustomInventory(Minecraft.getMinecraft().player));
+            e.setCanceled(true);
+            if(Minecraft.getMinecraft().player.isCreative() && !(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT))) {
+                Minecraft.getMinecraft().displayGuiScreen(new GuiContainerCreative(Minecraft.getMinecraft().player));
+            } else {
+                Main.network.sendToServer(new PacketReqOpenInv());
+            }
         }
 
         if(e.getGui() instanceof GuiDisconnected) {
@@ -250,7 +272,7 @@ public class Client {
                 ITextComponent reason = (ITextComponent) o;
 
 
-                e.setGui(new GuiServerError(Minecraft.getMinecraft().currentScreen, reason.getFormattedText()).getGuiScreen());
+                e.setGui(new GuiServerError(Minecraft.getMinecraft().currentScreen, reason).getGuiScreen());
             } catch (NoSuchFieldException e1) {
                 Main.logger.warn("Error while trying to get the message field of GuiDisconnected");
                 e1.printStackTrace();
@@ -267,8 +289,8 @@ public class Client {
             } else {
                 e.setCanceled(true);
                 Thread.sleep(100);
-                Main.browserScreen = new BrowserScreen("mod://westerlife/menu_echap/echap.html");
-                Main.browserScreen.openMenu();
+//                Main.browserScreen = new BrowserScreen("mod://westerlife/menu_echap/echap.html");
+//                Main.browserScreen.openMenu();
 
             }
 
@@ -293,36 +315,36 @@ public class Client {
                 Minecraft.getMinecraft().displayGuiScreen(new CSSCreateCharacter().getGuiScreen());
                 needToCreateCharacter = 2;
             } else {
-                Main.browserScreen = new BrowserScreen("mod://westerlife/create_perso/perso1.html");
-                Minecraft.getMinecraft().displayGuiScreen(Main.browserScreen);
-                Main.browserScreen.openMenu();
-                needToCreateCharacter = 2;
+//                Main.browserScreen = new BrowserScreen("mod://westerlife/create_perso/perso1.html");
+//                Minecraft.getMinecraft().displayGuiScreen(Main.browserScreen);
+//                Main.browserScreen.openMenu();
+//                needToCreateCharacter = 2;
             }
         }
 
         switch (openScreenMcef) {
             case "computer":
-                Main.browserScreen = new BrowserScreen("mod://westerlife/computer/main.html");
-                Main.browserScreen.openMenu();
-                openScreenMcef = "none";
+//                Main.browserScreen = new BrowserScreen("mod://westerlife/computer/main.html");
+//                Main.browserScreen.openMenu();
+//                openScreenMcef = "none";
                 break;
             case "ingamemenu":
-                Main.browserScreen = new BrowserScreen("mod://westerlife/menu_echap/echap.html");
-                Main.browserScreen.openMenu();
-                openScreenMcef = "none";
+//                Main.browserScreen = new BrowserScreen("mod://westerlife/menu_echap/echap.html");
+//                Main.browserScreen.openMenu();
+//                openScreenMcef = "none";
                 break;
             case "animations":
                 if (!Main.isOpti) {
-                    Main.browserScreen = new BrowserScreen("mod://westerlife/animations/index.html");
-                    Main.browserScreen.openMenu();
+//                    Main.browserScreen = new BrowserScreen("mod://westerlife/animations/index.html");
+//                    Main.browserScreen.openMenu();
                 } else {
                     Minecraft.getMinecraft().displayGuiScreen(new CSSGuiAnimations().getGuiScreen());
                 }
                 openScreenMcef = "none";
                 break;
             case "digicode":
-                Main.browserScreen = new BrowserScreen("mod://westerlife/digicode/index.html");
-                Main.browserScreen.openMenu();
+//                Main.browserScreen = new BrowserScreen("mod://westerlife/digicode/index.html");
+//                Main.browserScreen.openMenu();
                 openScreenMcef = "none";
                 break;
             case "none":
@@ -342,7 +364,7 @@ public class Client {
                 GlStateManager.pushMatrix();
                 GlStateManager.rotate(90, 1, 0, 0);
                 GlStateManager.translate(0.5f, 0.5f, -0.6f);
-                ObjModelRenderer objModelRenderer = DynamXContext.getObjModelRegistry().getModel(new ResourceLocation("westerlife", "models/dynamx/blocks/macdo/macdo.obj"));
+                DxModelRenderer objModelRenderer = DynamXContext.getDxModelRegistry().getModel(new ResourceLocation("westerlife", "models/dynamx/blocks/macdo/macdo.obj"));
 
 
                 if (e.getStack().getTagCompound() == null) {
@@ -358,7 +380,7 @@ public class Client {
                     if (e.getTransformType().equals(ItemCameraTransforms.TransformType.GUI)) {
                         GlStateManager.rotate(90, 1, 0, 0);
                         GlStateManager.scale(2.2, 2.2, 2.2);
-                        DynamXContext.getObjModelRegistry().getModel(new ResourceLocation("westerlife", "models/dynamx/blocks/macdo/macdo.obj")).renderGroups("steak", (byte) 0);
+                        DynamXContext.getDxModelRegistry().getModel(new ResourceLocation("westerlife", "models/dynamx/blocks/macdo/macdo.obj")).renderGroups("steak", (byte) 0, false);
 
                     } else if (e.getTransformType().equals(ItemCameraTransforms.TransformType.FIRST_PERSON_LEFT_HAND) || e.getTransformType().equals(ItemCameraTransforms.TransformType.FIRST_PERSON_RIGHT_HAND)) {
                         GlStateManager.rotate(90, 1, 0, 0);
@@ -368,7 +390,7 @@ public class Client {
                     }
 
                     for (TileMacdo.burger compo : ingredients) {
-                        objModelRenderer.renderGroups(compo.getRendervalue(), (byte) 0);
+                        objModelRenderer.renderGroups(compo.getRendervalue(), (byte) 0, false);
                         GlStateManager.translate(0, 0.02f,0);
                     }
                 }
@@ -420,6 +442,15 @@ public class Client {
             this.drawString(Minecraft.getMinecraft().fontRenderer, "    OPT : " + Main.isOpti + " " + Client.waitForSomething.keySet().size() + " " + Client.superpositionState.keySet().size(), 5, 90, 0xFF5C5C);
             this.drawString(Minecraft.getMinecraft().fontRenderer, "    LGH : " + chunk.getLightSubtracted(mc.player.getPosition(), 0), 5, 100, 0xFF5C5C);
 
+            if (Minecraft.getMinecraft().player.hasCapability(PlayerStatCapability.CAPABILITY, null) && event.getType().equals(RenderGameOverlayEvent.ElementType.DEBUG) && Keyboard.isKeyDown(Keyboard.KEY_APOSTROPHE)) {
+                GlStateManager.pushMatrix();
+                EntityPlayer player = Minecraft.getMinecraft().player;
+                GlStateManager.color(1, 1, 0, 1);
+                Minecraft.getMinecraft().fontRenderer.drawString(Objects.requireNonNull(player.getCapability(PlayerStatCapability.CAPABILITY, null)).getAnimation() + "", 0, 110, 0xFFFFFF);
+                Minecraft.getMinecraft().fontRenderer.drawString(Objects.requireNonNull(player.getCapability(PlayerStatCapability.CAPABILITY, null)).getCharacter() + "", 0, 120, 0xFFFFFF);
+                GlStateManager.color(1, 1, 1, 1);
+                GlStateManager.popMatrix();
+            }
 
             long i = Runtime.getRuntime().maxMemory();
             long j = Runtime.getRuntime().totalMemory();
@@ -549,23 +580,27 @@ public class Client {
         }
 
         if(Keyboard.isKeyDown(Keyboard.KEY_F3) && Keyboard.isKeyDown(Keyboard.KEY_D)) {
-            Minecraft.getMinecraft().displayGuiScreen(new GuiLoadingTerrain().getGuiScreen());
+            Minecraft.getMinecraft().displayGuiScreen(new GuiCharNotRegistred().getGuiScreen());
         }
 
         if (Keyboard.isKeyDown(Keyboard.KEY_F3) && Keyboard.isKeyDown(Keyboard.KEY_K)) {
             Main.isOpti = !Main.isOpti;
             // show toast message
             if (Main.isOpti) {
-                Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(new TextComponentString("§l§cMode optimisation des activé"));
+//                Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(new TextComponentString("§l§cMode optimisation des activé"));
+                Minecraft.getMinecraft().getToastGui().add(new SystemToast(SystemToast.Type.NARRATOR_TOGGLE, new TextComponentString("§l§cMode optimisation des activé"), new TextComponentString("§l§cMode optimisation des activé")));
+
             } else {
-                Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(new TextComponentString("§l§cMode optimisation des désactivé"));
+//                Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(new TextComponentString("§l§cMode optimisation des désactivé"));
+                Minecraft.getMinecraft().getToastGui().add(new SystemToast(SystemToast.Type.NARRATOR_TOGGLE, new TextComponentString("§l§cMode optimisation des désactivé"), new TextComponentString("§l§cMode optimisation des désactivé")));
             }
         }
-//        if (Keyboard.isKeyDown(Keyboard.KEY_F12)) {
-////            Main.getPlayerManager().loadTrack("http://193.38.250.14:8000/mix.m3u");
-////            Main.getPlayerManager().getAudioPlayer().setVolume(100);
-////            System.out.println(Main.getPlayerManager().getAudioPlayer().getPlayingTrack() + " / " + Main.getPlayerManager().getAudioPlayer().getVolume());
-//        }
+        if (Keyboard.isKeyDown(Keyboard.KEY_F12)) {
+            ClientNotifications.notifications.add(new Notification("Test", "Test", 0xF14902, System.currentTimeMillis()));
+            Minecraft.getMinecraft().player.sendMessage(new TextComponentString("§c> Added new notification."));
+
+            Minecraft.getMinecraft().displayGuiScreen(new fr.yan36.westerlife.client.gui.other.GuiInventory(new ContainerInventory(Minecraft.getMinecraft().player)));
+        }
     }
 
     @SubscribeEvent
@@ -586,8 +621,8 @@ public class Client {
     @SideOnly(Side.CLIENT)
     private void keyTestTyped() {
         //ACsGuiApi.asyncLoadThenShowGui("gendarmerie", CSSGuiGendarmerieLogin::new);
-        Main.browserScreen = new BrowserScreen();
-        Main.browserScreen.openMenu();
+//        Main.browserScreen = new BrowserScreen();
+//        Main.browserScreen.openMenu();
         //Main.browserScreen.executeJS("window.vue.setWindowF4('test', 'test');");
         System.out.println("Ouverture du menu");
 

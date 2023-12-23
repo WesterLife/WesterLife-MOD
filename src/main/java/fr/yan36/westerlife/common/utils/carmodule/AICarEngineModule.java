@@ -7,18 +7,13 @@ import fr.dynamx.api.network.sync.EntityVariable;
 import fr.dynamx.api.network.sync.SynchronizationRules;
 import fr.dynamx.api.network.sync.SynchronizedEntityVariable;
 import fr.dynamx.common.entities.PackPhysicsEntity;
-import fr.dynamx.common.entities.modules.CarEngineModule;
-import fr.dynamx.common.entities.modules.WheelsModule;
+import fr.dynamx.common.entities.modules.engines.CarEngineModule;
 import fr.dynamx.common.entities.vehicles.CarEntity;
 import fr.dynamx.common.physics.entities.AbstractEntityPhysicsHandler;
-import fr.dynamx.common.physics.entities.BaseVehiclePhysicsHandler;
-import fr.dynamx.common.physics.entities.modules.EnginePhysicsHandler;
 import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.Util;
-import fr.yan36.westerlife.common.utils.CarControls;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.relauncher.Side;
 
 @SynchronizedEntityVariable.SynchronizedPhysicsModule(modid = Main.MODID)
 public class AICarEngineModule implements IPhysicsModule<AbstractEntityPhysicsHandler<?, ?>>, IPhysicsModule.IEntityUpdateListener {

@@ -1,0 +1,118 @@
+
+/*
+
+Attention, propriété de WesterLife, toute utilisation, modification ou reproduction est interdite sans autorisation claire et explicite de la pars de l'administation de WesterLife est formellement interdite.
+Tout manquement à cette règle est passible de poursuite judiciaire.
+
+©️ WesterLife 2023 - Gabidut76, Yan36
+
+*/
+
+.password {
+    color: #FFFFFF;
+    font-size: 2px;
+    top: 25%;
+    left: 3%;
+    /*right: 80%;*/
+    height: 40%;
+    width: 55%;
+    text-align-vertical: top;
+    font-family: "westerlife:montserrat_small";
+    text-align: center;
+    /*background-color: red;*/
+}
+
+.password_indication {
+    border-width: 1px;
+    /*border-position: external;*/
+    border-color: #FFFFFF;
+    border-radius: 5px;
+    width: 15%;
+    height: 7%;
+    top: 55%;
+    left: 23%;
+    background-color: #F6B171;
+}
+
+.password_indication_text {
+    color: #FFFFFF;
+    font-size: 1px;
+    font-family: "westerlife:montserrat_small";
+    background-color: transparent;
+    width: 100%;
+    text-align: center;
+    /*background-color: red;*/
+    height: 100%;
+}
+
+.button {
+    background-image: url("westerlife:textures/gui/atm/buttonframe.png");
+    width: 20px;
+    height: 20px;
+    left: 60%;
+    top: 20%;
+}
+
+.button_text {
+    color: #FFFFFF;
+    font-size: 1px;
+    font-family: "westerlife:montserrat_fat";
+    background-color: transparent;
+    width: 100%;
+    text-align: center;
+    text-align-vertical: top;
+    /*bottom: 5px;*/
+    height: 100%;
+    /*background-color: red;*/
+}
+
+.button_return {
+    background-image: url("westerlife:textures/gui/atm/gobackbutton.png");
+    width: 50px;
+    height: 20px;
+    left: 60%;
+    top: 20%;
+}
+
+.eject {
+    background-color: #EE7223;
+    width: 22%;
+    top: 80%;
+    height: 9%;
+    left: 10%;
+    border-radius: 8px;
+}
+
+.eject_text {
+    color: #FFFFFF;
+    font-size: 1px;
+    font-family: "westerlife:montserrat_small";
+    width: 100%;
+    text-align: center;
+    text-align-vertical: center;
+    height: 100%;
+    background-color: transparent;
+}
+
+.confirm {
+    border-width: 1px;
+    border-color: #FFFFFF;
+    border-radius: 5px;
+
+    width: 15%;
+    height: 7%;
+    top: 65%;
+    left: 23%;
+    background-color: #F6B171;
+}
+
+.confirm_text {
+    color: #FFFFFF;
+    font-size: 1px;
+    font-family: "westerlife:montserrat_small";
+    background-color: transparent;
+    width: 100%;
+    text-align: center;
+    /*background-color: red;*/
+    height: 100%;
+}

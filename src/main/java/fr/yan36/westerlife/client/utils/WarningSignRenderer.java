@@ -31,8 +31,9 @@ public class WarningSignRenderer extends RenderPhysicsEntity<WarningSignEntity> 
         MinecraftForge.EVENT_BUS.post(new PhysicsEntityEvent.InitRenderer<>(PropsEntity.class, this));
     }
 
-    public void renderMain(WarningSignEntity entity, float partialsTicks) {
-        DynamXContext.getObjModelRegistry().getModel(new ResourceLocation(Main.MODID, "models/dynamx/blocks/highroad/warningsign/warningsign.obj")).renderGroups("base", (byte) 0);
+    @Override
+    public void renderEntity(WarningSignEntity entity, double v, double v1, double v2, float v3, boolean b) {
+        DynamXContext.getDxModelRegistry().getModel(new ResourceLocation(Main.MODID, "models/dynamx/blocks/highroad/warningsign/warningsign.obj")).renderGroups("base", (byte) 0, false);
 
 
         if(entity.getModuleByType(WarningSignEntityModule.class) != null) {
@@ -51,7 +52,7 @@ public class WarningSignRenderer extends RenderPhysicsEntity<WarningSignEntity> 
 //            System.out.println(q2.getX() + " " + q2.getY() + " " + q2.getZ() + " " + q2.getW());
             GlStateManager.rotate(q);
             GlStateManager.translate(0,-1.1,0);
-            DynamXContext.getObjModelRegistry().getModel(new ResourceLocation(Main.MODID, "models/dynamx/blocks/highroad/warningsign/warningsign.obj")).renderGroups("moving", (byte) 0);
+            DynamXContext.getDxModelRegistry().getModel(new ResourceLocation(Main.MODID, "models/dynamx/blocks/highroad/warningsign/warningsign.obj")).renderGroups("moving", (byte) 0, false);
             glPopMatrix();
 
         }
@@ -59,8 +60,9 @@ public class WarningSignRenderer extends RenderPhysicsEntity<WarningSignEntity> 
 
 
 
-        this.renderParts(entity, partialsTicks);
+        this.renderParts(entity, v3);
     }
+
 
 
 

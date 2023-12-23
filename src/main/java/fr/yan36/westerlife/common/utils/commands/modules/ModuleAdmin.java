@@ -5,6 +5,7 @@ import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.capabilities.playergarage.PlayerGarage;
 import fr.yan36.westerlife.common.capabilities.playergarage.PlayerGarageCapability;
 import fr.yan36.westerlife.common.capabilities.playerinventory.ExtraItemCapability;
+import fr.yan36.westerlife.common.network.PacketOpenAcsGui;
 import fr.yan36.westerlife.common.network.old.PacketOpenGUIAdmin;
 import fr.yan36.westerlife.common.utils.commands.CommandModule;
 import fr.yan36.westerlife.common.utils.commands.WesterLifeCommand;
@@ -73,6 +74,9 @@ public class ModuleAdmin extends CommandModule {
 
             }
         }
+        if (Objects.equals(args[1], "gui")) {
+            Main.network.sendTo(new PacketOpenAcsGui(9,"",""), (EntityPlayerMP) sender);
+        }
         if (Objects.equals(args[1], "itemdbg")) {
             if (Objects.equals(args[2], "add")) {
                 ItemStack item = ((EntityPlayerMP) sender).getHeldItemMainhand();
@@ -102,6 +106,13 @@ public class ModuleAdmin extends CommandModule {
                     for (int i = 0; i < player.getCapability(ExtraItemCapability.CAPABILITY, null).getSlots(); i++) {
                         player.sendMessage(new TextComponentString("Slot " + i + " : " + player.getCapability(ExtraItemCapability.CAPABILITY, null).getStackInSlot(i).getDisplayName()));
                     }
+                }
+            }
+            if (args[2].equals("open")) {
+                EntityPlayerMP player = (EntityPlayerMP) sender;
+                assert ExtraItemCapability.CAPABILITY != null;
+                if (player.hasCapability(ExtraItemCapability.CAPABILITY, null)) {
+                    player.openGui(Main.instance, 7, player.world, 0, 0, 0);
                 }
             }
         }
