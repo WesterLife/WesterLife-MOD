@@ -8,6 +8,7 @@ import fr.gabidut76.westerlife.client.renderer.AnimationRenderer;
 import fr.gabidut76.westerlife.client.renderer.ClientNotifications;
 import fr.gabidut76.westerlife.common.entities.npcbank.NPCBank;
 import fr.gabidut76.westerlife.common.entities.npcbank.NPCBankRenderer;
+import fr.gabidut76.westerlife.common.objects.RenderTileBinded;
 import fr.gabidut76.westerlife.westercore.Main;
 import fr.gabidut76.westerlife.client.gui.ultralight.UltraLight;
 import fr.gabidut76.westerlife.client.phone.Apps;
@@ -213,6 +214,35 @@ public class ClientProxy extends CommonProxy {
                         }
                         LOADED_STYLESHEETS.add(resourceLocation);
                     }
+                }
+
+
+
+            } catch (Exception var12) {
+                throw new RuntimeException("Failed to load style gui class " + name, var12);
+            }
+        }
+    }
+
+    public static void discoverBindedTiles(FMLConstructionEvent event) {
+        Set<ASMDataTable.ASMData> modData = event.getASMHarvestedData().getAll(RenderTileBinded.class.getName());
+        Iterator<ASMDataTable.ASMData> var2 = modData.iterator();
+
+        while (true) {
+            ASMDataTable.ASMData data;
+            if (!var2.hasNext()) {
+                return;
+            }
+
+            data = var2.next();
+            String name = data.getClassName();
+
+            try {
+                Class<?> aClass = Class.forName(data.getClassName());
+                RenderTileBinded annotation = aClass.getAnnotation(RenderTileBinded.class);
+                if(annotation != null) {
+                    System.out.println("Found tile to bind for " + name + " : " + annotation.tileEntityBinded());
+                    ClientRegistry.bindTileEntitySpecialRenderer(annotation.tileEntityBinded(), (net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer) aClass.newInstance());
                 }
 
 
