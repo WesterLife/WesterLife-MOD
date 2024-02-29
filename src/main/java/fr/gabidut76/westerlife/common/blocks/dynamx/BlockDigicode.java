@@ -1,0 +1,35 @@
+package fr.gabidut76.westerlife.common.blocks.dynamx;
+
+import fr.dynamx.common.blocks.DynamXBlock;
+import fr.gabidut76.westerlife.westercore.Main;
+//import fr.yan36.westerlife.common.blocks.tileentity.TEDigicode;
+import fr.gabidut76.westerlife.common.network.PacketOpenMcefGui;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+
+public class BlockDigicode extends DynamXBlock {
+    public BlockDigicode(Material material, String modid, String blockName, ResourceLocation model) {
+        super(material, modid, blockName, model);
+        setCreativeTab(Main.WESTER_MAIN);
+    }
+
+//    @Nullable
+//    public TileEntity createTileEntity(World world, IBlockState state) {
+//        return new TEDigicode(this.blockObjectInfo);
+//    }
+
+    @Override
+    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        if(!worldIn.isRemote) {
+            Main.network.sendTo(new PacketOpenMcefGui("digicode", pos), (EntityPlayerMP) playerIn);
+        }
+        return true;
+    }
+}

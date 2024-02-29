@@ -56,10 +56,14 @@ tasks.withType(JavaCompile) {
     options.encoding = "UTF-8"
 }
 
-sourceSets { main { output.resourcesDir = output.classesDir } }
+sourceSets {
+    main {
+        output.resourcesDir = output.classesDir
+    }
+}
 
-version = '1.5.8-2'
-group = 'fr.yan36.westerlife' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+version = '1.5.9-1'
+group = 'fr.gabidut76.westerlife' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'westerlife'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
@@ -108,6 +112,10 @@ minecraft {
 
 //        implementation fg.deobf('fr.dynamx:DynamX:4.0.0-beta-26')
         implementation fileTree(dir: 'libs', include: '*.jar')
+        implementation fg.deobf(fileTree(dir: 'libs/dynx', include: 'DynamX-4.1.0-dev17-wl-all-deobf.jar'))
+
+        // add jar sourcee
+
 
 //        shadow fileTree(dir: 'libs', include: '*.jar')
 
@@ -129,8 +137,14 @@ minecraft {
         compile 'com.labymedia:ultralight-java-databind:0.4.7'
         compile 'com.labymedia:ultralight-java-gpu:0.4.7'
 
+        implementation 'com.labymedia:ultralight-java-base:0.4.7'
+        implementation 'com.labymedia:ultralight-java-databind:0.4.7'
+        implementation 'com.labymedia:ultralight-java-gpu:0.4.7'
+
         compile fileTree('libs/simpledatabasemanager-1.0.jar')
         compile fileTree('libs/mcef-1.12.2-1.32.jar')
+
+        // sources
 
         annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
         testAnnotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
@@ -263,8 +277,6 @@ task prepareAssets(type: Copy) {
     group = 'build'
     from(project.file('src/main/resources'))
     into project.file('build/classes/java/main')
-
-
 
 
 }

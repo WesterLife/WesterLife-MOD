@@ -1,0 +1,204 @@
+package fr.gabidut76.westerlife.client.renderer;
+
+import fr.gabidut76.westerlife.westercore.Main;
+import fr.nathanael2611.simpledatabasemanager.client.ClientDatabases;
+import fr.nathanael2611.simpledatabasemanager.core.Databases;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import org.lwjgl.opengl.GL11;
+
+public class ClientHUD {
+
+
+    @SubscribeEvent
+    @SideOnly(Side.CLIENT)
+    public void healthRender(RenderGameOverlayEvent.Pre event) {
+        if (event.getType().equals(RenderGameOverlayEvent.ElementType.HEALTH) || event.getType().equals(RenderGameOverlayEvent.ElementType.FOOD) || event.getType().equals(RenderGameOverlayEvent.ElementType.EXPERIENCE)) {
+            if (Minecraft.getMinecraft().isReducedDebug()) {
+                return;
+            }
+            event.setCanceled(true);
+        }
+    }
+
+    @SubscribeEvent
+    @SideOnly(Side.CLIENT)
+    public void healthRender(RenderGameOverlayEvent.Post event) {
+        EntityPlayer player = Minecraft.getMinecraft().player;
+        if (!(player == null)) {
+
+
+            /*if (Minecraft.getMinecraft().player.getEntityWorld().getChunk(Minecraft.getMinecraft().player.getPosition()).hasCapability(PlayerChunkRelCapability.CAPABILITY, null)) {
+//                GlStateManager.enableAlpha();
+
+                ResourceLocation pollenLocation = new ResourceLocation(Main.MODID, "textures/hud/gauge/pollenempty.png");
+                ResourceLocation pollenFullLocation = new ResourceLocation(Main.MODID, "textures/hud/gauge/pollenfull.png");
+                Minecraft.getMinecraft().getTextureManager().bindTexture(pollenLocation);
+                Gui.drawScaledCustomSizeModalRect(5, 10, 0, 0, 256, 256, 30, 10, 256, 256);
+
+                int percent = (int) (Objects.requireNonNull(Minecraft.getMinecraft().player.getEntityWorld().getChunk(Minecraft.getMinecraft().player.getPosition()).getCapability(PlayerChunkRelCapability.CAPABILITY, null)).getCO2() * 30 / 100);
+
+                MC.getTextureManager().bindTexture(pollenFullLocation);
+                Gui.drawScaledCustomSizeModalRect(5, 10, 0, 0, 256, 256, percent, 10, 256, 256);
+
+//                GlStateManager.disableAlpha();
+
+
+            } else {
+//                GlStateManager.enableAlpha();
+                ResourceLocation pollenLocation = new ResourceLocation(Main.MODID, "textures/hud/gauge/pollenerror.png");
+                Minecraft.getMinecraft().getTextureManager().bindTexture(pollenLocation);
+                Gui.drawScaledCustomSizeModalRect(5, 10, 0, 0, 256, 256, 30, 10, 256, 256);
+//                GlStateManager.disableAlpha();
+            }
+
+            if (player.getHeldItem(EnumHand.MAIN_HAND).getItem() instanceof ItemCard) {
+                ItemCard card = (ItemCard) player.getHeldItem(EnumHand.MAIN_HAND).getItem();
+                GlStateManager.enableAlpha();
+                Minecraft.getMinecraft().getTextureManager().bindTexture(card.getType().getResourceLocation());
+                Gui.drawScaledCustomSizeModalRect(0, 0, 0, 0, 256, 256, 165, 110, 256, 256);
+                GlStateManager.disableAlpha();
+                if (player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound() != null) {
+
+                    Character target;
+
+                    if (player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().hasKey("link")) {
+                        target = Client.knowCharacters.get(UUID.fromString(player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().getString("link")));
+
+                        if (Minecraft.getMinecraft().world.getPlayerEntityByUUID(UUID.fromString(Objects.requireNonNull(player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound()).getString("link"))).hasCapability(PlayerStatData.PlayerStatProvider.CAPABILITY, null)) {
+                            target = Objects.requireNonNull(Minecraft.getMinecraft().world.getPlayerEntityByUUID(UUID.fromString(player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().getString("link"))).getCapability(PlayerStatData.PlayerStatProvider.CAPABILITY, null)).getCharacter();
+                        }
+
+                        if (Objects.equals(target.getLastName(), "Card errored")) {
+                            if (!Client.waitForSomething.containsKey("cni:" + player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().getString("link"))) {
+                                Main.network.sendToServer(new PacketRequestCharacter(UUID.fromString(player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().getString("link"))));
+                                Client.waitForSomething.put("cni", true);
+                            }
+                        }
+
+
+                        if (target != null) {
+
+                            if (card.getType().equals(ItemCard.CardType.CNI)) {
+                                GlStateManager.pushMatrix();
+                                GlStateManager.scale(0.5, 0.5, 0.5);
+                                Minecraft.getMinecraft().fontRenderer.drawString(target.getLastName(), 135, 65, 0x050505);
+                                Minecraft.getMinecraft().fontRenderer.drawString(target.getFirstNames(), 135, 90, 0x050505);
+                                Minecraft.getMinecraft().fontRenderer.drawString(target.getGender() == Character.Gender.MALE ? "M" : "F", 135, 110, 0x050505);
+                                Minecraft.getMinecraft().fontRenderer.drawString(Objects.equals(target.getNationality(), "Française") ? "FRA" : "AUT", 170, 110, 0x050505);
+                                Minecraft.getMinecraft().fontRenderer.drawString(target.getBirthPlace(), 235, 110, 0x050505);
+                                Minecraft.getMinecraft().fontRenderer.drawString(target.getBirthDate(), 135, 125, 0x050505);
+
+                                if (player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().hasKey("uniqueIdentifier")) {
+                                    Minecraft.getMinecraft().fontRenderer.drawString(player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().getString("uniqueIdentifier"), 135, 140, 0x050505);
+                                } else {
+                                    Minecraft.getMinecraft().fontRenderer.drawString("WESTX48ADEZ", 135, 140, 0x050505);
+                                }
+                                Minecraft.getMinecraft().fontRenderer.drawString("2030-01-01", 235, 155, 0x050505);
+                                GlStateManager.popMatrix();
+                            } else if (card.getType().equals(ItemCard.CardType.PERM)) {
+                                GlStateManager.pushMatrix();
+                                GlStateManager.scale(0.5, 0.5, 0.5);
+                                Minecraft.getMinecraft().fontRenderer.drawString(target.getLastName(), 135, 65, 0x050505);
+                                Minecraft.getMinecraft().fontRenderer.drawString(target.getFirstNames(), 135, 85, 0x050505);
+                                Minecraft.getMinecraft().fontRenderer.drawString(target.getBirthPlace(), 135, 105, 0x050505);
+                                    Minecraft.getMinecraft().fontRenderer.drawString(target.getPermis().getType().stream().map(Permis.PermisType::getLetterName).collect(Collectors.joining(", ")), 135, 125, 0x050505); //TODO: Pass permis
+
+                                if (player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().hasKey("uniqueIdentifier")) {
+                                    Minecraft.getMinecraft().fontRenderer.drawString(player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().getString("uniqueIdentifier"), 135, 155, 0x050505);
+                                } else {
+                                    Minecraft.getMinecraft().fontRenderer.drawString("WESTX48ADEZ", 130, 150, 0x050505);
+                                }
+
+                                Minecraft.getMinecraft().fontRenderer.drawString("2030-01-01", 235, 155, 0x050505);
+                                GlStateManager.popMatrix();
+                            } else if (card.getType().equals(ItemCard.CardType.DIPLO)) {
+                                GlStateManager.pushMatrix();
+                                GlStateManager.scale(0.5, 0.5, 0.5);
+                                Minecraft.getMinecraft().fontRenderer.drawString(target.getLastName(), 130, 65, 0x050505);
+                                Minecraft.getMinecraft().fontRenderer.drawString(target.getFirstNames(), 130, 100, 0x050505);
+                                Minecraft.getMinecraft().fontRenderer.drawString(target.getBirthPlace(), 130, 130, 0x050505);
+                                if (player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().hasKey("uniqueIdentifier")) {
+                                    Minecraft.getMinecraft().fontRenderer.drawString(player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().getString("uniqueIdentifier"), 130, 150, 0x050505);
+                                } else {
+                                    Minecraft.getMinecraft().fontRenderer.drawString("WESTX48ADEZ", 130, 150, 0x050505);
+                                }
+
+                                Minecraft.getMinecraft().fontRenderer.drawString("2030-01-01", 235, 155, 0x050505);
+                                GlStateManager.popMatrix();
+                            } else if (card.getType().equals(ItemCard.CardType.GDI) || card.getType().equals(ItemCard.CardType.PREF) || card.getType().equals(ItemCard.CardType.GOUV)) {
+                                if (target != null) {
+                                    GlStateManager.pushMatrix();
+                                    GlStateManager.scale(0.5, 0.5, 0.5);
+                                    Minecraft.getMinecraft().fontRenderer.drawString(target.getLastName(), 135, 65, 0x050505);
+                                    Minecraft.getMinecraft().fontRenderer.drawString(target.getFirstNames(), 135, 85, 0x050505);
+                                    Minecraft.getMinecraft().fontRenderer.drawString(target.getBirthPlace(), 135, 105, 0x050505);
+                                    if (player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().hasKey("uniqueIdentifier")) {
+                                        Minecraft.getMinecraft().fontRenderer.drawString(player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().getString("uniqueIdentifier"), 135, 125, 0x050505);
+                                    } else {
+                                        Minecraft.getMinecraft().fontRenderer.drawString("WESTX48ADEZ", 130, 150, 0x050505);
+                                    }
+
+                                    Minecraft.getMinecraft().fontRenderer.drawString("2030-01-01", 235, 155, 0x050505);
+                                    GlStateManager.popMatrix();
+                                }
+                            } else {
+                                System.out.println("null");
+                            }
+                        }
+                    }
+                }
+            }
+        }*/
+
+
+            ScaledResolution scaledresolution = event.getResolution();
+            if (Databases.getPlayerData(Minecraft.getMinecraft().player).contains("notification")) {
+                String notification = Databases.getPlayerData(Minecraft.getMinecraft().player).getString("notification");
+
+                Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(Main.MODID, "textures/hud/notification.png"));
+                Gui.drawScaledCustomSizeModalRect(scaledresolution.getScaledWidth() - 150, 50, 0, 0, 15, 70, 13, 70, 15, 70);
+
+                System.out.println(notification);
+            }
+
+            if (event.getType().equals(RenderGameOverlayEvent.ElementType.ALL)) {
+                GL11.glColor4f(1, 1, 1, 1);
+                int width = event.getResolution().getScaledWidth();
+                int x = width - 100;
+
+                if (!Minecraft.getMinecraft().player.capabilities.disableDamage) {
+                    Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(Main.MODID, "textures/hud/health_empty.png"));
+                    Gui.drawScaledCustomSizeModalRect(40, scaledresolution.getScaledHeight() - 76, 0, 0, 15, 70, 13, 70, 15, 70);
+                    int percent = (int) (Minecraft.getMinecraft().player.getHealth() * 70 / Minecraft.getMinecraft().player.getMaxHealth());
+                    if (percent > 0) {
+                        Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(Main.MODID, "textures/hud/health_full.png"));
+                        Gui.drawScaledCustomSizeModalRect(40, scaledresolution.getScaledHeight() - 76 + (70 - percent), 0, 70 - percent, 15, percent, 13, percent, 15, 70);
+                    }
+                    Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(Main.MODID, "textures/hud/food_empty.png"));
+                    Gui.drawScaledCustomSizeModalRect(10, scaledresolution.getScaledHeight() - 76, 0, 0, 15, 70, 13, 70, 15, 70);
+                    int percentFood = (int) (Minecraft.getMinecraft().player.getFoodStats().getFoodLevel() * 70 / 20);
+                    if (percentFood > 0) {
+                        Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(Main.MODID, "textures/hud/food_full.png"));
+                        Gui.drawScaledCustomSizeModalRect(10, scaledresolution.getScaledHeight() - 76 + (70 - percentFood), 0, 70 - percentFood, 15, percentFood, 13, percentFood, 15, 70);
+                    }
+                    Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(Main.MODID, "textures/hud/water_empty.png"));
+                    Gui.drawScaledCustomSizeModalRect(25, scaledresolution.getScaledHeight() - 76, 0, 0, 15, 70, 13, 70, 15, 70);
+                    int percentArmor = Math.round(ClientDatabases.getPersonalPlayerData().getFloat("watervalue") * 70 / 100);
+
+                    if (percentArmor > 0) {
+                        Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(Main.MODID, "textures/hud/water_full.png"));
+                        Gui.drawScaledCustomSizeModalRect(25, scaledresolution.getScaledHeight() - 76 + (70 - percentArmor), 0, 70 - percentArmor, 15, percentArmor, 13, percentArmor, 15, 70);
+                    }
+                }
+            }
+        }
+    }
+}

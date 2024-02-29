@@ -13,6 +13,7 @@ Tout manquement à cette règle est passible de poursuite judiciaire.
     height: 100%;
     left: 0%;
     top: 0%;
+    z-index: -1;
 }
 
 .settings {
@@ -46,4 +47,70 @@ Tout manquement à cette règle est passible de poursuite judiciaire.
     color: #F14902;
     bottom: 1%;
     text-align: right;
+}
+.username {
+    border: none;
+    background-color: #FFFFFF;
+    border-radius: 5px;
+    width: 50%;
+    left: 50%;
+    right: 50%;
+    top: 30%;
+    color: black;
+
+}
+
+.password {
+    top: 40%;
+    z-index: 1000;
+    border: none;
+    background-color: #FFFFFF;
+    border-radius: 5px;
+    width: 50%;
+    left: 50%;
+    right: 50%;
+    color: black;
+}
+
+.logloc {
+    top: 50%;
+    z-index: 1000;
+}
+.login_btn {
+    top: 60%;
+    z-index: 1000;
+    background-image: none;
+    background-image: url("westerlife:textures/main/login.png");
+    width: 25%;
+    height: 10%;
+    left: 50%;
+    right: 50%;
+}
+
+.reload_button {
+    top: 90%;
+    z-index: 1000;
+    background-color: green;
+}
+
+.title {
+    top: 5%;
+    z-index: 1000;
+    width: 50%;
+    height: 10%;
+    left: 50%;
+    right: 50%;
+    color: #F6E7D8;
+}
+
+.register {
+    bottom: 1%;
+    z-index: 1000;
+}
+
+.error {
+    color: #ff3030;
+    top: 0%;
+    width: 100%;
+    z-index: 1000;
 }

@@ -15,11 +15,29 @@ Tout manquement à cette règle est passible de poursuite judiciaire.
     background-color: rgba(55, 60, 73, 240);
     border-radius: 10px;
 }
+.background_2 {
+    right: 50%;
+    left: 50%;
+    height: 70%;
+    width: 75%;
+    vertical-position: center;
+    background-color: rgba(55, 60, 73, 240);
+    border-radius: 10px;
+}
 
 .scrollpane {
     left: 5%;
     top: 5%;
     width: 40%;
+    height: 80%;
+    background-color: rgba(55, 60, 73, 240);
+    border-radius: 10px;
+}
+
+.scrollpane_2 {
+    left: 5%;
+    top: 5%;
+    width: 60%;
     height: 80%;
     background-color: rgba(55, 60, 73, 240);
     border-radius: 10px;
@@ -49,7 +67,22 @@ Tout manquement à cette règle est passible de poursuite judiciaire.
     border: 0px;
     font-size: 5px;
     border: none;
-    top: 70%;
+    top: 80%;
+    left: 70%;
+    right: 30%;
+}
+
+.button_color {
+    width: 40%;
+    height: 10%;
+    border-radius: 10px;
+    background-image: none;
+    background-color: #ffffff;
+    color: #1c1c1c;
+    border: 0px;
+    font-size: 5px;
+    border: none;
+    top: 69%;
     left: 70%;
     right: 30%;
 }
@@ -65,8 +98,26 @@ Tout manquement à cette règle est passible de poursuite judiciaire.
     right: 28%;
 }
 
-.checkbox {
+.textfield {
+    width: 50%;
+    height: 10%;
+    background-color: rgba(55, 60, 73, 240);
+    color: white;
+    font-size: 5px;
+    border: none;
+    top: 55%;
+    left: 72%;
+    right: 28%;
+}
 
+.checkbox {
+    width: 100%;
+    height: auto;
     background-color: rgba(55, 60, 73, 240);
 
+}
+
+.checkbox_label {
+    width: auto;
+    height: auto;
 }

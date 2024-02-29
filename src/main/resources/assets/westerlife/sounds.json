@@ -26,5 +26,9 @@
   "caralarm": {
     "subtitle": "westerlife.subtitle.caralarm",
     "sounds": [ "westerlife:caralarm" ]
+  },
+  "cokecut": {
+    "subtitle": "westerlife.subtitle.cokecut",
+    "sounds": [ "westerlife:cokecut" ]
   }
 }

@@ -1,0 +1,48 @@
+# Blender MTL File: 'None'
+# Material Count: 1
+
+newmtl ModelMaterial
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.000000 0.000000 0.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+
+map_Kd textures/premiereclasse.png premiereclasse
+map_Kd textures/brigadier.png brigadier
+map_Kd textures/gendarme.png brigadierchef
+map_Kd textures/gendarmecar.png marechallogis
+map_Kd textures/marechal.png gendarme
+map_Kd textures/adjudant.png marechallogischef
+map_Kd textures/adjudantchef.png adjudant
+map_Kd textures/major.png adjudantchef
+map_Kd textures/eleveofficier.png major
+map_Kd textures/souslieutenant.png eleve
+map_Kd textures/lieutenant.png lieutenant
+map_Kd textures/capitaine.png capitaine
+map_Kd textures/chefescadron.png commandant
+map_Kd textures/lieutenantcolonel.png lcolonel
+map_Kd textures/colonel.png colonel
+map_Kd textures/genbrig.png general1
+map_Kd textures/gendiv.png general2
+map_Kd textures/gencorpsarmee.png general3
+map_Kd textures/generalarmee.png general4
+
+map_Kd textures/mobile/marechal.png mob_marechal
+map_Kd textures/mobile/gendarme.png mob_gendarme
+map_Kd textures/mobile/marechalchef.png mob_marechalchef
+map_Kd textures/mobile/adjudant.png mob_adjudant
+map_Kd textures/mobile/adjudantchef.png mob_adjudantchef
+map_Kd textures/mobile/major.png mob_major
+map_Kd textures/mobile/eleveoff.png mob_eleveofficier
+map_Kd textures/mobile/souslieutenant.png mob_souslieutenant
+map_Kd textures/mobile/lieutenant.png mob_lieutenant
+map_Kd textures/mobile/capitaine.png mob_capitaine
+map_Kd textures/mobile/commandant.png mob_commandant
+map_Kd textures/mobile/lieutenantcolonel.png mob_lieutenantcolonel
+map_Kd textures/mobile/colonel.png mob_colonel
+
+premiereclasse, brigadier, brigadierchef, marechallogis, gendarme, adjudant, marechallogischef, major, eleve, lieutenant, capitaine, commandant, lcolonel, colonel, general1, general2, general3, general4, mob_marechal, mob_gendarme, mob_marechalchef, mob_adjudant, mob_adjudantchef, mob_major, mob_eleveofficier, mob_souslieutenant, mob_lieutenant, mob_capitaine, mob_commandant, mob_lieutenantcolonel, mob_colonel
