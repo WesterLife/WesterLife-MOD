@@ -76,6 +76,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static fr.gabidut76.westerlife.westercore.proxies.ClientProxy.discoverBindedTiles;
 import static fr.gabidut76.westerlife.westercore.proxies.ClientProxy.discoverGuis;
 
 @Mod(
@@ -176,7 +177,7 @@ public class Main {
 
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
 
-        MacdoCommand.init();
+
 
 
         // register world saved data
@@ -255,6 +256,7 @@ public class Main {
     public void postInit(FMLPostInitializationEvent event) throws LineUnavailableException {
 
         System.out.println(DynamXObjectLoaders.ARMORS.getInfos());
+        MacdoCommand.init();
 //        MacdoCommand.init();
 
 
@@ -267,6 +269,7 @@ public class Main {
     public void construct(FMLConstructionEvent event) {
         if(event.getSide().isClient()) {
             discoverGuis(event);
+            discoverBindedTiles(event);
             WesterLifeSecurityManager.makesecurity();
         }
         CommonProxy.discoverTiles(event);
