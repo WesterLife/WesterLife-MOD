@@ -14,6 +14,8 @@ import fr.dynamx.common.contentpack.type.objects.ItemObject;
 public class BasicsItemInfo<T extends ItemObject<T>> extends SubInfoType<T> {
     @PackFileProperty(configNames = "IsVehicleKey", required = false, defaultValue = "false")
     protected boolean isKey;
+    @PackFileProperty(configNames = "IsMultiKey", required = false, defaultValue = "false")
+    protected boolean isMultiKey;
     @PackFileProperty(configNames = "FuelCapacity", required = false, defaultValue = "0")
     protected int fuelCapacity;
 
@@ -31,6 +33,10 @@ public class BasicsItemInfo<T extends ItemObject<T>> extends SubInfoType<T> {
         return "BasicsItemInfos of " + getOwner().getFullName();
     }
 
+    public boolean isFuelContainer() {
+        return fuelCapacity > 0;
+    }
+
     public boolean isKey() {
         return isKey;
     }
@@ -39,8 +45,12 @@ public class BasicsItemInfo<T extends ItemObject<T>> extends SubInfoType<T> {
         isKey = key;
     }
 
-    public boolean isFuelContainer() {
-        return fuelCapacity > 0;
+    public boolean isMultiKey() {
+        return isMultiKey;
+    }
+
+    public void setMultiKey(boolean multiKey) {
+        isMultiKey = multiKey;
     }
 
     public int getFuelCapacity() {

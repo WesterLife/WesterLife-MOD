@@ -8,6 +8,7 @@ import net.minecraft.util.ITickable;
 @TileToRegister(location = "westerlife:coke")
 public class TileCoke extends TileEntitySyncClient implements ITickable {
     public long placedAt = 0;
+    public boolean hasLeaves = false;
 
     public TileCoke(BlockObject blockObjectInfo) {
         super(blockObjectInfo);
@@ -20,12 +21,14 @@ public class TileCoke extends TileEntitySyncClient implements ITickable {
     @Override
     public void readFromNBT(NBTTagCompound tagCompound) {
         placedAt = tagCompound.getLong("placedAt");
+        hasLeaves = tagCompound.getBoolean("hasLeaves");
         super.readFromNBT(tagCompound);
     }
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
         tagCompound.setLong("placedAt", placedAt);
+        tagCompound.setBoolean("hasLeaves", hasLeaves);
         super.writeToNBT(tagCompound);
         return tagCompound;
     }
@@ -33,7 +36,10 @@ public class TileCoke extends TileEntitySyncClient implements ITickable {
     @Override
     public void update() {
         if (!world.isRemote && placedAt == 0) {
-            placedAt = world.getTotalWorldTime();
+            if(hasLeaves) {
+                System.out.println("change !");
+                placedAt = world.getTotalWorldTime();
+            }
             sync();
         }
     }

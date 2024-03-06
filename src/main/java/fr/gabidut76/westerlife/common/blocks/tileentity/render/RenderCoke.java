@@ -15,16 +15,19 @@ public class RenderCoke extends TESRDynamXBlock<TileCoke> {
         GlStateManager.scale((te.getPackInfo().getScaleModifier()).x, (te.getPackInfo().getScaleModifier()).y, (te.getPackInfo().getScaleModifier()).z);
         GlStateManager.rotate(te.getRotation() * 22.5F, 0.0F, -1.0F, 0.0F);
 
-        if(getWorld().getTotalWorldTime() - te.placedAt > (20 * 60 * 2)) {
-            DynamXContext.getDxModelRegistry().getModel(te.getPackInfo().getModel()).renderGroup("baby", (byte) te.getBlockMetadata(), false);
+        if(te.hasLeaves) {
+            if(getWorld().getTotalWorldTime() - te.placedAt > (20 * 60 * 2)) {
+                DynamXContext.getDxModelRegistry().getModel(te.getPackInfo().getModel()).renderGroup("baby", (byte) te.getBlockMetadata(), false);
+            }
+
+            if(getWorld().getTotalWorldTime() - te.placedAt > (20 * 60 * 4)) {
+                DynamXContext.getDxModelRegistry().getModel(te.getPackInfo().getModel()).renderGroup("plantation", (byte) te.getBlockMetadata(), false);
+            }
+            if(getWorld().getTotalWorldTime() - te.placedAt > (20 * 60 * 8)) {
+                DynamXContext.getDxModelRegistry().getModel(te.getPackInfo().getModel()).renderGroup("leaves", (byte) te.getBlockMetadata(), false);
+            }
         }
 
-        if(getWorld().getTotalWorldTime() - te.placedAt > (20 * 60 * 4)) {
-            DynamXContext.getDxModelRegistry().getModel(te.getPackInfo().getModel()).renderGroup("plantation", (byte) te.getBlockMetadata(), false);
-        }
-        if(getWorld().getTotalWorldTime() - te.placedAt > (20 * 60 * 6)) {
-            DynamXContext.getDxModelRegistry().getModel(te.getPackInfo().getModel()).renderGroup("leaves", (byte) te.getBlockMetadata(), false);
-        }
 
         DynamXContext.getDxModelRegistry().getModel(te.getPackInfo().getModel()).renderGroup("pot", (byte) te.getBlockMetadata(), false);
         GlStateManager.popMatrix();

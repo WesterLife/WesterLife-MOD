@@ -10,11 +10,11 @@ public class DynamXArmor extends DynamXItemArmor {
     public DynamXArmor(String armorname, ResourceLocation modelloc, EntityEquipmentSlot slot) {
         super(Main.MODID, armorname, modelloc, ArmorMaterial.LEATHER, slot);
 
-        getInfo().setArmorArms(new String[]{"armLeft", "armRight"});
-        getInfo().setArmorBody("body");
-        getInfo().setArmorHead("head");
-        getInfo().setArmorLegs(new String[]{"legLeft", "legRight"});
-        getInfo().setArmorFoot(new String[]{"footLeft", "footRight"});
+//        getInfo().setArmorArms(new String[]{"armLeft", "armRight"});
+//        getInfo().setArmorBody("body");
+//        getInfo().setArmorHead("head");
+//        getInfo().setArmorLegs(new String[]{"legLeft", "legRight"});
+//        getInfo().setArmorFoot(new String[]{"footLeft", "footRight"});
 
     }
 

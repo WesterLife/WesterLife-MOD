@@ -19,7 +19,15 @@ public class TextUtils {
             GlStateManager.translate(pos.x, pos.y, pos.z);
             GlStateManager.rotate(180, 1, 0, 0);
             GlStateManager.rotate(180, 0, 1, 0);
-            makeGLRotation(rotation);
+            float rotate = rotation.x;
+            if (rotate != 0)
+                GlStateManager.rotate(rotate, 1, 0, 0);
+            rotate = rotation.y;
+            if (rotate != 0)
+                GlStateManager.rotate(rotate, 0, 1, 0);
+            rotate = rotation.z;
+            if (rotate != 0)
+                GlStateManager.rotate(rotate, 0, 0, 1);
             GlStateManager.scale(scale.x / 40, scale.y / 40, scale.z / 40);
             GlStateManager.disableLighting();
 
@@ -36,17 +44,5 @@ public class TextUtils {
             GlStateManager.resetColor();
             GlStateManager.popMatrix();
         }
-    }
-
-    public static void makeGLRotation(Vector3f rotation) {
-        float rotate = rotation.x;
-        if (rotate != 0)
-            GlStateManager.rotate(rotate, 1, 0, 0);
-        rotate = rotation.y;
-        if (rotate != 0)
-            GlStateManager.rotate(rotate, 0, 1, 0);
-        rotate = rotation.z;
-        if (rotate != 0)
-            GlStateManager.rotate(rotate, 0, 0, 1);
     }
 }

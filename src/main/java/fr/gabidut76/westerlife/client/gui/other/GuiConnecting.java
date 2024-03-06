@@ -9,12 +9,13 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 
 import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 
 public class GuiConnecting extends net.minecraft.client.multiplayer.GuiConnecting {
 
     public GuiConnecting(Minecraft mcIn) throws IOException {
-        this(new CSSGuiMainMenu().getGuiScreen(), mcIn, "localhost", 25565);
+        this(new CSSGuiMainMenu().getGuiScreen(), mcIn, "91.197.6.118", 25794);
     }
     public GuiConnecting(GuiScreen parent, Minecraft mcIn, ServerData serverDataIn) {
         super(parent, mcIn, serverDataIn);

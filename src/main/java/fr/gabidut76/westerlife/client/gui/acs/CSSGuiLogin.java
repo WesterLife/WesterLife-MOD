@@ -14,7 +14,6 @@ import fr.aym.acsguis.component.textarea.GuiPasswordField;
 import fr.aym.acsguis.component.textarea.GuiTextField;
 import fr.aym.acsguis.cssengine.font.CssFontHelper;
 import fr.aym.acslib.api.services.error.ErrorCategory;
-import fr.dynamx.client.gui.GuiDnxDebug;
 import fr.dynamx.utils.DynamXLoadingTasks;
 import fr.dynamx.utils.errors.DynamXErrorManager;
 import fr.gabidut76.westerlife.CoreMod.WesterLifeSecurityManager;

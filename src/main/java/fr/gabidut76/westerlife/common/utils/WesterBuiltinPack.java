@@ -5,7 +5,7 @@ import fr.dynamx.api.contentpack.ContentPackType;
 import fr.dynamx.api.contentpack.object.IPhysicsPackInfo;
 import fr.dynamx.api.entities.modules.ModuleListBuilder;
 import fr.dynamx.client.renders.model.renderer.ObjObjectRenderer;
-import fr.dynamx.client.renders.scene.SceneGraph;
+import fr.dynamx.client.renders.scene.node.SceneNode;
 import fr.dynamx.common.contentpack.PackInfo;
 import fr.dynamx.common.contentpack.type.ObjectCollisionsHelper;
 import fr.dynamx.common.entities.PackPhysicsEntity;
@@ -53,7 +53,7 @@ public class WesterBuiltinPack implements IPhysicsPackInfo {
     }
 
     @Override
-    public SceneGraph<?, ?> getSceneGraph() {
+    public SceneNode<?, ?> getSceneGraph() {
         return null;
     }
 

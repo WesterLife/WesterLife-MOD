@@ -9,27 +9,65 @@ import fr.dynamx.api.contentpack.registry.DefinitionType;
 import fr.dynamx.api.contentpack.registry.PackFileProperty;
 import fr.dynamx.api.contentpack.registry.RegisteredSubInfoType;
 import fr.dynamx.api.contentpack.registry.SubInfoTypeRegistries;
-import fr.dynamx.client.renders.scene.EntityRenderContext;
+import fr.dynamx.client.renders.scene.BaseRenderContext;
+import fr.dynamx.client.renders.scene.IRenderContext;
 import fr.dynamx.client.renders.scene.SceneBuilder;
-import fr.dynamx.client.renders.scene.SceneGraph;
+import fr.dynamx.client.renders.scene.node.SceneNode;
+import fr.dynamx.client.renders.scene.node.SimpleNode;
 import fr.dynamx.common.contentpack.type.vehicle.ModularVehicleInfo;
 import fr.dynamx.common.entities.BaseVehicleEntity;
 import fr.dynamx.utils.DynamXUtils;
 
-import javax.annotation.Nullable;
+
 import java.util.List;
+
 
 @RegisteredSubInfoType(
         name = "SpeedDisplay",
         registries = {SubInfoTypeRegistries.WHEELED_VEHICLES, SubInfoTypeRegistries.HELICOPTER},
         strictName = false
 )
-public class SpeedDisplayInfos extends BasePart<ModularVehicleInfo> implements IDrawablePart<BaseVehicleEntity<?>, ModularVehicleInfo> {
+public class SpeedDisplayInfos extends BasePart<ModularVehicleInfo> implements IDrawablePart<ModularVehicleInfo> {
+
     @PackFileProperty(configNames = "Rotation", type = DefinitionType.DynamXDefinitionTypes.VECTOR3F, description = "common.rotation")
     protected Vector3f rotation;
 
+
     @PackFileProperty(configNames = "Font", required = false)
     protected String font = BasicsAddon.ID + ":e";
+
+
+    public Vector3f getRotation() {
+        return rotation;
+    }
+
+    public void setRotation(Vector3f rotation) {
+        this.rotation = rotation;
+    }
+
+    public String getFont() {
+        return font;
+    }
+
+    public void setFont(String font) {
+        this.font = font;
+    }
+
+    public int[] getColor() {
+        return color;
+    }
+
+    public void setColor(int[] color) {
+        this.color = color;
+    }
+
+    public String getNodeDependingOnName() {
+        return nodeDependingOnName;
+    }
+
+    public void setNodeDependingOnName(String nodeDependingOnName) {
+        this.nodeDependingOnName = nodeDependingOnName;
+    }
 
     @PackFileProperty(configNames = "Color", description = "common.color", required = false)
     protected int[] color = new int[]{10, 10, 10};
@@ -44,18 +82,6 @@ public class SpeedDisplayInfos extends BasePart<ModularVehicleInfo> implements I
     @Override
     public void appendTo(ModularVehicleInfo owner) {
         owner.addSubProperty(this);
-    }
-
-    public Vector3f getRotation() {
-        return rotation;
-    }
-
-    public int[] getColor() {
-        return color;
-    }
-
-    public String getFont() {
-        return font;
     }
 
     @Override
@@ -79,8 +105,7 @@ public class SpeedDisplayInfos extends BasePart<ModularVehicleInfo> implements I
     }
 
     @Override
-    public void addToSceneGraph(ModularVehicleInfo packInfo, SceneBuilder<BaseVehicleEntity<?>, ModularVehicleInfo> sceneBuilder) {
-        if (getRotation() == null) return;
+    public void addToSceneGraph(ModularVehicleInfo packInfo, SceneBuilder<IRenderContext, ModularVehicleInfo> sceneBuilder) {
         if (nodeDependingOnName != null) {
             sceneBuilder.addNode(packInfo, this, nodeDependingOnName);
         } else {
@@ -89,24 +114,23 @@ public class SpeedDisplayInfos extends BasePart<ModularVehicleInfo> implements I
     }
 
     @Override
-    public SceneGraph<BaseVehicleEntity<?>, ModularVehicleInfo> createSceneGraph(Vector3f modelScale, List<SceneGraph<BaseVehicleEntity<?>, ModularVehicleInfo>> childGraph) {
+    public SceneNode<IRenderContext, ModularVehicleInfo> createSceneGraph(Vector3f modelScale, List<SceneNode<IRenderContext, ModularVehicleInfo>> childGraph) {
         if (childGraph != null)
             throw new IllegalArgumentException("SpeedDisplayInfos can't have children parts");
-        return new SpeedDisplayNode<>(modelScale, null);
+        return (SceneNode) new SpeedDisplayNode(modelScale, null);
     }
 
-    class SpeedDisplayNode<T extends BaseVehicleEntity<?>, A extends ModularVehicleInfo> extends SceneGraph.Node<T, A> {
-        public SpeedDisplayNode(Vector3f scale, List<SceneGraph<T, A>> linkedChilds) {
+    class SpeedDisplayNode extends SimpleNode<BaseRenderContext.EntityRenderContext, ModularVehicleInfo> {
+        public SpeedDisplayNode(Vector3f scale, List<SceneNode<BaseRenderContext.EntityRenderContext, ModularVehicleInfo>> linkedChilds) {
             super(null, null, scale, linkedChilds);
         }
 
         @Override
-        public void render(@Nullable T entity, EntityRenderContext entityRenderContext, A packInfo) {
-            if (entity == null)
+        public void render(BaseRenderContext.EntityRenderContext entityRenderContext, ModularVehicleInfo info) {
+            if (!(entityRenderContext.getEntity() instanceof BaseVehicleEntity))
                 return;
-            String speed = "" + DynamXUtils.getSpeed(entity);
+            String speed = "" + DynamXUtils.getSpeed((BaseVehicleEntity<?>) entityRenderContext.getEntity());
             TextUtils.drawText(SpeedDisplayInfos.this.getPosition(), SpeedDisplayInfos.this.getScale(), SpeedDisplayInfos.this.getRotation(), speed, getColor(), getFont());
-
         }
     }
 }

@@ -4,9 +4,9 @@ import fr.aym.acsguis.component.layout.GuiScaler;
 import fr.aym.acsguis.component.panel.GuiFrame;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.textarea.GuiLabel;
-import fr.nathanael2611.modularvoicechat.client.gui.GuiConfig;
-import fr.nathanael2611.modularvoicechat.client.voice.audio.MicroManager;
-import fr.nathanael2611.modularvoicechat.client.voice.audio.SpeakerManager;
+//import fr.nathanael2611.modularvoicechat.client.gui.GuiConfig;
+//import fr.nathanael2611.modularvoicechat.client.voice.audio.MicroManager;
+//import fr.nathanael2611.modularvoicechat.client.voice.audio.SpeakerManager;
 import fr.gabidut76.westerlife.westercore.Main;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
@@ -50,11 +50,11 @@ public class CSSGuiPauseMenu extends GuiFrame {
         GuiPanel micSettings = new GuiPanel();
         micSettings.setCssClass("micSettings");
         micSettings.addClickListener((mouseX, mouseY, mouseButton) -> {
-            if (MicroManager.isRunning() && SpeakerManager.isRunning()) {
-                Minecraft.getMinecraft().displayGuiScreen(new GuiConfig());
-            } else {
-                Minecraft.getMinecraft().displayGuiScreen(new GuiErrorScreen("Erreur", "Erreur interne : " + MicroManager.isRunning() + "-" + SpeakerManager.isRunning() +  ". Cette erreur ne devrait survenir. Contactez le staff."));
-            }
+//            if (MicroManager.isRunning() && SpeakerManager.isRunning()) {
+//                Minecraft.getMinecraft().displayGuiScreen(new GuiConfig());
+//            } else {
+//                Minecraft.getMinecraft().displayGuiScreen(new GuiErrorScreen("Erreur", "Erreur interne : " + MicroManager.isRunning() + "-" + SpeakerManager.isRunning() +  ". Cette erreur ne devrait survenir. Contactez le staff."));
+//            }
         });
         background.add(micSettings);
 

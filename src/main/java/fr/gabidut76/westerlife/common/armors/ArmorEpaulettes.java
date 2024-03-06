@@ -19,15 +19,15 @@ public class ArmorEpaulettes extends DynamXItemArmor {
 
     public ArmorEpaulettes(String armorname, ResourceLocation modelloc, EntityEquipmentSlot slot) {
         super(Main.MODID, armorname, modelloc, ArmorMaterial.LEATHER, slot);
-        getInfo().setArmorArms(new String[]{"leftArmModel", "rightArmModel"});
+//        getInfo().setArmorArms(new String[]{"leftArmModel", "rightArmModel"});
 
 //        MaterialVariantsInfo m = new MaterialVariantsInfo<>(this.getInfo());
 //        m.setTexturesArray(Arrays.stream(GendInfos.values()).map(gendInfos -> gendInfos.modelLocation).toArray(String[]::new));
 //
 //        m.appendTo(this.getInfo());
 
-        MaterialVariantsInfo a = new MaterialVariantsInfo(this.getInfo());
-        a.setTexturesArray(Arrays.stream(GendInfos.values()).map(gendInfos -> gendInfos.modelLocation).toArray(String[]::new));
+//        MaterialVariantsInfo a = new MaterialVariantsInfo(this.getInfo());
+//        a.setTexturesArray(Arrays.stream(GendInfos.values()).map(gendInfos -> gendInfos.modelLocation).toArray(String[]::new));
 
         setCreativeTab(Main.WESTER_GEND);
     }

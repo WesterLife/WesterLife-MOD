@@ -13,8 +13,11 @@ import fr.dynamx.common.contentpack.type.vehicle.ModularVehicleInfo;
 import fr.dynamx.common.entities.BaseVehicleEntity;
 import fr.dynamx.common.entities.PackPhysicsEntity;
 import fr.dynamx.common.items.DynamXItem;
+
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
+
 
 @RegisteredSubInfoType(name = "FuelTank", registries = SubInfoTypeRegistries.WHEELED_VEHICLES, strictName = false)
 public class FuelTankInfos extends InteractivePart<BaseVehicleEntity<?>, ModularVehicleInfo> {
@@ -35,8 +38,16 @@ public class FuelTankInfos extends InteractivePart<BaseVehicleEntity<?>, Modular
         return tankSize;
     }
 
+    public void setTankSize(float tankSize) {
+        this.tankSize = tankSize;
+    }
+
     public float getFuelConsumption() {
         return fuelConsumption;
+    }
+
+    public void setFuelConsumption(float fuelConsumption) {
+        this.fuelConsumption = fuelConsumption;
     }
 
     @Override

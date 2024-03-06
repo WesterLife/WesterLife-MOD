@@ -6,15 +6,19 @@ import fr.dynamx.addons.basics.common.modules.LicensePlateModule;
 import fr.dynamx.addons.basics.utils.TextUtils;
 import fr.dynamx.api.contentpack.object.part.BasePart;
 import fr.dynamx.api.contentpack.object.part.IDrawablePart;
+import fr.dynamx.api.contentpack.object.render.IModelPackObject;
 import fr.dynamx.api.contentpack.registry.*;
 import fr.dynamx.api.entities.modules.ModuleListBuilder;
-import fr.dynamx.client.renders.scene.EntityRenderContext;
+import fr.dynamx.client.renders.scene.BaseRenderContext;
+import fr.dynamx.client.renders.scene.IRenderContext;
 import fr.dynamx.client.renders.scene.SceneBuilder;
-import fr.dynamx.client.renders.scene.SceneGraph;
+import fr.dynamx.client.renders.scene.node.SceneNode;
+import fr.dynamx.client.renders.scene.node.SimpleNode;
 import fr.dynamx.common.contentpack.type.vehicle.ModularVehicleInfo;
 import fr.dynamx.common.entities.BaseVehicleEntity;
 import fr.dynamx.common.entities.PackPhysicsEntity;
-import fr.dynamx.utils.optimization.GlQuaternionPool;
+
+
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -24,19 +28,24 @@ import java.util.List;
         registries = {SubInfoTypeRegistries.WHEELED_VEHICLES, SubInfoTypeRegistries.HELICOPTER},
         strictName = false
 )
-public class LicensePlateInfos extends BasePart<ModularVehicleInfo> implements IDrawablePart<BaseVehicleEntity<?>, ModularVehicleInfo> {
+public class LicensePlateInfos extends BasePart<ModularVehicleInfo> implements IDrawablePart<ModularVehicleInfo> {
+        
     @PackFileProperty(configNames = "Rotation", type = DefinitionType.DynamXDefinitionTypes.VECTOR3F, description = "common.rotation")
     protected Vector3f rotation = new Vector3f();
 
+        
     @PackFileProperty(configNames = "Pattern", required = false)
     protected String pattern = "aa-111-aa";
 
+        
     @PackFileProperty(configNames = "Font", required = false)
     protected String font = BasicsAddon.ID + ":e";
 
+        
     @PackFileProperty(configNames = "Color", description = "common.color", required = false)
     protected int[] color = new int[]{10, 10, 10};
 
+        
     @PackFileProperty(configNames = "LineSpacing", required = false)
     protected float lineSpacing = 0.0F;
 
@@ -60,26 +69,6 @@ public class LicensePlateInfos extends BasePart<ModularVehicleInfo> implements I
     @Override
     public void appendTo(ModularVehicleInfo owner) {
         owner.addPart(this);
-    }
-
-    public Vector3f getRotation() {
-        return rotation;
-    }
-
-    public String getFont() {
-        return font;
-    }
-
-    public int[] getColor() {
-        return color;
-    }
-
-    public String getPattern() {
-        return pattern;
-    }
-
-    public float getLineSpacing() {
-        return lineSpacing;
     }
 
     @Override
@@ -112,31 +101,79 @@ public class LicensePlateInfos extends BasePart<ModularVehicleInfo> implements I
     }
 
     @Override
-    public void addToSceneGraph(ModularVehicleInfo packInfo, SceneBuilder<BaseVehicleEntity<?>, ModularVehicleInfo> sceneBuilder) {
+    public void addToSceneGraph(ModularVehicleInfo packInfo, SceneBuilder<IRenderContext, ModularVehicleInfo> sceneBuilder) {
         if (nodeDependingOnName != null) {
-            sceneBuilder.addNode(packInfo, this , nodeDependingOnName);
+            sceneBuilder.addNode(packInfo, this, nodeDependingOnName);
         } else {
             sceneBuilder.addNode(packInfo, this);
         }
     }
 
     @Override
-    public SceneGraph<BaseVehicleEntity<?>, ModularVehicleInfo> createSceneGraph(Vector3f modelScale, List<SceneGraph<BaseVehicleEntity<?>, ModularVehicleInfo>> childGraph) {
-        if(childGraph != null)
+    public SceneNode<IRenderContext, ModularVehicleInfo> createSceneGraph(Vector3f modelScale, List<SceneNode<IRenderContext, ModularVehicleInfo>> childGraph) {
+        if (childGraph != null)
             throw new IllegalArgumentException("LicensePlateInfos can't have children parts");
-        return new LicensePlateNode<>(modelScale, null);
+        return (SceneNode) new LicensePlateNode(modelScale, null);
     }
 
-    class LicensePlateNode<T extends BaseVehicleEntity<?>, A extends ModularVehicleInfo> extends SceneGraph.Node<T, A> {
-        public LicensePlateNode(Vector3f scale, List<SceneGraph<T, A>> linkedChilds) {
+    public Vector3f getRotation() {
+        return rotation;
+    }
+
+    public void setRotation(Vector3f rotation) {
+        this.rotation = rotation;
+    }
+
+    public String getPattern() {
+        return pattern;
+    }
+
+    public void setPattern(String pattern) {
+        this.pattern = pattern;
+    }
+
+    public String getFont() {
+        return font;
+    }
+
+    public void setFont(String font) {
+        this.font = font;
+    }
+
+    public int[] getColor() {
+        return color;
+    }
+
+    public void setColor(int[] color) {
+        this.color = color;
+    }
+
+    public float getLineSpacing() {
+        return lineSpacing;
+    }
+
+    public void setLineSpacing(float lineSpacing) {
+        this.lineSpacing = lineSpacing;
+    }
+
+    public String getNodeDependingOnName() {
+        return nodeDependingOnName;
+    }
+
+    public void setNodeDependingOnName(String nodeDependingOnName) {
+        this.nodeDependingOnName = nodeDependingOnName;
+    }
+
+    class LicensePlateNode extends SimpleNode<BaseRenderContext.EntityRenderContext, ModularVehicleInfo> {
+        public LicensePlateNode(Vector3f scale, List<SceneNode<BaseRenderContext.EntityRenderContext, ModularVehicleInfo>> linkedChilds) {
             super(null, null, scale, linkedChilds);
         }
 
         @Override
-        public void render(@Nullable T entity, EntityRenderContext entityRenderContext, A packInfo) {
-            if (entity == null)
+        public void render(BaseRenderContext.EntityRenderContext entityRenderContext, ModularVehicleInfo info) {
+            if (entityRenderContext.getEntity() == null)
                 return;
-            LicensePlateModule module = entity.getModuleByType(LicensePlateModule.class);
+            LicensePlateModule module = entityRenderContext.getEntity().getModuleByType(LicensePlateModule.class);
             TextUtils.drawText(
                     LicensePlateInfos.this.getPosition(),
                     LicensePlateInfos.this.getScale(),

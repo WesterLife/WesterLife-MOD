@@ -33,6 +33,8 @@ public class DynamXInit {
     public static ItemDrink WINE;
     public static ItemDrink CHAMPAGNE;
     public static ItemFood barreChoco;
+    public static Item cokeconcasseur;
+    public static ItemRadio radio;
 
     public static BlockDistributeur Distributeur;
     public static BlockPlayerSensor playerSensor;
@@ -83,6 +85,7 @@ public class DynamXInit {
     public static BlockDynamx churchconfessional;
     public static ItemMagicWand magicWand;
     public static BlockCoke coke;
+    public static BlockCokeTable cokeTable;
 
     // AI ANCHOR POINTS
     public static BlockAIPoint goAIPoint;
@@ -120,6 +123,8 @@ public class DynamXInit {
         magicWand = new ItemMagicWand(Main.MODID, "magicwand", new ResourceLocation("westerlife","models/dynamx/items/baguette/baguette.obj"));
         garagetablet = new ItemGarageTablet(Main.MODID, "garagetablet", new ResourceLocation("westerlife","models/dynamx/items/tablet/tablet.obj"));
         shears = new ItemDynamx(Main.MODID, "shears", new ResourceLocation("westerlife","models/dynamx/items/shears/shears.obj")).setMaxStackSize(1).setCreativeTab(Main.WESTER_ILLEGAL);
+        cokeconcasseur = new ItemDynamx(Main.MODID, "cokeconcasseur", new ResourceLocation("westerlife","models/dynamx/items/cokeconcasseur/cokeconcasseur.obj")).setMaxStackSize(1).setCreativeTab(Main.WESTER_ILLEGAL);
+        radio = new ItemRadio(Main.MODID, "radio", new ResourceLocation("westerlife","models/dynamx/items/radio/radio.obj"));
         //Old items
         Belier = (ItemDynamx) new ItemDynamx(Main.MODID, "belier", new ResourceLocation("westerlife","models/dynamx/belier/belier.obj")).setMaxStackSize(1);
 
@@ -156,6 +161,7 @@ public class DynamXInit {
         playerSensor = new BlockPlayerSensor("playersensor", Material.ANVIL);
         carPresentation = new BlockCarPresentation(Material.ANVIL, Main.MODID, "carpresentation", new ResourceLocation("westerlife","models/dynamx/blocks/carpresentation/carpresentation.obj"));
         coke = new BlockCoke(Material.ANVIL, Main.MODID, "coke", new ResourceLocation("westerlife","models/dynamx/blocks/coke/coke.obj"));
+        cokeTable = new BlockCokeTable(Material.ANVIL, Main.MODID, "coketable", new ResourceLocation("westerlife","models/dynamx/blocks/coketable/coketable.obj"));
         //Road blocks
         barrierePolice = new BlockRoad(Material.ANVIL, Main.MODID, "barrierepolice", new ResourceLocation("westerlife","models/dynamx/blocks/barriere_police/barriere.obj"));
         clotureChantier = new BlockRoad(Material.ANVIL, Main.MODID, "cloturechantier", new ResourceLocation("westerlife","models/dynamx/blocks/cloture_chantier/cloturechantier.obj"));

@@ -4,9 +4,8 @@ import fr.dynamx.addons.basics.BasicsAddon;
 import fr.dynamx.addons.basics.common.modules.BasicsAddonModule;
 import fr.dynamx.addons.basics.common.modules.FuelTankModule;
 import fr.dynamx.api.entities.VehicleEntityProperties;
-import fr.dynamx.api.events.DynamXEntityRenderEvents;
-import fr.dynamx.api.events.PhysicsEntityEvent;
 import fr.dynamx.api.events.VehicleEntityEvent;
+import fr.dynamx.api.events.client.DynamXEntityRenderEvent;
 import fr.dynamx.client.handlers.hud.CarController;
 import fr.dynamx.common.entities.BaseVehicleEntity;
 import fr.dynamx.common.entities.modules.AbstractLightsModule;
@@ -25,65 +24,65 @@ public class ClientEventHandler {
         }
     }
 
-//    @SubscribeEvent
-//    public static void renderLights(DynamXEntityRenderEvents.Render event) {
-//        if (event.getRenderType() == DynamXEntityRenderEvents.Render.Type.ENTITY && event.getType() == VehicleEntityEvent.Render.Type.LIGHTS && event.getEntity() != null) {
-//            BasicsAddonModule module = event.getEntity().getModuleByType(BasicsAddonModule.class);
-//            if (module != null) {
-//                AbstractLightsModule lights = event.getEntity().getModuleByType(AbstractLightsModule.class);
-//                if (lights != null && module.getInfos() != null) {
-//                    lights.setLightOn(module.getInfos().sirenLightSource, module.isBeaconsOn() || module.isSirenOn());
-//
-//                    if (module.hasHeadLights()) {
-//                        if (module.isHeadLightsOn()) {
-//                            lights.setLightOn(module.getInfos().headLightsSource, true);
-//                            lights.setLightOn(module.getInfos().backLightsSource, true);
-//                        } else {
-//                            lights.setLightOn(module.getInfos().headLightsSource, false);
-//                            lights.setLightOn(module.getInfos().backLightsSource, false);
-//                        }
-//                    }
-//
-//                    if (module.hasDRL()) {
-//                        if (module.isDRLOn()) {
-//                            lights.setLightOn(module.getInfos().drLightSource, true);
-//                        } else {
-//                            lights.setLightOn(module.getInfos().drLightSource, false);
-//                        }
-//                    }
-//
-//                    if (module.hasTurnSignals()) {
-//                        lights.setLightOn(module.getInfos().turnLeftLightSource, module.isTurnSignalLeftOn());
-//                        lights.setLightOn(module.getInfos().turnRightLightSource, module.isTurnSignalRightOn());
-//                    }
-//
-//                    BasicEngineModule engine = event.getEntity().getModuleByType(BasicEngineModule.class);
-//                    if (engine != null) {
-//                        if (engine.isReversing()) {
-//                            if (engine.getEngineProperty(VehicleEntityProperties.EnumEngineProperties.ACTIVE_GEAR) == -1) {
-//                                lights.setLightOn(module.getInfos().reverseLightsSource, true);
-//                                lights.setLightOn(module.getInfos().brakeLightsSource, false);
-//                            } else {
-//                                lights.setLightOn(module.getInfos().reverseLightsSource, false);
-//                                lights.setLightOn(module.getInfos().brakeLightsSource, true);
-//                            }
-//                        } else if (engine.isAccelerating()) {
-//                            if (engine.getEngineProperty(VehicleEntityProperties.EnumEngineProperties.ACTIVE_GEAR) == -1) {
-//                                lights.setLightOn(module.getInfos().brakeLightsSource, true);
-//                                lights.setLightOn(module.getInfos().reverseLightsSource, false);
-//                            } else {
-//                                lights.setLightOn(module.getInfos().reverseLightsSource, false);
-//                                lights.setLightOn(module.getInfos().brakeLightsSource, false);
-//                            }
-//                        } else {
-//                            lights.setLightOn(module.getInfos().reverseLightsSource, false);
-//                            lights.setLightOn(module.getInfos().brakeLightsSource, false);
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
+    @SubscribeEvent
+    public static void renderLights(DynamXEntityRenderEvent event) {
+        if (event.getRenderType() == DynamXEntityRenderEvent.Type.ENTITY && event.getEntity() != null) {
+            BasicsAddonModule module = event.getEntity().getModuleByType(BasicsAddonModule.class);
+            if (module != null) {
+                AbstractLightsModule lights = event.getEntity().getModuleByType(AbstractLightsModule.class);
+                if (lights != null && module.getInfos() != null) {
+                    lights.setLightOn(module.getInfos().sirenLightSource, module.isBeaconsOn() || module.isSirenOn());
+
+                    if (module.hasHeadLights()) {
+                        if (module.isHeadLightsOn()) {
+                            lights.setLightOn(module.getInfos().headLightsSource, true);
+                            lights.setLightOn(module.getInfos().backLightsSource, true);
+                        } else {
+                            lights.setLightOn(module.getInfos().headLightsSource, false);
+                            lights.setLightOn(module.getInfos().backLightsSource, false);
+                        }
+                    }
+
+                    if (module.hasDRL()) {
+                        if (module.isDRLOn()) {
+                            lights.setLightOn(module.getInfos().drLightSource, true);
+                        } else {
+                            lights.setLightOn(module.getInfos().drLightSource, false);
+                        }
+                    }
+
+                    if (module.hasTurnSignals()) {
+                        lights.setLightOn(module.getInfos().turnLeftLightSource, module.isTurnSignalLeftOn());
+                        lights.setLightOn(module.getInfos().turnRightLightSource, module.isTurnSignalRightOn());
+                    }
+
+                    BasicEngineModule engine = event.getEntity().getModuleByType(BasicEngineModule.class);
+                    if (engine != null) {
+                        if (engine.isReversing()) {
+                            if (engine.getEngineProperty(VehicleEntityProperties.EnumEngineProperties.ACTIVE_GEAR) == -1) {
+                                lights.setLightOn(module.getInfos().reverseLightsSource, true);
+                                lights.setLightOn(module.getInfos().brakeLightsSource, false);
+                            } else {
+                                lights.setLightOn(module.getInfos().reverseLightsSource, false);
+                                lights.setLightOn(module.getInfos().brakeLightsSource, true);
+                            }
+                        } else if (engine.isAccelerating()) {
+                            if (engine.getEngineProperty(VehicleEntityProperties.EnumEngineProperties.ACTIVE_GEAR) == -1) {
+                                lights.setLightOn(module.getInfos().brakeLightsSource, true);
+                                lights.setLightOn(module.getInfos().reverseLightsSource, false);
+                            } else {
+                                lights.setLightOn(module.getInfos().reverseLightsSource, false);
+                                lights.setLightOn(module.getInfos().brakeLightsSource, false);
+                            }
+                        } else {
+                            lights.setLightOn(module.getInfos().reverseLightsSource, false);
+                            lights.setLightOn(module.getInfos().brakeLightsSource, false);
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     @SubscribeEvent
     public static void updateVehicleController(VehicleEntityEvent.ControllerUpdate event) {

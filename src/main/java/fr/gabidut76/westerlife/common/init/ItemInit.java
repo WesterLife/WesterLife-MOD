@@ -1,10 +1,7 @@
 package fr.gabidut76.westerlife.common.init;
 
+import fr.gabidut76.westerlife.common.items.*;
 import fr.gabidut76.westerlife.westercore.Main;
-import fr.gabidut76.westerlife.common.items.ItemBase;
-import fr.gabidut76.westerlife.common.items.ItemBillet;
-import fr.gabidut76.westerlife.common.items.ItemCard;
-import fr.gabidut76.westerlife.common.items.ItemPlaceCirculationSign;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 
@@ -47,8 +44,14 @@ public class ItemInit {
     public static final Item deluxe = new fr.gabidut76.westerlife.common.items.ItemFood("deluxe", 1, 0.5f);
     public static final Item mayo = new fr.gabidut76.westerlife.common.items.ItemFood("mayo", 1, 0.5f);
     public static final Item panneaucirculation = new ItemPlaceCirculationSign("panneaucirculation");
+    public static final Item canabis_resine = new ItemBase("canabis_resine")
+            .setCreativeTab(Main.WESTER_ILLEGAL);
 
     public static final Item coke = new ItemBase("coke")
+            .setCreativeTab(Main.WESTER_ILLEGAL);
+    public static final Item cigarette_paper = new ItemCigarettePaper("cigarette_paper",32)
+            .setCreativeTab(Main.WESTER_ILLEGAL);
+    public static final Item joint = new ItemSmokable("joint")
             .setCreativeTab(Main.WESTER_ILLEGAL);
 
     public static void init() {

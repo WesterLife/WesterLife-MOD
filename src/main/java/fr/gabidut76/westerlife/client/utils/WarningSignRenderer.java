@@ -4,7 +4,7 @@ import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import fr.dynamx.api.events.PhysicsEntityEvent;
 import fr.dynamx.client.renders.RenderPhysicsEntity;
-import fr.dynamx.client.renders.scene.EntityRenderContext;
+import fr.dynamx.client.renders.scene.BaseRenderContext;
 import fr.dynamx.common.DynamXContext;
 import fr.dynamx.common.entities.PropsEntity;
 import fr.gabidut76.westerlife.westercore.Main;
@@ -30,7 +30,7 @@ public class WarningSignRenderer extends RenderPhysicsEntity<WarningSignEntity> 
     }
 
     @Override
-    public void renderEntity(WarningSignEntity entity, EntityRenderContext entityRenderContext) {
+    public void renderEntity(WarningSignEntity entity, BaseRenderContext.EntityRenderContext entityRenderContext) {
         DynamXContext.getDxModelRegistry().getModel(new ResourceLocation(Main.MODID, "models/dynamx/blocks/highroad/warningsign/warningsign.obj")).renderGroup("base", (byte) 0, false);
 
 
@@ -58,14 +58,14 @@ public class WarningSignRenderer extends RenderPhysicsEntity<WarningSignEntity> 
     }
 
     @Override
-    public void renderEntityDebug(WarningSignEntity warningSignEntity, EntityRenderContext entityRenderContext) {
+    public void renderEntityDebug(WarningSignEntity warningSignEntity, BaseRenderContext.EntityRenderContext entityRenderContext) {
 
     }
 
     @Nullable
     @Override
-    public EntityRenderContext getRenderContext(WarningSignEntity warningSignEntity) {
-        return new EntityRenderContext(new WarningSignRenderer(this.renderManager));
+    public BaseRenderContext.EntityRenderContext getRenderContext(WarningSignEntity warningSignEntity) {
+        return new BaseRenderContext.EntityRenderContext(new WarningSignRenderer(this.renderManager));
     }
 
 

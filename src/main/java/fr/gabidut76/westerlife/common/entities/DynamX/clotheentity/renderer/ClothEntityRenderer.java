@@ -4,7 +4,7 @@ import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import fr.dynamx.api.events.PhysicsEntityEvent;
 import fr.dynamx.client.renders.RenderPhysicsEntity;
-import fr.dynamx.client.renders.scene.EntityRenderContext;
+import fr.dynamx.client.renders.scene.BaseRenderContext;
 import fr.dynamx.common.entities.PropsEntity;
 import fr.dynamx.utils.optimization.GlQuaternionPool;
 import fr.dynamx.utils.optimization.QuaternionPool;
@@ -32,7 +32,7 @@ public class ClothEntityRenderer extends RenderPhysicsEntity<ClothEntity> {
     }
 
     @Override
-    public void renderEntity(ClothEntity entity, EntityRenderContext entityRenderContext) {
+    public void renderEntity(ClothEntity entity, BaseRenderContext.EntityRenderContext entityRenderContext) {
         ClothEntityModule module = entity.getModuleByType(ClothEntityModule.class);
 
         if (entity.getModuleByType(ClothEntityModule.class) != null) {
@@ -95,14 +95,24 @@ public class ClothEntityRenderer extends RenderPhysicsEntity<ClothEntity> {
     }
 
     @Override
-    public void renderEntityDebug(ClothEntity clothEntity, EntityRenderContext entityRenderContext) {
+    public void renderEntityDebug(ClothEntity entity, BaseRenderContext.EntityRenderContext entityRenderContext) {
 
     }
+//
+//    @Override
+//    public void renderEntity(ClothEntity entity, EntityRenderContext entityRenderContext) {
+//
+//    }
+
+//    @Override
+//    public void renderEntityDebug(ClothEntity clothEntity, EntityRenderContext entityRenderContext) {
+//
+//    }
 
     @Nullable
     @Override
-    public EntityRenderContext getRenderContext(ClothEntity clothEntity) {
-        return new EntityRenderContext(new ClothEntityRenderer(this.renderManager));
+    public BaseRenderContext.EntityRenderContext getRenderContext(ClothEntity clothEntity) {
+        return new BaseRenderContext.EntityRenderContext(new ClothEntityRenderer(this.renderManager));
     }
 
 

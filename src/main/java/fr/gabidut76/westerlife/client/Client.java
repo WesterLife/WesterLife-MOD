@@ -1,27 +1,20 @@
 package fr.gabidut76.westerlife.client;
 
 import com.google.common.collect.Lists;
-import com.mrcrayfish.obfuscate.client.event.ModelPlayerEvent;
 import fr.aym.acsguis.api.ACsGuiApi;
-import fr.dynamx.api.events.ArmorEvent;
-import fr.dynamx.api.events.DynamXItemEvent;
-import fr.dynamx.api.events.EventStage;
 import fr.dynamx.api.events.VehicleEntityEvent;
+import fr.dynamx.api.events.client.DynamXRenderItemEvent;
 import fr.dynamx.client.handlers.hud.CarController;
 import fr.dynamx.client.renders.model.renderer.DxModelRenderer;
 import fr.dynamx.common.DynamXContext;
 import fr.dynamx.common.items.DynamXItemArmor;
 import fr.gabidut76.westerlife.CoreMod.WesterLifeSecurityManager;
-import fr.gabidut76.westerlife.client.gui.other.GuiColorPicker;
-import fr.gabidut76.westerlife.client.gui.other.IColorPickerCallback;
+import fr.gabidut76.westerlife.client.gui.other.*;
 import fr.gabidut76.westerlife.common.capabilities.playerstat.PlayerStatData;
 import fr.gabidut76.westerlife.westercore.Main;
 import fr.gabidut76.westerlife.client.gui.acs.*;
-import fr.gabidut76.westerlife.client.gui.other.EngineFailureIcon;
-import fr.gabidut76.westerlife.client.gui.other.GuiWorldSelectPatcher;
 import fr.gabidut76.westerlife.client.renderer.ClientNotifications;
 import fr.gabidut76.westerlife.common.blocks.tileentity.TileMacdo;
-import fr.gabidut76.westerlife.common.containers.inventory.ContainerInventory;
 import fr.gabidut76.westerlife.common.init.DynamXInit;
 import fr.gabidut76.westerlife.common.network.PacketReqOpenInv;
 import fr.gabidut76.westerlife.common.objects.Notification;
@@ -48,6 +41,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.chunk.Chunk;
+import net.minecraftforge.client.GuiIngameForge;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
@@ -77,6 +71,8 @@ import java.text.DecimalFormat;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType.CHAT;
 
 @Mod.EventBusSubscriber
 public class Client {
@@ -117,6 +113,8 @@ public class Client {
     public void GuieventHandler(GuiOpenEvent e) throws IOException, InterruptedException, NoSuchFieldException, IllegalAccessException {
 
         System.out.println("GUI: " + e.getGui());
+
+
 
 //        if(isLogginIn) {
 //            e.setGui(new fr.yan36.westerlife.client.gui.other.GuiConnecting(Minecraft.getMinecraft()));
@@ -255,9 +253,9 @@ public class Client {
 
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
-    public static void itemRenderer(DynamXItemEvent.Render e) throws Exception {
-        if (e.getStage().equals(EventStage.PRE)) {
-            if (e.getStack().getItem().equals(DynamXInit.burger)) {
+    public static void itemRenderer(DynamXRenderItemEvent e) throws Exception {
+        if (e.getStage().equals(DynamXRenderItemEvent.EventStage.PRE)) {
+            if (e.getContext().getStack().getItem().equals(DynamXInit.burger)) {
                 e.setCanceled(true);
                 GlStateManager.pushMatrix();
                 GlStateManager.rotate(90, 1, 0, 0);
@@ -265,22 +263,22 @@ public class Client {
                 DxModelRenderer objModelRenderer = DynamXContext.getDxModelRegistry().getModel(new ResourceLocation("westerlife", "models/dynamx/blocks/macdo/macdo.obj"));
 
 
-                if (e.getStack().getTagCompound() == null) {
+                if (e.getContext().getStack().getTagCompound() == null) {
 
 
 
                 } else {
                     List<TileMacdo.burger> ingredients = new ArrayList<>();
-                    String s = e.getStack().getTagCompound().getString("burger");
+                    String s = e.getContext().getStack().getTagCompound().getString("burger");
                     for (String s1 : s.split(", ")) {
                         ingredients.add(TileMacdo.burger.valueOf(s1));
                     }
-                    if (e.getTransformType().equals(ItemCameraTransforms.TransformType.GUI)) {
+                    if (e.getContext().getRenderType().equals(ItemCameraTransforms.TransformType.GUI)) {
                         GlStateManager.rotate(90, 1, 0, 0);
                         GlStateManager.scale(2.2, 2.2, 2.2);
                         DynamXContext.getDxModelRegistry().getModel(new ResourceLocation("westerlife", "models/dynamx/blocks/macdo/macdo.obj")).renderGroup("steak", (byte) 0, false);
 
-                    } else if (e.getTransformType().equals(ItemCameraTransforms.TransformType.FIRST_PERSON_LEFT_HAND) || e.getTransformType().equals(ItemCameraTransforms.TransformType.FIRST_PERSON_RIGHT_HAND)) {
+                    } else if (e.getContext().getRenderType().equals(ItemCameraTransforms.TransformType.FIRST_PERSON_LEFT_HAND) || e.getContext().getRenderType().equals(ItemCameraTransforms.TransformType.FIRST_PERSON_RIGHT_HAND)) {
                         GlStateManager.rotate(90, 1, 0, 0);
                         GlStateManager.translate(0, -0.1f, 0);
                     } else {
@@ -431,11 +429,6 @@ public class Client {
         CarController.setHudIcons(new EngineFailureIcon());
     }
 
-    @SubscribeEvent
-    @SideOnly(Side.CLIENT)
-    public void armorSuperpositor(ArmorEvent.Render event) {
-
-    }
 
 //    @SubscribeEvent
 //    @SideOnly(Side.CLIENT)
@@ -501,6 +494,9 @@ public class Client {
 
             final int[] color = {0};
             Minecraft.getMinecraft().displayGuiScreen(new GuiColorPicker(null, color1 -> System.out.println("Color picked: " + color1)));
+        }
+        if(Keyboard.isKeyDown(Keyboard.KEY_F3) && Keyboard.isKeyDown(Keyboard.KEY_L)) {
+            Minecraft.getMinecraft().ingameGUI = new GuiWesterIngame(Minecraft.getMinecraft());
         }
     }
 

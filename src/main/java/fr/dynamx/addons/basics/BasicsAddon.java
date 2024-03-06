@@ -4,13 +4,10 @@ import fr.aym.acsguis.api.ACsGuiApi;
 import fr.dynamx.addons.basics.client.BasicsAddonController;
 import fr.dynamx.addons.basics.client.InteractionKeyController;
 import fr.dynamx.addons.basics.common.infos.BasicsItemInfo;
-import fr.dynamx.addons.basics.common.infos.DashboardNeedleInfo.EnumDashboardNeedleType;
-import fr.dynamx.addons.basics.common.infos.DashboardTextInfos.EnumDashboardTextType;
 import fr.dynamx.addons.basics.server.CommandBasicsSpawn;
 import fr.dynamx.addons.basics.utils.FuelJerrycanUtils;
 import fr.dynamx.addons.basics.utils.VehicleKeyUtils;
 import fr.dynamx.api.contentpack.DynamXAddon;
-import fr.dynamx.api.contentpack.registry.DefinitionType;
 import fr.dynamx.common.contentpack.type.objects.ItemObject;
 import fr.dynamx.common.items.DynamXItem;
 import fr.dynamx.common.items.DynamXItemRegistry;
@@ -23,6 +20,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -33,8 +31,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Mod(modid = BasicsAddon.ID, version = "1.0.8", name = "DynamX Basics Addon", dependencies = "before: dynamxmod")
-@DynamXAddon(modid = BasicsAddon.ID, name = "DynamX Basics", version = "1.0.7")
+@Mod(modid = BasicsAddon.ID, version = "1.0.10", name = "DynamX Basics Addon", dependencies = "before: dynamxmod")
+@DynamXAddon(modid = BasicsAddon.ID, name = "DynamX Basics", version = "1.0.10")
 public class BasicsAddon {
     public static final String ID = "dynamx_basics";
     public static final Map<String, SoundEvent> soundMap = new HashMap<>();
@@ -49,8 +47,6 @@ public class BasicsAddon {
         }
         registerKey();
         registerJerrycan();
-        new DefinitionType<>(EnumDashboardNeedleType.class, EnumDashboardNeedleType::fromString, "type.dashboardneedletype");
-        new DefinitionType<>(EnumDashboardTextType.class, EnumDashboardTextType::fromString, "type.dashboardtexttype");
     }
 
     private static void registerKey() {

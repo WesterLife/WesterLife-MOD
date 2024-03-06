@@ -19,12 +19,10 @@ import fr.dynamx.common.items.vehicle.ItemHelicopter;
 import fr.dynamx.utils.debug.DynamXDebugOption;
 import fr.dynamx.utils.debug.DynamXDebugOptions;
 import fr.gabidut76.westerlife.CoreMod.WesterLifeSecurityManager;
-import fr.gabidut76.westerlife.common.entities.DynamX.airplane.AirplaneEntity;
-import fr.gabidut76.westerlife.common.entities.DynamX.airplane.infoloader.AirplaneVehicleValidator;
-import fr.gabidut76.westerlife.common.entities.DynamX.airplane.infoloader.ItemAirplane;
 import fr.gabidut76.westerlife.common.entities.npcbank.NPCBank;
 import fr.gabidut76.westerlife.common.objects.gameplay.MacdoCommand;
 import fr.gabidut76.westerlife.common.utils.commands.CommandWarn;
+import fr.gabidut76.westerlife.westerradio.WesterRadio;
 import fr.nathanael2611.simpledatabasemanager.core.Database;
 import fr.nathanael2611.simpledatabasemanager.core.Databases;
 import fr.nathanael2611.simpledatabasemanager.core.SyncedDatabases;
@@ -83,7 +81,7 @@ import static fr.gabidut76.westerlife.westercore.proxies.ClientProxy.discoverGui
         modid = Main.MODID,
         name = Main.NAME,
         version = Main.VERSION,
-        dependencies = "before: dynamxmod; after: httpcore|httpclient|lavaplayer|music_westerlife|sdm|mcef;"
+        dependencies = "before: dynamxmod; after: httpcore|httpclient|lavaplayer|music_westerlife|sdm|mcef|voicecgat;"
 
 )
 @DynamXAddon(modid = Main.MODID, name = Main.NAME, version = Main.VERSION)
@@ -111,7 +109,6 @@ public class Main {
 
     public static CO2ManagementThread co2ManagementThread;
 
-    public static ObjectLoader<ModularVehicleInfo, ItemAirplane> AIRPLANES_INFO;
 
 
     @DynamXAddon.AddonEventSubscriber
@@ -130,13 +127,6 @@ public class Main {
             DynamXInit.barreChoco.getInfo().setItem3DRenderLocation(Enum3DRenderLocation.WORLD);
             DynamXInit.burger.getInfo().setItem3DRenderLocation(Enum3DRenderLocation.WORLD);
         }
-
-        AIRPLANES_INFO = new ObjectLoader<>("airplane_", (packName, fileName) -> {
-            AirplaneVehicleValidator v = new AirplaneVehicleValidator();
-            return new ModularVehicleInfo(packName, fileName, v);
-        }, new SubInfoTypesRegistry());
-
-        DynamXObjectLoaders.getInfoLoaders().add(AIRPLANES_INFO);
 
     }
 
@@ -183,6 +173,7 @@ public class Main {
         // register world saved data
         Capabilities.init();
         Network.init(event.getSide());
+        WesterRadio.init(event.getSide());
         MinecraftForge.EVENT_BUS.register(new RegistryHandler());
         MinecraftForge.EVENT_BUS.register(this);
         radar = DynamXDebugOption.newOptionWithMask(DynamXDebugOptions.DebugCategories.GENERAL, "render radar debug", 32);
@@ -256,7 +247,7 @@ public class Main {
     public void postInit(FMLPostInitializationEvent event) throws LineUnavailableException {
 
         System.out.println(DynamXObjectLoaders.ARMORS.getInfos());
-        MacdoCommand.init();
+//        MacdoCommand.init();
 //        MacdoCommand.init();
 
 

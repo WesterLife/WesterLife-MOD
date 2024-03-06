@@ -194,7 +194,7 @@ public class Character extends SerializablePacket implements INBTSerializable<NB
 
     public void setRelatedBankAccount(BankAccount relatedBankAccount) {
         this.relatedBankAccount = relatedBankAccount;
-    }
+    } 
 
     public String getId() {
         return id;

@@ -46,6 +46,10 @@ public class PacketSyncPlayerStats implements IMessage {
     @Override
     public void toBytes(ByteBuf buf) {
         ByteBufUtils.writeVarInt(buf, this.player,5);
+        if(this.animation == null) {
+            System.out.println("Animation is null");
+            this.animation = Animation.NONE;
+        }
         ByteBufUtils.writeVarInt(buf, this.animation.getId(),5);
         if(this.c == null) {
             System.out.println("Character is null");

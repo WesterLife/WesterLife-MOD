@@ -43,18 +43,24 @@ public class BlockCoke extends DynamXBlock {
         if(!worldIn.isRemote) {
             TileCoke tile = (TileCoke) worldIn.getTileEntity(pos);
             if (tile != null) {
-                if(worldIn.getTotalWorldTime() - tile.placedAt > (20 * 60 * 6) && playerIn.getHeldItem(hand).getItem() == DynamXInit.shears) {
-                    playerIn.playSound(SoundsInit.COKECUT, 1.0F, 1.0F);
+                if(playerIn.getHeldItem(hand).getItem() == ItemInit.coke && tile.placedAt == 0) {
+                    playerIn.getHeldItem(hand).shrink(1);
                     tile.placedAt = worldIn.getTotalWorldTime();
+                    tile.hasLeaves = true;
+                    tile.sync();
+                }
+                if(worldIn.getTotalWorldTime() - tile.placedAt > (20 * 60 * 8) && playerIn.getHeldItem(hand).getItem() == DynamXInit.shears) {
+                    playerIn.playSound(SoundsInit.COKECUT, 1.0F, 1.0F);
+                    tile.placedAt = worldIn.getTotalWorldTime() - (20 * 60 * 6);
                     tile.sync();
                     EntityItem item = new EntityItem(worldIn, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemInit.coke, Util.randBetween(1,4)));
                     worldIn.spawnEntity(item);
                 }
                 if(playerIn.getHeldItem(hand).getItem() == DynamXInit.magicWand) {
-                    tile.placedAt = worldIn.getTotalWorldTime() - (20 * 60 * 6);
+                    tile.placedAt = worldIn.getTotalWorldTime() - (20 * 60 * 8);
                     tile.sync();
                 }
-                if(playerIn.getHeldItem(hand).getItem() == ItemInit.CNI) {
+                if(playerIn.getHeldItem(hand).getItem() == ItemInit.CNI && playerIn.isCreative()) {
                     playerIn.sendMessage(new TextComponentString("Placed at: " + (worldIn.getTotalWorldTime() - tile.placedAt) + " ticks"));
                 }
             }
