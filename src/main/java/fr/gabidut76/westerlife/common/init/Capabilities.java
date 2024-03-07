@@ -16,6 +16,7 @@ import fr.gabidut76.westerlife.common.capabilities.playerstat.IPlayerStat;
 import fr.gabidut76.westerlife.common.capabilities.playerstat.PlayerStatData;
 import fr.gabidut76.westerlife.common.capabilities.playerstat.PlayerStatHandler;
 import fr.gabidut76.westerlife.westercore.Main;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -34,6 +35,11 @@ public class Capabilities {
 
     @SubscribeEvent
     public static void registerCapabilities(final AttachCapabilitiesEvent<Entity> e) {
+        if(FMLCommonHandler.instance().getSide().isClient()) {
+            if(Minecraft.getMinecraft().isSingleplayer()) {
+                return;
+            }
+        }
         if(e.getObject() instanceof EntityPlayer) {
             System.out.println("Attaching all capabilities to player.");
 

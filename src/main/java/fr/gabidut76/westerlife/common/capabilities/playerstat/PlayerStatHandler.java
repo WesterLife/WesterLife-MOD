@@ -5,6 +5,7 @@ import fr.gabidut76.westerlife.common.objects.character.Character;
 import fr.gabidut76.westerlife.common.utils.Animation;
 import fr.gabidut76.westerlife.westerapi.api.NemesisLink;
 import fr.gabidut76.westerlife.westercore.Main;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.text.TextComponentString;
@@ -112,7 +113,11 @@ public class PlayerStatHandler {
 
     @SubscribeEvent
     public void timer(TickEvent.PlayerTickEvent e) {
-
+        if(FMLCommonHandler.instance().getSide().isClient()) {
+            if(Minecraft.getMinecraft().isSingleplayer()) {
+                return;
+            }
+        }
         if (e.phase == TickEvent.Phase.END && e.player.ticksExisted % 20 == 0 && e.side.isServer()) {
             try {
                 sync(e.player);

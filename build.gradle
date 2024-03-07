@@ -109,9 +109,9 @@ minecraft {
     dependencies {
         minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2860'
 
-
+        compileOnly fileTree(dir: 'WesterLife/mods', include: 'voicechat-forge-1.12.2-2.4.13.jar')
 //        implementation fg.deobf('fr.dynamx:DynamX:4.0.0-beta-26')
-        implementation fileTree(dir: 'libs', include: '*.jar')
+        compile fileTree(dir: 'libs', include: '*.jar')
         implementation fg.deobf(fileTree(dir: 'libs/dynx', include: 'DynamX-4.1.0-dev18-all.jar'))
 
         // add jar sourcee
@@ -145,7 +145,7 @@ minecraft {
         compile fileTree('libs/simpledatabasemanager-1.0.jar')
         compile fileTree('libs/mcef-1.12.2-1.32.jar')
 
-//        compileOnly files('WesterLife/mods/voicechat-forge-1.12.2-2.5.1.jar')
+
 
         // sources
 

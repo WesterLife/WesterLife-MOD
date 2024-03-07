@@ -5,6 +5,7 @@ import fr.gabidut76.westerlife.common.blocks.BlockPlayerSensor;
 import fr.gabidut76.westerlife.common.capabilities.packets.PacketSyncChunk;
 import net.minecraft.block.BlockAir;
 import net.minecraft.block.BlockFire;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTBase;
@@ -16,6 +17,7 @@ import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -63,6 +65,11 @@ public class PlayerChunkRelCapability {
 
     @SubscribeEvent
     public static void updateBlock(BlockEvent.NeighborNotifyEvent event) {
+        if(FMLCommonHandler.instance().getSide().isClient()) {
+            if(Minecraft.getMinecraft().isSingleplayer()) {
+                return;
+            }
+        }
         if (!event.getWorld().isRemote) {
             if(event.getState().getBlock() instanceof BlockPlayerSensor) return;
             if (event.getState().getBlock() instanceof BlockFire || event.getState().getBlock() instanceof BlockAir) {
