@@ -13,13 +13,12 @@ import fr.dynamx.common.entities.modules.engines.BasicEngineModule;
 import fr.dynamx.common.entities.vehicles.CarEntity;
 import fr.gabidut76.westerlife.common.capabilities.playerstat.PlayerStatData;
 import fr.gabidut76.westerlife.common.capabilities.playerstat.PlayerStatHandler;
-import fr.nathanael2611.simpledatabasemanager.core.Databases;
+
 import fr.gabidut76.westerlife.westercore.Main;
 import fr.gabidut76.westerlife.common.blocks.dynamx.BlockComputer;
 import fr.gabidut76.westerlife.common.init.DynamXInit;
 import fr.gabidut76.westerlife.common.init.ItemInit;
 import fr.gabidut76.westerlife.common.items.ItemCard;
-import fr.gabidut76.westerlife.common.network.PacketAskToCreateCharacter;
 import fr.gabidut76.westerlife.common.network.PacketOpenMcefGui;
 import fr.gabidut76.westerlife.common.network.sync.PacketAnimationToAll;
 import fr.gabidut76.westerlife.common.objects.PlayerHealth;
@@ -27,7 +26,6 @@ import fr.gabidut76.westerlife.common.utils.Animation;
 import fr.gabidut76.westerlife.common.utils.carmodule.DamageCarModule;
 import fr.gabidut76.westerlife.common.utils.carmodule.GarageModule;
 import fr.gabidut76.westerlife.westerapi.api.NemesisLink;
-import fr.gabidut76.westerlife.westerapi.bdd.DBUtils;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -131,12 +129,12 @@ public class Serveur {
 
     @SubscribeEvent
     public void on(TickEvent.PlayerTickEvent e) {
-        Databases.getPlayerData(e.player).setFloat("watervalue", Databases.getPlayerData(e.player).getFloat("watervalue") - 0.00005f);
+
         if(e.player.isSprinting()) {
-            Databases.getPlayerData(e.player).setFloat("watervalue", Databases.getPlayerData(e.player).getFloat("watervalue") - 0.005f);
+
         }
         if(e.player.isBurning()) {
-            Databases.getPlayerData(e.player).setFloat("watervalue", Databases.getPlayerData(e.player).getFloat("watervalue") - 0.005f);
+
         }
     }
 

@@ -1,8 +1,6 @@
 package fr.gabidut76.westerlife.client.renderer;
 
 import fr.gabidut76.westerlife.westercore.Main;
-import fr.nathanael2611.simpledatabasemanager.client.ClientDatabases;
-import fr.nathanael2611.simpledatabasemanager.core.Databases;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
@@ -160,14 +158,6 @@ public class ClientHUD {
 
 
             ScaledResolution scaledresolution = event.getResolution();
-            if (Databases.getPlayerData(Minecraft.getMinecraft().player).contains("notification")) {
-                String notification = Databases.getPlayerData(Minecraft.getMinecraft().player).getString("notification");
-
-                Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(Main.MODID, "textures/hud/notification.png"));
-                Gui.drawScaledCustomSizeModalRect(scaledresolution.getScaledWidth() - 150, 50, 0, 0, 15, 70, 13, 70, 15, 70);
-
-                System.out.println(notification);
-            }
 
             if (event.getType().equals(RenderGameOverlayEvent.ElementType.ALL)) {
                 GL11.glColor4f(1, 1, 1, 1);
@@ -191,7 +181,7 @@ public class ClientHUD {
                     }
                     Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(Main.MODID, "textures/hud/water_empty.png"));
                     Gui.drawScaledCustomSizeModalRect(25, scaledresolution.getScaledHeight() - 76, 0, 0, 15, 70, 13, 70, 15, 70);
-                    int percentArmor = Math.round(ClientDatabases.getPersonalPlayerData().getFloat("watervalue") * 70 / 100);
+                    int percentArmor = Math.round(50 * 70 / 100f);
 
                     if (percentArmor > 0) {
                         Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(Main.MODID, "textures/hud/water_full.png"));

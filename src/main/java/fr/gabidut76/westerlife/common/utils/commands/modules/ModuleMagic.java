@@ -27,18 +27,18 @@ public class ModuleMagic extends CommandModule {
             Main.network.sendTo(new PacketOpenAcsGui(3, args[2], ""), (EntityPlayerMP) sender);
         }
         if(args[1].equals("getKit")) {
-            List<ItemStack> items = Util.stringToItemStackList(Main.wl_db.getString("kits."+args[2]));
-            System.out.println(Main.wl_db.getString("kits."+args[2]));
-            for (ItemStack item : items) {
-                sender.sendMessage(new TextComponentString(item.getDisplayName()));
-                System.out.println(item.getDisplayName());
-            }
+//            List<ItemStack> items = Util.stringToItemStackList(Main.wl_db.getString("kits."+args[2]));
+//            System.out.println(Main.wl_db.getString("kits."+args[2]));
+//            for (ItemStack item : items) {
+//                sender.sendMessage(new TextComponentString(item.getDisplayName()));
+//                System.out.println(item.getDisplayName());
+//            }
         }
         if(args[1].equals("notif")) {
             Main.network.sendTo(new PacketOpenAcsGui(4,",",""), (EntityPlayerMP) sender);
         }
         if(args[1].equals("giveKit")) {
-            List<ItemStack> items = Util.stringToItemStackList(Main.wl_db.getString("kits."+args[2]));
+//            List<ItemStack> items = Util.stringToItemStackList(Main.wl_db.getString("kits."+args[2]));
             EntityPlayerMP target = (EntityPlayerMP) sender;
             if(args.length > 3) {
                 if(server.getPlayerList().getPlayerByUsername(args[3]) == null) {
@@ -55,13 +55,13 @@ public class ModuleMagic extends CommandModule {
                 }
             }
 
-            for (ItemStack item : items) {
-                if(target == null) {
-                    sender.sendMessage(new TextComponentString("Le joueur "+args[3]+" n'existe pas"));
-                    return;
-                }
-                target.inventory.addItemStackToInventory(item);
-            }
+//            for (ItemStack item : items) {
+//                if(target == null) {
+//                    sender.sendMessage(new TextComponentString("Le joueur "+args[3]+" n'existe pas"));
+//                    return;
+//                }
+//                target.inventory.addItemStackToInventory(item);
+//            }
             sender.sendMessage(new TextComponentString("Le kit "+args[2]+" a été donné à "+target.getName()));
         }
 
@@ -81,7 +81,7 @@ public class ModuleMagic extends CommandModule {
         }
         if(args.length == 3) {
 
-            return new ArrayList<>(Arrays.asList(Main.wl_db.getString("kits").split(";")));
+//            return new ArrayList<>(Arrays.asList(Main.wl_db.getString("kits").split(";")));
         }
         if(args.length == 4) {
             return new ArrayList<>(Arrays.asList(server.getOnlinePlayerNames()));

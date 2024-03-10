@@ -1,7 +1,6 @@
 package fr.gabidut76.westerlife.common.network.old;
 
 import fr.gabidut76.westerlife.westercore.Main;
-import fr.gabidut76.westerlife.westerapi.bdd.MethodesBDD;
 import fr.gabidut76.westerlife.common.utils.list.Warp;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
@@ -41,9 +40,9 @@ public class PacketSendWarpsToServer implements IMessage{
         @Override
         @SideOnly(Side.SERVER)
         public IMessage onMessage(PacketSendWarpsToServer m, MessageContext ctx) {
-            List<Warp> warps = MethodesBDD.getWarps();
-            EntityPlayer e = (EntityPlayer) ctx.getServerHandler().player.world.getEntityByID(m.uid);
-            Main.network.sendTo(new PacketSendWarpsToPlayer(m.uid, warps.toString()), (EntityPlayerMP) e);
+//            List<Warp> warps = MethodesBDD.getWarps();
+//            EntityPlayer e = (EntityPlayer) ctx.getServerHandler().player.world.getEntityByID(m.uid);
+//            Main.network.sendTo(new PacketSendWarpsToPlayer(m.uid, warps.toString()), (EntityPlayerMP) e);
             return null;
         }
     }

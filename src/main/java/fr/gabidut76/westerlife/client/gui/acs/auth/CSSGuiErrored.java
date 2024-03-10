@@ -1,10 +1,9 @@
-package fr.gabidut76.westerlife.client.gui.acs;
+package fr.gabidut76.westerlife.client.gui.acs.auth;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import fr.aym.acsguis.api.ACsGuiApi;
 import fr.aym.acsguis.api.GuiAPIClientHelper;
-import fr.aym.acsguis.component.button.GuiButton;
 import fr.aym.acsguis.component.layout.GuiScaler;
 import fr.aym.acsguis.component.panel.GuiFrame;
 import fr.aym.acsguis.component.panel.GuiPanel;
@@ -17,13 +16,9 @@ import fr.aym.acslib.api.services.error.ErrorCategory;
 import fr.dynamx.utils.DynamXLoadingTasks;
 import fr.dynamx.utils.errors.DynamXErrorManager;
 import fr.gabidut76.westerlife.CoreMod.WesterLifeSecurityManager;
-import fr.gabidut76.westerlife.client.Client;
-import fr.gabidut76.westerlife.client.gui.other.GuiConnecting;
 import fr.gabidut76.westerlife.westercore.Main;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiMainMenu;
-import net.minecraft.client.gui.GuiOptions;
-import net.minecraft.client.gui.GuiWorldSelection;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
@@ -40,13 +35,13 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 
-public class CSSGuiLogin extends GuiFrame {
+public class CSSGuiErrored extends GuiFrame {
     private int shifter = 0;
 
     private GuiTextField logLOC;
     private GuiLabel box3 = new GuiLabel("Reload css styles");
 
-    public CSSGuiLogin() throws IOException {
+    public CSSGuiErrored() throws IOException {
         super(new GuiScaler.Identity());
 
         logLOC = new GuiTextField();

@@ -266,12 +266,36 @@ public class MixinsSplashScreen {
                     ProgressManager.ProgressBar first = null, penult = null, last = null;
                     Iterator<ProgressManager.ProgressBar> i = ProgressManager.barIterator();
                     while (i.hasNext()) {
+
                         if (first == null) first = i.next();
                         else {
                             penult = last;
                             last = i.next();
                         }
                     }
+                    if(first != null)
+                    {
+                        StringBuilder sb = new StringBuilder();
+                        sb.append("Chargement : ");
+                        sb.append(first.getTitle()).append(" > ").append(first.getMessage());
+
+                        if(penult != null)
+                        {
+                            sb.append(" | ");
+                            sb.append(penult.getTitle()).append(" > ").append(penult.getMessage());
+                        }
+
+                        if(last != null)
+                        {
+                            sb.append(" | ");
+                            sb.append(last.getTitle()).append(" > ").append(last.getMessage());
+                        }
+
+
+                        System.out.println(sb.toString());
+
+                    }
+
 
                     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -347,6 +371,8 @@ public class MixinsSplashScreen {
                         clearGL();
                         setGL();
                     }
+
+
 
 
                     // Such a hack - if the time taken is greater than 10 milliseconds, we're gonna guess that we're on a

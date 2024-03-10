@@ -3,7 +3,6 @@
   "package": "fr.gabidut76.westerlife.CoreMod.mixins",
   "minVersion": "0.6",
   "client": [
-    "MixinsSplashScreen"
   ],
   "server": [],
   "injectors": {

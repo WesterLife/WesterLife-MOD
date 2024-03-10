@@ -2,7 +2,6 @@ package fr.gabidut76.westerlife.common.network.old;
 
 import fr.gabidut76.westerlife.westercore.Main;
 import fr.gabidut76.westerlife.common.init.ItemInit;
-import fr.gabidut76.westerlife.westerapi.bdd.MethodesBDD;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -45,48 +44,48 @@ public class PacketRetirerArgentServer implements IMessage {
         @SideOnly(Side.SERVER)
         public IMessage onMessage(PacketRetirerArgentServer m, MessageContext ctx) {
             EntityPlayer e = (EntityPlayer) ctx.getServerHandler().player.world.getEntityByID(m.player);
-            if(MethodesBDD.getArgent(e) >= m.money){
-                    switch (m.money) {
-
-                        //Vérification le pack est sécurisé.
-
-                        case 5:
-                            e.addItemStackToInventory(new ItemStack(ItemInit.CINQ_EUROS));
-                            MethodesBDD.setArgent(e, MethodesBDD.getArgent(e) - 5);
-                            break;
-                        case 10:
-                            e.addItemStackToInventory(new ItemStack(ItemInit.DIX_EUROS));
-                            MethodesBDD.setArgent(e, MethodesBDD.getArgent(e) - 10);
-                            break;
-                        case 20:
-                            e.addItemStackToInventory(new ItemStack(ItemInit.VINGT_EUROS));
-                            MethodesBDD.setArgent(e, MethodesBDD.getArgent(e) - 20);
-                            break;
-                        case 50:
-                            e.addItemStackToInventory(new ItemStack(ItemInit.CINQUANTE_EUROS));
-                            MethodesBDD.setArgent(e, MethodesBDD.getArgent(e) - 50);
-                            break;
-                        case 100:
-                            e.addItemStackToInventory(new ItemStack(ItemInit.CENT_EUROS));
-                            MethodesBDD.setArgent(e, MethodesBDD.getArgent(e) - 100);
-                            break;
-                        case 200:
-                            e.addItemStackToInventory(new ItemStack(ItemInit.DEUX_CENTS_EUROS));
-                            MethodesBDD.setArgent(e, MethodesBDD.getArgent(e) - 200);
-                            break;
-                        case 500:
-                            e.addItemStackToInventory(new ItemStack(ItemInit.CINQ_CENTS_EUROS));
-                            MethodesBDD.setArgent(e, MethodesBDD.getArgent(e) - 500);
-                            break;
-                        default:
-                            break;
-
-                    }
-                } else {
-                    e.sendMessage(new TextComponentString("§cVous n'avez pas les fonds nécessaires sur votre compte bancaire pour effectuer ce débit."));
-                }
-                System.out.println(m.money);
-                Main.network.sendTo(new PacketSyncPlayer(MethodesBDD.getNom(e),MethodesBDD.getPrenom(e),MethodesBDD.getSex(e),MethodesBDD.getDate(e),MethodesBDD.getArgent(e),MethodesBDD.getRIB(e)), (EntityPlayerMP) e);
+//            if(MethodesBDD.getArgent(e) >= m.money){
+//                    switch (m.money) {
+//
+//                        //Vérification le pack est sécurisé.
+//
+//                        case 5:
+//                            e.addItemStackToInventory(new ItemStack(ItemInit.CINQ_EUROS));
+//                            MethodesBDD.setArgent(e, MethodesBDD.getArgent(e) - 5);
+//                            break;
+//                        case 10:
+//                            e.addItemStackToInventory(new ItemStack(ItemInit.DIX_EUROS));
+//                            MethodesBDD.setArgent(e, MethodesBDD.getArgent(e) - 10);
+//                            break;
+//                        case 20:
+//                            e.addItemStackToInventory(new ItemStack(ItemInit.VINGT_EUROS));
+//                            MethodesBDD.setArgent(e, MethodesBDD.getArgent(e) - 20);
+//                            break;
+//                        case 50:
+//                            e.addItemStackToInventory(new ItemStack(ItemInit.CINQUANTE_EUROS));
+//                            MethodesBDD.setArgent(e, MethodesBDD.getArgent(e) - 50);
+//                            break;
+//                        case 100:
+//                            e.addItemStackToInventory(new ItemStack(ItemInit.CENT_EUROS));
+//                            MethodesBDD.setArgent(e, MethodesBDD.getArgent(e) - 100);
+//                            break;
+//                        case 200:
+//                            e.addItemStackToInventory(new ItemStack(ItemInit.DEUX_CENTS_EUROS));
+//                            MethodesBDD.setArgent(e, MethodesBDD.getArgent(e) - 200);
+//                            break;
+//                        case 500:
+//                            e.addItemStackToInventory(new ItemStack(ItemInit.CINQ_CENTS_EUROS));
+//                            MethodesBDD.setArgent(e, MethodesBDD.getArgent(e) - 500);
+//                            break;
+//                        default:
+//                            break;
+//
+//                    }
+//                } else {
+//                    e.sendMessage(new TextComponentString("§cVous n'avez pas les fonds nécessaires sur votre compte bancaire pour effectuer ce débit."));
+//                }
+//                System.out.println(m.money);
+//                Main.network.sendTo(new PacketSyncPlayer(MethodesBDD.getNom(e),MethodesBDD.getPrenom(e),MethodesBDD.getSex(e),MethodesBDD.getDate(e),MethodesBDD.getArgent(e),MethodesBDD.getRIB(e)), (EntityPlayerMP) e);
 
             return null;
         }

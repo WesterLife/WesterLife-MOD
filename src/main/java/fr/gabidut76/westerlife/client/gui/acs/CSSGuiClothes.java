@@ -39,36 +39,36 @@ public class CSSGuiClothes extends GuiFrame {
                     label.setCssClass("item");
                     label.allowLineBreak();
 
-                    if(Main.wl_db.getString(Minecraft.getMinecraft().player.getUniqueID().toString()) == null) {
-                        label.getStyle().setFontColor(TextFormatting.RED);
-                    } else {
-                        ArrayList<String> itemsReadOnly = new ArrayList<>(Arrays.asList(Main.wl_db.getString(Minecraft.getMinecraft().player.getUniqueID().toString()).split(",")));
-                        if(itemsReadOnly.contains(((DynamXItemArmor<?>) item).getInfo().getFullName())) {
-                            label.getStyle().setFontColor(TextFormatting.GREEN);
-                        } else {
-                            label.getStyle().setFontColor(TextFormatting.RED);
-                        }
-                    }
-
-                    label.getStyle().setOffsetY(l * 20);
-
-                    label.addClickListener((mouseX, mouseY, mouseButton) -> {
-
-                        if(Main.wl_db.getString(Minecraft.getMinecraft().player.getUniqueID().toString()) == null) {
-                            Main.network.sendToServer(new PacketSyncClothes(Minecraft.getMinecraft().player.getUniqueID().toString(), ((DynamXItemArmor<?>) item).getInfo().getFullName(), "add", ((DynamXItemArmor<?>) item).getInfo().getObjArmor().getActiveTextureId(), ((DynamXItemArmor<?>) item).getInfo().getObjArmor().getActivePart().getSlotIndex()));
-
-                            label.getStyle().setFontColor(TextFormatting.GREEN);
-                        } else {
-                            ArrayList<String> itemsReadOnly = new ArrayList<>(Arrays.asList(Main.wl_db.getString(Minecraft.getMinecraft().player.getUniqueID().toString()).split(",")));
-                            if(itemsReadOnly.contains(((DynamXItemArmor<?>) item).getInfo().getFullName())) {
-                                label.getStyle().setFontColor(TextFormatting.RED);
-                                Main.network.sendToServer(new PacketSyncClothes(Minecraft.getMinecraft().player.getUniqueID().toString(), ((DynamXItemArmor<?>) item).getInfo().getFullName(), "remove", ((DynamXItemArmor<?>) item).getInfo().getObjArmor().getActiveTextureId(), ((DynamXItemArmor<?>) item).getInfo().getObjArmor().getActivePart().getSlotIndex()));
-
-                            } else {
-                                label.getStyle().setFontColor(TextFormatting.GREEN);
-                                Main.network.sendToServer(new PacketSyncClothes(Minecraft.getMinecraft().player.getUniqueID().toString(), ((DynamXItemArmor<?>) item).getInfo().getFullName(), "add", ((DynamXItemArmor<?>) item).getInfo().getObjArmor().getActiveTextureId(), ((DynamXItemArmor<?>) item).getInfo().getObjArmor().getActivePart().getSlotIndex()));                            }
-                        }
-                    });
+//                    if(Main.wl_db.getString(Minecraft.getMinecraft().player.getUniqueID().toString()) == null) {
+//                        label.getStyle().setFontColor(TextFormatting.RED);
+//                    } else {
+//                        ArrayList<String> itemsReadOnly = new ArrayList<>(Arrays.asList(Main.wl_db.getString(Minecraft.getMinecraft().player.getUniqueID().toString()).split(",")));
+//                        if(itemsReadOnly.contains(((DynamXItemArmor<?>) item).getInfo().getFullName())) {
+//                            label.getStyle().setFontColor(TextFormatting.GREEN);
+//                        } else {
+//                            label.getStyle().setFontColor(TextFormatting.RED);
+//                        }
+//                    }
+//
+//                    label.getStyle().setOffsetY(l * 20);
+//
+//                    label.addClickListener((mouseX, mouseY, mouseButton) -> {
+//
+//                        if(Main.wl_db.getString(Minecraft.getMinecraft().player.getUniqueID().toString()) == null) {
+//                            Main.network.sendToServer(new PacketSyncClothes(Minecraft.getMinecraft().player.getUniqueID().toString(), ((DynamXItemArmor<?>) item).getInfo().getFullName(), "add", ((DynamXItemArmor<?>) item).getInfo().getObjArmor().getActiveTextureId(), ((DynamXItemArmor<?>) item).getInfo().getObjArmor().getActivePart().getSlotIndex()));
+//
+//                            label.getStyle().setFontColor(TextFormatting.GREEN);
+//                        } else {
+//                            ArrayList<String> itemsReadOnly = new ArrayList<>(Arrays.asList(Main.wl_db.getString(Minecraft.getMinecraft().player.getUniqueID().toString()).split(",")));
+//                            if(itemsReadOnly.contains(((DynamXItemArmor<?>) item).getInfo().getFullName())) {
+//                                label.getStyle().setFontColor(TextFormatting.RED);
+//                                Main.network.sendToServer(new PacketSyncClothes(Minecraft.getMinecraft().player.getUniqueID().toString(), ((DynamXItemArmor<?>) item).getInfo().getFullName(), "remove", ((DynamXItemArmor<?>) item).getInfo().getObjArmor().getActiveTextureId(), ((DynamXItemArmor<?>) item).getInfo().getObjArmor().getActivePart().getSlotIndex()));
+//
+//                            } else {
+//                                label.getStyle().setFontColor(TextFormatting.GREEN);
+//                                Main.network.sendToServer(new PacketSyncClothes(Minecraft.getMinecraft().player.getUniqueID().toString(), ((DynamXItemArmor<?>) item).getInfo().getFullName(), "add", ((DynamXItemArmor<?>) item).getInfo().getObjArmor().getActiveTextureId(), ((DynamXItemArmor<?>) item).getInfo().getObjArmor().getActivePart().getSlotIndex()));                            }
+//                        }
+//                    });
                     background.add(label);
                     l++;
                 }

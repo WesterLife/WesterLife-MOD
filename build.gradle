@@ -112,7 +112,7 @@ minecraft {
         compileOnly fileTree(dir: 'WesterLife/mods', include: 'voicechat-forge-1.12.2-2.4.13.jar')
 //        implementation fg.deobf('fr.dynamx:DynamX:4.0.0-beta-26')
         compile fileTree(dir: 'libs', include: '*.jar')
-        implementation fg.deobf(fileTree(dir: 'libs/dynx', include: 'DynamX-4.1.0-dev18-all.jar'))
+        implementation fg.deobf(fileTree(dir: 'libs/dynx', include: 'DynamX-4.1.0-dev18-all-nomixin.jar'))
 
         // add jar sourcee
 
@@ -182,20 +182,20 @@ minecraft {
                     "FMLAT"                      : "fr.yan36.westerlife.coremod.WesterLifeCoreMod",
             ])
         }
-        from {
-            configurations.compile
-                    .filter {
-                        it.name == 'java-discord-rpc-2.0.1.jar' ||
-                                it.name == 'mcef-1.12.2-1.32.jar' ||
-                                it.name == 'HikariCP-3.1.0.jar' ||
-                                it.name == 'slf4j-api-1.7.25.jar' ||
-                                it.name == 'mysql-connector-java-8.0.19.jar' ||
-                                it.name == 'simpledatabasemanager-1.0.jar' ||
-                                it.name == 'lavaplayer.jar'
-                    }
-                    .collect { it.isDirectory() ? it : zipTree(it) }
-
-        }
+//        from {
+//            configurations.compile
+//                    .filter {
+//                        it.name == 'java-discord-rpc-2.0.1.jar' ||
+//                                it.name == 'mcef-1.12.2-1.32.jar' ||
+//                                it.name == 'HikariCP-3.1.0.jar' ||
+//                                it.name == 'slf4j-api-1.7.25.jar' ||
+//                                it.name == 'mysql-connector-java-8.0.19.jar' ||
+//                                it.name == 'simpledatabasemanager-1.0.jar' ||
+//                                it.name == 'lavaplayer.jar'
+//                    }
+//                    .collect { it.isDirectory() ? it : zipTree(it) }
+//
+//        }
     }
 }
 

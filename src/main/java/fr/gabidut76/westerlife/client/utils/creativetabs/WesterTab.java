@@ -17,20 +17,20 @@ public class WesterTab extends CreativeTabs {
     @Override
     public ItemStack createIcon() {
 
-        if (Objects.equals(this.getTabLabel(), "westertab_cards")) {
-            return new ItemStack(ItemInit.CNI);
-        } else if (Objects.equals(this.getTabLabel(), "westertab_economy")) {
-            return new ItemStack(ItemInit.CARTE_BANCAIRE);
-        } else if (Objects.equals(this.getTabLabel(), "westertab_roads")) {
-            return new ItemStack(DynamXInit.feurouge);
-        } else if (Objects.equals(this.getTabLabel(), "westertab_food")) {
-            return new ItemStack(DynamXInit.WATER);
-        } else if (Objects.equals(this.getTabLabel(), "westertab_gend")) {
-            return new ItemStack(DynamXInit.balise_yellow.getItem());
-        } else if (Objects.equals(this.getTabLabel(), "westertab_illegal")) {
-            return new ItemStack(ItemInit.coke);
-        } else {
+//        if (Objects.equals(this.getTabLabel(), "westertab_cards")) {
+//            return new ItemStack(ItemInit.CNI);
+//        } else if (Objects.equals(this.getTabLabel(), "westertab_economy")) {
+//            return new ItemStack(ItemInit.CARTE_BANCAIRE);
+//        } else if (Objects.equals(this.getTabLabel(), "westertab_roads")) {
+//            return new ItemStack(DynamXInit.feurouge);
+//        } else if (Objects.equals(this.getTabLabel(), "westertab_food")) {
+//            return new ItemStack(DynamXInit.WATER);
+//        } else if (Objects.equals(this.getTabLabel(), "westertab_gend")) {
+//            return new ItemStack(DynamXInit.balise_yellow.getItem());
+//        } else if (Objects.equals(this.getTabLabel(), "westertab_illegal")) {
+//            return new ItemStack(ItemInit.coke);
+//        } else {
             return new ItemStack(ItemInit.CINQ_EUROS);
-        }
+//        }
     }
 }

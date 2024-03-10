@@ -1,7 +1,6 @@
 package fr.gabidut76.westerlife.common.network.old;
 
 import fr.gabidut76.westerlife.westercore.Main;
-import fr.gabidut76.westerlife.westerapi.bdd.MethodesBDD;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -32,7 +31,7 @@ public class PacketReqSyncPlayer implements IMessage{
         @SideOnly(Side.SERVER)
         public IMessage onMessage(PacketReqSyncPlayer m, MessageContext ctx) {
             EntityPlayerMP player = ctx.getServerHandler().player;
-            Main.network.sendTo(new PacketSyncPlayer(MethodesBDD.getNom(player),MethodesBDD.getPrenom(player),MethodesBDD.getSex(player),MethodesBDD.getDate(player),MethodesBDD.getArgent(player), MethodesBDD.getRIB(player)), player);
+//            Main.network.sendTo(new PacketSyncPlayer(MethodesBDD.getNom(player),MethodesBDD.getPrenom(player),MethodesBDD.getSex(player),MethodesBDD.getDate(player),MethodesBDD.getArgent(player), MethodesBDD.getRIB(player)), player);
             return null;
         }
     }

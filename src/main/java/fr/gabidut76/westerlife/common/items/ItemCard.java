@@ -1,11 +1,10 @@
 package fr.gabidut76.westerlife.common.items;
 
+import fr.gabidut76.westerlife.westerapi.api.NemesisLink;
 import fr.gabidut76.westerlife.westercore.Main;
 import fr.gabidut76.westerlife.common.init.ItemInit;
 import fr.gabidut76.westerlife.common.utils.interfaces.IHasModel;
 import fr.gabidut76.westerlife.server.DiscordWebhook;
-import fr.gabidut76.westerlife.westerapi.bdd.DBUtils;
-import fr.gabidut76.westerlife.westerapi.bdd.DatabaseManager;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -75,7 +74,7 @@ public class ItemCard extends Item implements IHasModel {
             if(!worldIn.isRemote) {
                 if(stack.hasTagCompound()) {
                     if(stack.getTagCompound().hasKey("link")) {
-                        tooltip.add("§aCarte synchronisée au profil de : " + Objects.requireNonNull(DBUtils.getCharacter(UUID.fromString(stack.getTagCompound().getString("link")))).getLastName());
+//                        tooltip.add("§aCarte synchronisée au profil de : " + Objects.requireNonNull(DBUtils.getCharacter(UUID.fromString(stack.getTagCompound().getString("link")))).getLastName());
                     }
                 }
             }
@@ -94,26 +93,28 @@ public class ItemCard extends Item implements IHasModel {
                 stack.getTagCompound().setString("link", String.valueOf(playerIn.getUniqueID()));
                 String a = this.getType().name().substring(0, 3) + Math.round(Float.parseFloat(Math.random() * 10000000 + ""));
                 stack.getTagCompound().setString("uniqueIdentifier", String.valueOf(a));
-                playerIn.sendMessage(new TextComponentString("§aCarte synchronisée le profil de : " + DBUtils.getCharacter(playerIn.getUniqueID()).getLastName() + " !"));
-                DiscordWebhook webhook = new DiscordWebhook(DatabaseManager.discordLogger);
+//                playerIn.sendMessage(new TextComponentString("§aCarte synchronisée le profil de : " + DBUtils.getCharacter(playerIn.getUniqueID()).getLastName() + " !"));
+//                DiscordWebhook webhook = new DiscordWebhook(DatabaseManager.discordLogger);
 
-                webhook.addEmbed(
-                        new DiscordWebhook.EmbedObject()
-                                .setTitle("Mise en circulation d'une carte")
-                                .setColor(new Color(0x00FF00))
-                                .setFooter("WesterLife - logger", "https://cdn.discordapp.com/icons/813796868537581588/a424290da4df55b736153d20e46f6770.webp?size=96")
-                                .addField("Type de carte", this.getType().name(), true)
-                                .addField("Activé par", playerIn.getUniqueID() + " " + playerIn.getName(), true)
-                                .addField("Identifiant unique carte", String.valueOf(a), true)
-                );
+                NemesisLink.NEMESIS_API.logDiscordData("1173346685011894332", "Mise en cirulation d'une carte : " + playerIn.getUniqueID() + " " + playerIn.getName() + " " + a + " " + this.getType().name());
 
-                webhook.setAvatarUrl("https://cdn.discordapp.com/icons/813796868537581588/a424290da4df55b736153d20e46f6770.webp?size=96");
-                webhook.setUsername("WesterLife - logger");
-                try {
-                    webhook.execute();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+//                webhook.addEmbed(
+//                        new DiscordWebhook.EmbedObject()
+//                                .setTitle("Mise en circulation d'une carte")
+//                                .setColor(new Color(0x00FF00))
+//                                .setFooter("WesterLife - logger", "https://cdn.discordapp.com/icons/813796868537581588/a424290da4df55b736153d20e46f6770.webp?size=96")
+//                                .addField("Type de carte", this.getType().name(), true)
+//                                .addField("Activé par", playerIn.getUniqueID() + " " + playerIn.getName(), true)
+//                                .addField("Identifiant unique carte", String.valueOf(a), true)
+//                );
+//
+//                webhook.setAvatarUrl("https://cdn.discordapp.com/icons/813796868537581588/a424290da4df55b736153d20e46f6770.webp?size=96");
+//                webhook.setUsername("WesterLife - logger");
+//                try {
+//                    webhook.execute();
+//                } catch (IOException e) {
+//                    throw new RuntimeException(e);
+//                }
 
             } else {
                 playerIn.sendMessage(new TextComponentString("§cCette carte est déjà synchronisée ça serait trop facile de la voler sinon :)"));

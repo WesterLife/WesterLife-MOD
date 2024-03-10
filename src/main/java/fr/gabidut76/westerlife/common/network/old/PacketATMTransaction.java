@@ -1,7 +1,6 @@
 package fr.gabidut76.westerlife.common.network.old;
 
 import fr.gabidut76.westerlife.westercore.Main;
-import fr.gabidut76.westerlife.westerapi.bdd.MethodesBDD;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -43,20 +42,20 @@ public class PacketATMTransaction implements IMessage{
         @SideOnly(Side.SERVER)
         public IMessage onMessage(PacketATMTransaction m, MessageContext ctx) {
             EntityPlayer e = (EntityPlayer) ctx.getServerHandler().player;
-            if(MethodesBDD.getCharacterExists(e)){
-                if(MethodesBDD.getRibExist(m.rib)){
-                    if(MethodesBDD.getArgent(ctx.getServerHandler().player) >= Double.parseDouble(m.montant)){
-                        MethodesBDD.setArgent(e, MethodesBDD.getArgent(e) - Double.parseDouble(m.montant));
-                        MethodesBDD.setArgentByRIB(m.rib, MethodesBDD.getArgentByRIB(m.rib) + Double.parseDouble(m.montant));
-                        e.sendMessage(new TextComponentString("§cTransaction effectuée avec succès."));
-                        Main.network.sendTo(new PacketSyncPlayer(MethodesBDD.getNom(e), MethodesBDD.getPrenom(e), MethodesBDD.getSex(e), MethodesBDD.getDate(e), MethodesBDD.getArgent(e), MethodesBDD.getRIB(e)), (EntityPlayerMP) e);
-                    } else {
-                        ctx.getServerHandler().player.sendMessage(new TextComponentString("§cVous n'avez pas assez d'argent sur votre compte pour effectuer cette transaction"));
-                    }
-                } else {
-                    ctx.getServerHandler().player.sendMessage(new TextComponentString("§cLe RIB auquel est destiné la transaction n'existe pas."));
-                }
-            }
+//            if(MethodesBDD.getCharacterExists(e)){
+//                if(MethodesBDD.getRibExist(m.rib)){
+//                    if(MethodesBDD.getArgent(ctx.getServerHandler().player) >= Double.parseDouble(m.montant)){
+//                        MethodesBDD.setArgent(e, MethodesBDD.getArgent(e) - Double.parseDouble(m.montant));
+//                        MethodesBDD.setArgentByRIB(m.rib, MethodesBDD.getArgentByRIB(m.rib) + Double.parseDouble(m.montant));
+//                        e.sendMessage(new TextComponentString("§cTransaction effectuée avec succès."));
+//                        Main.network.sendTo(new PacketSyncPlayer(MethodesBDD.getNom(e), MethodesBDD.getPrenom(e), MethodesBDD.getSex(e), MethodesBDD.getDate(e), MethodesBDD.getArgent(e), MethodesBDD.getRIB(e)), (EntityPlayerMP) e);
+//                    } else {
+//                        ctx.getServerHandler().player.sendMessage(new TextComponentString("§cVous n'avez pas assez d'argent sur votre compte pour effectuer cette transaction"));
+//                    }
+//                } else {
+//                    ctx.getServerHandler().player.sendMessage(new TextComponentString("§cLe RIB auquel est destiné la transaction n'existe pas."));
+//                }
+//            }
 
         return null;
         }

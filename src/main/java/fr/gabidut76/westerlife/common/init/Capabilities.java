@@ -35,11 +35,6 @@ public class Capabilities {
 
     @SubscribeEvent
     public static void registerCapabilities(final AttachCapabilitiesEvent<Entity> e) {
-        if(FMLCommonHandler.instance().getSide().isClient()) {
-            if(Minecraft.getMinecraft().isSingleplayer()) {
-                return;
-            }
-        }
         if(e.getObject() instanceof EntityPlayer) {
             System.out.println("Attaching all capabilities to player.");
 

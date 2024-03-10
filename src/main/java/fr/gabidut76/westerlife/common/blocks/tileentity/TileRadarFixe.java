@@ -8,7 +8,6 @@ import fr.gabidut76.westerlife.common.Util;
 import fr.gabidut76.westerlife.common.objects.justice.Conviction;
 import fr.gabidut76.westerlife.common.objects.justice.Punishment;
 import fr.gabidut76.westerlife.common.utils.AABB;
-import fr.gabidut76.westerlife.westerapi.bdd.DBUtils;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -98,8 +97,7 @@ public class TileRadarFixe extends TileEntitySyncClient implements ITickable {
                             }
 
                             Conviction conviction = new Conviction(ep.getUniqueID().toString(), "Excès de vitesse au coordonnées GPS de : " + getPos().getX() + " " + getPos().getY() + " " + getPos().getZ() + ". Flashé à la vitesse de : " + v.getPhysicsHandler().getSpeed(BaseVehiclePhysicsHandler.SpeedUnit.KMH) + " (+" + depassement + ")", String.valueOf(new Date().getTime()) , l);
-
-                            DBUtils.saveToDB(conviction);
+                            //TODO:refaire les amandes
                             float t = 0;
                             for (Punishment value : conviction.getPunishment()) {
                                 t+=value.getAmount();

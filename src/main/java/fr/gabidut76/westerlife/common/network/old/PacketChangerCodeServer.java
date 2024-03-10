@@ -1,6 +1,5 @@
 package fr.gabidut76.westerlife.common.network.old;
 
-import fr.gabidut76.westerlife.westerapi.bdd.MethodesBDD;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
@@ -41,7 +40,7 @@ public class PacketChangerCodeServer implements IMessage {
         @SideOnly(Side.SERVER)
         public IMessage onMessage(PacketChangerCodeServer m, MessageContext ctx) {
             EntityPlayer e = (EntityPlayer) ctx.getServerHandler().player.world.getEntityByID(m.player);
-                MethodesBDD.setCodeCB(e, m.code);
+
             return null;
         }
     }

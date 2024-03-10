@@ -40,9 +40,9 @@ public class PacketSetKit implements IMessage{
         public IMessage onMessage(PacketSetKit m, MessageContext ctx) {
             if(!Util.hasPermission(ctx.getServerHandler().player, "op")) return null;
             if(!ctx.getServerHandler().player.isCreative()) return null;
-            Main.wl_db.setString("kits."+m.kitname, m.items);
-            Main.wl_db.setString("kits", Main.wl_db.getString("kits")+";"+m.kitname);
-            System.out.println("Kit "+m.kitname+" set to "+ m.items);
+//            Main.wl_db.setString("kits."+m.kitname, m.items);
+//            Main.wl_db.setString("kits", Main.wl_db.getString("kits")+";"+m.kitname);
+//            System.out.println("Kit "+m.kitname+" set to "+ m.items);
 
             return null;
         }

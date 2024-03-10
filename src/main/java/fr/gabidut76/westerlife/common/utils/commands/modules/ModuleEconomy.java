@@ -7,7 +7,6 @@ import fr.gabidut76.westerlife.common.objects.character.Character;
 import fr.gabidut76.westerlife.common.objects.economy.BankAccount;
 import fr.gabidut76.westerlife.common.utils.commands.CommandModule;
 import fr.gabidut76.westerlife.westerapi.api.NemesisLink;
-import fr.gabidut76.westerlife.westerapi.bdd.DBUtils;
 import fr.gabidut76.westerlife.westercore.Main;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;

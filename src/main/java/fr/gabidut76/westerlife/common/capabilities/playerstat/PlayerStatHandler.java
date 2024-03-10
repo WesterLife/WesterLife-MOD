@@ -28,7 +28,6 @@ public class PlayerStatHandler {
 
     @SubscribeEvent
     public void onPlayerJoin(final PlayerEvent.PlayerLoggedInEvent e) {
-        if(FMLCommonHandler.instance().getSide().isClient()) return;
         if (!(e.player instanceof EntityPlayer)) {
             return;
         }
@@ -113,11 +112,6 @@ public class PlayerStatHandler {
 
     @SubscribeEvent
     public void timer(TickEvent.PlayerTickEvent e) {
-        if(FMLCommonHandler.instance().getSide().isClient()) {
-            if(Minecraft.getMinecraft().isSingleplayer()) {
-                return;
-            }
-        }
         if (e.phase == TickEvent.Phase.END && e.player.ticksExisted % 20 == 0 && e.side.isServer()) {
             try {
                 sync(e.player);

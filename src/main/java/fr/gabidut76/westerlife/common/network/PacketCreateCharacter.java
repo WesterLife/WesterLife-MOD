@@ -4,8 +4,6 @@ import fr.gabidut76.westerlife.common.init.DynamXInit;
 import fr.gabidut76.westerlife.common.init.ItemInit;
 import fr.gabidut76.westerlife.common.items.ItemCard;
 import fr.gabidut76.westerlife.server.DiscordWebhook;
-import fr.gabidut76.westerlife.westerapi.bdd.DBUtils;
-import fr.gabidut76.westerlife.westerapi.bdd.DatabaseManager;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -69,56 +67,56 @@ public class PacketCreateCharacter implements IMessage{
             EntityPlayer e = (EntityPlayer) ctx.getServerHandler().player.world.getEntityByID(m.player);
             if(Side.SERVER.isServer()) {
                 assert e != null;
-                if (!DBUtils.isRowExistInDatabase("players", "uuid", e.getUniqueID().toString())) {
-                    System.out.println("Received packet from " + e.getUniqueID().toString() + " to create a character. (s=" + m.sex + ")");
-//                    DBUtils.saveToDB(new Character(e.getUniqueID(), m.firstnames, m.familyname, m.nationality, Character.Gender.getBySex(m.sex), m.birthdate, m.birthplace));
-                    e.sendMessage(new TextComponentString("§cWesterLife §8» §aVotre personnage a bien été créé ! Bon jeu !"));
-                    ItemStack item = new ItemStack(ItemInit.CNI);
-                    item.setTagCompound(new NBTTagCompound());
-                    assert item.getTagCompound() != null;
-                    item.getTagCompound().setString("link", e.getUniqueID().toString());
-
-                    item.getTagCompound().setString("link", String.valueOf(e.getUniqueID()));
-                    String a = ItemCard.CardType.CNI.name().substring(0, 3) + Math.round(Float.parseFloat(Math.random() * 10000000 + ""));
-                    item.getTagCompound().setString("uniqueIdentifier", String.valueOf(a));
-                    e.sendMessage(new TextComponentString("§aCarte synchronisée le profil de : " + DBUtils.getCharacter(e.getUniqueID()).getLastName() + " !"));
-
-                    ItemStack water = new ItemStack(DynamXInit.WATER, 2);
-                    water.setStackDisplayName("§b§3Bouteille d'eau");
-                    e.inventory.addItemStackToInventory(water);
-
-                    ItemStack food = new ItemStack(DynamXInit.barreChoco, 5);
-                    food.setStackDisplayName("§b§6Barre de chocolat");
-                    e.inventory.addItemStackToInventory(food);
-
-                    ItemStack food2 = new ItemStack(Items.BREAD, 2);
-                    food2.setStackDisplayName("§b§6Pain");
-                    e.inventory.addItemStackToInventory(food2);
-
-                    DiscordWebhook webhook = new DiscordWebhook(DatabaseManager.discordLogger);
-
-                    webhook.addEmbed(
-                            new DiscordWebhook.EmbedObject()
-                                    .setTitle("Mise en circulation d'une carte")
-                                    .setColor(new Color(0x00FF00))
-                                    .setFooter("WesterLife - logger", "https://cdn.discordapp.com/icons/813796868537581588/a424290da4df55b736153d20e46f6770.webp?size=96")
-                                    .addField("Type de carte", ItemCard.CardType.CNI.name(), true)
-                                    .addField("Activé par", e.getUniqueID() + " " + e.getName(), true)
-                                    .addField("Identifiant unique carte", String.valueOf(a), true)
-                                    .addField("Lié a identitée créé", m.firstnames + " " + m.familyname + " " + m.birthdate + " " + m.birthplace + " " + m.nationality + " " + m.sex , true)
-                    );
-
-                    webhook.setAvatarUrl("https://cdn.discordapp.com/icons/813796868537581588/a424290da4df55b736153d20e46f6770.webp?size=96");
-                    webhook.setUsername("WesterLife - logger");
-                    try {
-                        webhook.execute();
-                    } catch (IOException e1) {
-                        throw new RuntimeException(e1);
-                    }
-
-                    e.inventory.addItemStackToInventory(item);
-
-                }
+//                if (!DBUtils.isRowExistInDatabase("players", "uuid", e.getUniqueID().toString())) {
+//                    System.out.println("Received packet from " + e.getUniqueID().toString() + " to create a character. (s=" + m.sex + ")");
+////                    DBUtils.saveToDB(new Character(e.getUniqueID(), m.firstnames, m.familyname, m.nationality, Character.Gender.getBySex(m.sex), m.birthdate, m.birthplace));
+//                    e.sendMessage(new TextComponentString("§cWesterLife §8» §aVotre personnage a bien été créé ! Bon jeu !"));
+//                    ItemStack item = new ItemStack(ItemInit.CNI);
+//                    item.setTagCompound(new NBTTagCompound());
+//                    assert item.getTagCompound() != null;
+//                    item.getTagCompound().setString("link", e.getUniqueID().toString());
+//
+//                    item.getTagCompound().setString("link", String.valueOf(e.getUniqueID()));
+//                    String a = ItemCard.CardType.CNI.name().substring(0, 3) + Math.round(Float.parseFloat(Math.random() * 10000000 + ""));
+//                    item.getTagCompound().setString("uniqueIdentifier", String.valueOf(a));
+//                    e.sendMessage(new TextComponentString("§aCarte synchronisée le profil de : " + DBUtils.getCharacter(e.getUniqueID()).getLastName() + " !"));
+//
+//                    ItemStack water = new ItemStack(DynamXInit.WATER, 2);
+//                    water.setStackDisplayName("§b§3Bouteille d'eau");
+//                    e.inventory.addItemStackToInventory(water);
+//
+//                    ItemStack food = new ItemStack(DynamXInit.barreChoco, 5);
+//                    food.setStackDisplayName("§b§6Barre de chocolat");
+//                    e.inventory.addItemStackToInventory(food);
+//
+//                    ItemStack food2 = new ItemStack(Items.BREAD, 2);
+//                    food2.setStackDisplayName("§b§6Pain");
+//                    e.inventory.addItemStackToInventory(food2);
+//
+//                    DiscordWebhook webhook = new DiscordWebhook(DatabaseManager.discordLogger);
+//
+//                    webhook.addEmbed(
+//                            new DiscordWebhook.EmbedObject()
+//                                    .setTitle("Mise en circulation d'une carte")
+//                                    .setColor(new Color(0x00FF00))
+//                                    .setFooter("WesterLife - logger", "https://cdn.discordapp.com/icons/813796868537581588/a424290da4df55b736153d20e46f6770.webp?size=96")
+//                                    .addField("Type de carte", ItemCard.CardType.CNI.name(), true)
+//                                    .addField("Activé par", e.getUniqueID() + " " + e.getName(), true)
+//                                    .addField("Identifiant unique carte", String.valueOf(a), true)
+//                                    .addField("Lié a identitée créé", m.firstnames + " " + m.familyname + " " + m.birthdate + " " + m.birthplace + " " + m.nationality + " " + m.sex , true)
+//                    );
+//
+//                    webhook.setAvatarUrl("https://cdn.discordapp.com/icons/813796868537581588/a424290da4df55b736153d20e46f6770.webp?size=96");
+//                    webhook.setUsername("WesterLife - logger");
+//                    try {
+//                        webhook.execute();
+//                    } catch (IOException e1) {
+//                        throw new RuntimeException(e1);
+//                    }
+//
+//                    e.inventory.addItemStackToInventory(item);
+//
+//                }
             }
             return null;
         }

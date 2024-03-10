@@ -2,7 +2,6 @@ package fr.gabidut76.westerlife.common.network.old;
 
 import fr.gabidut76.westerlife.westercore.Main;
 import fr.gabidut76.westerlife.common.init.ItemInit;
-import fr.gabidut76.westerlife.westerapi.bdd.MethodesBDD;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -68,8 +67,8 @@ public class PacketDepoArgentServer implements IMessage {
 
                 }
 
-                Main.network.sendTo(new PacketSyncPlayer(MethodesBDD.getNom(e),MethodesBDD.getPrenom(e),MethodesBDD.getSex(e),MethodesBDD.getDate(e),MethodesBDD.getArgent(e), MethodesBDD.getRIB(e)), (EntityPlayerMP) e);
-                MethodesBDD.setArgent(e, MethodesBDD.getArgent(e) + m.money);
+//                Main.network.sendTo(new PacketSyncPlayer(MethodesBDD.getNom(e),MethodesBDD.getPrenom(e),MethodesBDD.getSex(e),MethodesBDD.getDate(e),MethodesBDD.getArgent(e), MethodesBDD.getRIB(e)), (EntityPlayerMP) e);
+//                MethodesBDD.setArgent(e, MethodesBDD.getArgent(e) + m.money);
 
             } else {
                 e.sendMessage(new TextComponentString("§cVous n'avez pas les billets nécessaires pour effectuer ce dépôt."));

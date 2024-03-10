@@ -1,6 +1,5 @@
 package fr.gabidut76.westerlife.common.network.sync;
 
-import fr.nathanael2611.simpledatabasemanager.core.SyncedDatabases;
 import fr.gabidut76.westerlife.westercore.Main;
 import io.netty.buffer.ByteBuf;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
@@ -54,29 +53,17 @@ public class PacketSyncClothes implements IMessage{
 //        @SideOnly(Side.SERVER)
         public IMessage onMessage(PacketSyncClothes m, MessageContext ctx) {
             List<String> clothes2;
-            if(Main.wl_db.getString(m.uuid) == null) {
-                Main.wl_db.setString(m.uuid, "");
-                clothes2 = new ArrayList<>();
-            } else {
-                List<String> t = Arrays.asList(Main.wl_db.getString(m.uuid).split(","));
-                clothes2 = new ArrayList<>(t);
-            }
 
             int byteToInt = m.activeID & 0xFF;
             switch (m.action) {
                 case "add":
-                    clothes2.add(m.clothes + "!" + byteToInt + "!" + m.slot);
+
                     break;
                 case "remove":
-                    clothes2.remove(m.clothes + "!" + byteToInt + "!" + m.slot);
-                    break;
+
                 case "removeall":
-                    clothes2.clear();
                     break;
             }
-            Main.wl_db.setString(m.uuid, String.join(",", clothes2));
-
-            SyncedDatabases.syncAll();
 
             return null;
         }

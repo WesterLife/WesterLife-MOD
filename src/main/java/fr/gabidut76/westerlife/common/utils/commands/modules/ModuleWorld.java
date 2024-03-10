@@ -4,7 +4,6 @@ package fr.gabidut76.westerlife.common.utils.commands.modules;
 
 import com.jme3.math.Vector3f;
 import fr.dynamx.common.contentpack.DynamXObjectLoaders;
-import fr.nathanael2611.simpledatabasemanager.core.Databases;
 import fr.gabidut76.westerlife.westercore.Main;
 import fr.gabidut76.westerlife.common.Util;
 import fr.gabidut76.westerlife.common.blocks.dynamx.BlockPanneauRue;
@@ -249,34 +248,34 @@ public class ModuleWorld extends CommandModule {
                 if (Objects.equals(args[2], "create")) {
                     LightSequence lightSequence = new LightSequence();
                     lightSequence.add(new BlockPos(0, -20, 0));
-                    Main.wl_db.setString("seq_" + args[3], new LightSequence().toString());
+//                    Main.wl_db.setString("seq_" + args[3], new LightSequence().toString());
                     sender.sendMessage(new TextComponentString("§aSequence " + args[3] + " created"));
                 } else if (Objects.equals(args[2], "addlyre")) {
                     EntityPlayer player = (EntityPlayer) sender;
                     RayTraceResult rayTraceResult = player.world.rayTraceBlocks(player.getPositionEyes(1), player.getPositionEyes(1).add(player.getLookVec().scale(10)));
                     assert rayTraceResult != null;
                     System.out.println(rayTraceResult.getBlockPos());
-                    if (rayTraceResult != null) {
-                        TileLyre tilespot = (TileLyre) player.world.getTileEntity(rayTraceResult.getBlockPos());
-                        if (tilespot != null) {
-                            LightSequence lightSequence = LightSequence.fromString(Main.wl_db.getString("seq_" + args[3]));
-                            lightSequence.add(tilespot.getPos());
-                            Main.wl_db.setString("seq_" + args[3], lightSequence.toString());
-                            sender.sendMessage(new TextComponentString("§aLyre added to sequence " + args[3]));
-                        }
-                    }
-                } else if (Objects.equals(args[2], "addseq")) {
-                    Vector3f vector3fTo = new Vector3f(Integer.parseInt(args[3]), Integer.parseInt(args[4]), Integer.parseInt(args[5]));
-                    LightSequence lightSequence = LightSequence.fromString(Main.wl_db.getString("seq_" + args[6]));
-                    lightSequence.add(new LightSequence.DoubleVector(new Vector3f(0, 0, 0), vector3fTo));
-                    Main.wl_db.setString("seq_" + args[6], lightSequence.toString());
-                    sender.sendMessage(new TextComponentString("§aSequence added to sequence " + args[3] + " " + args[4] + " " + args[5] + " " + args[6]));
-                } else if (Objects.equals(args[2], "play")) {
-                    LightSequence lightSequence = LightSequence.fromString(Main.wl_db.getString("seq_" + args[3]));
-                    lightSequence.play(sender.getEntityWorld());
+                    if (rayTraceResult != null) {}
+//                        TileLyre tilespot = (TileLyre) player.world.getTileEntity(rayTraceResult.getBlockPos());
+//                        if (tilespot != null) {
+//                            LightSequence lightSequence = LightSequence.fromString(Main.wl_db.getString("seq_" + args[3]));
+//                            lightSequence.add(tilespot.getPos());
+//                            Main.wl_db.setString("seq_" + args[3], lightSequence.toString());
+//                            sender.sendMessage(new TextComponentString("§aLyre added to sequence " + args[3]));
+//                        }
+//                    }
+//                } else if (Objects.equals(args[2], "addseq")) {
+//                    Vector3f vector3fTo = new Vector3f(Integer.parseInt(args[3]), Integer.parseInt(args[4]), Integer.parseInt(args[5]));
+//                    LightSequence lightSequence = LightSequence.fromString(Main.wl_db.getString("seq_" + args[6]));
+//                    lightSequence.add(new LightSequence.DoubleVector(new Vector3f(0, 0, 0), vector3fTo));
+//                    Main.wl_db.setString("seq_" + args[6], lightSequence.toString());
+//                    sender.sendMessage(new TextComponentString("§aSequence added to sequence " + args[3] + " " + args[4] + " " + args[5] + " " + args[6]));
+//                } else if (Objects.equals(args[2], "play")) {
+//                    LightSequence lightSequence = LightSequence.fromString(Main.wl_db.getString("seq_" + args[3]));
+//                    lightSequence.play(sender.getEntityWorld());
                 } else if (Objects.equals(args[2], "dump")) {
-                    LightSequence lightSequence = LightSequence.fromString(Main.wl_db.getString("seq_" + args[3]));
-                    sender.sendMessage(new TextComponentString(lightSequence.toString()));
+//                    LightSequence lightSequence = LightSequence.fromString(Main.wl_db.getString("seq_" + args[3]));
+//                    sender.sendMessage(new TextComponentString(lightSequence.toString()));
                 } else if (Objects.equals(args[2], "bl")) {
                     // make the block blink
                     BlockPos blockPos = new BlockPos(Integer.parseInt(args[3]), Integer.parseInt(args[4]), Integer.parseInt(args[5]));
@@ -288,12 +287,12 @@ public class ModuleWorld extends CommandModule {
                         tileEntity.syncToClient();
                     }
                 } else if (Objects.equals(args[2], "gui")) {
-                    Main.network.sendTo(new PacketOpenAcsGui(1, Main.wl_db.getString("seq_" + args[3]), args[3]), (EntityPlayerMP) sender);
+//                    Main.network.sendTo(new PacketOpenAcsGui(1, Main.wl_db.getString("seq_" + args[3]), args[3]), (EntityPlayerMP) sender);
                 } else if (Objects.equals(args[2], "manuset")) {
-                    Main.wl_db.setString("seq_" + args[3], args[4]);
+//                    Main.wl_db.setString("seq_" + args[3], args[4]);
                 } else if (Objects.equals(args[2], "reset")) {
-                    LightSequence lightSequence = LightSequence.fromString(Main.wl_db.getString("seq_" + args[3]));
-                    lightSequence.reset(sender.getEntityWorld());
+//                    LightSequence lightSequence = LightSequence.fromString(Main.wl_db.getString("seq_" + args[3]));
+//                    lightSequence.reset(sender.getEntityWorld());
                 }
 
 
@@ -447,7 +446,7 @@ public class ModuleWorld extends CommandModule {
 
 
             } else if (Objects.equals(args[1], "resetwater")) {
-                Databases.getPlayerData((EntityPlayer) sender).setFloat("watervalue", 100f);
+//                Databases.getPlayerData((EntityPlayer) sender).setFloat("watervalue", 100f);
             } else if (Objects.equals(args[1], "setbank")) {
                 if (sender instanceof EntityPlayer) {
                     EntityPlayer player = (EntityPlayer) sender;
@@ -459,7 +458,7 @@ public class ModuleWorld extends CommandModule {
                     sender.sendMessage(new TextComponentString("§aBank set to " + args[2]));
                 }
             } else if (Objects.equals(args[1], "notif")) {
-                Databases.getPlayerData((EntityPlayer) sender).setString("notification", "Bonjour, ceci est un test de §lnotification !");
+//                Databases.getPlayerData((EntityPlayer) sender).setString("notification", "Bonjour, ceci est un test de §lnotification !");
                 sender.sendMessage(new TextComponentString("§aNotification set !"));
             } else if (Objects.equals(args[1], "digicode")) {
                 //Change the code of a digicode

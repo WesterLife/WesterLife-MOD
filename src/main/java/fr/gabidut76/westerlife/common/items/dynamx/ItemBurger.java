@@ -23,7 +23,7 @@ public class ItemBurger extends DynamXItem {
     public ItemBurger(String modid, String itemName, ResourceLocation model, float saturationModifier) {
         super(modid, itemName, model);
         this.saturationModifier = saturationModifier;
-        getInfo().addDrawablePart(new ItemBurgerPart());
+//        getInfo().addDrawablePart(new ItemBurgerPart());
     }
 
     @Override

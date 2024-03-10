@@ -2,6 +2,8 @@ package fr.gabidut76.westerlife.CoreMod;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import fr.gabidut76.westerlife.client.Client;
+import fr.gabidut76.westerlife.common.objects.LaunchType;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -13,6 +15,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Objects;
 
 public class WesterLifeSecurityManager {
 
@@ -45,6 +48,11 @@ public class WesterLifeSecurityManager {
             }
 
             JsonObject jsonObject = new Gson().fromJson(content, JsonObject.class);
+
+            if(jsonObject.get("nurl") != null) {
+                NEMESIS_URL = jsonObject.get("nurl").getAsString();
+            }
+
             String accessToken = jsonObject.get("account").getAsJsonObject().get("username").getAsString();
 
             String response = null;
@@ -53,18 +61,27 @@ public class WesterLifeSecurityManager {
             } catch (Exception e) {
                 throw new RuntimeException("WesterLifeLibLoader, ERROR -3", new Throwable("WesterLifeLibLoader"));
             }
-
+            System.out.println(response);
             if(response == null) {
                 throw new RuntimeException("WesterLifeLibLoader, ERROR -1", new Throwable("WesterLifeLibLoader"));
             }
 
+
+
             JsonObject responseJson = new Gson().fromJson(response, JsonObject.class);
 
             try {
-                if(responseJson.get("data").getAsString().equals("")) {
-                    SHOULD_MANUAL_LOGIN = true;
+                if(Objects.equals(responseJson.get("info").getAsJsonObject().get("state").getAsJsonObject().get("code").getAsString(), "ERROR")) {
+                    Client.launchType = LaunchType.NEEDTOCONNECT;
+                } else {
+                    System.out.println(responseJson.get("data").getAsJsonObject().get("user").getAsJsonObject().get("uuid").getAsString());
+                    if(Objects.equals(responseJson.get("data").getAsJsonObject().get("user").getAsJsonObject().get("uuid").getAsString(), "fromdiscord")) {
+                        Client.launchType = LaunchType.NEEDTOCONFIRMUUID;
+                    }
                 }
+
             } catch (Exception e) {
+                Client.launchType = LaunchType.ERRORED;
                 e.printStackTrace();
             }
 

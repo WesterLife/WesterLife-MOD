@@ -8,9 +8,11 @@ import fr.dynamx.client.handlers.hud.CarController;
 import fr.dynamx.client.renders.model.renderer.DxModelRenderer;
 import fr.dynamx.common.DynamXContext;
 import fr.dynamx.common.items.DynamXItemArmor;
-import fr.gabidut76.westerlife.CoreMod.WesterLifeSecurityManager;
+import fr.gabidut76.westerlife.client.gui.acs.auth.CSSGuiConfirmUUID;
+import fr.gabidut76.westerlife.client.gui.acs.auth.CSSGuiLogin;
 import fr.gabidut76.westerlife.client.gui.other.*;
 import fr.gabidut76.westerlife.common.capabilities.playerstat.PlayerStatData;
+import fr.gabidut76.westerlife.common.objects.LaunchType;
 import fr.gabidut76.westerlife.westercore.Main;
 import fr.gabidut76.westerlife.client.gui.acs.*;
 import fr.gabidut76.westerlife.client.renderer.ClientNotifications;
@@ -26,10 +28,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.inventory.GuiContainerCreative;
 import net.minecraft.client.gui.inventory.GuiInventory;
-import net.minecraft.client.gui.toasts.SystemToast;
-import net.minecraft.client.model.ModelBiped;
-import net.minecraft.client.model.ModelPlayer;
-import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.multiplayer.GuiConnecting;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
@@ -41,7 +39,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.chunk.Chunk;
-import net.minecraftforge.client.GuiIngameForge;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
@@ -72,8 +69,6 @@ import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType.CHAT;
-
 @Mod.EventBusSubscriber
 public class Client {
 
@@ -96,7 +91,7 @@ public class Client {
     public static boolean isLogginIn = false;
 
 
-
+    public static LaunchType launchType = LaunchType.OK;
 
     public static void setScreenMcef(String screenName) {
         openScreenMcef = screenName;
@@ -114,26 +109,34 @@ public class Client {
 
         System.out.println("GUI: " + e.getGui());
 
-
-
-//        if(isLogginIn) {
-//            e.setGui(new fr.yan36.westerlife.client.gui.other.GuiConnecting(Minecraft.getMinecraft()));
-//            return;
-//        }
-
         if (e.getGui() instanceof GuiMainMenu) {
             e.setCanceled(true);
-            if(WesterLifeSecurityManager.SHOULD_MANUAL_LOGIN) {
-                Minecraft.getMinecraft().displayGuiScreen(new CSSGuiLogin().getGuiScreen());
-            } else {
-                Minecraft.getMinecraft().displayGuiScreen(new CSSGuiMainMenu().getGuiScreen());
+//            if(WesterLifeSecurityManager.SHOULD_MANUAL_LOGIN) {
+//                Minecraft.getMinecraft().displayGuiScreen(new CSSGuiLogin().getGuiScreen());
+//            } else {
+//                Minecraft.getMinecraft().displayGuiScreen(new CSSGuiMainMenu().getGuiScreen());
+//            }
+
+            System.out.println("LaunchType: " + launchType);
+
+            switch (launchType) {
+                case NEEDTOCONNECT:
+                    Minecraft.getMinecraft().displayGuiScreen(new CSSGuiLogin().getGuiScreen());
+                    break;
+                case NEEDTOCONFIRMUUID:
+                    Minecraft.getMinecraft().displayGuiScreen(new CSSGuiConfirmUUID().getGuiScreen());
+                    break;
+                case OK:
+                    Minecraft.getMinecraft().displayGuiScreen(new CSSGuiMainMenu().getGuiScreen());
+                    break;
+                case ERRORED:
+                    Minecraft.getMinecraft().displayGuiScreen(new GuiErrorScreen("Erreur", "Une erreur est survenue lors de la connexion au serveur."));
+                    break;
             }
 
 
+
         }
-
-
-
         if (e.getGui() == null && Minecraft.getMinecraft().player == null) {
             System.out.println("CASE OK");
         }

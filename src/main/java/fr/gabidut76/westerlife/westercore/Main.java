@@ -2,33 +2,19 @@ package fr.gabidut76.westerlife.westercore;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
 import fr.dynamx.api.contentpack.DynamXAddon;
 import fr.dynamx.api.contentpack.object.render.Enum3DRenderLocation;
 import fr.dynamx.api.dxmodel.DxModelPath;
 import fr.dynamx.api.events.PhysicsEntityEvent;
 import fr.dynamx.common.DynamXContext;
 import fr.dynamx.common.contentpack.DynamXObjectLoaders;
-import fr.dynamx.common.contentpack.loader.ObjectLoader;
-import fr.dynamx.common.contentpack.loader.SubInfoTypesRegistry;
-import fr.dynamx.common.contentpack.type.vehicle.ModularVehicleInfo;
-import fr.dynamx.common.contentpack.type.vehicle.VehicleValidator;
 import fr.dynamx.common.entities.BaseVehicleEntity;
 import fr.dynamx.common.items.DynamXItemArmor;
-import fr.dynamx.common.items.vehicle.ItemHelicopter;
 import fr.dynamx.utils.debug.DynamXDebugOption;
 import fr.dynamx.utils.debug.DynamXDebugOptions;
 import fr.gabidut76.westerlife.CoreMod.WesterLifeSecurityManager;
-import fr.gabidut76.westerlife.common.entities.npcbank.NPCBank;
-import fr.gabidut76.westerlife.common.objects.gameplay.MacdoCommand;
-import fr.gabidut76.westerlife.common.utils.commands.CommandWarn;
-import fr.gabidut76.westerlife.westerradio.WesterRadio;
-import fr.nathanael2611.simpledatabasemanager.core.Database;
-import fr.nathanael2611.simpledatabasemanager.core.Databases;
-import fr.nathanael2611.simpledatabasemanager.core.SyncedDatabases;
 import fr.gabidut76.westerlife.client.gui.GuiHandler;
 import fr.gabidut76.westerlife.client.utils.creativetabs.WesterTab;
-import fr.gabidut76.westerlife.westercore.proxies.CommonProxy;
 import fr.gabidut76.westerlife.common.capabilities.playerchunckrel.CO2ManagementThread;
 import fr.gabidut76.westerlife.common.entities.DynamX.clotheentity.ClothEntity;
 import fr.gabidut76.westerlife.common.entities.DynamX.punchingball.TestEntity2;
@@ -36,6 +22,7 @@ import fr.gabidut76.westerlife.common.entities.DynamX.warningsign.WarningSignEnt
 import fr.gabidut76.westerlife.common.entities.EntitySeat;
 import fr.gabidut76.westerlife.common.entities.NPCTestEntity;
 import fr.gabidut76.westerlife.common.entities.npc.NPCConcessEntity;
+import fr.gabidut76.westerlife.common.entities.npcbank.NPCBank;
 import fr.gabidut76.westerlife.common.entities.npcdomac.NPCDomacEntity;
 import fr.gabidut76.westerlife.common.handlers.RegistryHandler;
 import fr.gabidut76.westerlife.common.init.*;
@@ -43,9 +30,12 @@ import fr.gabidut76.westerlife.common.utils.WesterBuiltinPack;
 import fr.gabidut76.westerlife.common.utils.carmodule.AICarEngineModule;
 import fr.gabidut76.westerlife.common.utils.carmodule.DamageCarModule;
 import fr.gabidut76.westerlife.common.utils.carmodule.GarageModule;
+import fr.gabidut76.westerlife.common.utils.commands.CommandWarn;
 import fr.gabidut76.westerlife.common.utils.commands.PersoCommand;
 import fr.gabidut76.westerlife.common.utils.commands.WesterLifeCommand;
 import fr.gabidut76.westerlife.westerapi.api.NemesisLink;
+import fr.gabidut76.westerlife.westercore.proxies.CommonProxy;
+import fr.gabidut76.westerlife.westerradio.WesterRadio;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.util.ResourceLocation;
@@ -105,8 +95,6 @@ public class Main {
 
     public static Boolean isOpti = false;
 
-    public static Database wl_db;
-
     public static CO2ManagementThread co2ManagementThread;
 
 
@@ -147,7 +135,6 @@ public class Main {
         System.out.println("Starting CO2 management thread");
         NemesisLink.init();
         co2ManagementThread.start();
-        Databases.onServerStarting(event);
     }
 
     @Mod.EventHandler
@@ -190,9 +177,6 @@ public class Main {
 
 
         }
-
-        wl_db = Databases.getDatabase("westerlife_armorsuperposition");
-        SyncedDatabases.add("westerlife_armorsuperposition");
 
         List<DynamXItemArmor<?>> globalitems = ForgeRegistries.ITEMS.getEntries().stream().filter(e -> e.getValue() instanceof DynamXItemArmor<?>).collect(Collectors.toCollection(ArrayList::new)).stream().map(e -> (DynamXItemArmor<?>) e.getValue()).collect(Collectors.toList());
         for (DynamXItemArmor<?> item : globalitems) {
