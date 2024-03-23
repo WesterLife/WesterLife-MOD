@@ -1,5 +1,6 @@
 package fr.gabidut76.westerlife.common.init;
 
+import fr.gabidut76.westerlife.common.network.kits.PacketCreateKit;
 import fr.gabidut76.westerlife.westercore.Main;
 import fr.gabidut76.westerlife.common.capabilities.packets.PacketSyncPlayerStats;
 import fr.gabidut76.westerlife.common.capabilities.packets.PacketSyncChunk;
@@ -63,6 +64,7 @@ public class Network {
             Main.network.registerMessage(PacketSendNotif.ClientHandler.class, PacketSendNotif.class, 48, Side.CLIENT);
             Main.network.registerMessage(PacketNotif.ClientHandler.class, PacketNotif.class, 49, Side.CLIENT);
             Main.network.registerMessage(PacketOpenGuiECO.ClientHandler.class, PacketOpenGuiECO.class, 50, Side.CLIENT);
+            Main.network.registerMessage(PacketCreateKit.ClientHandler.class, PacketCreateKit.class, 51, Side.CLIENT);
 
         } else  {
             Main.network.registerMessage(PacketSyncPlayerStats.ServerHandler.class, PacketSyncPlayerStats.class, 38, Side.SERVER);
@@ -78,6 +80,7 @@ public class Network {
             Main.network.registerMessage(PacketSendNotif.ServerHandler.class, PacketSendNotif.class, 48, Side.SERVER);
             Main.network.registerMessage(PacketNotif.ServerHandler.class, PacketNotif.class, 49, Side.SERVER);
             Main.network.registerMessage(PacketOpenGuiECO.ServerHandler.class, PacketOpenGuiECO.class, 50, Side.SERVER);
+            Main.network.registerMessage(PacketCreateKit.ServerHandler.class, PacketCreateKit.class, 51, Side.SERVER);
 
         }
 

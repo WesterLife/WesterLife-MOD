@@ -112,7 +112,10 @@ minecraft {
         compileOnly fileTree(dir: 'WesterLife/mods', include: 'voicechat-forge-1.12.2-2.4.13.jar')
 //        implementation fg.deobf('fr.dynamx:DynamX:4.0.0-beta-26')
         compile fileTree(dir: 'libs', include: '*.jar')
-        implementation fg.deobf(fileTree(dir: 'libs/dynx', include: 'DynamX-4.1.0-dev18-all-nomixin.jar'))
+        implementation fg.deobf(fileTree(dir: 'libs/dynx', include: 'DynamX-4.1.0-dev19-all.jar'))
+
+
+        implementation fg.deobf(fileTree(dir: 'libs/bl'))
 
         // add jar sourcee
 
@@ -138,6 +141,8 @@ minecraft {
         compile 'com.labymedia:ultralight-java-databind:0.4.7'
         compile 'com.labymedia:ultralight-java-gpu:0.4.7'
 
+        compileOnly 'org.projectlombok:lombok:1.18.24'
+
         implementation 'com.labymedia:ultralight-java-base:0.4.7'
         implementation 'com.labymedia:ultralight-java-databind:0.4.7'
         implementation 'com.labymedia:ultralight-java-gpu:0.4.7'
@@ -148,7 +153,7 @@ minecraft {
 
 
         // sources
-
+        annotationProcessor 'org.projectlombok:lombok:1.18.24'
         annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
         testAnnotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 

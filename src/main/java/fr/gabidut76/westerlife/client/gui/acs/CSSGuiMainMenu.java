@@ -61,7 +61,7 @@ public class CSSGuiMainMenu extends GuiFrame {
                     File file = new File(Minecraft.getMinecraft().gameDir, "launcher_profiles.json");
                     if(!file.exists()) {
                         System.out.println("Shit");
-                        Minecraft.getMinecraft().displayGuiScreen(new GuiServerError(this.getGuiScreen(), new TextComponentString("Wtf ?")).getGuiScreen());
+                        Minecraft.getMinecraft().displayGuiScreen(new GuiServerError(this.getGuiScreen(), new TextComponentString("Casse toi met le fichier non ?")).getGuiScreen());
                         return;
                     }
                     String content = null;

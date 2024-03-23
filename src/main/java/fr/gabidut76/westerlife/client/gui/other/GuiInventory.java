@@ -8,6 +8,7 @@ import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
+// used inventory
 public class GuiInventory extends GuiContainer {
     public static final ResourceLocation texture = new ResourceLocation(Main.MODID, "textures/gui/inventory/inventory.png");
 

@@ -121,7 +121,6 @@ public class WarningSignEntityModule implements IPhysicsModule<AbstractEntityPhy
     public void initPhysicsEntity(@Nullable AbstractEntityPhysicsHandler<?, ?> handler) {
             System.out.println("initPhysicsEntity called");
             DynamXMain.proxy.scheduleTask(entity.world, () -> {
-                System.out.println("test ?");
                 JointHandlerRegistry.createJointWithSelf(JOINT_NAME, entity, (byte) 0);
             });
     }

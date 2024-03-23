@@ -75,13 +75,39 @@ public class CSSGuiConfirmUUID extends GuiFrame {
         GuiPanel login = new GuiPanel();
         login.setCssClass("login_btn");
         login.addClickListener((mouseX, mouseY, mouseButton) -> {
-//            String rep = WesterLifeSecurityManager.httpPost(WesterLifeSecurityManager.NEMESIS_URL + "api/auth/check", "{\"username\":\"" + username.getText() + "\",\"password\":\"" + password.getText() + "\"}");
-//
-//            File file = new File(Minecraft.getMinecraft().gameDir + "\\launcher_profiles.json");
-//            JsonObject jsonObject1 = new JsonObject();
-//
-//
-//            System.out.println(rep);
+
+            File file = new File(Minecraft.getMinecraft().gameDir + "\\launcher_profiles.json");
+            JsonObject jsonObject1 = new JsonObject();
+            String filecontent = "";
+            try {
+                filecontent = new String(java.nio.file.Files.readAllBytes(file.toPath()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            Gson gson = new Gson();
+            JsonObject internal = gson.fromJson(filecontent, JsonObject.class);
+
+            String rep = WesterLifeSecurityManager.httpPost(WesterLifeSecurityManager.NEMESIS_URL + "api/auth/confirmuuid", "{\"token\":\"" + internal.get("account").getAsJsonObject().get("username").getAsString() + "\",\"uuid\":\"" + Minecraft.getMinecraft().player.getUniqueID().toString() + "\"}");
+
+            if (rep.contains("error")) {
+                GuiLabel error = new GuiLabel("§cErreur: " + rep);
+                error.setCssClass("error");
+                add(error);
+            } else {
+                internal.get("account").getAsJsonObject().addProperty("nemesis", rep);
+                try {
+                    FileOutputStream fileOutputStream = new FileOutputStream(file);
+                    fileOutputStream.write(gson.toJson(internal).getBytes());
+                    fileOutputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Minecraft.getMinecraft().displayGuiScreen(new GuiMainMenu());
+            }
+
+
+            System.out.println(rep);
         });
 
 

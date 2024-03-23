@@ -5,7 +5,7 @@ import com.google.common.collect.Lists;
 import com.jme3.math.Vector3f;
 import fr.aym.acsguis.cssengine.font.CssFontHelper;
 import fr.gabidut76.westerlife.common.blocks.dynamx.BlockAIPoint;
-import fr.gabidut76.westerlife.common.objects.KitWSD;
+
 import fr.gabidut76.westerlife.common.utils.AABB;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.FontRenderer;
@@ -35,21 +35,11 @@ import java.util.*;
 import static net.minecraft.world.World.MAX_ENTITY_RADIUS;
 
 public class Util {
-    public static KitWSD getKitTest(World world) {
-        MapStorage storage = world.getMapStorage();
-        assert storage != null;
-        KitWSD instance = (KitWSD) storage.getOrLoadData(KitWSD.class, "test");
-
-        if (instance == null) {
-            instance = new KitWSD("caca ?");
-            storage.setData("test", instance);
-        }
-        return instance;
-    }
 
     public static int randBetween(int min, int max) {
         return min + (int) (Math.random() * ((max - min) + 1));
     }
+
     public static int getAngleBetweenTwoPoint(BlockPos p1, BlockPos p2) {
         double angle = Math.toDegrees(Math.atan2(p2.getZ() - p1.getZ(), p2.getX() - p1.getX()));
         if (angle < 0) {
@@ -88,18 +78,6 @@ public class Util {
 
     }
 
-    public static void setKitTest(World world, String arg) {
-        MapStorage storage = world.getMapStorage();
-        assert storage != null;
-        KitWSD instance = (KitWSD) storage.getOrLoadData(KitWSD.class, "test");
-
-        if (instance == null) {
-            instance = new KitWSD(arg);
-            storage.setData("test", instance);
-        }
-        instance.markDirty();
-
-    }
 
     public static boolean isProximity(EntityPlayer player, BlockPos pos, int range) {
         return player.getDistanceSq(pos) < range * range;
@@ -345,7 +323,6 @@ public class Util {
     }
 
 
-
     public NBTTagCompound serializeEntityPlayer(EntityPlayer p) {
         NBTTagCompound nbt = new NBTTagCompound();
         nbt.setString("name", p.getName());
@@ -373,14 +350,10 @@ public class Util {
      * @param top
      * @param right
      * @param bottom
-     * @param coltl
-     *            - the color of the top left corner
-     * @param coltr
-     *            - the color of the top right corner
-     * @param colbl
-     *            - the color of the bottom left corner
-     * @param colbr
-     *            - the color of the bottom right corner
+     * @param coltl  - the color of the top left corner
+     * @param coltr  - the color of the top right corner
+     * @param colbl  - the color of the bottom left corner
+     * @param colbr  - the color of the bottom right corner
      * @param zLevel
      */
     public static void drawGradientRect(int left, int top, int right, int bottom, int coltl, int coltr, int colbl,
@@ -478,6 +451,6 @@ public class Util {
         }
         h *= 60;
         float s = c / M;
-        return new int[] { c == 0 ? -1 : (int) h, (int) (s * 100), (int) (M * 100) };
+        return new int[]{c == 0 ? -1 : (int) h, (int) (s * 100), (int) (M * 100)};
     }
 }

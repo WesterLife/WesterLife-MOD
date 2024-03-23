@@ -19,6 +19,7 @@ import fr.dynamx.utils.errors.DynamXErrorManager;
 import fr.gabidut76.westerlife.CoreMod.WesterLifeSecurityManager;
 import fr.gabidut76.westerlife.client.Client;
 import fr.gabidut76.westerlife.client.gui.other.GuiConnecting;
+import fr.gabidut76.westerlife.common.objects.LaunchType;
 import fr.gabidut76.westerlife.westercore.Main;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiMainMenu;
@@ -160,7 +161,7 @@ public class CSSGuiLogin extends GuiFrame {
                     FileOutputStream fileOutputStream = new FileOutputStream(file);
                     fileOutputStream.write(jsonObject1.toString().getBytes());
                     fileOutputStream.close();
-                    WesterLifeSecurityManager.SHOULD_MANUAL_LOGIN = false;
+                    Client.launchType = LaunchType.NEEDTOCONNECT;
                     Minecraft.getMinecraft().displayGuiScreen(new GuiMainMenu());
                 } catch (IOException e) {
                     GuiLabel label1 = new GuiLabel("Impossible de sauvegarder le fichier de configuration");

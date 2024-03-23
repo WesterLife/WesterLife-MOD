@@ -26,6 +26,9 @@ import fr.gabidut76.westerlife.common.entities.npcbank.NPCBank;
 import fr.gabidut76.westerlife.common.entities.npcdomac.NPCDomacEntity;
 import fr.gabidut76.westerlife.common.handlers.RegistryHandler;
 import fr.gabidut76.westerlife.common.init.*;
+import fr.gabidut76.westerlife.common.objects.gameplay.MacdoCommand;
+import fr.gabidut76.westerlife.common.objects.kits.Kit;
+import fr.gabidut76.westerlife.common.objects.kits.KitRules;
 import fr.gabidut76.westerlife.common.utils.WesterBuiltinPack;
 import fr.gabidut76.westerlife.common.utils.carmodule.AICarEngineModule;
 import fr.gabidut76.westerlife.common.utils.carmodule.DamageCarModule;
@@ -231,7 +234,7 @@ public class Main {
     public void postInit(FMLPostInitializationEvent event) throws LineUnavailableException {
 
         System.out.println(DynamXObjectLoaders.ARMORS.getInfos());
-//        MacdoCommand.init();
+        MacdoCommand.init();
 //        MacdoCommand.init();
 
 

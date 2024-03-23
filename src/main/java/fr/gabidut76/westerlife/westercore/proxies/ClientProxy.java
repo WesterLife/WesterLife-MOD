@@ -11,7 +11,7 @@ import fr.gabidut76.westerlife.common.entities.npcbank.NPCBankRenderer;
 import fr.gabidut76.westerlife.common.objects.RenderTileBinded;
 import fr.gabidut76.westerlife.westercore.Main;
 import fr.gabidut76.westerlife.client.gui.ultralight.UltraLight;
-import fr.gabidut76.westerlife.client.phone.Apps;
+
 import fr.gabidut76.westerlife.client.renderer.ClientHUD;
 import fr.gabidut76.westerlife.client.renderer.LayerArmorSuperposition;
 import fr.gabidut76.westerlife.client.utils.TestEntity2Renderer;
@@ -177,8 +177,6 @@ public class ClientProxy extends CommonProxy {
 
 
 
-
-        Apps.Init(); // Gabi <3
 
 
     }

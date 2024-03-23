@@ -11,6 +11,7 @@ import fr.gabidut76.westerlife.common.objects.character.Character;
 import fr.gabidut76.westerlife.common.objects.character.Permis;
 import fr.gabidut76.westerlife.common.objects.corporations.Corporation;
 import fr.gabidut76.westerlife.common.objects.economy.BankAccount;
+import fr.gabidut76.westerlife.common.objects.kits.Kit;
 import net.minecraft.nbt.NBTException;
 
 import java.io.*;
@@ -412,4 +413,11 @@ public class NemesisAPI {
 //        makeAPIRequest("user/warn/" + playerID + "/" + reason, "POST", "a");
     }
 
+    public void addKit(Kit kit) {
+        try {
+            makeAPIRequest("kit/add", "POST", kit.toJson());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

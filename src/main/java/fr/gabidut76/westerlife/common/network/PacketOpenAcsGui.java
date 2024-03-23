@@ -115,6 +115,9 @@ public class PacketOpenAcsGui implements IMessage{
                 Minecraft.getMinecraft().displayGuiScreen(new GuiCreativeInventoryCustom(Minecraft.getMinecraft().player));
 
             }
+            if(m.screen == 14) {
+                ACsGuiApi.asyncLoadThenShowGui("kit", CSSGuiCreateKit::new);
+            }
             return null;
         }
     }

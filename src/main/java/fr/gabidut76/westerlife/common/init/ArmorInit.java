@@ -23,14 +23,14 @@ public class ArmorInit {
     public static HashMap<String, ArmorEpaulettes> EPAULETTES = new HashMap<>();
 
     public static void init() {
-        register("tshirt", new ResourceLocation(Main.MODID, "models/dynamx/armors/tshirt/tshirt.obj"), EntityEquipmentSlot.CHEST);
-        for (GendInfos value : GendInfos.values()) {
-            System.out.println("Registering " + value.registryname);
-            ArmorEpaulettes ep = new ArmorEpaulettes(value.registryname, new ResourceLocation(Main.MODID, "models/dynamx/armors/epaulette/armors_epau.obj"), EntityEquipmentSlot.CHEST);
-            System.out.println(ep.getInfo().getVariants());
-            EPAULETTES.put(value.registryname, ep);
+//        register("tshirt", new ResourceLocation(Main.MODID, "models/dynamx/armors/tshirt/tshirt.obj"), EntityEquipmentSlot.CHEST);
+//        for (GendInfos value : GendInfos.values()) {
+//            System.out.println("Registering " + value.registryname);
+//            ArmorEpaulettes ep = new ArmorEpaulettes(value.registryname, new ResourceLocation(Main.MODID, "models/dynamx/armors/epaulette/armors_epau.obj"), EntityEquipmentSlot.CHEST);
+//            System.out.println(ep.getInfo().getVariants());
+//            EPAULETTES.put(value.registryname, ep);
 //            IGNORE_BINDTEXTURE.add(new ResourceLocation(Main.MODID, "models/dynamx/armors/tshirt/tshirt.obj"));
-        }
+//        }
     }
 
     public static void register(String armorname, ResourceLocation modelloc, EntityEquipmentSlot... slots) {

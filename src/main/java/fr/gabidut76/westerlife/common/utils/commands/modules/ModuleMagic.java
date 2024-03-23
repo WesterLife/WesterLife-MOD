@@ -23,8 +23,8 @@ public class ModuleMagic extends CommandModule {
 
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) {
-        if(args[1].equals("saveKit")) {
-            Main.network.sendTo(new PacketOpenAcsGui(3, args[2], ""), (EntityPlayerMP) sender);
+        if(args[1].equals("kit")) {
+            Main.network.sendTo(new PacketOpenAcsGui(14, "", ""), (EntityPlayerMP) sender);
         }
         if(args[1].equals("getKit")) {
 //            List<ItemStack> items = Util.stringToItemStackList(Main.wl_db.getString("kits."+args[2]));
