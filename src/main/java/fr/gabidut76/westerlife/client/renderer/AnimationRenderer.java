@@ -5,6 +5,7 @@ import fr.gabidut76.westerlife.client.Client;
 import fr.gabidut76.westerlife.common.capabilities.playerstat.PlayerStatData;
 import fr.gabidut76.westerlife.common.utils.Animation;
 import fr.gabidut76.westerlife.westercore.Main;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.player.EntityPlayer;

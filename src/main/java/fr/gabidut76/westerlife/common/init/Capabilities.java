@@ -19,6 +19,7 @@ import fr.gabidut76.westerlife.westercore.Main;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.common.MinecraftForge;
@@ -35,7 +36,7 @@ public class Capabilities {
 
     @SubscribeEvent
     public static void registerCapabilities(final AttachCapabilitiesEvent<Entity> e) {
-        if(e.getObject() instanceof EntityPlayer) {
+        if(e.getObject() instanceof EntityPlayerMP) {
             System.out.println("Attaching all capabilities to player.");
 
             e.addCapability(new ResourceLocation(Main.MODID, "playerstat"), new PlayerStatData.PlayerStatProvider());
