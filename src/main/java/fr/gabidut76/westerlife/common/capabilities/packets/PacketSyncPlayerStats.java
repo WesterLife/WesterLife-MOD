@@ -7,6 +7,7 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -73,7 +74,7 @@ public class PacketSyncPlayerStats implements IMessage {
                 Entity entity = Minecraft.getMinecraft().world.getEntityByID(message.player);
 //                System.out.println("Applying capabilities to player : " + entity);
 //                System.out.println("Animation : " + message.animation);
-                if(entity != null && entity instanceof EntityPlayer) {
+                if(entity != null && entity instanceof EntityPlayerMP) {
 
 
                     assert PlayerStatData.PlayerStatProvider.CAPABILITY != null;
@@ -81,9 +82,6 @@ public class PacketSyncPlayerStats implements IMessage {
                     if(entity.hasCapability(PlayerStatData.PlayerStatProvider.CAPABILITY, null)) {
                         Objects.requireNonNull(entity.getCapability(PlayerStatData.PlayerStatProvider.CAPABILITY, null)).setAnimation(message.animation);
                         Objects.requireNonNull(entity.getCapability(PlayerStatData.PlayerStatProvider.CAPABILITY, null)).setCharacter(message.c);
-                    } else {
-                        System.out.println("Capability is null");
-                        System.out.println(message.c);
                     }
                 }
             });

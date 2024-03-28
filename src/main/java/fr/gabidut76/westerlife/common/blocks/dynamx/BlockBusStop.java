@@ -1,11 +1,13 @@
 package fr.gabidut76.westerlife.common.blocks.dynamx;
 
+import fr.betterlights.BetterLightsMod;
 import fr.dynamx.common.blocks.DynamXBlock;
 import fr.gabidut76.westerlife.common.Util;
+import fr.gabidut76.westerlife.common.blocks.tileentity.TileBusStop;
+import fr.gabidut76.westerlife.common.blocks.tileentity.TileTombe;
 import fr.gabidut76.westerlife.common.init.DynamXInit;
 import fr.gabidut76.westerlife.common.network.PacketOpenAcsGui;
 import fr.gabidut76.westerlife.westercore.Main;
-import fr.gabidut76.westerlife.common.blocks.tileentity.TileSpot;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,26 +21,36 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-public class BlockSpot extends DynamXBlock {
+public class BlockBusStop extends DynamXBlock {
 
-    public BlockSpot(Material material, String modid, String blockName, ResourceLocation model) {
+    public BlockBusStop(Material material, String modid, String blockName, ResourceLocation model) {
         super(material, modid, blockName, model);
         setCreativeTab(Main.WESTER_MAIN);
     }
 
-
     @Override
-    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World worldIn, BlockPos pos2, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if(!worldIn.isRemote) {
             if(player.isCreative() && player.getHeldItem(hand).getItem().equals(DynamXInit.magicWand))
-                Main.network.sendTo(new PacketOpenAcsGui(5, Util.blockPosToString(pos), "spot"), (EntityPlayerMP) player);
+                Main.network.sendTo(new PacketOpenAcsGui(5, Util.blockPosToString(pos2), "busstop"), (EntityPlayerMP) player);
+
         }
         return true;
     }
 
-    @Nullable
     @Override
-    public TileEntity createTileEntity(World world, IBlockState state) {
-        return new TileSpot(this.blockObjectInfo);
+    public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+        super.breakBlock(worldIn, pos, state);
+        TileBusStop tile = (TileBusStop) worldIn.getTileEntity(pos);
+        if(tile != null) {
+            tile.lightCasters.forEach(lightCaster -> BetterLightsMod.getLightManager().removeLightCaster(lightCaster, true));
+
+        }
     }
+
+    @Nullable
+    public TileEntity createTileEntity(World world, IBlockState state) {
+        return new TileBusStop(this.blockObjectInfo);
+    }
+
 }

@@ -2,6 +2,7 @@ package fr.gabidut76.westerlife.common.blocks.tileentity.render;
 
 import fr.dynamx.client.renders.TESRDynamXBlock;
 import fr.dynamx.common.DynamXContext;
+import fr.gabidut76.westerlife.client.utils.ClientUtils;
 import fr.gabidut76.westerlife.common.blocks.tileentity.TileTestSphere;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.EntityRenderer;
@@ -22,8 +23,11 @@ public class RenderTestSphere extends TESRDynamXBlock<TileTestSphere> {
         GL11.glShadeModel(GL11.GL_SMOOTH);
         GL11.glEnable(GL11.GL_LIGHTING);
 
+//        ClientUtils.initBloom(5f);
+        ClientUtils.initMetalness(500f);
         DynamXContext.getDxModelRegistry().getModel(te.getPackInfo().getModel()).renderModel((byte) te.getBlockMetadata(), false);
-
+        ClientUtils.endMetalness();
+//        ClientUtils.endBloom();
         GL11.glShadeModel(GL11.GL_FLAT);
         GlStateManager.disableTexture2D();
         GlStateManager.disableLighting();

@@ -114,7 +114,7 @@ public class PlayerStatHandler {
     public void timer(TickEvent.PlayerTickEvent e) {
         if (e.phase == TickEvent.Phase.END && e.player.ticksExisted % 20 == 0 && e.side.isServer()) {
             try {
-                sync(e.player);
+                if(e.player instanceof EntityPlayerMP) sync(e.player);
             } catch (Exception ex) {
                 AUTH_LOGGER.severe("Error while syncing player: " + e.player);
                 throw new RuntimeException(ex);
@@ -123,7 +123,7 @@ public class PlayerStatHandler {
     }
 
     public static void sync(EntityPlayer entity) {
-
+        if(!(entity instanceof EntityPlayerMP)) return;
         Main.network.sendTo(new PacketSyncPlayerStats(entity.getEntityId(), Objects.requireNonNull(entity.getCapability(PlayerStatData.PlayerStatProvider.CAPABILITY, null)).getAnimation(), Objects.requireNonNull(entity.getCapability(PlayerStatData.PlayerStatProvider.CAPABILITY, null)).getCharacter()), (EntityPlayerMP) entity);
         Main.network.sendToAllTracking(new PacketSyncPlayerStats(entity.getEntityId(), Objects.requireNonNull(entity.getCapability(PlayerStatData.PlayerStatProvider.CAPABILITY, null)).getAnimation(), Objects.requireNonNull(entity.getCapability(PlayerStatData.PlayerStatProvider.CAPABILITY, null)).getCharacter()), entity);
     }

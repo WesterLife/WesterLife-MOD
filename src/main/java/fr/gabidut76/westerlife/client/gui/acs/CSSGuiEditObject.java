@@ -9,11 +9,13 @@ import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.panel.GuiScrollPane;
 import fr.aym.acsguis.component.textarea.GuiTextField;
 import fr.dynamx.common.contentpack.DynamXObjectLoaders;
+import fr.gabidut76.westerlife.client.gui.other.GuiColorPicker;
 import fr.gabidut76.westerlife.westercore.Main;
 import fr.gabidut76.westerlife.common.Util;
 import fr.gabidut76.westerlife.common.blocks.dynamx.BlockPanneauRue;
 import fr.gabidut76.westerlife.common.blocks.tileentity.*;
 import fr.gabidut76.westerlife.common.network.PacketUpdateTileEntity;
+import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.*;
@@ -60,7 +62,7 @@ public class CSSGuiEditObject extends GuiFrame {
 
             String[] infos = DynamXObjectLoaders.WHEELED_VEHICLES.getInfos().keySet().toArray(new String[0]);
 
-            GuiDropdownList list = new GuiDropdownList("Voiture",Arrays.asList(infos));
+            GuiDropdownList list = new GuiDropdownList("Voiture", Arrays.asList(infos));
 
 //            DynamXObjectLoaders.WHEELED_VEHICLES.getInfos().forEach((a, b) -> {
 //                GuiButton button = new GuiButton();
@@ -166,17 +168,12 @@ public class CSSGuiEditObject extends GuiFrame {
             text.setText(String.valueOf(tile.getSyncvalue()));
 
 
-
-
             GuiButton save = new GuiButton();
 
             save.setCssClass("save");
             save.setText("Sauvegarder");
             save.addClickListener((a, b, c) -> {
-                Main.network.sendToServer(new PacketUpdateTileEntity(tile.getPos(), "feurouge", new String[]{
-                        posisition.getText(),
-                        text.getText()
-                }));
+                Main.network.sendToServer(new PacketUpdateTileEntity(tile.getPos(), "feurouge", new String[]{posisition.getText(), text.getText()}));
             });
 
             background.add(text);
@@ -201,9 +198,7 @@ public class CSSGuiEditObject extends GuiFrame {
             save.setCssClass("save");
             save.setText("Sauvegarder");
             save.addClickListener((a, b, c) -> {
-                Main.network.sendToServer(new PacketUpdateTileEntity(tile.getPos(), "pagglo", new String[]{
-                        text.getText()
-                }));
+                Main.network.sendToServer(new PacketUpdateTileEntity(tile.getPos(), "pagglo", new String[]{text.getText()}));
             });
 
             background.add(text);
@@ -230,10 +225,7 @@ public class CSSGuiEditObject extends GuiFrame {
             save.setCssClass("save");
             save.setText("Sauvegarder");
             save.addClickListener((a, b, c) -> {
-                Main.network.sendToServer(new PacketUpdateTileEntity(tile.getPos(), "portenom", new String[]{
-                        text.getText(),
-                        name.getText()
-                }));
+                Main.network.sendToServer(new PacketUpdateTileEntity(tile.getPos(), "portenom", new String[]{text.getText(), name.getText()}));
             });
 
             background.add(text);
@@ -247,7 +239,6 @@ public class CSSGuiEditObject extends GuiFrame {
             System.out.println(tile.getRadius());
             System.out.println(tile.getTimepowered());
             System.out.println(tile.getPlayerexcluded());
-
 
 
             GuiTextField text = new GuiTextField();
@@ -272,11 +263,7 @@ public class CSSGuiEditObject extends GuiFrame {
             save.setCssClass("save");
             save.setText("Sauvegarder");
             save.addClickListener((a, b, c) -> {
-                Main.network.sendToServer(new PacketUpdateTileEntity(tile.getPos(), "sensor", new String[]{
-                        text.getText(),
-                        name.getText(),
-                        Objects.equals(name2.getText(), "") ? " " : name2.getText()
-                }));
+                Main.network.sendToServer(new PacketUpdateTileEntity(tile.getPos(), "sensor", new String[]{text.getText(), name.getText(), Objects.equals(name2.getText(), "") ? " " : name2.getText()}));
             });
 
             background.add(text);
@@ -285,8 +272,40 @@ public class CSSGuiEditObject extends GuiFrame {
             background.add(save);
         }
 
+        if (Objects.equals(isFor, "spot")) {
+            TileSpot tile = (TileSpot) Objects.requireNonNull(mc.world).getTileEntity(Objects.requireNonNull(Util.parseBlockPosFromString(pos)));
+
+            GuiTextField text = new GuiTextField();
+            text.setCssClass("text");
+            text.setHintText("angle");
+            assert tile != null;
+            text.setText(String.valueOf(tile.getAngle()));
+
+            AtomicInteger color = new AtomicInteger(tile.getColor());
+            GuiButton button1 = new GuiButton("Couleur");
+            button1.setCssClass("button_color");
 
 
+            button1.setCssClass("text2");
+            button1.setText("Changer la couleur");
+            button1.addClickListener((mouseX, mouseY, mouseButton) -> Minecraft.getMinecraft().displayGuiScreen(new GuiColorPicker(this.getGuiScreen(), (color1 -> {
+                color.set(color1);
+                background.getStyle().setBackgroundColor(color1);
+            }), false, tile.getColor())));
+
+            background.add(button1);
+            background.add(text);
+
+            GuiButton save = new GuiButton();
+            save.setCssClass("save");
+            save.setText("Sauvegarder");
+            save.addClickListener((a, b, c) -> {
+                Main.network.sendToServer(new PacketUpdateTileEntity(tile.getPos(), "spot", new String[]{text.getText(), String.valueOf(color.get())}));
+            });
+
+            background.add(save);
+
+        }
 
 
         add(background);

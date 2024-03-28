@@ -2,8 +2,10 @@ package fr.gabidut76.westerlife.common.blocks.tileentity.render;
 
 import fr.dynamx.client.renders.TESRDynamXBlock;
 import fr.dynamx.common.DynamXContext;
+import fr.gabidut76.westerlife.client.utils.ClientUtils;
 import fr.gabidut76.westerlife.common.blocks.tileentity.TileLyre;
 import net.minecraft.client.renderer.GlStateManager;
+import org.lwjgl.opengl.GL11;
 
 public class RenderLyre extends TESRDynamXBlock<TileLyre> {
 
@@ -38,6 +40,10 @@ public class RenderLyre extends TESRDynamXBlock<TileLyre> {
         GlStateManager.translate(0,1.094f,0);
         GlStateManager.rotate(te.getActualrotation().y, 0.0F, 0.0F,1.0F);
         DynamXContext.getDxModelRegistry().getModel(te.getPackInfo().getModel()).renderGroup("pitch", (byte) te.getBlockMetadata(), false);
+        ClientUtils.initBloom(5f);
+        GL11.glColor4f(te.getColor().x, te.getColor().y, te.getColor().z, 1f);
+        DynamXContext.getDxModelRegistry().getModel(te.getPackInfo().getModel()).renderGroup("light", (byte) te.getBlockMetadata(), false);
+        ClientUtils.endBloom();
         GlStateManager.popMatrix();
     }
 

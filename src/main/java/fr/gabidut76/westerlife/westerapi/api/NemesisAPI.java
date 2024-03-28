@@ -144,15 +144,13 @@ public class NemesisAPI {
             types.add(Permis.PermisType.valueOf(a.getAsString()));
         }
 
-        Permis permis = new Permis(
+        return new Permis(
                 uuid,
                 types,
                 obj.get("points").getAsString(),
                 obj.get("obtentionDate").getAsString(),
                 obj.get("delivranceAutorite").getAsString()
         );
-
-        return permis;
     }
 
     public void makeTransaction(String from, String to, String amount) throws IOException {

@@ -101,6 +101,13 @@ public class ModuleWorld extends CommandModule {
                     player.sendMessage(new TextComponentString("§a NBT IN HAND : " + player.getHeldItemMainhand().getTagCompound()));
                 }
 
+            } else if (Objects.equals(args[1], "idskin")) {
+
+                if (sender instanceof EntityPlayer) {
+                    EntityPlayer player = (EntityPlayer) sender;
+                    player.getHeldItemMainhand().getTagCompound().getCompoundTag("link").setString("ownerName", args[2]);
+                }
+
             } else if (Objects.equals(args[1], "setconcesspnj")) {
 
                 if (sender instanceof EntityPlayer) {
@@ -173,6 +180,24 @@ public class ModuleWorld extends CommandModule {
                     }
                 } else {
                     sender.sendMessage(new TextComponentString("§c/wlmod world radar <setspeed>"));
+                }
+
+
+            } else if (Objects.equals(args[1], "bus")) {
+
+                if (sender instanceof EntityPlayer) {
+                    EntityPlayer player = (EntityPlayer) sender;
+                    RayTraceResult rayTraceResult = player.world.rayTraceBlocks(player.getPositionEyes(1), player.getPositionEyes(1).add(player.getLookVec().scale(10)));
+                    assert rayTraceResult != null;
+                    System.out.println(rayTraceResult.getBlockPos());
+                    TileBusStop tile = (TileBusStop) player.world.getTileEntity(rayTraceResult.getBlockPos());
+                    if (tile != null) {
+                        tile.setStopname(args[2].replaceAll("_", " "));
+                        tile.sync();
+                        sender.sendMessage(new TextComponentString("§aSet text to '" + args[2] + "'."));
+                    }
+                } else {
+                    sender.sendMessage(new TextComponentString("§c/wlmod world bus <stopname>"));
                 }
 
 
@@ -380,11 +405,38 @@ public class ModuleWorld extends CommandModule {
                     if (rayTraceResult != null) {
                         TileLyre tilespot = (TileLyre) player.world.getTileEntity(rayTraceResult.getBlockPos());
                         if (tilespot != null) {
+                            if (Objects.equals(args[2], "easeto")) {
+                                tilespot.setRotationfrom(new Vector2f(tilespot.getActualrotation().x, tilespot.getActualrotation().y));
+                                tilespot.setRotationto(new Vector2f(Integer.parseInt(args[3]), Integer.parseInt(args[4])));
+                                tilespot.setTimeMax(Integer.parseInt(args[5]));
+                                tilespot.sync();
+                                tilespot.syncToClient();
+                                sender.sendMessage(new TextComponentString("§aSet from to '" + args[3] + " " + args[4] + "'°."));
+                            }
                             if (Objects.equals(args[2], "setfrom")) {
                                 tilespot.setRotationfrom(new Vector2f(Integer.parseInt(args[3]), Integer.parseInt(args[4])));
                                 tilespot.sync();
                                 tilespot.syncToClient();
                                 sender.sendMessage(new TextComponentString("§aSet from to '" + args[3] + " " + args[4] + "'°."));
+                            }
+                            if (Objects.equals(args[2], "color")) {
+                                tilespot.setColor(new Vector3f(Integer.parseInt(args[3]), Integer.parseInt(args[4]), Integer.parseInt(args[5])));
+                                tilespot.sync();
+                                tilespot.syncToClient();
+                                sender.sendMessage(new TextComponentString("§aSet color " + new Vector3f(Integer.parseInt(args[3]), Integer.parseInt(args[4]), Integer.parseInt(args[5])) + "."));
+                            }
+                            if (Objects.equals(args[2], "intensity")) {
+                                tilespot.setIntensity(Integer.parseInt(args[3]));
+                                tilespot.sync();
+                                tilespot.syncToClient();
+                                sender.sendMessage(new TextComponentString("§aSet intensity '" + args[3] + "'."));
+                            }
+                            if (Objects.equals(args[2], "zoom")) {
+                                tilespot.setZoom(Integer.parseInt(args[3]));
+                                tilespot.sync();
+                                tilespot.syncToClient();
+                                tilespot.markDirty();
+                                sender.sendMessage(new TextComponentString("§aSet zoom '" + args[3] + "'."));
                             }
                             if (Objects.equals(args[2], "setto")) {
                                 tilespot.setRotationto(new Vector2f(Integer.parseInt(args[3]), Integer.parseInt(args[4])));

@@ -2,10 +2,11 @@ package fr.gabidut76.westerlife.common.blocks.dynamx;
 
 import fr.dynamx.common.blocks.DynamXBlock;
 import fr.gabidut76.westerlife.common.Util;
+import fr.gabidut76.westerlife.common.blocks.tileentity.TileLightController;
+import fr.gabidut76.westerlife.common.blocks.tileentity.TileSpot;
 import fr.gabidut76.westerlife.common.init.DynamXInit;
 import fr.gabidut76.westerlife.common.network.PacketOpenAcsGui;
 import fr.gabidut76.westerlife.westercore.Main;
-import fr.gabidut76.westerlife.common.blocks.tileentity.TileSpot;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,9 +20,9 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-public class BlockSpot extends DynamXBlock {
+public class BlockLightController extends DynamXBlock {
 
-    public BlockSpot(Material material, String modid, String blockName, ResourceLocation model) {
+    public BlockLightController(Material material, String modid, String blockName, ResourceLocation model) {
         super(material, modid, blockName, model);
         setCreativeTab(Main.WESTER_MAIN);
     }
@@ -39,6 +40,6 @@ public class BlockSpot extends DynamXBlock {
     @Nullable
     @Override
     public TileEntity createTileEntity(World world, IBlockState state) {
-        return new TileSpot(this.blockObjectInfo);
+        return new TileLightController(this.blockObjectInfo);
     }
 }

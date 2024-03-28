@@ -122,6 +122,15 @@ public class PacketUpdateTileEntity implements IMessage{
                 te.syncToClient();
             }
 
+            if(Objects.equals(m.forWhat, "spot") && player.isCreative() && Util.isProximity(player, m.pos, 5)) {
+                TileSpot te = (TileSpot) player.world.getTileEntity(m.pos);
+                assert te != null;
+                te.setAngle(Integer.parseInt(m.args[0]));
+                te.setColor(Integer.parseInt(m.args[1]));
+                te.sync();
+                te.syncToClient();
+            }
+
             return null;
         }
     }

@@ -21,6 +21,7 @@ public class BlockIRM extends DynamXBlock {
 
     public BlockIRM(Material material, String modid, String blockName, ResourceLocation model) {
         super(material, modid, blockName, model);
+        
         setCreativeTab(Main.WESTER_MAIN);
     }
 
