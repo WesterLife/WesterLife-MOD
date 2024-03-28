@@ -114,7 +114,7 @@ minecraft {
         compile fileTree(dir: 'libs', include: '*.jar')
         implementation fg.deobf(fileTree(dir: 'libs/dynx', include: 'DynamX-4.1.0-dev19-all.jar'))
 
-
+        compileOnly files('WesterLife/mods/OptiFine_1.12.2_HD_U_G5.jar')
         implementation fg.deobf(fileTree(dir: 'libs/bl'))
 
         // add jar sourcee

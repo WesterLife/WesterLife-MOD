@@ -40,6 +40,13 @@ public class Util {
         return min + (int) (Math.random() * ((max - min) + 1));
     }
 
+    public static Vec3d getVectorForRotation(float pitch, float yaw) {
+        float f = MathHelper.cos(-yaw * 0.017453292F - (float) Math.PI);
+        float f1 = MathHelper.sin(-yaw * 0.017453292F - (float) Math.PI);
+        float f2 = -MathHelper.cos(-pitch * 0.017453292F);
+        float f3 = MathHelper.sin(-pitch * 0.017453292F);
+        return new Vec3d((double) (f1 * f2), (double) f3, (double) (f * f2));
+    }
     public static int getAngleBetweenTwoPoint(BlockPos p1, BlockPos p2) {
         double angle = Math.toDegrees(Math.atan2(p2.getZ() - p1.getZ(), p2.getX() - p1.getX()));
         if (angle < 0) {

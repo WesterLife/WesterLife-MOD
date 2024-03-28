@@ -9,7 +9,10 @@ import fr.dynamx.common.DynamXContext;
 import fr.dynamx.common.entities.ModularPhysicsEntity;
 import fr.dynamx.utils.DynamXConfig;
 import fr.dynamx.utils.optimization.MutableBoundingBox;
+import fr.gabidut76.westerlife.common.init.DynamXInit;
+import fr.gabidut76.westerlife.common.init.ItemInit;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.Vec3d;
@@ -19,6 +22,7 @@ import net.minecraftforge.fml.relauncher.Side;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class WarningSignEntity extends ModularPhysicsEntity<WarningSignPhysicsHandler> {
 
@@ -28,6 +32,7 @@ public class WarningSignEntity extends ModularPhysicsEntity<WarningSignPhysicsHa
     public WarningSignEntity(World worldIn, float spawnRot) {
         super(worldIn, new Vector3f(0,0,0), spawnRot);
         this.rotation = spawnRot;
+        setRotation(spawnRot, 0);
     }
 
     public WarningSignEntity(World worldIn) {
@@ -80,7 +85,13 @@ public class WarningSignEntity extends ModularPhysicsEntity<WarningSignPhysicsHa
 
     @Override
     public boolean attackEntityFrom(DamageSource damageSource, float amount) {
-        if (damageSource.getImmediateSource() instanceof EntityPlayer && ((EntityPlayer) damageSource.getImmediateSource()).isCreative()) {
+        if (damageSource.getImmediateSource() instanceof EntityPlayer && ((EntityPlayer) damageSource.getImmediateSource()).isCreative() || damageSource == DamageSource.OUT_OF_WORLD || damageSource.getImmediateSource().isSneaking()) {
+            if(!world.isRemote) {
+                if(Objects.requireNonNull(damageSource.getImmediateSource()).isSneaking()) {
+                    this.entityDropItem(new ItemStack(ItemInit.panneaucirculation), 0.5f);
+                    this.setDead();
+                }
+            }
             return super.attackEntityFrom(damageSource, amount);
         }
         return false;
@@ -88,12 +99,12 @@ public class WarningSignEntity extends ModularPhysicsEntity<WarningSignPhysicsHa
 
     @Override
     protected void readEntityFromNBT(NBTTagCompound compound) {
-
+        super.func_70037_a(compound);
     }
 
     @Override
     protected void writeEntityToNBT(NBTTagCompound compound) {
-
+        super.func_70014_b(compound);
     }
 
 

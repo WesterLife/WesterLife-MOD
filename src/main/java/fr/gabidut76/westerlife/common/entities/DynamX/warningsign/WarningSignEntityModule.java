@@ -23,6 +23,7 @@ import fr.dynamx.common.physics.joints.JointHandler;
 import fr.dynamx.common.physics.joints.JointHandlerRegistry;
 import fr.dynamx.common.physics.utils.RigidBodyTransform;
 import fr.dynamx.common.physics.utils.SynchronizedRigidBodyTransform;
+import fr.dynamx.utils.maths.DynamXGeometry;
 import fr.dynamx.utils.optimization.Vector3fPool;
 import fr.dynamx.utils.physics.DynamXPhysicsHelper;
 import fr.gabidut76.westerlife.westercore.Main;
@@ -39,7 +40,7 @@ public class WarningSignEntityModule implements IPhysicsModule<AbstractEntityPhy
     static {
         JointHandlerRegistry.register(new JointHandler(JOINT_NAME, WarningSignEntity.class, WarningSignEntity.class, WarningSignEntityModule.class));
     }
-    public final PhysicsEntity<?> entity;
+    public final WarningSignEntity entity;
     private final Map<Byte, PhysicsRigidBody> attachedParts = new HashMap();
     private final HashMap<Byte, SynchronizedRigidBodyTransform> attachedBodiesTransform = new HashMap();
     @SynchronizedEntityVariable(
@@ -48,7 +49,7 @@ public class WarningSignEntityModule implements IPhysicsModule<AbstractEntityPhy
     private final EntityTransformsVariable synchronizedTransforms;
     public PhysicsRigidBody punchingBag = null;
 
-    public WarningSignEntityModule(PhysicsEntity<?> entity) {
+    public WarningSignEntityModule(WarningSignEntity entity) {
         this.entity = entity;
         this.synchronizedTransforms = new EntityTransformsVariable(entity, this);
         System.out.println("WarningSignEntityModule created");
@@ -90,6 +91,9 @@ public class WarningSignEntityModule implements IPhysicsModule<AbstractEntityPhy
         DynamXContext.getPhysicsWorld(entity.world).addCollisionObject(punchingBag);
         New6Dof joint2 = new New6Dof(rigidBody, punchingBag, Vector3fPool.get(0, 0, 0), Vector3fPool.get(0, -1, 0), Quaternion.IDENTITY.toRotationMatrix(), Quaternion.IDENTITY.toRotationMatrix(), RotationOrder.XYZ);
         DynamXContext.getPhysicsWorld(entity.world).addJoint(joint2);
+
+        assert this.entity.physicsHandler != null;
+        this.entity.physicsHandler.setPhysicsRotation(DynamXGeometry.rotationYawToQuaternion(entity.rotation));
 
         joint2.setCollisionBetweenLinkedBodies(false);
         joint2.setBreakingImpulseThreshold(75f);

@@ -6,7 +6,9 @@ import fr.dynamx.api.events.PhysicsEntityEvent;
 import fr.dynamx.client.renders.RenderPhysicsEntity;
 import fr.dynamx.client.renders.scene.BaseRenderContext;
 import fr.dynamx.common.DynamXContext;
+import fr.dynamx.common.contentpack.parts.PartDoor;
 import fr.dynamx.common.entities.PropsEntity;
+import fr.dynamx.utils.client.DynamXRenderUtils;
 import fr.gabidut76.westerlife.westercore.Main;
 
 import fr.gabidut76.westerlife.common.entities.DynamX.warningsign.WarningSignEntity;
@@ -31,6 +33,12 @@ public class WarningSignRenderer extends RenderPhysicsEntity<WarningSignEntity> 
 
     @Override
     public void renderEntity(WarningSignEntity entity, BaseRenderContext.EntityRenderContext entityRenderContext) {
+        GlStateManager.pushMatrix();
+
+        this.setupRenderTransform(entity, entityRenderContext.getRenderPosition(), entityRenderContext.getPartialTicks());
+
+        DynamXRenderUtils.popGlAllAttribBits();
+
         DynamXContext.getDxModelRegistry().getModel(new ResourceLocation(Main.MODID, "models/dynamx/blocks/highroad/warningsign/warningsign.obj")).renderGroup("base", (byte) 0, false);
 
 
@@ -54,6 +62,8 @@ public class WarningSignRenderer extends RenderPhysicsEntity<WarningSignEntity> 
             glPopMatrix();
 
         }
+
+        GlStateManager.popMatrix();
 
     }
 

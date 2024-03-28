@@ -8,6 +8,8 @@ import com.jme3.bullet.objects.PhysicsRigidBody;
 import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import fr.dynamx.common.physics.entities.EntityPhysicsHandler;
+import fr.dynamx.utils.DynamXUtils;
+import fr.dynamx.utils.maths.DynamXGeometry;
 import fr.dynamx.utils.optimization.Vector3fPool;
 import fr.dynamx.utils.physics.DynamXPhysicsHelper;
 
@@ -16,6 +18,7 @@ public class WarningSignPhysicsHandler extends EntityPhysicsHandler<WarningSignE
 
     public WarningSignPhysicsHandler(WarningSignEntity entity) {
         super(entity);
+
     }
 
     @Override
