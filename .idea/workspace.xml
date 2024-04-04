@@ -1,0 +1,565 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="89a86520-8bc1-4e29-b3a9-e457d977ceda" name="Changes" comment="Shaders utils &amp; WarningSign reworked">
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/fr/gabidut76/westerlife/common/capabilities/packets/PacketSyncWorldLight.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/fr/gabidut76/westerlife/common/capabilities/worldlight/IWorldLight.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/fr/gabidut76/westerlife/common/capabilities/worldlight/WorldLight.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/fr/gabidut76/westerlife/common/capabilities/worldlight/WorldLightHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/westerlife/models/dynamx/armors/security/secu.mtl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/westerlife/models/dynamx/armors/security/secu.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/westerlife/models/dynamx/armors/security/texture.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/westerlife/models/dynamx/blocks/chest/chest.mtl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/westerlife/models/dynamx/blocks/chest/chest.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/westerlife/models/dynamx/blocks/chest/gold.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/westerlife/models/dynamx/blocks/chest/metal.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/westerlife/models/dynamx/blocks/chest/plastic.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/westerlife/models/dynamx/blocks/chest/plasticroughness.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/westerlife/models/item/passport.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/westerlife/models/item/passport_diplo.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/westerlife/textures/hud/cards/passport.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/westerlife/textures/hud/cards/passport_diplo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/westerlife/textures/items/cards/passport.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/westerlife/textures/items/cards/passport_diplo.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/gabidut76/westerlife/client/gui/acs/CSSGuiLights.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/gabidut76/westerlife/client/renderer/ClientHUD.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/gabidut76/westerlife/client/renderer/ClientHUD.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/gabidut76/westerlife/common/armors/DynamXArmor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/gabidut76/westerlife/common/armors/DynamXArmor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/gabidut76/westerlife/common/blocks/tileentity/TileEntitySyncClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/gabidut76/westerlife/common/blocks/tileentity/TileEntitySyncClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/gabidut76/westerlife/common/blocks/tileentity/TileLightController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/gabidut76/westerlife/common/blocks/tileentity/TileLightController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/gabidut76/westerlife/common/blocks/tileentity/TileLyre.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/gabidut76/westerlife/common/blocks/tileentity/TileLyre.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/gabidut76/westerlife/common/init/ArmorInit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/gabidut76/westerlife/common/init/ArmorInit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/gabidut76/westerlife/common/init/Capabilities.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/gabidut76/westerlife/common/init/Capabilities.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/gabidut76/westerlife/common/init/ItemInit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/gabidut76/westerlife/common/init/ItemInit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/gabidut76/westerlife/common/init/Network.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/gabidut76/westerlife/common/init/Network.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/gabidut76/westerlife/common/items/ItemCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/gabidut76/westerlife/common/items/ItemCard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/gabidut76/westerlife/common/network/PacketOpenAcsGui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/gabidut76/westerlife/common/network/PacketOpenAcsGui.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/gabidut76/westerlife/common/objects/LightSequence.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/gabidut76/westerlife/common/objects/LightSequence.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/gabidut76/westerlife/common/utils/commands/modules/ModuleWorld.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/gabidut76/westerlife/common/utils/commands/modules/ModuleWorld.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="WesterLife-MOD" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="WesterLife-MOD" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="WesterLife-MOD" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="WesterLife-MOD" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build setup" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="WesterLife-MOD" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="fg_runs" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="WesterLife-MOD" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="other" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="WesterLife-MOD" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="shadow" type="c8890929:TasksNode$1" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="AnnotationType" />
+        <option value="Interface" />
+        <option value="Enum" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2bYOrk0LnCoj20m8jxPB68U7qab" />
+  <component name="ProjectViewState">
+    <option name="showLibraryContents" value="true" />
+    <option name="showVisibilityIcons" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "ShowUsagesActions.previewPropertyKey": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/gabid/Desktop/developpement/WesterLifeRolePlay/api/src/index.js",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.31428573",
+    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\gabid\Desktop\WesterLife-MOD\src\main\resources\assets\westerlife\models\dynamx\armors\security" />
+      <recent name="C:\Users\gabid\Desktop\WesterLife-MOD\src\main\resources\assets\westerlife\models\dynamx\blocks\chest" />
+      <recent name="C:\Users\gabid\Desktop\WesterLife-MOD\src\main\resources\assets\westerlife\textures\hud\cards" />
+      <recent name="C:\Users\gabid\Desktop\WesterLife-MOD\src\main\resources\assets\westerlife\models\item" />
+      <recent name="C:\Users\gabid\Desktop\WesterLife-MOD\src\main\resources\assets\westerlife\textures\items" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\gabid\Desktop\WesterLife-MOD\src\main\resources\assets\westerlife\textures\items\cards" />
+      <recent name="C:\Users\gabid\Desktop\WesterLife-MOD\src\main\resources\assets\westerlife\models\dynamx\blocks\busstop" />
+      <recent name="C:\Users\gabid\Desktop\WesterLife-MOD\libs" />
+      <recent name="C:\Users\gabid\Desktop\WesterLife-MOD\src\main\resources\assets\westerlife\models\dynamx\armors\epaulette\major" />
+      <recent name="C:\Users\gabid\Desktop\WesterLife-MOD\src\main\resources\assets\westerlife\models\dynamx\armors\epaulette\textures" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="fr.gabidut76.westerlife.common.capabilities.packets" />
+      <recent name="fr.gabidut76.westerlife.common.blocks.tileentity.render" />
+      <recent name="fr.gabidut76.westerlife.common.blocks.tileentity" />
+      <recent name="fr.gabidut76.westerlife.common.blocks.dynamx" />
+      <recent name="fr.gabidut76.westerlife.common.network.kits" />
+    </key>
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="gradle --refresh-dependencies" />
+    </option>
+  </component>
+  <component name="RunManager" selected="Application.runClient (1)">
+    <configuration name="runClient (1)" type="Application" factoryName="Application" singleton="false">
+      <envs>
+        <env name="MCP_TO_SRG" value="$PROJECT_DIR$/../WesterLife-MOD\build\createSrgToMcp\output.srg" />
+        <env name="MOD_CLASSES" value="jw%%$PROJECT_DIR$/../WesterLife-MOD\build\classes\java\main" />
+        <env name="mainClass" value="net.minecraft.launchwrapper.Launch" />
+        <env name="MCP_MAPPINGS" value="stable_39-1.12" />
+        <env name="FORGE_VERSION" value="14.23.5.2860" />
+        <env name="assetIndex" value="1.12" />
+        <env name="assetDirectory" value="C:\Users\gabid\.gradle\caches\forge_gradle\assets" />
+        <env name="nativesDirectory" value="$PROJECT_DIR$/../WesterLife-MOD\build\natives" />
+        <env name="FORGE_GROUP" value="net.minecraftforge" />
+        <env name="tweakClass" value="net.minecraftforge.fml.common.launcher.FMLTweaker" />
+        <env name="MC_VERSION" value="1.12.2" />
+      </envs>
+      <option name="MAIN_CLASS_NAME" value="net.minecraftforge.legacydev.MainClient" />
+      <module name="WesterLife-MOD.main" />
+      <option name="PROGRAM_PARAMETERS" value="--username westerdev --mixin.config mixins.westerlife.json" />
+      <option name="VM_PARAMETERS" value="-Dforge.logging.console.level=debug -Dmixin.dumpTargetOnFailure=true -Dforge.logging.markers=REGISTRIES -Dnet.minecraftforge.gradle.GradleStart.srg.srg-mcp=C:\Users\gabid\Desktop\WesterLife-MOD\build\createSrgToMcp\output.srg -Dmixin.env.remapRefMap=true -Dmixin.env.refMapRemappingFile=C:\Users\gabid\Desktop\WesterLife-MOD\build\createSrgToMcp\output.srg -Dmixin.debug.verbose=true -Dmixin.debug.export=true -Dfml.coreMods.load=com.mrcrayfish.obfuscate.asm.ObfuscatePlugin -Dfml.coreMods.load=fr.betterlights.asm.BetterLightsCoreMod" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/WesterLife" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+        <option name="Gradle.BeforeRunTask" enabled="false" tasks=":prepareRunClient" externalProjectPath="$PROJECT_DIR$" />
+      </method>
+    </configuration>
+    <configuration name="WesterLife-MOD [buildDependents]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="buildDependents" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="WesterLife-MOD [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="WesterLife-MOD [clean]" type="GradleRunConfiguration" factoryName="Gradle">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="clean" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="WesterLife-MOD [downloadMCMeta]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="downloadMCMeta" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="WesterLife-MOD [genIntellijRuns]" type="GradleRunConfiguration" factoryName="Gradle">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="genIntellijRuns" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="WesterLife-MOD [shadowJar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="shadowJar" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="index.js" type="NodeJSConfigurationType" nameIsGenerated="true" path-to-js-file="src/index.js" working-dir="$PROJECT_DIR$/../developpement/WesterLifeRolePlay/api">
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Application.runClient" />
+      <item itemvalue="Application.runClient (1)" />
+      <item itemvalue="Application.runServer" />
+      <item itemvalue="Gradle.WesterLife-MOD [genIntellijRuns]" />
+      <item itemvalue="Gradle.WesterLife-MOD [clean]" />
+      <item itemvalue="Gradle.WesterLife-MOD [build]" />
+      <item itemvalue="Gradle.WesterLife-MOD [shadowJar]" />
+      <item itemvalue="Gradle.WesterLife-MOD [buildDependents]" />
+      <item itemvalue="Gradle.WesterLife-MOD [downloadMCMeta]" />
+      <item itemvalue="Node.js.index.js" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.WesterLife-MOD [build]" />
+        <item itemvalue="Gradle.WesterLife-MOD [shadowJar]" />
+        <item itemvalue="Gradle.WesterLife-MOD [downloadMCMeta]" />
+        <item itemvalue="Gradle.WesterLife-MOD [buildDependents]" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="89a86520-8bc1-4e29-b3a9-e457d977ceda" name="Changes" comment="" />
+      <created>1706388752781</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1706388752781</updated>
+      <workItem from="1706388756664" duration="221000" />
+      <workItem from="1706388994369" duration="4306000" />
+      <workItem from="1706434321853" duration="3238000" />
+      <workItem from="1706450281864" duration="7228000" />
+      <workItem from="1706606023453" duration="6848000" />
+      <workItem from="1706612935552" duration="10759000" />
+      <workItem from="1706635418913" duration="6041000" />
+      <workItem from="1706646405618" duration="311000" />
+      <workItem from="1706704629629" duration="8783000" />
+      <workItem from="1708278371302" duration="6325000" />
+      <workItem from="1708367558987" duration="8588000" />
+      <workItem from="1708859268532" duration="26486000" />
+      <workItem from="1708934621945" duration="102000" />
+      <workItem from="1708936051647" duration="1643000" />
+      <workItem from="1708937740013" duration="5506000" />
+      <workItem from="1708946787990" duration="831000" />
+      <workItem from="1708963657871" duration="4000" />
+      <workItem from="1709050381532" duration="2525000" />
+      <workItem from="1709118706622" duration="4790000" />
+      <workItem from="1709129229211" duration="2994000" />
+      <workItem from="1709209486566" duration="45000" />
+      <workItem from="1709210057654" duration="22987000" />
+      <workItem from="1709376533740" duration="4104000" />
+      <workItem from="1709458631052" duration="2916000" />
+      <workItem from="1709499053431" duration="21000" />
+      <workItem from="1709582911269" duration="1264000" />
+      <workItem from="1709584218771" duration="2870000" />
+      <workItem from="1709661590489" duration="1662000" />
+      <workItem from="1709729832783" duration="2705000" />
+      <workItem from="1709756093594" duration="4339000" />
+      <workItem from="1709811950893" duration="4499000" />
+      <workItem from="1709819515359" duration="226000" />
+      <workItem from="1709819912153" duration="547000" />
+      <workItem from="1709820478739" duration="53000" />
+      <workItem from="1709820570170" duration="493000" />
+      <workItem from="1709821203446" duration="7352000" />
+      <workItem from="1709835138146" duration="283000" />
+      <workItem from="1710067751471" duration="5634000" />
+      <workItem from="1710528079721" duration="601000" />
+      <workItem from="1710579032294" duration="24000" />
+      <workItem from="1710579403747" duration="1411000" />
+      <workItem from="1710581411778" duration="1569000" />
+      <workItem from="1710605567746" duration="2106000" />
+      <workItem from="1710619152887" duration="4254000" />
+      <workItem from="1710668742034" duration="9637000" />
+      <workItem from="1710702214296" duration="265000" />
+      <workItem from="1711143737255" duration="1614000" />
+      <workItem from="1711183716761" duration="179000" />
+      <workItem from="1711212937676" duration="29000" />
+      <workItem from="1711213389872" duration="7516000" />
+      <workItem from="1711223688725" duration="12895000" />
+      <workItem from="1711237195015" duration="787000" />
+      <workItem from="1711275883446" duration="109000" />
+      <workItem from="1711288516778" duration="2015000" />
+      <workItem from="1711387710803" duration="985000" />
+      <workItem from="1711397855593" duration="3307000" />
+      <workItem from="1711472669063" duration="8605000" />
+      <workItem from="1711485146952" duration="2420000" />
+      <workItem from="1711554323651" duration="9349000" />
+      <workItem from="1711654008897" duration="1965000" />
+      <workItem from="1711656365518" duration="5429000" />
+      <workItem from="1711700583683" duration="3297000" />
+      <workItem from="1711747117216" duration="1313000" />
+      <workItem from="1711789862570" duration="2336000" />
+      <workItem from="1712260121143" duration="5000" />
+      <workItem from="1712260218811" duration="279000" />
+      <workItem from="1712260835349" duration="441000" />
+    </task>
+    <task id="LOCAL-00001" summary="Nemesis maj successfully passed (v1.5.9-1) / 527 files">
+      <created>1709234199394</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1709234199394</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Patch pre-load macdo command">
+      <created>1709240343561</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1709240343561</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Annot RenderTileBinded.java">
+      <created>1709240448077</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1709240448077</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Annot RenderTileBinded.java">
+      <created>1709240452394</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1709240452394</updated>
+    </task>
+    <task id="LOCAL-00005" summary="🥲">
+      <created>1709759122049</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1709759122049</updated>
+    </task>
+    <task id="LOCAL-00006" summary="caca">
+      <created>1709818584396</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1709818584396</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Remove libs &amp; unsed content">
+      <created>1710094970431</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1710094970431</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Working bl integration ?&#10;+ repair basic addon integration">
+      <created>1711214699961</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1711214699961</updated>
+    </task>
+    <task id="LOCAL-00009" summary="busstop, lampadaire, spot, lyre">
+      <created>1711654123790</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1711654123790</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Capabilities correction">
+      <created>1711654143123</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1711654143123</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Shaders utils &amp; WarningSign reworked">
+      <created>1711654162061</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1711654162061</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <MESSAGE value="Nemesis maj successfully passed (v1.5.9-1) / 527 files" />
+    <MESSAGE value="Patch pre-load macdo command" />
+    <MESSAGE value="Annot RenderTileBinded.java" />
+    <MESSAGE value="" />
+    <MESSAGE value="caca" />
+    <MESSAGE value="Remove libs &amp; unsed content" />
+    <MESSAGE value="Working bl integration ?&#10;+ repair basic addon integration" />
+    <MESSAGE value="busstop, lampadaire, spot, lyre" />
+    <MESSAGE value="Capabilities correction" />
+    <MESSAGE value="Shaders utils &amp; WarningSign reworked" />
+    <option name="LAST_COMMIT_MESSAGE" value="Shaders utils &amp; WarningSign reworked" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>jar://$PROJECT_DIR$/../DynamX/build/libs/DynamX-4.1.0-dev16-sources.jar!/fr/dynamx/client/renders/model/renderer/ArmorRenderer.java</url>
+          <line>66</line>
+          <properties class="fr.dynamx.client.renders.model.renderer.ArmorRenderer" method="renderWithRotation">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>jar://$PROJECT_DIR$/libs/dynx/DynamX-4.1.0-dev16-all-westerlife.jar!/fr/dynamx/client/renders/model/renderer/ObjObjectRenderer.class</url>
+          <line>137</line>
+          <properties class="fr.dynamx.client.renders.model.renderer.ObjObjectRenderer">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="39" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <condition expression="Objects.isNull(objObjectRenderer)" language="JAVA" custom="java.util.Objects" />
+          <url>jar://$PROJECT_DIR$/libs/dynx/DynamX-4.1.0-dev19-all.jar!/fr/dynamx/common/contentpack/type/objects/BlockObject.class</url>
+          <line>89</line>
+          <option name="timeStamp" value="44" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/fr/gabidut76/westerlife/client/gui/other/GuiCustomInventory.java</url>
+          <line>26</line>
+          <option name="timeStamp" value="49" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
