@@ -17,21 +17,12 @@ public class MethodesBDD {
 
     //Création d'un personnage rôle-play
     public static void createCharacter(EntityPlayer p, String familyname, String firstnames, String birthdate, String birthplace, String nationality, String sex){
-        instance.execute("INSERT INTO `players` (`pseudo`,`uuid`, `familyname`, `firstnames`, `birthdate`, `birthplace`, `nationality`, `sex`) VALUES ('"+p.getDisplayNameString()+"','"+p.getUniqueID().toString()+"','"+familyname+"','"+firstnames+"','"+birthdate+"','"+birthplace+"','"+nationality+"','"+sex+"')");
+        DBUtils.createCharacter(p, familyname, firstnames, birthdate, birthplace, nationality, sex);
     }
-
 
     //Vérifie si un personne rôle-play existe pour un joueur
     public static boolean getCharacterExists(EntityPlayer p){
-        boolean exists = false;
-        String uuid = p.getUniqueID().toString();
-        QueryResult qr = instance.getData("SELECT uuid FROM players WHERE uuid= ?", uuid);
-        try {
-            exists = p.getUniqueID().toString().equals(qr.getValue(0, 0));
-        } catch (Exception e) {
-            //e.printStackTrace();
-        }
-        return exists;
+        return DBUtils.getCharacterExists(p);
     }
 
     //Old methods
@@ -208,53 +199,54 @@ public class MethodesBDD {
     }
 
     public static String getNom(EntityPlayer p){
-        String job = null;
-        QueryResult qr = instance.getData("SELECT nom FROM players WHERE uuid= ?", p.getUniqueID());
-        job = qr.getValue(0,0);
-        return job;
+        fr.yan36.westerlife.common.objects.character.Character c = DBUtils.getActiveCharacter(p);
+        if (c != null && c.getLastName() != null) return c.getLastName();
+        return "Inconnu";
     }
 
     public static String getRIB(EntityPlayer p){
-        String job = null;
-        QueryResult qr = instance.getData("SELECT rib FROM players WHERE uuid= ?", p.getUniqueID());
-        job = qr.getValue(0,0);
-        return job;
+        fr.yan36.westerlife.common.objects.character.Character c = DBUtils.getActiveCharacter(p);
+        String uuid = (c != null) ? c.getUuid().toString() : p.getUniqueID().toString();
+        QueryResult qr = instance.getData("SELECT rib FROM players WHERE uuid= ?", uuid);
+        return qr.getValue(0,0);
     }
 
     public static String getCodeCB(EntityPlayer p){
-        String job = null;
-        QueryResult qr = instance.getData("SELECT codeCB FROM players WHERE uuid= ?", p.getUniqueID());
-        job = qr.getValue(0,0);
-        return job;
+        fr.yan36.westerlife.common.objects.character.Character c = DBUtils.getActiveCharacter(p);
+        String uuid = (c != null) ? c.getUuid().toString() : p.getUniqueID().toString();
+        QueryResult qr = instance.getData("SELECT codeCB FROM players WHERE uuid= ?", uuid);
+        return qr.getValue(0,0);
     }
 
     public static void setCodeCB(EntityPlayer p, String Code){
-        String uuid = p.getUniqueID().toString();
+        fr.yan36.westerlife.common.objects.character.Character c = DBUtils.getActiveCharacter(p);
+        String uuid = (c != null) ? c.getUuid().toString() : p.getUniqueID().toString();
         instance.execute("UPDATE players SET codeCB = ? WHERE uuid = ?", Code, uuid);
         System.out.println("Code CB updated for " + p.getName() + " : " + Code);
     }
 
     public static String getData(EntityPlayer p, String WData, String from, String where, String whereValue){
-        return instance.getData("SELECT " + WData + " FROM " + from + " WHERE " + where + "=" + whereValue, p.getUniqueID()).getValue(0,0);
+        fr.yan36.westerlife.common.objects.character.Character c = DBUtils.getActiveCharacter(p);
+        String uuid = (c != null) ? c.getUuid().toString() : p.getUniqueID().toString();
+        return instance.getData("SELECT " + WData + " FROM " + from + " WHERE " + where + "=" + whereValue, uuid).getValue(0,0);
     }
 
     public static String getPrenom(EntityPlayer p){
-        String job = null;
-        QueryResult qr = instance.getData("SELECT prenom FROM players WHERE uuid= ?", p.getUniqueID());
-        job = qr.getValue(0,0);
-        return job;
+        fr.yan36.westerlife.common.objects.character.Character c = DBUtils.getActiveCharacter(p);
+        if (c != null && c.getFirstNames() != null) return c.getFirstNames();
+        return "Inconnu";
     }
+
     public static String getSex(EntityPlayer p){
-        String job = null;
-        QueryResult qr = instance.getData("SELECT sex FROM players WHERE uuid= ?", p.getUniqueID());
-        job = qr.getValue(0,0);
-        return job;
+        fr.yan36.westerlife.common.objects.character.Character c = DBUtils.getActiveCharacter(p);
+        if (c != null && c.getGender() != null) return c.getGender().getSex();
+        return "HOMME";
     }
+
     public static String getDate(EntityPlayer p){
-        String job = null;
-        QueryResult qr = instance.getData("SELECT date FROM players WHERE uuid= ?", p.getUniqueID());
-        job = qr.getValue(0,0);
-        return job;
+        fr.yan36.westerlife.common.objects.character.Character c = DBUtils.getActiveCharacter(p);
+        if (c != null && c.getBirthDate() != null) return c.getBirthDate();
+        return "01-01-2000";
     }
     
 

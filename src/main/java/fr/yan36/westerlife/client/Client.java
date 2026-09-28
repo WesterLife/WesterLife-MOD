@@ -209,13 +209,7 @@ public class Client {
         System.out.println("GUI: " + e.getGui());
         if (e.getGui() instanceof GuiMainMenu) {
             e.setCanceled(true);
-            if (Main.isOpti) {
-                Minecraft.getMinecraft().displayGuiScreen(new CSSGuiMainMenu().getGuiScreen());
-            } else {
-                Main.browserScreen = new BrowserScreen("mod://westerlife/main_menu/main.html");
-                Minecraft.getMinecraft().displayGuiScreen(Main.browserScreen);
-//                Main.browserScreen.openMenu();
-            }
+            Minecraft.getMinecraft().displayGuiScreen(new CSSGuiMainMenu().getGuiScreen());
         }
 
 
@@ -254,15 +248,7 @@ public class Client {
 
         if (e.getGui() instanceof GuiIngameMenu) {
 
-            if (Main.isOpti) {
-                e.setGui(new CSSGuiPauseMenu().getGuiScreen());
-            } else {
-                e.setCanceled(true);
-                Thread.sleep(100);
-                Main.browserScreen = new BrowserScreen("mod://westerlife/menu_echap/echap.html");
-                Main.browserScreen.openMenu();
-
-            }
+            e.setGui(new CSSGuiPauseMenu().getGuiScreen());
 
         }
 
@@ -281,15 +267,8 @@ public class Client {
     @SideOnly(Side.CLIENT)
     public void onTickEvent(TickEvent.ClientTickEvent event) {
         if (needToCreateCharacter == 1 && Minecraft.getMinecraft().world != null && Minecraft.getMinecraft().isGamePaused()) {
-            if (Main.isOpti) {
-                Minecraft.getMinecraft().displayGuiScreen(new CSSCreateCharacter().getGuiScreen());
-                needToCreateCharacter = 2;
-            } else {
-                Main.browserScreen = new BrowserScreen("mod://westerlife/create_perso/perso1.html");
-                Minecraft.getMinecraft().displayGuiScreen(Main.browserScreen);
-                Main.browserScreen.openMenu();
-                needToCreateCharacter = 2;
-            }
+            Minecraft.getMinecraft().displayGuiScreen(new CSSCreateCharacter().getGuiScreen());
+            needToCreateCharacter = 2;
         }
 
         switch (openScreenMcef) {
@@ -304,12 +283,7 @@ public class Client {
                 openScreenMcef = "none";
                 break;
             case "animations":
-                if (!Main.isOpti) {
-                    Main.browserScreen = new BrowserScreen("mod://westerlife/animations/index.html");
-                    Main.browserScreen.openMenu();
-                } else {
-                    Minecraft.getMinecraft().displayGuiScreen(new CSSGuiAnimations().getGuiScreen());
-                }
+                Minecraft.getMinecraft().displayGuiScreen(new CSSGuiAnimations().getGuiScreen());
                 openScreenMcef = "none";
                 break;
             case "digicode":
@@ -407,9 +381,9 @@ public class Client {
             if (mc.player.isCreative())
                 this.drawString(Minecraft.getMinecraft().fontRenderer, "X: " + df.format(Minecraft.getMinecraft().player.posX) + " Y: " + df.format(Minecraft.getMinecraft().player.posY) + " Z: " + df.format(Minecraft.getMinecraft().player.posZ), 5, 50, 0xFF5C5C);
             this.drawString(Minecraft.getMinecraft().fontRenderer, "FPS : " + Minecraft.getDebugFPS(), 5, 60, 0xFF5C5C);
-            this.drawString(Minecraft.getMinecraft().fontRenderer, "Private data : " + Minecraft.getMinecraft().player.chunkCoordX + " " + Minecraft.getMinecraft().player.chunkCoordZ + " " + Main.isOpti, 5, 70, 0xFF5C5C);
+            this.drawString(Minecraft.getMinecraft().fontRenderer, "Private data : " + Minecraft.getMinecraft().player.chunkCoordX + " " + Minecraft.getMinecraft().player.chunkCoordZ, 5, 70, 0xFF5C5C);
             this.drawString(Minecraft.getMinecraft().fontRenderer, "    SPV : " + DynamXInit.fastRegistryAccess.keySet().size() + " " + Client.knowCharacters.keySet().size() + " " + Client.knowPermis.size(), 5, 80, 0xFF5C5C);
-            this.drawString(Minecraft.getMinecraft().fontRenderer, "    OPT : " + Main.isOpti + " " + Client.waitForSomething.keySet().size() + " " + Client.superpositionState.keySet().size(), 5, 90, 0xFF5C5C);
+            this.drawString(Minecraft.getMinecraft().fontRenderer, "    " + Client.waitForSomething.keySet().size() + " " + Client.superpositionState.keySet().size(), 5, 90, 0xFF5C5C);
             this.drawString(Minecraft.getMinecraft().fontRenderer, "    LGH : " + chunk.getLightSubtracted(mc.player.getPosition(), 0), 5, 100, 0xFF5C5C);
 
 
@@ -544,15 +518,6 @@ public class Client {
             Minecraft.getMinecraft().displayGuiScreen(new GuiLoadingTerrain().getGuiScreen());
         }
 
-        if (Keyboard.isKeyDown(Keyboard.KEY_F3) && Keyboard.isKeyDown(Keyboard.KEY_K)) {
-            Main.isOpti = !Main.isOpti;
-            // show toast message
-            if (Main.isOpti) {
-                Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(new TextComponentString("§l§cMode optimisation des activé"));
-            } else {
-                Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(new TextComponentString("§l§cMode optimisation des désactivé"));
-            }
-        }
 //        if (Keyboard.isKeyDown(Keyboard.KEY_F12)) {
 ////            Main.getPlayerManager().loadTrack("http://193.38.250.14:8000/mix.m3u");
 ////            Main.getPlayerManager().getAudioPlayer().setVolume(100);

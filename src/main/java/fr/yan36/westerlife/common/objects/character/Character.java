@@ -67,6 +67,7 @@ public class Character implements IDatabaseVariable, IDatabaseResponse {
         }
     };
     private UUID uuid;
+    private UUID accountUuid;
     private String firstNames;
     private String lastName;
     private String nationality;
@@ -74,8 +75,9 @@ public class Character implements IDatabaseVariable, IDatabaseResponse {
     private String birthPlace;
     private String birthDate;
 
-    public Character(UUID uuid, String firstNames, String lastName, String nationality, Gender gender, String birthPlace, String birthDate) {
+    public Character(UUID uuid, UUID accountUuid, String firstNames, String lastName, String nationality, Gender gender, String birthPlace, String birthDate) {
         this.uuid = uuid;
+        this.accountUuid = accountUuid != null ? accountUuid : uuid;
         this.firstNames = firstNames;
         this.lastName = lastName;
         this.nationality = nationality;
@@ -84,8 +86,13 @@ public class Character implements IDatabaseVariable, IDatabaseResponse {
         this.birthDate = birthDate;
     }
 
+    public Character(UUID uuid, String firstNames, String lastName, String nationality, Gender gender, String birthPlace, String birthDate) {
+        this(uuid, uuid, firstNames, lastName, nationality, gender, birthPlace, birthDate);
+    }
+
     public Character() {
         this.uuid = UUID.fromString("00000000-0000-0000-0000-000000000000");
+        this.accountUuid = UUID.fromString("00000000-0000-0000-0000-000000000000");
         this.firstNames = "null";
         this.lastName = "null";
         this.nationality = "null";
@@ -102,6 +109,14 @@ public class Character implements IDatabaseVariable, IDatabaseResponse {
         this.uuid = uuid;
     }
 
+    public UUID getAccountUuid() {
+        return accountUuid != null ? accountUuid : uuid;
+    }
+
+    public void setAccountUuid(UUID accountUuid) {
+        this.accountUuid = accountUuid;
+    }
+
     public String getFirstNames() {
         return firstNames;
     }
@@ -116,6 +131,10 @@ public class Character implements IDatabaseVariable, IDatabaseResponse {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getFullName() {
+        return (firstNames != null ? firstNames : "") + " " + (lastName != null ? lastName : "");
     }
 
     public String getNationality() {
@@ -151,12 +170,13 @@ public class Character implements IDatabaseVariable, IDatabaseResponse {
     }
 
     public String toString() {
-        return uuid.toString() + ";" + firstNames + ";" + lastName + ";" + nationality + ";" + gender.getSex() + ";" + birthPlace + ";" + birthDate;
+        return uuid.toString() + ";" + firstNames + ";" + lastName + ";" + nationality + ";" + gender.getSex() + ";" + birthPlace + ";" + birthDate + (accountUuid != null ? ";" + accountUuid.toString() : "");
     }
 
     public static Character fromString(String s) {
         String[] split = s.split(";");
-
-        return new Character(UUID.fromString(split[0]), split[1], split[2], split[3], Gender.getBySex(split[4]), split[5], split[6]);
+        UUID id = UUID.fromString(split[0]);
+        UUID accId = (split.length > 7 && !split[7].isEmpty()) ? UUID.fromString(split[7]) : id;
+        return new Character(id, accId, split[1], split[2], split[3], Gender.getBySex(split[4]), split[5], split[6]);
     }
 }

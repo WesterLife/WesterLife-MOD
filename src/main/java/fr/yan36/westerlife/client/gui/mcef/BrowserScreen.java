@@ -98,13 +98,7 @@ public class BrowserScreen extends GuiScreen implements IJSQueryHandler {
     public void onGuiClosed() {
         if (Client.needToCreateCharacter == 2) {
             Client.needToCreateCharacter = 1;
-            if (Main.isOpti) {
-                Minecraft.getMinecraft().displayGuiScreen(new CSSCreateCharacter().getGuiScreen());
-            } else {
-                Main.browserScreen = new BrowserScreen("mod://westerlife/create_perso/perso1.html");
-                Minecraft.getMinecraft().displayGuiScreen(Main.browserScreen);
-                Main.browserScreen.openMenu();
-            }
+            Minecraft.getMinecraft().displayGuiScreen(new CSSCreateCharacter().getGuiScreen());
         }
 
         Main.browserScreen = null;

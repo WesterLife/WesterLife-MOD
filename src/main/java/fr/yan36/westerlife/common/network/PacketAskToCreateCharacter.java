@@ -26,6 +26,9 @@ public class PacketAskToCreateCharacter implements IMessage{
         public IMessage onMessage(PacketAskToCreateCharacter m, MessageContext ctx) {
             if(Side.CLIENT.isClient()) {
                 Client.needToCreateCharacter = 1;
+                net.minecraft.client.Minecraft.getMinecraft().addScheduledTask(() -> {
+                    net.minecraft.client.Minecraft.getMinecraft().displayGuiScreen(new fr.yan36.westerlife.client.gui.acs.CSSCreateCharacter().getGuiScreen());
+                });
             }
             return null;
         }

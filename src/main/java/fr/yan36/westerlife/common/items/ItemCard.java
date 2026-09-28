@@ -79,7 +79,11 @@ public class ItemCard extends Item implements IHasModel {
             if(!worldIn.isRemote) {
                 if(stack.hasTagCompound()) {
                     if(stack.getTagCompound().hasKey("link")) {
-                        tooltip.add("§aCarte synchronisée au profil de : " + Objects.requireNonNull(DBUtils.getCharacter(UUID.fromString(stack.getTagCompound().getString("link")))).getLastName());
+                        try {
+                            fr.yan36.westerlife.common.objects.character.Character c = DBUtils.getCharacter(UUID.fromString(stack.getTagCompound().getString("link")));
+                            String name = (c != null && c.getLastName() != null) ? c.getFullName() : "Inconnu";
+                            tooltip.add("§aCarte synchronisée au profil de : " + name);
+                        } catch (Exception ignored) {}
                     }
                 }
             }
@@ -95,10 +99,14 @@ public class ItemCard extends Item implements IHasModel {
                 stack.setTagCompound(stack.serializeNBT());
             }
             if(!stack.getTagCompound().hasKey("link")) {
-                stack.getTagCompound().setString("link", String.valueOf(playerIn.getUniqueID()));
+                fr.yan36.westerlife.common.objects.character.Character activeChar = DBUtils.getActiveCharacter(playerIn);
+                UUID linkId = (activeChar != null) ? activeChar.getUuid() : playerIn.getUniqueID();
+                String charName = (activeChar != null) ? activeChar.getFullName() : playerIn.getName();
+
+                stack.getTagCompound().setString("link", linkId.toString());
                 String a = this.getType().name().substring(0, 3) + Math.round(Float.parseFloat(Math.random() * 10000000 + ""));
                 stack.getTagCompound().setString("uniqueIdentifier", String.valueOf(a));
-                playerIn.sendMessage(new TextComponentString("§aCarte synchronisée le profil de : " + DBUtils.getCharacter(playerIn.getUniqueID()).getLastName() + " !"));
+                playerIn.sendMessage(new TextComponentString("§aCarte synchronisée au profil de : §e" + charName + " §a!"));
                 DiscordWebhook webhook = new DiscordWebhook(DatabaseManager.discordLogger);
 
                 webhook.addEmbed(

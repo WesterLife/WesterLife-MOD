@@ -20,15 +20,82 @@ public class DBUtils {
     // Base De Données - Manager Player
     //===================================
 
-    public static void createCharacter(EntityPlayer p, String familyname, String firstnames, String birthdate, String birthplace, String nationality, String sex){
-        try{
+    public static void initDatabaseSchema() {
+        try {
+            if (ServerProxy.getDatabaseManager() == null || ServerProxy.getDatabaseManager().getWesterLifeDB() == null) {
+                return;
+            }
             Connection connection = ServerProxy.getDatabaseManager().getWesterLifeDB().getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO `players` (`uuid`, `pseudo`, `familyname`, `firstnames`, `birthdate`, `birthplace`, `nationality`, `sex`) VALUES ('"+p.getUniqueID().toString()+"','"+p.getName()+"','"+familyname+"','"+firstnames+"','"+birthdate+"','"+birthplace+"','"+nationality+"','"+sex+"')");
-            preparedStatement.executeUpdate();
+            if (connection == null) return;
+
+            java.sql.DatabaseMetaData md = connection.getMetaData();
+            ResultSet rs = md.getColumns(null, null, "players", "account_uuid");
+            if (!rs.next()) {
+                java.sql.Statement stmt = connection.createStatement();
+                try {
+                    stmt.executeUpdate("ALTER TABLE `players` ADD COLUMN `account_uuid` VARCHAR(36) NULL AFTER `uuid`");
+                    System.out.println("[WesterLife] Added 'account_uuid' column to table 'players'.");
+                } catch (Exception ex) {
+                    System.out.println("[WesterLife] Note when adding account_uuid: " + ex.getMessage());
+                }
+                stmt.close();
+            }
+            rs.close();
+
+            java.sql.Statement stmt = connection.createStatement();
+            try {
+                stmt.executeUpdate("UPDATE `players` SET `account_uuid` = `uuid` WHERE `account_uuid` IS NULL OR `account_uuid` = ''");
+            } catch (Exception ex) {
+                System.out.println("[WesterLife] Note when updating account_uuid: " + ex.getMessage());
+            }
+            stmt.close();
+            connection.close();
+        } catch (Exception e) {
+            System.err.println("[WesterLife] Database schema initialization warning: " + e.getMessage());
+        }
+    }
+
+    public static Character createCharacter(EntityPlayer p, String familyname, String firstnames, String birthdate, String birthplace, String nationality, String sex){
+        return createCharacter(p.getUniqueID(), p.getName(), familyname, firstnames, birthdate, birthplace, nationality, sex);
+    }
+
+    public static Character createCharacter(UUID accountUuid, String pseudo, String familyname, String firstnames, String birthdate, String birthplace, String nationality, String sex){
+        UUID charUuid = UUID.randomUUID();
+        try {
+            Connection connection = ServerProxy.getDatabaseManager().getWesterLifeDB().getConnection();
+            PreparedStatement ps;
+            try {
+                ps = connection.prepareStatement("INSERT INTO `players` (`uuid`, `account_uuid`, `pseudo`, `familyname`, `firstnames`, `birthdate`, `birthplace`, `nationality`, `sex`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                ps.setString(1, charUuid.toString());
+                ps.setString(2, accountUuid.toString());
+                ps.setString(3, pseudo);
+                ps.setString(4, familyname);
+                ps.setString(5, firstnames);
+                ps.setString(6, birthdate);
+                ps.setString(7, birthplace);
+                ps.setString(8, nationality);
+                ps.setString(9, sex);
+                ps.executeUpdate();
+                ps.close();
+            } catch (SQLException ex) {
+                // Fallback if account_uuid does not exist yet
+                ps = connection.prepareStatement("INSERT INTO `players` (`uuid`, `pseudo`, `familyname`, `firstnames`, `birthdate`, `birthplace`, `nationality`, `sex`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+                ps.setString(1, charUuid.toString());
+                ps.setString(2, pseudo);
+                ps.setString(3, familyname);
+                ps.setString(4, firstnames);
+                ps.setString(5, birthdate);
+                ps.setString(6, birthplace);
+                ps.setString(7, nationality);
+                ps.setString(8, sex);
+                ps.executeUpdate();
+                ps.close();
+            }
             connection.close();
         } catch (SQLException e){
             e.printStackTrace();
         }
+        return new Character(charUuid, accountUuid, firstnames, familyname, nationality, Character.Gender.getBySex(sex), birthplace, birthdate);
     }
 
     public static void createBankAccount(String owner, int account_number, String cb_code, String date, boolean isPersonnal){
@@ -51,22 +118,38 @@ public class DBUtils {
         }
     }
 
-    public static boolean getCharacterExists(EntityPlayer p){
-        boolean exists = false;
-        try{
+    public static List<Character> getCharactersByAccount(UUID accountUuid) {
+        List<Character> list = new ArrayList<>();
+        if (accountUuid == null) return list;
+        try {
             Connection connection = ServerProxy.getDatabaseManager().getWesterLifeDB().getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT uuid FROM players WHERE uuid= ?");
-            preparedStatement.setString(1, p.getUniqueID().toString());
-            preparedStatement.executeQuery();
-            ResultSet rs = preparedStatement.getResultSet();
-            if (rs.next()){
-                exists = true;
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM `players` WHERE `account_uuid` = ? OR (`account_uuid` IS NULL AND `uuid` = ?)");
+            ps.setString(1, accountUuid.toString());
+            ps.setString(2, accountUuid.toString());
+            ps.execute();
+            ResultSet rs = ps.getResultSet();
+            while (rs.next()) {
+                Character c = parseCharacterFromResultSet(rs, accountUuid);
+                if (c != null) {
+                    list.add(c);
+                }
             }
+            rs.close();
+            ps.close();
             connection.close();
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-        return exists;
+        return list;
+    }
+
+    public static Character getActiveCharacter(EntityPlayer player) {
+        return fr.yan36.westerlife.server.character.PlayerCharacterManager.getActiveCharacter(player);
+    }
+
+    public static boolean getCharacterExists(EntityPlayer p){
+        List<Character> chars = getCharactersByAccount(p.getUniqueID());
+        return !chars.isEmpty();
     }
 
     //===================================
@@ -294,28 +377,20 @@ public class DBUtils {
     }
 
     public static Character getCharacter(UUID uuid) {
+        if (uuid == null) return null;
         try{
             Connection connection = ServerProxy.getDatabaseManager().getWesterLifeDB().getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM `players` WHERE UUID=?");
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM `players` WHERE `uuid`=? OR `account_uuid`=? LIMIT 1");
             preparedStatement.setString(1, String.valueOf(uuid));
+            preparedStatement.setString(2, String.valueOf(uuid));
             preparedStatement.execute();
             ResultSet rs = preparedStatement.getResultSet();
             if (rs.next()){
-                Character character = new Character();
-                character.setUuid(uuid);
-                character.setBirthDate(rs.getString("birthdate"));
-                character.setBirthPlace(rs.getString("birthplace"));
-                character.setGender(Character.Gender.getBySex(rs.getString("birthplace")));
-                character.setNationality(rs.getString("nationality"));
-                character.setLastName(rs.getString("lastname"));
-                character.setFirstNames(rs.getString("firstname"));
-
-
+                Character character = parseCharacterFromResultSet(rs, uuid);
                 connection.close();
-
                 return character;
             } else {
-
+                connection.close();
                 Character character = new Character();
                 character.setUuid(uuid);
                 character.setBirthDate("error");
@@ -324,9 +399,7 @@ public class DBUtils {
                 character.setNationality("error");
                 character.setLastName("Vous n'êtes pas enregistré dans la base de données. Contactez un administrateur.");
                 character.setFirstNames("error");
-                connection.close();
                 return character;
-
             }
 
         } catch (SQLException e){
@@ -334,6 +407,55 @@ public class DBUtils {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public static Character parseCharacterFromResultSet(ResultSet rs, UUID defaultAccountUuid) {
+        try {
+            UUID charUuid;
+            try {
+                charUuid = UUID.fromString(rs.getString("uuid"));
+            } catch (Exception ex) {
+                charUuid = UUID.randomUUID();
+            }
+
+            UUID accUuid = defaultAccountUuid;
+            try {
+                String accStr = rs.getString("account_uuid");
+                if (accStr != null && !accStr.isEmpty()) {
+                    accUuid = UUID.fromString(accStr);
+                }
+            } catch (SQLException ignored) {
+            }
+            if (accUuid == null) {
+                accUuid = charUuid;
+            }
+
+            String birthdate = getSafeColumnString(rs, "birthdate", null, "01-01-2000");
+            String birthplace = getSafeColumnString(rs, "birthplace", null, "Paris");
+            String nationality = getSafeColumnString(rs, "nationality", null, "Française");
+            String sex = getSafeColumnString(rs, "sex", "sexe", "HOMME");
+            String lastName = getSafeColumnString(rs, "familyname", "lastname", "Inconnu");
+            String firstName = getSafeColumnString(rs, "firstnames", "firstname", "Inconnu");
+
+            return new Character(charUuid, accUuid, firstName, lastName, nationality, Character.Gender.getBySex(sex), birthplace, birthdate);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private static String getSafeColumnString(ResultSet rs, String primary, String fallback, String defaultVal) {
+        try {
+            String val = rs.getString(primary);
+            if (val != null) return val;
+        } catch (SQLException ignored) {}
+        if (fallback != null) {
+            try {
+                String val = rs.getString(fallback);
+                if (val != null) return val;
+            } catch (SQLException ignored) {}
+        }
+        return defaultVal;
     }
 
     public static Permis getPermis(UUID uuid) {

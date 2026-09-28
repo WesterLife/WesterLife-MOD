@@ -57,5 +57,7 @@ public class Network {
         }
 
 
+        Main.network.registerMessage(PacketCharacterList.Handler.class, PacketCharacterList.class, 41, Side.CLIENT);
+        Main.network.registerMessage(PacketSelectCharacter.Handler.class, PacketSelectCharacter.class, 42, Side.SERVER);
     }
 }

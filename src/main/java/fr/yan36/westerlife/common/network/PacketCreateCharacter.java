@@ -1,5 +1,6 @@
 package fr.yan36.westerlife.common.network;
 
+import fr.yan36.westerlife.Main;
 import fr.yan36.westerlife.common.init.DynamXInit;
 import fr.yan36.westerlife.common.init.ItemInit;
 import fr.yan36.westerlife.common.items.ItemCard;
@@ -67,62 +68,42 @@ public class PacketCreateCharacter implements IMessage{
     }
     public static class ServerHandler implements IMessageHandler<PacketCreateCharacter, IMessage> {
         @Override
-        @SideOnly(Side.SERVER)
         public IMessage onMessage(PacketCreateCharacter m, MessageContext ctx) {
-            EntityPlayer e = (EntityPlayer) ctx.getServerHandler().player.world.getEntityByID(m.player);
-            if(Side.SERVER.isServer()) {
-                assert e != null;
-                if (!DBUtils.isRowExistInDatabase("players", "uuid", e.getUniqueID().toString())) {
-                    System.out.println("Received packet from " + e.getUniqueID().toString() + " to create a character. (s=" + m.sex + ")");
-                    DBUtils.saveToDB(new Character(e.getUniqueID(), m.firstnames, m.familyname, m.nationality, Character.Gender.getBySex(m.sex), m.birthdate, m.birthplace));
-                    e.sendMessage(new TextComponentString("§cWesterLife §8» §aVotre personnage a bien été créé ! Bon jeu !"));
-                    ItemStack item = new ItemStack(ItemInit.CNI);
-                    item.setTagCompound(new NBTTagCompound());
-                    assert item.getTagCompound() != null;
-                    item.getTagCompound().setString("link", e.getUniqueID().toString());
+            net.minecraft.entity.player.EntityPlayerMP playerMP = ctx.getServerHandler().player;
+            if (playerMP == null) return null;
 
-                    item.getTagCompound().setString("link", String.valueOf(e.getUniqueID()));
-                    String a = ItemCard.CardType.CNI.name().substring(0, 3) + Math.round(Float.parseFloat(Math.random() * 10000000 + ""));
-                    item.getTagCompound().setString("uniqueIdentifier", String.valueOf(a));
-                    e.sendMessage(new TextComponentString("§aCarte synchronisée le profil de : " + DBUtils.getCharacter(e.getUniqueID()).getLastName() + " !"));
+            playerMP.getServerWorld().addScheduledTask(() -> {
+                System.out.println("Received packet from " + playerMP.getUniqueID().toString() + " to create a character: " + m.firstnames + " " + m.familyname);
 
-                    ItemStack water = new ItemStack(DynamXInit.WATER, 2);
-                    water.setStackDisplayName("§b§3Bouteille d'eau");
-                    e.inventory.addItemStackToInventory(water);
-
-                    ItemStack food = new ItemStack(DynamXInit.barreChoco, 5);
-                    food.setStackDisplayName("§b§6Barre de chocolat");
-                    e.inventory.addItemStackToInventory(food);
-
-                    ItemStack food2 = new ItemStack(Items.BREAD, 2);
-                    food2.setStackDisplayName("§b§6Pain");
-                    e.inventory.addItemStackToInventory(food2);
-
-                    DiscordWebhook webhook = new DiscordWebhook(DatabaseManager.discordLogger);
-
-                    webhook.addEmbed(
-                            new DiscordWebhook.EmbedObject()
-                                    .setTitle("Mise en circulation d'une carte")
-                                    .setColor(new Color(0x00FF00))
-                                    .setFooter("WesterLife - logger", "https://cdn.discordapp.com/icons/813796868537581588/a424290da4df55b736153d20e46f6770.webp?size=96")
-                                    .addField("Type de carte", ItemCard.CardType.CNI.name(), true)
-                                    .addField("Activé par", e.getUniqueID() + " " + e.getName(), true)
-                                    .addField("Identifiant unique carte", String.valueOf(a), true)
-                                    .addField("Lié a identitée créé", m.firstnames + " " + m.familyname + " " + m.birthdate + " " + m.birthplace + " " + m.nationality + " " + m.sex , true)
-                    );
-
-                    webhook.setAvatarUrl("https://cdn.discordapp.com/icons/813796868537581588/a424290da4df55b736153d20e46f6770.webp?size=96");
-                    webhook.setUsername("WesterLife - logger");
-                    try {
-                        webhook.execute();
-                    } catch (IOException e1) {
-                        throw new RuntimeException(e1);
-                    }
-
-                    e.inventory.addItemStackToInventory(item);
-
+                Character oldActive = fr.yan36.westerlife.server.character.PlayerCharacterManager.getActiveCharacter(playerMP);
+                if (oldActive != null) {
+                    fr.yan36.westerlife.server.character.PlayerCharacterManager.saveCharacterState(playerMP, oldActive);
                 }
-            }
+
+                Character newChar = DBUtils.createCharacter(playerMP, m.familyname, m.firstnames, m.birthdate, m.birthplace, m.nationality, m.sex);
+
+                fr.yan36.westerlife.server.character.PlayerCharacterManager.setActiveCharacter(playerMP, newChar);
+                fr.yan36.westerlife.server.character.PlayerCharacterManager.loadCharacterState(playerMP, newChar);
+
+                playerMP.sendMessage(new TextComponentString("§cWesterLife §8» §aVotre personnage §e" + newChar.getFullName() + " §aa bien été créé et activé ! Bon jeu !"));
+                Main.network.sendTo(new PacketSendCharacter(newChar), playerMP);
+
+                DiscordWebhook webhook = new DiscordWebhook(DatabaseManager.discordLogger);
+                webhook.addEmbed(
+                        new DiscordWebhook.EmbedObject()
+                                .setTitle("Création d'un personnage RP")
+                                .setColor(new Color(0x00FF00))
+                                .setFooter("WesterLife - logger", "https://cdn.discordapp.com/icons/813796868537581588/a424290da4df55b736153d20e46f6770.webp?size=96")
+                                .addField("Compte joueur", playerMP.getUniqueID() + " (" + playerMP.getName() + ")", true)
+                                .addField("UUID Personnage", newChar.getUuid().toString(), true)
+                                .addField("Identité créée", m.firstnames + " " + m.familyname + " | " + m.birthdate + " à " + m.birthplace + " (" + m.nationality + ", " + m.sex + ")", false)
+                );
+                webhook.setAvatarUrl("https://cdn.discordapp.com/icons/813796868537581588/a424290da4df55b736153d20e46f6770.webp?size=96");
+                webhook.setUsername("WesterLife - logger");
+                try {
+                    webhook.execute();
+                } catch (Exception ignored) {}
+            });
             return null;
         }
     }

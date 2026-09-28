@@ -77,7 +77,7 @@ public class CSSCreateCharacter extends GuiFrame {
                     prenoms.getText(),
                     birthdate.getText().replaceAll("/", "-"), // mdr
                     birthplace.getText(),
-                    Objects.equals(birthplace.getText(), "F") ? "Française" : "Étrangère",
+                    Objects.equals(nationalite.getText(), "F") ? "Française" : "Étrangère",
                     Objects.equals(sexe.getText(), "M") ? "HOMME" : "FEMME"
             ));
             Client.needToCreateCharacter = 0;

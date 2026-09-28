@@ -1,0 +1,109 @@
+/*
+   WesterLife - Character Selection GUI Stylesheet
+*/
+
+.background {
+    background-color: #2E364A;
+    z-index: -1;
+    width: 65%;
+    height: 85%;
+    left: 50%;
+    right: 50%;
+    top: 50%;
+    bottom: 50%;
+    border-radius: 20px;
+}
+
+.title {
+    text-align: center;
+    color: #FFFFFF;
+    top: 4%;
+    height: 8%;
+    width: 90%;
+    left: 50%;
+    right: 50%;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.scrollPane {
+    top: 13%;
+    height: 68%;
+    width: 92%;
+    left: 50%;
+    right: 50%;
+}
+
+.card {
+    background-color: #1F2533;
+    border-radius: 12px;
+    width: 98%;
+    height: 65px;
+    margin-bottom: 8px;
+    left: 50%;
+    right: 50%;
+}
+
+.charName {
+    color: #FFD700;
+    font-weight: bold;
+    top: 8px;
+    left: 15px;
+}
+
+.charInfo {
+    color: #C0C8D2;
+    top: 26px;
+    left: 15px;
+}
+
+.charGender {
+    color: #8A99AD;
+    top: 44px;
+    left: 15px;
+}
+
+.playBtn {
+    text-align: center;
+    top: 15px;
+    right: 15px;
+    width: 20%;
+    height: 35px;
+    color: #FFFFFF;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.newCharBtn {
+    text-align: center;
+    bottom: 3%;
+    left: 28%;
+    width: 44%;
+    height: 36px;
+    color: #FFFFFF;
+    background-color: #2196F3;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+.closeBtn {
+    text-align: center;
+    bottom: 3%;
+    right: 6%;
+    width: 18%;
+    height: 36px;
+    color: #E0E0E0;
+    background-color: #555E70;
+    border: none;
+    border-radius: 10px;
+}
+
+.emptyLabel {
+    text-align: center;
+    color: #A0AAB8;
+    top: 40%;
+    width: 100%;
+}

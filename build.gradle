@@ -27,13 +27,6 @@ repositories {
         name = "CurseForge"
         url = "https://minecraft.curseforge.com/api/maven/"
     }
-
-    maven {
-        url('http://maven.dynamx.fr/artifactory/DynamXRepo/')
-    }
-    maven {
-        url 'https://maven.dynamx.fr/artifactory/' + 'ACsGuisRepo/'
-    }
     maven {
         url 'https://www.cursemaven.com/'
     }
@@ -56,14 +49,13 @@ tasks.withType(JavaCompile) {
     options.encoding = "UTF-8"
 }
 
-sourceSets { main { output.resourcesDir = output.classesDir } }
+//sourceSets { main { output.resourcesDir = output.classesDir } }
 
 version = '1.5.8'
 group = 'fr.yan36.westerlife' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'westerlife'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
-
 
 minecraft {
 

@@ -58,12 +58,22 @@ public class Serveur {
     public static HashMap<EntityPlayer, Boolean> menottes = new HashMap<>();
     @SubscribeEvent
     public void onConnectToServer(PlayerEvent.PlayerLoggedInEvent e) {
+        EntityPlayerMP playerMP = (EntityPlayerMP) e.player;
         boolean devmod = false;
         if(!devmod) {
-            if(!DBUtils.getCharacterExists(e.player)){
-                Main.network.sendTo(new PacketAskToCreateCharacter(), (EntityPlayerMP) e.player);
-                e.player.sendMessage(new TextComponentString("§cVous n'avez pas de personnage, veuillez en créer un."));
+            List<fr.yan36.westerlife.common.objects.character.Character> playerCharacters = DBUtils.getCharactersByAccount(playerMP.getUniqueID());
+            if(playerCharacters.isEmpty()){
+                Main.network.sendTo(new PacketAskToCreateCharacter(), playerMP);
+                playerMP.sendMessage(new TextComponentString("§cVous n'avez pas de personnage RP, veuillez en créer un."));
                 Databases.getPlayerData(e.player).setFloat("watervalue", 100f);
+            } else {
+                fr.yan36.westerlife.common.objects.character.Character active = fr.yan36.westerlife.server.character.PlayerCharacterManager.getActiveCharacter(playerMP);
+                if (active == null) {
+                    active = playerCharacters.get(0);
+                    fr.yan36.westerlife.server.character.PlayerCharacterManager.setActiveCharacter(playerMP, active);
+                }
+                Main.network.sendTo(new fr.yan36.westerlife.common.network.PacketCharacterList(playerCharacters), playerMP);
+                playerMP.sendMessage(new TextComponentString("§6[WesterLife] §aPersonnage actif : §e" + active.getFullName() + " §7(Utilisez §b/char §7pour changer ou créer)"));
             }
         }
 
@@ -75,6 +85,13 @@ public class Serveur {
             e.player.getEntityData().setString("health", new PlayerHealth(Collections.emptyList(), Collections.emptyList()).toString());
         }
 
+    }
+
+    @SubscribeEvent
+    public void onDisconnectFromServer(PlayerEvent.PlayerLoggedOutEvent e) {
+        if (e.player instanceof EntityPlayerMP) {
+            fr.yan36.westerlife.server.character.PlayerCharacterManager.onPlayerLogout((EntityPlayerMP) e.player);
+        }
     }
 
 

@@ -85,12 +85,6 @@ public class Main {
     @SideOnly(Side.CLIENT)
     public static BrowserScreen browserScreen;
 
-    HashMap<Integer, DynamXItemArmor<?>> tqt_frere = new HashMap<>();
-
-    @SideOnly(Side.CLIENT)
-    public static BrowserHud browserHud;
-    public static Boolean isOpti = false;
-
     public static Database wl_db;
 
 
@@ -164,21 +158,6 @@ public class Main {
             DynamXInit.fastRegistryAccess.put(item.getInfo().getFullName(), item);
             System.out.println("added " + item.getInfo().getFullName() + " to fast registry access");
         }
-
-        File file = new File("launcher_profiles.json");
-        if(!file.exists()) {
-            CrashReport.makeCrashReport(new Exception("Launcher profiles not found"), "Launcher profiles not found");
-        } else {
-            try {
-                String json = FileUtils.readFileToString(file, "UTF-8");
-                JsonObject obj = new JsonParser().parse(json).getAsJsonObject();
-                isOpti = obj.get("isOpti").getAsBoolean();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-
     }
 
 
