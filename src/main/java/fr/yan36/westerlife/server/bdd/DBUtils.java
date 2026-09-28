@@ -29,6 +29,8 @@ public class DBUtils {
             if (connection == null) return;
 
             java.sql.DatabaseMetaData md = connection.getMetaData();
+
+            // 1. Players account_uuid check
             ResultSet rs = md.getColumns(null, null, "players", "account_uuid");
             if (!rs.next()) {
                 java.sql.Statement stmt = connection.createStatement();
@@ -48,8 +50,81 @@ public class DBUtils {
             } catch (Exception ex) {
                 System.out.println("[WesterLife] Note when updating account_uuid: " + ex.getMessage());
             }
+
+            // 2. Bank account table & solde column check
+            try {
+                stmt.executeUpdate("CREATE TABLE IF NOT EXISTS `bank_account` (" +
+                        "`account_number` VARCHAR(32) NOT NULL PRIMARY KEY," +
+                        "`owner` VARCHAR(36) NOT NULL," +
+                        "`RIB` VARCHAR(64) NOT NULL," +
+                        "`cb_code` VARCHAR(8) NOT NULL," +
+                        "`solde` DOUBLE NOT NULL DEFAULT 0," +
+                        "`creation_date` VARCHAR(32) NOT NULL" +
+                        ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+            } catch (Exception ex) {
+                System.out.println("[WesterLife] Note when creating bank_account: " + ex.getMessage());
+            }
+
+            ResultSet rsSolde = md.getColumns(null, null, "bank_account", "solde");
+            if (!rsSolde.next()) {
+                try {
+                    stmt.executeUpdate("ALTER TABLE `bank_account` ADD COLUMN `solde` DOUBLE NOT NULL DEFAULT 0");
+                    System.out.println("[WesterLife] Added 'solde' column to table 'bank_account'.");
+                } catch (Exception ex) {
+                    System.out.println("[WesterLife] Note when adding solde: " + ex.getMessage());
+                }
+            }
+            rsSolde.close();
+
+            // 3. Companies table
+            try {
+                stmt.executeUpdate("CREATE TABLE IF NOT EXISTS `companies` (" +
+                        "`id` INT AUTO_INCREMENT PRIMARY KEY," +
+                        "`siret` VARCHAR(14) NOT NULL UNIQUE," +
+                        "`name` VARCHAR(100) NOT NULL," +
+                        "`type` VARCHAR(32) NOT NULL DEFAULT 'SARL'," +
+                        "`owner_uuid` VARCHAR(36) NOT NULL," +
+                        "`account_number` VARCHAR(32) NOT NULL," +
+                        "`capital` DOUBLE NOT NULL DEFAULT 0," +
+                        "`creation_date` VARCHAR(32) NOT NULL" +
+                        ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+            } catch (Exception ex) {
+                System.out.println("[WesterLife] Note when creating companies table: " + ex.getMessage());
+            }
+
+            // 4. Company ranks table
+            try {
+                stmt.executeUpdate("CREATE TABLE IF NOT EXISTS `company_ranks` (" +
+                        "`id` INT AUTO_INCREMENT PRIMARY KEY," +
+                        "`company_id` INT NOT NULL," +
+                        "`name` VARCHAR(64) NOT NULL," +
+                        "`description` VARCHAR(255) DEFAULT ''," +
+                        "`level` INT NOT NULL DEFAULT 1," +
+                        "`salary` DOUBLE NOT NULL DEFAULT 0," +
+                        "`can_hire` TINYINT(1) NOT NULL DEFAULT 0," +
+                        "`can_fire` TINYINT(1) NOT NULL DEFAULT 0," +
+                        "`can_withdraw` TINYINT(1) NOT NULL DEFAULT 0" +
+                        ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+            } catch (Exception ex) {
+                System.out.println("[WesterLife] Note when creating company_ranks table: " + ex.getMessage());
+            }
+
+            // 5. Company employees table
+            try {
+                stmt.executeUpdate("CREATE TABLE IF NOT EXISTS `company_employees` (" +
+                        "`id` INT AUTO_INCREMENT PRIMARY KEY," +
+                        "`company_id` INT NOT NULL," +
+                        "`character_uuid` VARCHAR(36) NOT NULL," +
+                        "`rank_name` VARCHAR(64) NOT NULL DEFAULT 'Employé'," +
+                        "`joined_date` VARCHAR(32) NOT NULL" +
+                        ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+            } catch (Exception ex) {
+                System.out.println("[WesterLife] Note when creating company_employees table: " + ex.getMessage());
+            }
+
             stmt.close();
             connection.close();
+            System.out.println("[WesterLife] Database schema for companies and bank accounts successfully initialized.");
         } catch (Exception e) {
             System.err.println("[WesterLife] Database schema initialization warning: " + e.getMessage());
         }
@@ -482,6 +557,45 @@ public class DBUtils {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public static String getPersonalBankAccount(UUID charUuid, UUID accountUuid) {
+        String accNum = null;
+        if (charUuid != null) {
+            accNum = getStringInfo("account_number", "bank_account", "owner", charUuid.toString());
+        }
+        if (accNum == null && accountUuid != null) {
+            accNum = getStringInfo("account_number", "bank_account", "owner", accountUuid.toString());
+        }
+        return accNum;
+    }
+
+    public static double getAccountBalance(String accountNumber) {
+        if (accountNumber == null) return 0.0;
+        try {
+            String val = getStringInfo("solde", "bank_account", "account_number", accountNumber);
+            if (val != null) {
+                return Double.parseDouble(val);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0.0;
+    }
+
+    public static void setAccountBalance(String accountNumber, double balance) {
+        if (accountNumber == null) return;
+        setInfo("bank_account", "account_number", accountNumber, "solde", String.valueOf((int) balance));
+    }
+
+    public static boolean transferBankMoney(String fromAccount, String toAccount, double amount) {
+        if (fromAccount == null || toAccount == null || amount <= 0) return false;
+        double fromSolde = getAccountBalance(fromAccount);
+        if (fromSolde < amount) return false;
+        double toSolde = getAccountBalance(toAccount);
+        setAccountBalance(fromAccount, fromSolde - amount);
+        setAccountBalance(toAccount, toSolde + amount);
+        return true;
     }
 
 }

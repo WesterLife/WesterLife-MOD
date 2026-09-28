@@ -39,6 +39,7 @@ public class WesterLifeCommand extends CommandBase {
         modules.add(new ModulePermis());
         modules.add(new ModuleMagic());
         modules.add(new ModuleGarage());
+        modules.add(new ModuleCompany());
     }
 
 

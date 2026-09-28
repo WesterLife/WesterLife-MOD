@@ -22,6 +22,7 @@ public class ServerProxy extends CommonProxy {
     {
         super.init();
         fr.yan36.westerlife.server.bdd.DBUtils.initDatabaseSchema();
+        fr.yan36.westerlife.server.entreprises.CompanyManager.getInstance().init();
     }
 
     public static DatabaseManager getDatabaseManager() {

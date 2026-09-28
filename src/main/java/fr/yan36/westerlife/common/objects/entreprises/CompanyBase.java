@@ -1,48 +1,47 @@
 package fr.yan36.westerlife.common.objects.entreprises;
 
+import java.util.UUID;
 
-public class CompanyBase {
-    private String companyIdentifiant;
-    private String name;
-    private Integer creationDate;
-    private String creator;
+public class CompanyBase extends Company {
 
     public CompanyBase(String companyIdentifiant, String name, Integer creationDate, String creator) {
-        this.companyIdentifiant = companyIdentifiant;
-        this.name = name;
-        this.creationDate = creationDate;
-        this.creator = creator;
+        super(0, companyIdentifiant, name, CompanyType.SARL, parseUuidSafe(creator), "0", 0.0, String.valueOf(creationDate));
+    }
+
+    private static UUID parseUuidSafe(String str) {
+        try {
+            if (str != null && str.length() == 36) {
+                return UUID.fromString(str);
+            }
+        } catch (Exception ignored) {}
+        return UUID.randomUUID();
     }
 
     public String getCompanyIdentifiant() {
-        return companyIdentifiant;
+        return getSiret();
     }
 
     public void setCompanyIdentifiant(String companyIdentifiant) {
-        this.companyIdentifiant = companyIdentifiant;
+        setSiret(companyIdentifiant);
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getCreationDate() {
-        return creationDate;
+    public Integer getCreationDateAsInt() {
+        try {
+            return Integer.parseInt(getCreationDate());
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
     public void setCreationDate(Integer creationDate) {
-        this.creationDate = creationDate;
+        super.setCreationDate(String.valueOf(creationDate));
     }
 
     public String getCreator() {
-        return creator;
+        return getOwnerUuid() != null ? getOwnerUuid().toString() : "";
     }
 
     public void setCreator(String creator) {
-        this.creator = creator;
+        setOwnerUuid(parseUuidSafe(creator));
     }
 }

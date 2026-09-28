@@ -1,48 +1,28 @@
 package fr.yan36.westerlife.common.objects.entreprises;
 
-import fr.yan36.westerlife.common.objects.economy.BankAccount;
-import fr.yan36.westerlife.common.objects.entreprises.types.Employee;
+import fr.yan36.westerlife.common.objects.entreprises.types.Rank;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
-public class CompanyPublic implements ICorporation {
+public class CompanyPublic extends Company {
 
     public enum Type { NATIONAL_INSTITUTION, TERRITORIAL_COMMUNITY, PUBLIC_ETABLISHMENT }
-    private CompanyBase company;
-    private BankAccount bankAccount;
-    private List<String> vehicles;
-    private List<Employee> employees;
-    private String siret;
-
-
 
     public CompanyPublic(CompanyBase company) {
-        this.company = company;
-        company.setCompanyIdentifiant("123456789");
-        bankAccount = new BankAccount(BankAccount.Type.PROFESSIONAL, "123456789", "Yan", 1000, "123456789", "1234", "01/01/2020");
+        super(company.getId(), company.getSiret(), company.getName(), CompanyType.PUBLIQUE, company.getOwnerUuid(), company.getAccountNumber(), company.getCapital(), company.getCreationDate());
+        setRanks(getDefaultRanks());
+    }
 
-
-
+    private static List<Rank> getDefaultRanks() {
+        List<Rank> list = new ArrayList<>();
+        list.add(new Rank("Directeur", "Directeur de l'établissement public", 0f, 100));
+        list.add(new Rank("Responsable de service", "Responsable", 0f, 50));
+        list.add(new Rank("Agent", "Agent de la fonction publique", 0f, 10));
+        return list;
     }
 
     public CompanyBase getBaseCompany() {
-        return company;
+        return new CompanyBase(getSiret(), getName(), 0, getOwnerUuid() != null ? getOwnerUuid().toString() : "");
     }
-
-    @Override
-    public String getSiret() {
-        return null;
-    }
-
-    @Override
-    public void setSiret(String siret) {
-        this.siret = siret;
-    }
-
-    @Override
-    public List<String> impots() {
-        return Collections.singletonList("AUCUNE");
-    }
-
 }

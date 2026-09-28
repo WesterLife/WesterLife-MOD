@@ -30,6 +30,7 @@ import fr.yan36.westerlife.common.init.Network;
 import fr.yan36.westerlife.common.utils.WesterBuiltinPack;
 import fr.yan36.westerlife.common.utils.carmodule.AICarEngineModule;
 import fr.yan36.westerlife.common.utils.carmodule.GarageModule;
+import fr.yan36.westerlife.common.utils.commands.EntrepriseCommand;
 import fr.yan36.westerlife.common.utils.commands.PersoCommand;
 import fr.yan36.westerlife.common.utils.commands.WesterLifeCommand;
 import net.minecraft.crash.CrashReport;
@@ -118,6 +119,7 @@ public class Main {
     public void onserverStarting(FMLServerStartingEvent event) {
         event.registerServerCommand(new WesterLifeCommand());
         event.registerServerCommand(new PersoCommand());
+        event.registerServerCommand(new EntrepriseCommand());
         Databases.onServerStarting(event);
     }
 

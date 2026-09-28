@@ -21,6 +21,62 @@ public class BankAccount {
         this.cration_date = cration_date;
     }
 
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public String getAccountNumber() {
+        return account_number;
+    }
+
+    public void setAccountNumber(String account_number) {
+        this.account_number = account_number;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+    public Integer getSolde() {
+        return solde;
+    }
+
+    public void setSolde(Integer solde) {
+        this.solde = solde;
+    }
+
+    public String getRIB() {
+        return RIB;
+    }
+
+    public void setRIB(String RIB) {
+        this.RIB = RIB;
+    }
+
+    public String getCbPassword() {
+        return cb_password;
+    }
+
+    public void setCbPassword(String cb_password) {
+        this.cb_password = cb_password;
+    }
+
+    public String getCreationDate() {
+        return cration_date;
+    }
+
+    public void setCreationDate(String cration_date) {
+        this.cration_date = cration_date;
+    }
+
     public void saveToDB() {
         System.out.println("Account " + account_number + " saved to DB");
     }
